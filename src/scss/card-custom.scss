@@ -1,0 +1,45 @@
+.card-title{
+	font-size: 1.4rem;
+}
+
+.card{
+	margin-bottom: 2rem;
+	.nav{
+		flex-direction: column;
+	}
+}
+
+.regulamento {
+	margin-bottom: 0;
+	.card-header{
+		background-color: $brand-primary;
+		.collapse-title{			
+			color: #fff;			
+			&:hover{
+				color: $brand-warning;				
+			}
+		}
+	}
+}
+
+.card-footer .btn-primary{
+	width: 100%;
+}
+
+.badge{
+	width: 14px;
+	height: 14px;
+	display: inline-block !important;
+
+	&.premiacao{
+		background-color: #5cb85c;
+	}
+
+	&.neutro{
+		background-color: #ccc;
+	}
+
+	&.rebaixamento{
+		background-color: #d9534f;
+	}
+}

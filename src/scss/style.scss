@@ -1,0 +1,105 @@
+@import "../components/bootstrap/scss/bootstrap";
+@import "../components/components-font-awesome/scss/font-awesome";
+
+/* sidebar */
+@import "sidebar";
+
+
+/* Header */
+
+@import "header";
+
+/* Card-Custom */
+@import "card-custom";
+
+@include media-breakpoint-up('lg') {
+	.container{
+		width: 85%;
+		margin-left: 195px;
+	}
+}
+
+/* Titulo das páginas */
+.headline{
+	font-size: 1.5rem;
+	font-weight: bold;
+	padding: 15px 20px;
+}
+
+/* Pré inscrição */
+.pre-inscricao{
+	background: url(../img/pre-inscricao.png) no-repeat top center; 	
+  	height:515px;
+  	.pre-msg{
+  		text-align: center;
+  		padding: 5px 5px; 
+  	}
+}
+
+.headline-custom{
+	font-size: 2rem;
+	font-weight: bold;
+	margin-top: 40px;
+	text-align: center;
+	color: $brand-warning;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+/* Tabela Cartola sem cartola */
+.liga-csc{
+	width: 100%;
+	overflow-x: auto;
+	display: table;
+	text-align: center;
+	.table-title{
+		text-align: center;
+	}
+}
+
+.table th, .table td{
+	padding: 0.56rem
+}
+
+.bg-table{
+	background-color: #efefef;
+}
+
+/* Scouts */
+.busca-time{
+	padding: 1.5rem 0.75rem;
+}
+
+/* Mata Mata */
+.torneio-mata{
+	display: flex;
+}
+.mata-and{
+	text-align: center;
+	text-decoration: none;
+
+	&:hover{
+		background-color: #fff;
+	}
+}
+
+.text-white{
+	padding: 15px;
+	margin-bottom: 5px;
+	align-items:center;
+}
+
+/* Inscrição */
+.inscricao{
+	background-color: #fff;
+	padding: 30px 10px;
+	border-radius: 5px;
+	.form-control{
+		padding: 1.5rem 0.75rem;
+	}
+	.form-inline{
+		justify-content: space-between;
+	}
+}
+
+.info{
+	margin-top: 63px;
+}
