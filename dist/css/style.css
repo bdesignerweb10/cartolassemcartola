@@ -8444,6 +8444,9 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   .badge.rebaixamento {
     background-color: #d9534f; }
 
+.card-destaque {
+  text-align: center; }
+
 @media (min-width: 992px) {
   .container {
     width: 85%;

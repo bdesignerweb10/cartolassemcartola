@@ -55,7 +55,7 @@
 							</div><!-- card-block -->
 							<footer>
 								<div class="card-footer">
-									<button class="btn btn-primary">Visualizar destaques por rodada</button>
+									<a href="destaques.php"><button class="btn btn-primary">Visualizar destaques por rodada</button></a>
 								</div><!-- card-footer -->
 							</footer>				
 						</div><!-- card -->
@@ -183,7 +183,7 @@
 							</div><!-- card-block -->
 							<footer>
 								<div class="card-footer">
-									<button class="btn btn-primary">Acompanhar todos os mata mata</button>
+									<a href="mata-mata.php"><button class="btn btn-primary">Acompanhar todos os mata mata</button></a>
 								</div><!-- card-footer -->
 							</footer>				
 						</div><!-- card -->

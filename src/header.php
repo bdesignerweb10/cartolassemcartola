@@ -1,3 +1,6 @@
+<?php 
+	$mercado = "f";
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -85,10 +88,17 @@
 				</div><!-- liga -->
 
 				<div class="liga-logo">
-					<span class="mark-merc">Mercado aberto</span>
-					<span class="mark">
-						<i class="fa fa-hourglass-start fa-2x"></i>												
-					</span> <!-- realizar if para verificar mercado aberto fechado, se mercado fechado <i class="fa fa-hourglass-end fa-2x"></i> -->
+					<?php if ($mercado == "a") { ?>
+						<span class="mark-merc">Mercado aberto</span>
+						<span class="mark">
+							<i class="fa fa-hourglass-start fa-2x"></i>												
+						</span> 
+					<?php } else { ?>
+						<span class="mark-merc">Mercado fechado</span>
+							<span class="mark">
+								<i class="fa fa-hourglass-end fa-2x"></i>												
+							</span>
+					<?php } ?>
 				</div><!-- liga-logo -->
 			</div><!-- container -->	
 		</div><!-- header -->
