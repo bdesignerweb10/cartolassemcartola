@@ -1,0 +1,404 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"back",
+				"background-color"
+			],
+			[
+				"inlin",
+				"inline-block"
+			],
+			[
+				"utf",
+				"utf8_decode"
+			],
+			[
+				"utf8",
+				"utf8_encode"
+			],
+			[
+				"str_rep",
+				"str_replace"
+			],
+			[
+				"text-a",
+				"text-align"
+			],
+			[
+				"nome",
+				"nome_plano"
+			],
+			[
+				"pad",
+				"padding-right"
+			],
+			[
+				"padd",
+				"padding-left"
+			],
+			[
+				"tipo",
+				"tipo_pagamento"
+			],
+			[
+				"stat",
+				"status"
+			],
+			[
+				"notifica",
+				"notificaUsuario"
+			],
+			[
+				"cod",
+				"cod_transacao"
+			],
+			[
+				"data",
+				"data_status"
+			],
+			[
+				"email",
+				"email_pagseguro"
+			],
+			[
+				"id",
+				"id_usuario"
+			],
+			[
+				"url",
+				"url_pagretorno"
+			],
+			[
+				"pag",
+				"pagSeguro"
+			],
+			[
+				"max",
+				"max-width"
+			],
+			[
+				"min",
+				"min-width"
+			],
+			[
+				"pa",
+				"padding-right"
+			],
+			[
+				"margin",
+				"margin-right"
+			],
+			[
+				"mart",
+				"margin-bottom"
+			],
+			[
+				"borde",
+				"border-radius"
+			],
+			[
+				"mar",
+				"margin-top"
+			],
+			[
+				"tex",
+				"text-align"
+			],
+			[
+				"marg",
+				"margin-left"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/cartolassemcartola"
+	],
+	"file_history":
+	[
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Wagner/ieduc/.htaccess",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Wagner/geduc/application/config/config.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Wagner/geduc/.htaccess",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Wagner/geduc/application/config/database.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Wagner/geduc/index.php",
+		"/Users/phmpilz/Desktop/order-details-item.php",
+		"/Users/phmpilz/Desktop/my-account.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Wagner/traccar/dist/css/style.css",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Wagner/traccar/acts/Login.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Wagner/traccar/login.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Wagner/traccar/index.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Wagner/traccar/header_login.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Wagner/traccar/header.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Wagner/traccar/dist/videos/video1.mp4",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Wagner/traccar/src/scss/style.scss",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Wagner/traccar/footer_login.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Wagner/traccar/footer.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Wagner/traccar/model/login.html",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Wagner/traccar/widgets.html",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Wagner/Captive/index.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Wagner/Captive/index2.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/acts/acts.Pagamento.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/acts/acts.RetornoPagSeguro.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/acts/acts.Assinatura.php",
+		"/Users/phmpilz/Desktop/php.ini",
+		"/Users/phmpilz/Desktop/.htaccess",
+		"/Users/phmpilz/Desktop/php_info.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/ateliedane/.htaccess",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/ateliedane/wp-config.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/image-cropper.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/acts/acts.GaleriesImages.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/acts/acts.Minhaempresa.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/header.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/index.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/divulgue.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/header.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/acts/class.Pagamento.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/conexao/connect.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/_htaccess",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/acts/acts.Login.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/acts/acts.MigrarPlano.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/acts/acts.Usuario.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/acts/acts.AtivarUsuario.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/acts/acts.Financeiro.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/acts/acts.Pagamento.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/acts/acts.ExcluirUsuario.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/24horas.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/empresa.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/segmentos.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/css/style.css",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/minhaempresa-include.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/minhaempresainfo-include.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/minhaempresainfo-manage.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/minhaempresainfo-update.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/minhaempresa-manage.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/galeries-show.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/footer.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/galeries-include-images.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/galeries-manage.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/acts/acts.Galeries.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/galeries-update.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/galeries-include.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/acts/acts.MinhaEmpresaInfo.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/acts/acts.Esqueci.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/login.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/esqueci-senha.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/BD/_ALTER_TABLE.sql",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/css/stylelogin.css",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/connect.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/acts/acts.AprovaComentario.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/comentario-update.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/usuarios-manage.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/slides-manage.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/segmentos-manage.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/planosanuncios-manage.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/planos-manage.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/pagamento-manage.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/newsletter-manage.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/empresa-manage.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/destaques-manage.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/comentario-manage.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/beneficios-manage.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/anunciosimagens-manage.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/account-manage.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/acts/acts.Slides.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/footer.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/nossaempresa.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/css/main.css",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/anuncios.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/log_email.txt",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/log_email.txt",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/acts/acts.Account.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/acts/log_assinatura.txt",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/acts/acts.AnunciosImagens.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/acts/acts.Beneficio.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/acts/acts.Destaques.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/acts/acts.Empresa.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/acts/acts.Planos.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/acts/acts.PlanosAnuncios.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/acts/acts.RetornoPagSeguro.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/acts/acts.Segmentos.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/acts/class.Image.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/acts/class.Str.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/acts/config.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/status.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/account-migrar.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/cadastro.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/status.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/acts/acts.NotificacaoStatusBoleto.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/acts/acts.NotificacaoStatusPagSeguro.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/acts/acts.AtualizaStatusPagSeguro.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/planosanuncios-include.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/planos-include.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/account-change.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/css/bootstrap.css",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/pagamento.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/cadastro.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/planos.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/contratar.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/contratar-plano.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/planos-update.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/beneficio-update.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/css/modal.css",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/css/style.css",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/acts/acts.AlterarPlano.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/css/janela_modal.css",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/financeiro-manage.php",
+		"/Users/phmpilz/Dropbox/Webnet/PHP/Bruninho/agendaja/painel/acts/acts.CancelarPlano.php"
+	],
+	"find":
+	{
+		"height": 23.0
+	},
+	"find_in_files":
+	{
+		"height": 101.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 35.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "cartolassemcartola.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 238.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

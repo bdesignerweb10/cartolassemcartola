@@ -8356,7 +8356,7 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
     .sidebar {
       left: 0; }
       .sidebar .nav .nav-link {
-        font-size: 1.1rem; }
+        font-size: 1.0rem; }
       .sidebar .nav .fa {
         font-size: 1.7em; } }
 
@@ -8485,6 +8485,10 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
 
 .table th, .table td {
   padding: 0.56rem; }
+
+.liga-csc tbody tr td, .liga-csc tbody th {
+  vertical-align: middle;
+  }
 
 .bg-table {
   background-color: #efefef; }
