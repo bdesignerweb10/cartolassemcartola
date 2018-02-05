@@ -1,5 +1,8 @@
 <?php 
 	$mercado = "f";
+	
+	if(basename($_SERVER['PHP_SELF']) != "inscricao.php")
+		header('location:inscricao.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
