@@ -2,7 +2,7 @@
 	$mercado = "f";
 	
 	if(basename($_SERVER['PHP_SELF']) != "inscricao.php")
-		header('location:inscricao.php');
+		header('location:inscricao.php'); 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -81,7 +81,7 @@
 					<p>
 						<span class="mark">Cartolas</span>
 						<span>sem</span>
-						<span class="mark">cartola</span>
+						<span class="mark">Cartola</span>
 					</p>
 					<p>
 						<span class="mark">01</span>
@@ -91,6 +91,9 @@
 				</div><!-- liga -->
 
 				<div class="liga-logo">
+					<div class="calendario">
+						<i class="fa fa-calendar fa-2x"></i>
+					</div>					
 					<?php if ($mercado == "a") { ?>
 						<span class="mark-merc">Mercado aberto</span>
 						<span class="mark">

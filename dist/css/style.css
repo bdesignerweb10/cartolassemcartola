@@ -8400,6 +8400,10 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   .header .liga-logo {
     display: flex;
     align-items: center; }
+    .header .offcanvas .calendario,
+    .header .liga .calendario,
+    .header .liga-logo .calendario {
+      padding-right: 17px; }
   .header .offcanvas .item {
     font-size: 2rem; }
   .header .liga {
@@ -8487,8 +8491,7 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   padding: 0.56rem; }
 
 .liga-csc tbody tr td, .liga-csc tbody th {
-  vertical-align: middle;
-  }
+  vertical-align: middle; }
 
 .bg-table {
   background-color: #efefef; }

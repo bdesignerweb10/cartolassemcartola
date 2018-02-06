@@ -31,6 +31,9 @@
 	.liga-logo{
 		display: flex;
 		align-items: center;
+		.calendario{
+			padding-right: 17px;
+		}
 	}
 
 	.offcanvas .item{
@@ -52,3 +55,4 @@
 		}
 	}
 }
+

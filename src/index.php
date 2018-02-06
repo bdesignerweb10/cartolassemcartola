@@ -73,7 +73,7 @@
 							</div><!-- card-block -->
 							<footer>
 								<div class="card-footer">
-									<button class="btn btn-primary">Acompanhar desempenho do meu time</button>
+									<button class="btn btn-primary">Acompanhar meu desempenho</button>					
 								</div><!-- card-footer -->
 							</footer>				
 						</div><!-- card -->
