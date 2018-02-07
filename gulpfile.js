@@ -31,6 +31,12 @@ gulp.task("sass", ['cache:css'], function() {
  	.pipe(gulp.dest('./dist/fonts'))
  });
 
+ /* Task para mover a pasta admin para pasta dist */
+ gulp.task("move-admin", function() { 
+ 	return gulp.src('./src/admin/*.php') 
+ 	.pipe(gulp.dest('./dist/admin'))
+ });
+
 /* Task minify html */
 gulp.task("php", function() {
 	return gulp.src("./src/*.php")
@@ -76,7 +82,7 @@ gulp.task("server", function() {
 	gulp.watch("./src/*.php", ['php']);
 });
 
-gulp.task("default", ["sass", "php", "js", "concat-js","move-fonts", "server"]);
+gulp.task("default", ["sass", "php", "js", "concat-js","move-fonts","move-admin", "server"]);
 
 
 
