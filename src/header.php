@@ -1,8 +1,9 @@
 <?php 
 	$mercado = "f";
 	
-	if(basename($_SERVER['PHP_SELF']) != "inscricao.php")
-		header('location:inscricao.php'); 
+	//TODO: somente redirecionar para a tela de inscricao caso a temporada esteja encerrada
+	//if(basename($_SERVER['PHP_SELF']) != "inscricao.php" || basename($_SERVER['PHP_SELF']) != "regulamentos.php")
+	//	header('location:inscricao.php'); 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -84,9 +85,9 @@
 						<span class="mark">Cartola</span>
 					</p>
 					<p>
-						<span class="mark">01</span>
-						<span>Fev</span>
-						<span class="mark">2018</span>
+						<span class="mark"><?php echo date("d"); ?></span>
+						<span><?php echo date("M"); ?></span>
+						<span class="mark"><?php echo date("Y"); ?></span>
 					</p>
 				</div><!-- liga -->
 

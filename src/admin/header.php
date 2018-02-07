@@ -1,6 +1,3 @@
-<?php 
-	$mercado = "f";
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
