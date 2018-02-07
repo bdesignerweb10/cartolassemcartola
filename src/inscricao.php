@@ -39,6 +39,9 @@
 					      	<p> - Diretamente com o Responsável<br />
 					      	 - Transferência Bancária</p>
 					      	
+					      	<p>Já leu nosso regulamento?</p>
+					      	<p><a href="regulamentos.php">Acesse Regulamentos e leia todas as regras pra depois não ficar de mimimi!</a></p>
+					      	
 					      	<p>Desejamos a todos um bom divertimento.</p>
 					      	<footer>Equipe <cite title="Source Title">Cartolas sem cartola</cite></footer>
 				    	</blockquote>

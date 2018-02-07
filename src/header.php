@@ -23,6 +23,18 @@
 
 			<ul class="nav">
 				<li class="nav-item">					
+					<a href="inscricao.php" class="nav-link">
+					<i class="fa fa-check-square-o"></i>	
+					Inscrições
+					</a>
+				</li>
+				<li class="nav-item">					
+					<a href="regulamentos.php" class="nav-link">
+					<i class="fa fa-file-text-o"></i>	
+					Regulamentos
+					</a>
+				</li>
+				<li class="nav-item">					
 					<a href="index.php" class="nav-link">
 					<i class="fa fa-bar-chart"></i>	
 					Dashboard
@@ -50,18 +62,6 @@
 					<a href="scouts.php" class="nav-link">
 					<i class="fa fa-area-chart"></i>	
 					Scouts
-					</a>
-				</li>
-				<li class="nav-item">					
-					<a href="regulamentos.php" class="nav-link">
-					<i class="fa fa-file-text-o"></i>	
-					Regulamentos
-					</a>
-				</li>
-				<li class="nav-item">					
-					<a href="inscricao.php" class="nav-link">
-					<i class="fa fa-check-square-o"></i>	
-					Inscrições
 					</a>
 				</li>
 			</ul>
