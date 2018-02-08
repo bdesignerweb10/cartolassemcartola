@@ -8,7 +8,7 @@
 			<div class="col-sm-8">
 				<h3 class="headline">Inscrição liga Cartolas sem cartola - Temporada 2018</h3>
 				<div class="inscricao">
-					<form id="inscricao" data-toggle="validator" action="">
+					<form id="inscricao" data-toggle="validator" action="checkout.php">
 			  			<div class="form-group">		    			
 			    			<input type="text" class="form-control" id="nome" aria-describedby="nome" placeholder="Informe seu nome" data-error="Por favor, informe seu nome." required>
 			    			<div class="help-block with-errors"></div>
@@ -37,10 +37,11 @@
 					      	
 					      	<p>Formas de Pagamento:</p>
 					      	<p> - Diretamente com o Responsável<br />
-					      	 - Transferência Bancária</p>
+					      	 - Transferência Bancária <br />
+					      	 - Pagseguro</p>
 					      	
 					      	<p>Já leu nosso regulamento?</p>
-					      	<p><a href="regulamentos.php">Acesse Regulamentos e leia todas as regras pra depois não ficar de mimimi!</a></p>
+					      	<p><a href="regulamentos.php">Acesse Regulamentos e leia todas as regras para depois não ficar de mimimi!</a></p>
 					      	
 					      	<p>Desejamos a todos um bom divertimento.</p>
 					      	<footer>Equipe <cite title="Source Title">Cartolas sem cartola</cite></footer>

@@ -104,6 +104,52 @@
 	}
 }
 
+.insc-resp{
+	color: #000;
+}
+
 .info{
 	margin-top: 63px;
+}
+
+
+/* Confronto mata mata */
+.center-block{
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.confronto{
+	display: flex;
+	justify-content: space-around;
+}
+
+.vs{
+	font-size: 4rem;
+	font-weight: bold;
+	color: $brand-primary;
+}
+
+.clube{
+	margin-bottom: 0;
+	padding-top: 5px;
+	font-weight: 400;
+	text-align: center;
+}
+
+.pontuacao{
+	text-align: center;
+	font-size: 2rem;
+}
+
+.chaveamento{
+	margin-top: 10px;
+	text-align: center;
+    font-size: 11px;
+    color: #999;
+}
+
+.confrontos{
+	padding: 16px;
 }
