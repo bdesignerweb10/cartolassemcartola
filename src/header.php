@@ -41,17 +41,17 @@
 					</a>
 				</li>
 				<li class="nav-item">					
+					<a href="clube.php" class="nav-link">
+					<i class="fa fa-id-card"></i>	
+					História do Clube
+					</a>
+				</li>
+				<li class="nav-item">					
 					<a href="liga.php" class="nav-link">
 					<i class="fa fa-line-chart"></i>	
 					Tabela Liga CSC
 					</a>
-				</li>
-				<li class="nav-item">					
-					<a href="#" class="nav-link">
-					<i class="fa fa-table"></i>	
-					Rodada a Rodada
-					</a>
-				</li>
+				</li>				
 				<li class="nav-item">					
 					<a href="mata-mata.php" class="nav-link">
 					<i class="fa fa-trophy"></i>	
