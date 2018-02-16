@@ -28,7 +28,7 @@
 
 /* Pré inscrição */
 .pre-inscricao{
-	background: url(../img/pre-inscricao.png) no-repeat top center; 	
+	//background: url(../img/pre-inscricao.png) no-repeat top center; 	
   	height:515px;
   	.pre-msg{
   		text-align: center;
@@ -252,4 +252,16 @@ ul.escudos > li {
     width: 33.33333%;
   }
 
+}
+
+@media screen and (min-width: 320px) and (max-device-width: 480px) {
+	.historia{
+		padding-top: 5px;
+	}
+	.brasao{
+		width: 90px;
+	}	
+	.info-clube{
+		text-align: center;
+	}
 }

@@ -8464,7 +8464,6 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
 
 /* Pré inscrição */
 .pre-inscricao {
-  background: url(../img/pre-inscricao.png) no-repeat top center;
   height: 515px; }
   .pre-inscricao .pre-msg {
     text-align: center;
@@ -8641,3 +8640,11 @@ ul.escudos > li {
 @media screen and (min-width: 20em) {
   ul.escudos > li {
     width: 33.33333%; } }
+
+@media screen and (min-width: 320px) and (max-device-width: 480px) {
+  .historia {
+    padding-top: 5px; }
+  .brasao {
+    width: 90px; }
+  .info-clube {
+    text-align: center; } }
