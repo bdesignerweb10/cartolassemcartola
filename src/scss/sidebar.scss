@@ -50,6 +50,13 @@
 	}
 }
 
+.nav-active {
+	color: #fff !important;
+	.fa{
+		color: $brand-warning;
+	}
+}
+
 .open-sidebar{
 	&:after{
 		content: "";

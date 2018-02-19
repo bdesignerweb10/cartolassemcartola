@@ -3,20 +3,20 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="../img/favicon-16x16.png">
 	<title>Cartolas sem cartola</title>
-	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
 	<nav>
 		<div class="sidebar">
 			<div class="sidebar-header">
-				<img src="img/logo.png" alt="Logo Cartola">
+				<img src="../img/logo.png" alt="Logo Cartola">
 			</div><!-- sidebar-header -->
 
 			<ul class="nav">
-				<?php if(basename($_SERVER['PHP_SELF']) != "index.php") : ?>
+				<?php if(basename($_SERVER['PHP_SELF']) !== "index.php") : ?>
 					<li class="nav-item">					
 						<a href="index.php" class="nav-link">
 						<i class="fa fa-bar-chart"></i>	

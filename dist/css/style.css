@@ -8360,6 +8360,11 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
       .sidebar .nav .fa {
         font-size: 1.7em; } }
 
+.nav-active {
+  color: #fff !important; }
+  .nav-active .fa {
+    color: #fc8f3e; }
+
 .open-sidebar:after {
   content: "";
   position: fixed;
@@ -8463,6 +8468,9 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   padding: 15px 20px; }
 
 /* Pré inscrição */
+#premain {
+  display: none; }
+
 .pre-inscricao {
   background: url(../img/pre-inscricao.png) no-repeat top center;
   height: 515px; }

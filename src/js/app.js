@@ -3,10 +3,59 @@ $(function() {
 		if (e.target == document.documentElement) {
 			$("html").removeClass("open-sidebar");
 		}
-	})
+	});
+
 	$(".js-open-sidebar").on("click", function(){
 		$("html").addClass("open-sidebar");
-	})
+	});
+
+	$("#regulamento").on("click", function(){
+		if(this.checked) {
+			$("#btn-inscricao").removeAttr("disabled");
+			$("#btn-inscricao").removeClass("disabled");
+		}
+		else {
+			$("#btn-inscricao").attr("disabled");
+			$("#btn-inscricao").addClass("disabled");
+		}
+	});
+
+	$("#pag-maos").on("click", function(){
+		$("#valor").val("R$ 30,00");
+	});
+
+	$("#pag-banco").on("click", function(){
+		$("#valor").val("R$ 30,00");
+	});
+
+	$("#pag-pagseguro").on("click", function(){
+		$("#valor").val("R$ 35,00");
+	});
+
+	$("#form-inscricao").submit(function(e) {
+		e.preventDefault(); // avoid to execute the actual submit of the form.
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.inscricao.php",
+			data: $("#form-inscricao").serialize(),
+			success: function(data)
+			{
+				var retorno = JSON.parse(data);
+
+				if(retorno.succeed) {
+					$('#premain').show('fast', function() {
+						$('#inscmain').hide('fast');
+					});
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+	});
 })
 
 
