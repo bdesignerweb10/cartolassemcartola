@@ -11,13 +11,13 @@ $result = $conn->query("SELECT * FROM tbl_config LIMIT 1") or trigger_error($mys
 if ($result) { 
     if($result->num_rows === 0) {
 
-			$temporada = ;
-			$temporada_atual = ;
-			$mercado = ;
-			$rodada = ;
-			$api_ligada = ;
-			$email_pagseguro = ;
-			$token_pagseguro = ;
+			// $temporada = ;
+			// $temporada_atual = ;
+			// $mercado = ;
+			// $rodada = ;
+			// $api_ligada = ;
+			// $email_pagseguro = ;
+			// $token_pagseguro = ;
     }
     else {
         while($dados = $result->fetch_object()) {
