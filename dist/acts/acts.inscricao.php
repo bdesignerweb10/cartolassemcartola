@@ -68,14 +68,39 @@ if(isset($_POST) && !empty($_POST) && $_POST["nome"]) {
 		echo '{"succeed": false, "errno": 510, "title": "Erro em um ou mais campos do formulário!", "erro": "Ocorreram erros nos seguintes campos do formulário: <b>' . $errMsg . '</b>"}';
 	}
 	else {
-		// input no banco de dados
-		// tbl_usuarios
-		// tbl_times
-		// tbl_inscricao
 		try {
-			
-			
-			echo '{"succeed": true}';
+
+			$nome = $_POST["nome"];
+			$email = $_POST["email"];
+			$telefone = $_POST["telefone"];
+			$time = $_POST["time"];
+			$escudo = formataNomeEscudo($time);
+			$valor = $_POST["valor"];
+			$forma_pagto = $_POST["forma-pagto"];
+
+			$qry_time = "INSERT INTO tbl_times (nome_time, escudo_time, nome_presidente, email, telefone, ativo) 
+							  VALUES ('$time', '$escudo.png', '$nome', '$email', '$telefone', 0)";
+
+			if ($conn->query($qry_time) === TRUE) {
+
+				$id_time = $conn->insert_id;
+				$qry_insc = "INSERT INTO tbl_inscricao (id_times, id_anos, forma_pgto, ativo)";
+
+				if ($conn->query($qry_insc) === TRUE) {
+
+					$qry_usu = "INSERT INTO tbl_usuarios (times_id, id_anos, forma_pgto, ativo)";
+
+					if ($conn->query($qry_insc) === TRUE) {
+						echo '{"succeed": true}';
+					} else {
+				        throw new Exception("Erro ao inserir o usuário: " . $sql . "<br>" . $conn->error);
+					}
+				} else {
+			        throw new Exception("Erro ao inserir a inscrição: " . $sql . "<br>" . $conn->error);
+				}
+			} else {
+		        throw new Exception("Erro ao inserir o time: " . $sql . "<br>" . $conn->error);
+			}
 		} catch(Exception $e) {
 			echo '{"succeed": false, "errno": 513, "title": "Erro ao salvar os dados!", "erro": "Ocorreu um erro ao salvar os dados: ' . $e->getMessage() . '"}';
 		}

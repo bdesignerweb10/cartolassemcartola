@@ -96,19 +96,19 @@
 
 				<div class="liga-logo">
 					<?php if ($temporada) : ?>
-						<div class="calendario">
-							<i class="fa fa-calendar fa-2x"></i>
-						</div>					
-						<?php if ($mercado) : ?>
-							<span class="mark-merc">Mercado aberto</span>
+					<div class="calendario hidden-xs-down">
+						<i class="fa fa-calendar fa-2x"></i>
+					</div>					
+					<?php if ($mercado) : ?>
+						<span class="mark-merc hidden-xs-down">Mercado aberto</span>
+						<span class="mark">
+							<i class="fa fa-hourglass-start fa-2x"></i>												
+						</span> 
+						<?php else: ?>
+							<span class="mark-merc hidden-xs-down">Mercado fechado</span>
 							<span class="mark">
 								<i class="fa fa-hourglass-start fa-2x"></i>												
 							</span> 
-						<?php else: ?>
-							<span class="mark-merc">Mercado fechado</span>
-								<span class="mark">
-									<i class="fa fa-hourglass-end fa-2x"></i>												
-								</span>
 						<?php endif; ?>
 					<?php endif; ?>
 				</div><!-- liga-logo -->
