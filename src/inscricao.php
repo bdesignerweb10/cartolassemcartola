@@ -1,9 +1,11 @@
-<?php require_once('header.php'); ?>
+<?php 
+require_once('header.php');
+?>
 <main id="inscmain">
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-8">
-				<h3 class="headline">Inscrição liga Cartolas sem cartola - Temporada 2018</h3>
+				<h3 class="headline">Inscrição liga Cartolas sem cartola - Temporada <?php echo $temp_atual; ?></h3>
 				<div class="inscricao">
 					<form id="form-inscricao" data-toggle="validator" action="acts/acts.inscricao.php" method="POST">
 			  			<div class="form-group">		    			
@@ -80,6 +82,7 @@
 	<div class="container pre-inscricao">
 		<div class="row">
 			<div class="col-sm-12">
+				<button id="btn-voltar" type="submit" class="btn btn-primary form-control" style="padding: 1.5rem 0.75rem;">Voltar</button>		
 				<h2 class="headline-custom">Obrigado por se inscrever na liga Cartolas sem cartola</h2>
 				<p class="pre-msg">Agora falta só um pouco, aguarde a confirmação do pagamento e venha mitar conosco na liga.</p>				
 			</div><!-- col-sm-12 -->

@@ -26,6 +26,12 @@ gulp.task("sass", ['cache:css'], function() {
 });
 
 /* Task para mover a pasta fonts para pasta dist */
+ gulp.task("move-img", function() { 
+ 	return gulp.src('./src/img/**') 
+ 	.pipe(gulp.dest('./dist/img'))
+ });
+
+/* Task para mover a pasta fonts para pasta dist */
  gulp.task("move-fonts", function() { 
  	return gulp.src('./src/components/components-font-awesome/fonts/**') 
  	.pipe(gulp.dest('./dist/fonts'))
@@ -104,7 +110,7 @@ gulp.task("server", function() {
 	gulp.watch("./src/admin/acts/*.php", ['php']);
 });
 
-gulp.task("default", ["sass", "php", "js", "concat-js", "move-fonts", "move-acts", "move-admin", "move-admin-acts", "move-libs", "server"]);
+gulp.task("default", ["sass", "php", "js", "concat-js", "move-img", "move-fonts", "move-acts", "move-admin", "move-admin-acts", "move-libs", "server"]);
 
 
 

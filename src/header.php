@@ -88,9 +88,9 @@
 						<span class="mark">Cartola</span>
 					</p>
 					<p>
-						<span class="mark">01</span>
-						<span>Fev</span>
-						<span class="mark">2018</span>
+						<span class="mark"><? echo date('d'); ?></span>
+						<span><?php echo date('M'); ?></span>
+						<span class="mark"><?php echo date('Y'); ?></span>
 					</p>
 				</div><!-- liga -->
 

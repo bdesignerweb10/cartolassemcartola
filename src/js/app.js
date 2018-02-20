@@ -32,8 +32,14 @@ $(function() {
 		$("#valor").val("R$ 35,00");
 	});
 
+	$("form").submit(function(e) {
+		$('#loading').modal({
+			keyboard: false
+		});
+	});
+	
 	$("#form-inscricao").submit(function(e) {
-		e.preventDefault(); // avoid to execute the actual submit of the form.
+		e.preventDefault();
 
 		$.ajax({
 			type: "POST",
@@ -41,11 +47,20 @@ $(function() {
 			data: $("#form-inscricao").serialize(),
 			success: function(data)
 			{
-				var retorno = JSON.parse(data);
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
 				if(retorno.succeed) {
-					$('#premain').show('fast', function() {
-						$('#inscmain').hide('fast');
+					$('#premain').show(function() {
+						$('#inscmain').hide();
+
+						$('#nome').val('');
+						$('#email').val('');
+						$('#telefone').val('');
+						$('#time').val('');
+						$('input[name="forma-pagto"]').prop('checked', false);
+						$('#regulamento').prop('checked', false);
 					});
 				}
 				else {
@@ -55,6 +70,13 @@ $(function() {
 				}
 			}
 		});
+	});
+	
+	$("#btn-voltar").click(function(e) {
+		e.preventDefault();
+
+		$('#premain').hide();
+		$('#inscmain').show();
 	});
 })
 

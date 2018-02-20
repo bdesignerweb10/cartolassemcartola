@@ -26,9 +26,9 @@ DROP TABLE IF EXISTS `tbl_anos`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tbl_anos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `descricao` varchar(60) NOT NULL,
+  `descricao` varchar(4) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -178,7 +178,7 @@ CREATE TABLE `tbl_rodadas` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` int(2) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -214,7 +214,7 @@ CREATE TABLE `tbl_times` (
   `telefone` varchar(15) NOT NULL,
   `ativo` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -249,10 +249,11 @@ DROP TABLE IF EXISTS `tbl_usuarios`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tbl_usuarios` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `times_id` int(11) NOT NULL,
+  `times_id` int(11) DEFAULT NULL,
   `usuario` varchar(120) NOT NULL,
   `senha` varchar(120) NOT NULL,
   `nivel` int(1) NOT NULL,
+  `senha_provisoria` int(1) NOT NULL,
   `tentativas` int(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_times_id_idx` (`times_id`),
@@ -277,4 +278,4 @@ CREATE TABLE `tbl_usuarios` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-19 13:04:27
+-- Dump completed on 2018-02-19 22:32:05

@@ -8472,6 +8472,7 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   display: none; }
 
 .pre-inscricao {
+  background: url(../img/pre-inscricao.png) no-repeat top center;
   height: 515px; }
   .pre-inscricao .pre-msg {
     text-align: center;
