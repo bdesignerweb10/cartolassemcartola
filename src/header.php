@@ -1,8 +1,8 @@
 <?php 
-	$mercado = "f";
+	require_once("conn.php");
 	
-	/*if(basename($_SERVER['PHP_SELF']) != "inscricao.php")
-		header('location:inscricao.php');*/ 
+	if(!$temporada && (basename($_SERVER['PHP_SELF']) != "inscricao.php" && basename($_SERVER['PHP_SELF']) != "regulamentos.php"))
+		header('location:inscricao.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,46 +22,50 @@
 			</div><!-- sidebar-header -->
 
 			<ul class="nav">
+				<?php if($temporada) : ?>
+					<li class="nav-item">					
+						<a href="index.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? ' nav-active' : ''; ?>">
+						<i class="fa fa-bar-chart"></i>	
+						Dashboard
+						</a>
+					</li>
+					<li class="nav-item">					
+						<a href="liga.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'liga.php' ? ' nav-active' : ''; ?>">
+						<i class="fa fa-line-chart"></i>	
+						Tabela Liga CSC
+						</a>
+					</li>
+					<li class="nav-item">					
+						<a href="rodada.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'rodada.php' ? ' nav-active' : ''; ?>">
+						<i class="fa fa-table"></i>	
+						Rodada a Rodada
+						</a>
+					</li>
+					<li class="nav-item">					
+						<a href="mata-mata.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'mata-mata.php' ? ' nav-active' : ''; ?>">
+						<i class="fa fa-trophy"></i>	
+						Mata-Mata
+						</a>
+					</li>
+					<li class="nav-item">					
+						<a href="scouts.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'scouts.php' ? ' nav-active' : ''; ?>">
+						<i class="fa fa-area-chart"></i>	
+						Scouts
+						</a>
+					</li>
+				<?php endif; ?>
+				<?php if(!$temporada) : ?>
+					<li class="nav-item">					
+						<a href="inscricao.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'inscricao.php' ? ' nav-active' : ''; ?>">
+						<i class="fa fa-check-square-o"></i>	
+						Inscrições
+						</a>
+					</li>
+				<?php endif; ?>
 				<li class="nav-item">					
-					<a href="inscricao.php" class="nav-link">
-					<i class="fa fa-check-square-o"></i>	
-					Inscrições
-					</a>
-				</li>
-				<li class="nav-item">					
-					<a href="regulamentos.php" class="nav-link">
+					<a href="regulamentos.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'regulamentos.php' ? ' nav-active' : ''; ?>">
 					<i class="fa fa-file-text-o"></i>	
 					Regulamentos
-					</a>
-				</li>
-				<li class="nav-item">					
-					<a href="index.php" class="nav-link">
-					<i class="fa fa-bar-chart"></i>	
-					Dashboard
-					</a>
-				</li>
-				<li class="nav-item">					
-					<a href="clube.php" class="nav-link">
-					<i class="fa fa-id-card"></i>	
-					História do Clube
-					</a>
-				</li>
-				<li class="nav-item">					
-					<a href="liga.php" class="nav-link">
-					<i class="fa fa-line-chart"></i>	
-					Tabela Liga CSC
-					</a>
-				</li>				
-				<li class="nav-item">					
-					<a href="mata-mata.php" class="nav-link">
-					<i class="fa fa-trophy"></i>	
-					Mata-Mata
-					</a>
-				</li>
-				<li class="nav-item">					
-					<a href="scouts.php" class="nav-link">
-					<i class="fa fa-area-chart"></i>	
-					Scouts
 					</a>
 				</li>
 			</ul>
@@ -91,20 +95,22 @@
 				</div><!-- liga -->
 
 				<div class="liga-logo">
+					<?php if ($temporada) : ?>
 					<div class="calendario hidden-xs-down">
 						<i class="fa fa-calendar fa-2x"></i>
 					</div>					
-					<?php if ($mercado == "a") { ?>
+					<?php if ($mercado) : ?>
 						<span class="mark-merc hidden-xs-down">Mercado aberto</span>
 						<span class="mark">
 							<i class="fa fa-hourglass-start fa-2x"></i>												
 						</span> 
-					<?php } else { ?>
-						<span class="mark-merc hidden-xs-down">Mercado fechado</span>
+						<?php else: ?>
+							<span class="mark-merc hidden-xs-down">Mercado fechado</span>
 							<span class="mark">
-								<i class="fa fa-hourglass-end fa-2x"></i>												
-							</span>
-					<?php } ?>
+								<i class="fa fa-hourglass-start fa-2x"></i>												
+							</span> 
+						<?php endif; ?>
+					<?php endif; ?>
 				</div><!-- liga-logo -->
 			</div><!-- container -->	
 		</div><!-- header -->
