@@ -58,7 +58,8 @@ require_once('header.php');
 				<div class="card card-inverse card-warning info">
 					<div class="card-block">
 				    	<blockquote class="card-blockquote">
-					      	<p>Olá Cartoleiro, seja bem-vindo a liga Cartolas sem cartola.</p>
+					      	<p>Olá Cartoleiro!</p>
+					      	<p>Seja bem-vindo a liga Cartolas sem cartola.</p>
 					      	<p>Após realizar sua inscrição é necessário realizar o pagamento com o tesoureiro da Liga (Bruno Gomes) para que sua inscrição seja efetivada na liga.</p>
 					      	
 					      	<p>Formas de Pagamento:</p>
@@ -68,6 +69,10 @@ require_once('header.php');
 					      	
 					      	<p>Já leu nosso regulamento?</p>
 					      	<p><a href="regulamentos.php">Acesse Regulamentos e leia todas as regras para depois não ficar de mimimi!</a></p>
+
+					      	<p>Caso tenha alguma dúvida ou sugestão, entre em contato por:</p>
+					      	<p> - (19) 99897-0090<br />
+					      	 - <a href="mailto:contato@cartolassemcartola.com.br">contato@cartolassemcartola.com.br</a></p>
 					      	
 					      	<p>Desejamos a todos um bom divertimento.</p>
 					      	<footer>Equipe <cite title="Source Title">Cartolas sem cartola</cite></footer>

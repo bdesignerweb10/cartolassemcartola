@@ -3,10 +3,10 @@
 //require_once("acts/errorhandling.php");
 
 // DEV
-$conn = new mysqli("localhost", "cartolas", "cart@1234", "cartolassemcartola");
+//$conn = new mysqli("localhost", "cartolas", "cart@1234", "cartolassemcartola");
 
 // PRD
-//$conn = new mysqli("cartolassemcar.mysql.dbaas.com.br", "cartolassemcar", "cart@12345", "cartolassemcar");
+$conn = new mysqli("cartolassemcar.mysql.dbaas.com.br", "cartolassemcar", "cart@12345", "cartolassemcar");
 
 if ($conn->connect_errno) {
     die("Failed to connect to MySQL: [$conn->connect_errno] $conn->connect_error");
