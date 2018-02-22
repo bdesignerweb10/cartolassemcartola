@@ -1,6 +1,8 @@
 <?php
+ob_start();
+if (!isset($_SESSION)) session_start(); 
 
-//require_once("acts/errorhandling.php");
+require_once("acts/errorhandling.php");
 
 // DEV
 $conn = new mysqli("localhost", "root", "root", "cartolassemcartola");
@@ -17,48 +19,55 @@ $result = $conn->query("SELECT * FROM tbl_config LIMIT 1") or trigger_error($mys
 if ($result) { 
     if($result->num_rows === 0) {
 		try {
+			$qry_admin = "INSERT INTO `tbl_usuarios` (`usuario`, `senha`, `nivel`, `senha_provisoria`, `tentativas`) 
+											 VALUES ('admin', MD5('adm@12345'), 1, 0, 0)";
 
-			$qry_anos = "INSERT INTO tbl_anos (descricao) VALUES ('" . date("Y") . "')";
+			if ($conn->query($qry_admin) === TRUE) {
 
-			if ($conn->query($qry_anos) === TRUE) {
+				$qry_anos = "INSERT INTO tbl_anos (descricao) VALUES ('" . date("Y") . "')";
 
-				$id_anos = $conn->insert_id;
+				if ($conn->query($qry_anos) === TRUE) {
 
-				$qry_rod = "INSERT INTO tbl_rodadas (descricao) VALUES (1), (2), (3), (4), (5), (6), (7), (8), (9), (10), (11), (12), (13), (14), (15), (16), (17), (18), (19), (20), (21), (22), (23), (24), (25), (26), (27), (28), (29), (30), (31), (32), (33), (34), (35), (36), (37), (38)";
+					$id_anos = $conn->insert_id;
 
-				if ($conn->query($qry_rod) === TRUE) {
+					$qry_rod = "INSERT INTO tbl_rodadas (descricao) VALUES (1), (2), (3), (4), (5), (6), (7), (8), (9), (10), (11), (12), (13), (14), (15), (16), (17), (18), (19), (20), (21), (22), (23), (24), (25), (26), (27), (28), (29), (30), (31), (32), (33), (34), (35), (36), (37), (38)";
 
-					$qry_temp = "INSERT INTO tbl_temporadas (id_anos, id_rodadas)
-  						 			  SELECT $id_anos, id FROM tbl_rodadas ORDER BY id ASC";
+					if ($conn->query($qry_rod) === TRUE) {
 
-					if ($conn->query($qry_temp) === TRUE) {
-					
-						$res_rod = $conn->query("SELECT MIN(id) AS id FROM tbl_rodadas LIMIT 1") or trigger_error($mysqli->error);
-				        while($rod = $res_rod->fetch_object()) {
-							$prim_rodada = $rod->id;
-						}
+						$qry_temp = "INSERT INTO tbl_temporadas (id_anos, id_rodadas)
+	  						 			  SELECT $id_anos, id FROM tbl_rodadas ORDER BY id ASC";
 
-						$temporada = 0;
-						$temporada_atual = $id_anos;
-						$mercado = 0;
-						$rodada = $prim_rodada;
-						$api_ligada = 0;
-						$email_pagseguro = "";
-						$token_pagseguro = "";
+						if ($conn->query($qry_temp) === TRUE) {
+						
+							$res_rod = $conn->query("SELECT MIN(id) AS id FROM tbl_rodadas LIMIT 1") or trigger_error($mysqli->error);
+					        while($rod = $res_rod->fetch_object()) {
+								$prim_rodada = $rod->id;
+							}
 
-						$qry_conf = "INSERT INTO tbl_config (temporada_aberta, temporada_atual, status_mercado, rodada_atual, api_ligada, email_pagseguro, token_pagseguro) VALUES ($temporada, $temporada_atual, $mercado, $rodada, $api_ligada, '$email_pagseguro', '$token_pagseguro')";
+							$_SESSION["temporada"] = 0;
+							$_SESSION["temporada_atual"] = $id_anos;
+							$_SESSION["mercado"] = 0;
+							$_SESSION["rodada"] = $prim_rodada;
+							$_SESSION["api_ligada"] = 0;
+							$_SESSION["email_pagseguro"] = "";
+							$_SESSION["token_pagseguro"] = "";
 
-						if ($conn->query($qry_conf) !== TRUE) {
-					        throw new Exception("Erro ao inserir a inscrição: " . $qry_conf . "<br>" . $conn->error);
+							$qry_conf = "INSERT INTO tbl_config (temporada_aberta, temporada_atual, status_mercado, rodada_atual, api_ligada, email_pagseguro, token_pagseguro) VALUES ($temporada, $temporada_atual, $mercado, $rodada, $api_ligada, '$email_pagseguro', '$token_pagseguro')";
+
+							if ($conn->query($qry_conf) !== TRUE) {
+						        throw new Exception("Erro ao inserir a inscrição: " . $qry_conf . "<br>" . $conn->error);
+							}
+						} else {
+					        throw new Exception("Erro ao inserir o setup de temporadas: " . $qry_temp . "<br>" . $conn->error);
 						}
 					} else {
-				        throw new Exception("Erro ao inserir o setup de temporadas: " . $qry_temp . "<br>" . $conn->error);
+				        throw new Exception("Erro ao inserir o setup de rodadas: " . $qry_rod . "<br>" . $conn->error);
 					}
 				} else {
-			        throw new Exception("Erro ao inserir o setup de rodadas: " . $qry_rod . "<br>" . $conn->error);
+			        throw new Exception("Erro ao inserir o setup de ano (temporada atual): " . $qry_anos . "<br>" . $conn->error);
 				}
 			} else {
-		        throw new Exception("Erro ao inserir o setup de ano (temporada atual): " . $qry_anos . "<br>" . $conn->error);
+		        throw new Exception("Erro ao inserir o admin: " . $qry_admin . "<br>" . $conn->error);
 			}
 		} catch(Exception $e) {
     		die("Ocorreu um erro ao fazer o setup do sistema: " . $e->getMessage());
@@ -66,19 +75,19 @@ if ($result) {
     }
     else {
         while($dados = $result->fetch_object()) {
-			$temporada = $dados->temporada_aberta;
-			$temporada_atual = $dados->temporada_atual;
-			$mercado = $dados->status_mercado;
-			$rodada = $dados->rodada_atual;
-			$api_ligada = $dados->api_ligada;
-			$email_pagseguro = $dados->email_pagseguro;
-			$token_pagseguro = $dados->token_pagseguro;
+			$_SESSION["temporada"] = $dados->temporada_aberta;
+			$_SESSION["temporada_atual"] = $dados->temporada_atual;
+			$_SESSION["mercado"] = $dados->status_mercado;
+			$_SESSION["rodada"] = $dados->rodada_atual;
+			$_SESSION["api_ligada"] = $dados->api_ligada;
+			$_SESSION["email_pagseguro"] = $dados->email_pagseguro;
+			$_SESSION["token_pagseguro"] = $dados->token_pagseguro;
 		}
 
-		$ano = $conn->query("SELECT descricao FROM tbl_anos WHERE id = $temporada_atual") or trigger_error($mysqli->error);
+		$ano = $conn->query("SELECT descricao FROM tbl_anos WHERE id = " . $_SESSION["temporada_atual"]) or trigger_error($mysqli->error);
 
 		while($res_ano = $ano->fetch_object()) {
-			$temp_atual = $res_ano->descricao;
+			$_SESSION["temp_atual"] = $res_ano->descricao;
 		}
 	}
 

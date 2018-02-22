@@ -101,7 +101,7 @@ if(isset($_POST) && !empty($_POST) && $_POST["nome"]) {
 
 				$id_time = $conn->insert_id;
 				$qry_insc = "INSERT INTO tbl_inscricao (id_times, id_anos, forma_pgto, ativo) 
-				 				  				VALUES ($id_time, $temporada_atual, $forma_pagto, 0)";
+				 				  				VALUES ($id_time, " . $_SESSION["temporada_atual"] . ", $forma_pagto, 0)";
 
 				if ($conn->query($qry_insc) === TRUE) {
 

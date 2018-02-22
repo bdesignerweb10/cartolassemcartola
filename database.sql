@@ -212,9 +212,10 @@ CREATE TABLE `tbl_times` (
   `nome_presidente` varchar(120) NOT NULL,
   `email` varchar(120) NOT NULL,
   `telefone` varchar(15) NOT NULL,
+  `historia` text,
   `ativo` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -229,6 +230,7 @@ CREATE TABLE `tbl_times_temporadas` (
   `id_anos` int(11) NOT NULL,
   `id_rodadas` int(11) NOT NULL,
   `pontuacao` double NOT NULL DEFAULT '0',
+  `posicao_liga` int(3) DEFAULT NULL,
   `usuario_id` int(11) NOT NULL,
   `alterado_em` datetime NOT NULL,
   PRIMARY KEY (`id_times`,`id_anos`,`id_rodadas`),
@@ -258,8 +260,10 @@ CREATE TABLE `tbl_usuarios` (
   PRIMARY KEY (`id`),
   KEY `fk_times_id_idx` (`times_id`),
   CONSTRAINT `fk_times_id` FOREIGN KEY (`times_id`) REFERENCES `tbl_times` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+INSERT INTO `tbl_usuarios` (`usuario`, `senha`, `nivel`, `senha_provisoria`, `tentativas`) VALUES ('admin', MD5('adm@12345'), 1, 0, 0);
 
 --
 -- Dumping events for database 'cartolassemcartola'
@@ -278,4 +282,4 @@ CREATE TABLE `tbl_usuarios` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-19 22:32:05
+-- Dump completed on 2018-02-21 15:06:49

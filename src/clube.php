@@ -57,7 +57,7 @@
 				    <a class="nav-link active" data-toggle="tab" href="#geral" role="tab">Desempenho Geral</a>
 				  </li>
 				  <li class="nav-item dropdown">
-				    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="" role="button" aria-haspopup="true" aria-expanded="false">Desempenho por temporada</a>
+				    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Desempenho por temporada</a>
 				    <div class="dropdown-menu">
 				      <a class="dropdown-item" href="#a2014" role="tab">2014</a>
 				      <a class="dropdown-item" href="#a2015">2015</a>

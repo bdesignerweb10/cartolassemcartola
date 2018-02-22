@@ -1,16 +1,30 @@
 <?php 
 	require_once("conn.php");
 	
+<<<<<<< HEAD
 	/*if(!$temporada && (basename($_SERVER['PHP_SELF']) != "inscricao.php" && basename($_SERVER['PHP_SELF']) != "regulamentos.php"))
 		header('location:inscricao.php');*/
+=======
+	if(!$_SESSION["temporada"] && (basename($_SERVER['PHP_SELF']) != "inscricao.php" && basename($_SERVER['PHP_SELF']) != "regulamentos.php"))
+		header('location:inscricao.php');
+>>>>>>> cb8289c3829bbef0a767d8ef88d85b095ea5215d
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+	
+	<meta name="description" content="Acompanhe seu time na liga Cartolas sem Cartola e seque bastante todos seus colegas" />
+	<meta name="keywords" content="cartola, fc, globo, cartolas, sem, cartola, futebol, brasileirão, serie, a" />
+	<meta name="author" content="Pedro Pilz, Bruno Gomes"/>
+
+	<meta name="robots" content="index, follow" />
+	<meta name="googlebot" content="index, follow" />
+	
 	<title>Cartolas sem cartola</title>
+
+	<link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
 	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -22,7 +36,7 @@
 			</div><!-- sidebar-header -->
 
 			<ul class="nav">
-				<?php if($temporada) : ?>
+				<?php if($_SESSION["$temporada"]) : ?>
 					<li class="nav-item">					
 						<a href="index.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? ' nav-active' : ''; ?>">
 						<i class="fa fa-bar-chart"></i>	
@@ -54,7 +68,7 @@
 						</a>
 					</li>
 				<?php endif; ?>
-				<?php if(!$temporada) : ?>
+				<?php if(!$_SESSION["$temporada"]) : ?>
 					<li class="nav-item">					
 						<a href="inscricao.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'inscricao.php' ? ' nav-active' : ''; ?>">
 						<i class="fa fa-check-square-o"></i>	
@@ -95,11 +109,11 @@
 				</div><!-- liga -->
 
 				<div class="liga-logo">
-					<?php if ($temporada) : ?>
+					<?php if ($_SESSION["$temporada"]) : ?>
 					<div class="calendario hidden-xs-down">
 						<i class="fa fa-calendar fa-2x"></i>
 					</div>					
-					<?php if ($mercado) : ?>
+					<?php if ($_SESSION["mercado"]) : ?>
 						<span class="mark-merc hidden-xs-down">Mercado aberto</span>
 						<span class="mark">
 							<i class="fa fa-hourglass-start fa-2x"></i>												

@@ -78,6 +78,66 @@ $(function() {
 		$('#premain').hide();
 		$('#inscmain').show();
 	});
+	
+	$("#form-login").submit(function(e) {
+		e.preventDefault();
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.login.php",
+			data: $("#form-login").serialize(),
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					window.location.href = 'home.php';
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+	});
+
+    // $('table.datatable').DataTable({
+    //     "language": {
+    //         "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Portuguese-Brasil.json"
+    //     },
+    //     "info": false,
+  		// "autoWidth": false,
+  		// "searching": false,
+  		// "pageLength": 25,
+  		// "lengthChange": false
+    // });
+
+    $('.btn-add').click(function() {
+		e.preventDefault();
+		$('.mainform').show(function() {
+			$('.maintable').hide();
+		});
+    });	
+
+    $('.btn-edit').click(function(e) {
+		e.preventDefault();
+
+    	var id = $(this).prop('data-alt-id');
+    	var page = $(this).prop('data-page');
+
+    	$('.headline').val('Alterando registro id #' + id);
+
+		$('.mainform').show(function() {
+			$('.maintable').hide();
+		});
+    });	
+
+    $('.btn-del').click(function(e) {
+		e.preventDefault();
+    });	
 })
 
 
