@@ -59,12 +59,12 @@
 				  <li class="nav-item dropdown">
 				    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Desempenho por temporada</a>
 				    <div class="dropdown-menu">
-				      <a class="dropdown-item" href="#a2014" role="tab">2014</a>
-				      <a class="dropdown-item" href="#a2015">2015</a>
-				      <a class="dropdown-item" href="#a2016">2016</a>
-				      <a class="dropdown-item" href="#a2017">2017</a>				      
+				      <a class="dropdown-item" data-toggle="tab" href="#a2014" role="tab">2014</a>
+				      <a class="dropdown-item" data-toggle="tab" href="#a2015">2015</a>
+				      <a class="dropdown-item" data-toggle="tab" href="#a2016">2016</a>
+				      <a class="dropdown-item" data-toggle="tab" href="#a2017">2017</a>				      
 				      <div class="dropdown-divider"></div>
-				      <a class="dropdown-item disabled" href="#">2018</a>
+				      <a class="dropdown-item disabled" data-toggle="tab" href="#">2018</a>
 				    </div>
 				  </li>
 				  <li class="nav-item">
@@ -114,19 +114,12 @@
 						</div><!-- row -->		
 					</div><!-- col-sm-12 -->
 				</div><!-- tab-panel -->
+				
+				<div class="tab-pane" id="a2014" role="tabpanel">2014</div>
+				<div class="tab-pane" id="a2015" role="tabpanel">2015</div>
+				<div class="tab-pane" id="a2016" role="tabpanel">2016</div>
+				<div class="tab-pane" id="a2017" role="tabpanel">2017</div>
 
-				<div class="tab-pane" id="#" role="tabpanel">
-					<div class="col-sm-12 historia">
-						<div class="row">							
-							<div class="tab-content">
-						      <div class="tab-pane" id="a2014" role="tabpanel">2014</div>
-						      <div class="tab-pane" id="a2015" role="tabpanel">2015</div>
-						      <div class="tab-pane" id="a2016" role="tabpanel">2016</div>
-						      <div class="tab-pane" id="a2017" role="tabpanel">2017</div>
-						    </div>						   							
-						</div><!-- row -->
-					</div><!-- col-sm-12 -->		
-				</div>
 				<div class="tab-pane" id="historia" role="tabpanel">
 					<div class="col-sm-12 historia">
 						<div class="row">

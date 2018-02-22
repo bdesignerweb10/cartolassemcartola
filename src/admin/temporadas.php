@@ -44,8 +44,12 @@ $anos = $conn->query("SELECT id, descricao FROM tbl_anos ORDER BY descricao ASC"
 						                <td>$dados->descricao</td>
 						                <td class='center'>&nbsp;</td>
 						                <td class='center'>
-						                	<a href='#' class='btn-edit' data-alt-id='$dados->id' data-page='temporadas'><i class='fa fa-edit fa-2x edit'></i></a>
-						                	<a href='#' class='btn-del' data-alt-id='$dados->id' data-page='temporadas'><i class='fa fa-trash fa-2x del'></i></a>
+						                	<a href='#' class='btn-edit' data-alt-id='$dados->id' data-page='temporadas'>
+						                		<i class='fa fa-edit fa-2x edit'></i>
+					                		</a>
+						                	<a href='#' class='btn-del' data-alt-id='$dados->id' data-page='temporadas'>
+						                		<i class='fa fa-trash fa-2x del'></i>
+					                		</a>
 					                	</td>
 						            </tr>";
 			        		}

@@ -1,13 +1,8 @@
 <?php 
 	require_once("conn.php");
 	
-<<<<<<< HEAD
-	/*if(!$temporada && (basename($_SERVER['PHP_SELF']) != "inscricao.php" && basename($_SERVER['PHP_SELF']) != "regulamentos.php"))
-		header('location:inscricao.php');*/
-=======
-	if(!$_SESSION["temporada"] && (basename($_SERVER['PHP_SELF']) != "inscricao.php" && basename($_SERVER['PHP_SELF']) != "regulamentos.php"))
-		header('location:inscricao.php');
->>>>>>> cb8289c3829bbef0a767d8ef88d85b095ea5215d
+	// if(!$_SESSION["temporada"] && (basename($_SERVER['PHP_SELF']) != "inscricao.php" && basename($_SERVER['PHP_SELF']) != "regulamentos.php"))
+	// 	header('location:inscricao.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,7 +31,7 @@
 			</div><!-- sidebar-header -->
 
 			<ul class="nav">
-				<?php if($_SESSION["$temporada"]) : ?>
+				<?php //if($_SESSION["$temporada"]) : ?>
 					<li class="nav-item">					
 						<a href="index.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? ' nav-active' : ''; ?>">
 						<i class="fa fa-bar-chart"></i>	
@@ -67,15 +62,15 @@
 						Scouts
 						</a>
 					</li>
-				<?php endif; ?>
-				<?php if(!$_SESSION["$temporada"]) : ?>
+				<?php //endif; ?>
+				<?php //if(!$_SESSION["$temporada"]) : ?>
 					<li class="nav-item">					
 						<a href="inscricao.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'inscricao.php' ? ' nav-active' : ''; ?>">
 						<i class="fa fa-check-square-o"></i>	
 						Inscrições
 						</a>
 					</li>
-				<?php endif; ?>
+				<?php //endif; ?>
 				<li class="nav-item">					
 					<a href="regulamentos.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'regulamentos.php' ? ' nav-active' : ''; ?>">
 					<i class="fa fa-file-text-o"></i>	
