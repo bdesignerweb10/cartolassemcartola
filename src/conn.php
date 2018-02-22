@@ -3,7 +3,7 @@
 //require_once("acts/errorhandling.php");
 
 // DEV
-$conn = new mysqli("localhost", "cartolas", "cart@1234", "cartolassemcartola");
+$conn = new mysqli("localhost", "root", "root", "cartolassemcartola");
 
 // PRD
 //$conn = new mysqli("cartolassemcar.mysql.dbaas.com.br", "cartolassemcar", "cart@12345", "cartolassemcar");

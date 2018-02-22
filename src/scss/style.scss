@@ -250,6 +250,17 @@ ul.escudos > li {
     width: 50%;
   }
 
+.text-hitoria{
+	padding-top: 15px;
+	>p{
+		text-align: justify;
+	}
+}
+
+.dropdown-item:focus, .dropdown-item:hover{
+	background-color: #efefef;
+}
+
 @media screen and (min-width: 20em) {
 
 ul.escudos > li {
