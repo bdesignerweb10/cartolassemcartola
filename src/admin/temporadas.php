@@ -8,9 +8,9 @@ $anos = $conn->query("SELECT id, descricao FROM tbl_anos ORDER BY descricao ASC"
 		<h3 class="headline">Gerenciamento de temporadas (anos)</h3>
 		<div class="row" style="margin-bottom: 20px;">
 			<div class="col-sm-12 col-md-6 col-lg-4 col-xl-4 offset-md-6 offset-lg-8 offset-lg-8">
-				<button type="button" class="btn btn-success btn-lg form-control btn-add" name="btn-add" data-div-hide="mainform" data-div-show="maintable">
-					<i class='fa fa-plus'></i> Cadastrar nova temporada
-				</button>	
+				<button type="button" class="btn btn-success btn-lg form-control btn-add" name="btn-add" data-div-hide="maintable" data-div-show="mainform">
+					<i class='fa fa-plus'></i> Cadastrar nova rodada
+				</button>		
 			</div><!-- col-sm-8-->
 		</div><!-- row -->	
 		<div class="row">
