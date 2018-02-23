@@ -8,7 +8,7 @@ $anos = $conn->query("SELECT id, descricao FROM tbl_anos ORDER BY descricao ASC"
 		<h3 class="headline">Gerenciamento de temporadas (anos)</h3>
 		<div class="row" style="margin-bottom: 20px;">
 			<div class="col-sm-12 col-md-6 col-lg-4 col-xl-4 offset-md-6 offset-lg-8 offset-lg-8">
-				<button type="button" class="btn btn-success btn-lg form-control btn-add" name="btn-add">
+				<button type="button" class="btn btn-success btn-lg form-control btn-add" name="btn-add" data-div-hide="mainform" data-div-show="maintable">
 					<i class='fa fa-plus'></i> Cadastrar nova temporada
 				</button>	
 			</div><!-- col-sm-8-->
@@ -18,7 +18,7 @@ $anos = $conn->query("SELECT id, descricao FROM tbl_anos ORDER BY descricao ASC"
 				<table class="table table-striped table-bordered table-hover datatable" cellspacing="0" width="100%">
 			        <thead>
 			            <tr>
-			                <th>#</th>
+			                <th class='center'>#</th>
 			                <th class="bigcolumn">Descrição</th>
 			                <th class='center'>Temporada Atual?</th>
 			                <th class='center'>Opções</th>
@@ -29,7 +29,7 @@ $anos = $conn->query("SELECT id, descricao FROM tbl_anos ORDER BY descricao ASC"
 			        	while($dados = $anos->fetch_object()) {
 			        		if($dados->id == $_SESSION["temporada_atual"]) {
 				        		echo "<tr>
-						                <td>$dados->id</td>
+						                <td class='center'>$dados->id</td>
 						                <td>$dados->descricao</td>
 						                <td class='center'><i class='fa fa-check fa-2x add'></i></td>
 						                <td class='center'>
@@ -40,7 +40,7 @@ $anos = $conn->query("SELECT id, descricao FROM tbl_anos ORDER BY descricao ASC"
 			        		}
 			        		else {
 				        		echo "<tr>
-						                <td>$dados->id</td>
+						                <td class='center'>$dados->id</td>
 						                <td>$dados->descricao</td>
 						                <td class='center'>&nbsp;</td>
 						                <td class='center'>

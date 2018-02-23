@@ -7,7 +7,7 @@ if(isset($_POST) && !empty($_POST) && $_POST["descricao"]) {
 	$errMsg = "";
 
 	if(!isset($_POST["descricao"]) || empty($_POST["descricao"])) {
-		$errMsg .= "Descrição (ano da temporada)";
+		$errMsg .= "Descrição da rodada";
 		$isValid = false;
 	}
 

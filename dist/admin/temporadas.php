@@ -18,7 +18,7 @@ $anos = $conn->query("SELECT id, descricao FROM tbl_anos ORDER BY descricao ASC"
 				<table class="table table-striped table-bordered table-hover datatable" cellspacing="0" width="100%">
 			        <thead>
 			            <tr>
-			                <th>#</th>
+			                <th class='center'>#</th>
 			                <th class="bigcolumn">Descrição</th>
 			                <th class='center'>Temporada Atual?</th>
 			                <th class='center'>Opções</th>
@@ -29,7 +29,7 @@ $anos = $conn->query("SELECT id, descricao FROM tbl_anos ORDER BY descricao ASC"
 			        	while($dados = $anos->fetch_object()) {
 			        		if($dados->id == $_SESSION["temporada_atual"]) {
 				        		echo "<tr>
-						                <td>$dados->id</td>
+						                <td class='center'>$dados->id</td>
 						                <td>$dados->descricao</td>
 						                <td class='center'><i class='fa fa-check fa-2x add'></i></td>
 						                <td class='center'>
@@ -40,7 +40,7 @@ $anos = $conn->query("SELECT id, descricao FROM tbl_anos ORDER BY descricao ASC"
 			        		}
 			        		else {
 				        		echo "<tr>
-						                <td>$dados->id</td>
+						                <td class='center'>$dados->id</td>
 						                <td>$dados->descricao</td>
 						                <td class='center'>&nbsp;</td>
 						                <td class='center'>

@@ -55,6 +55,7 @@ if(isset($_POST) && !empty($_POST) && $_POST["login"]) {
 
 							if ($conn->query($qry_tent) === TRUE) {
 								echo '{"succeed": false, "errno": 913, "title": "Senha errada!", "erro": "A senha digiada para o usuário está errada, favor revisar as informações e tente novamente!"}';
+								exit();
 							}
 						} else {
 							$tentativas = 0;
@@ -67,15 +68,16 @@ if(isset($_POST) && !empty($_POST) && $_POST["login"]) {
 								$_SESSION["usu_id"] = $usu_id;
 								$_SESSION["usu_login"] = $usu_login;
 								$_SESSION["usu_nivel"] = $usu_nivel;
-
-								echo '{"succeed": true}';
 							}
 						}
 
 						$qry_tent = "UPDATE tbl_usuarios SET tentativas = " . $tentativas . " WHERE id = " . $usu_id;
 
-						if ($conn->query($qry_tent) === TRUE) {
+						if ($conn->query($qry_tent) !== TRUE) {
+				        	throw new Exception("Erro ao inserir o usuário: " . $qry_tent . "<br>" . $conn->error);
 						}
+
+						echo '{"succeed": true}';
 					}
 			    }
 			}
