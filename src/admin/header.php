@@ -38,15 +38,21 @@ if (!isset($_SESSION["usu_id"]) || empty($_SESSION["usu_id"]) ||
 					</a>
 				</li>
 				<li class="nav-item">					
-					<a href="temporadas.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'temporadas.php' ? ' nav-active' : ''; ?>">
-					<i class="fa fa-calendar"></i>	
-					Temporadas
+					<a href="anos.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'anos.php' ? ' nav-active' : ''; ?>">
+					<i class="fa fa-clock-o"></i>	
+					Anos
 					</a>
 				</li>
 				<li class="nav-item">					
 					<a href="rodadas.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'rodadas.php' ? ' nav-active' : ''; ?>">
 					<i class="fa fa-hourglass-half"></i>	
 					Rodadas
+					</a>
+				</li>
+				<li class="nav-item">					
+					<a href="temporadas.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'temporadas.php' ? ' nav-active' : ''; ?>">
+					<i class="fa fa-calendar"></i>	
+					Temporadas
 					</a>
 				</li>
 				<li class="nav-item">					

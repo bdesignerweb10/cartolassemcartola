@@ -18,6 +18,9 @@ if(isset($_POST) && !empty($_POST) && $_POST["descricao"]) {
 		try {
 			$conn->autocommit(FALSE);
 
+			
+
+			$conn->commit();
 
 		} catch(Exception $e) {
 			$conn->rollback();
