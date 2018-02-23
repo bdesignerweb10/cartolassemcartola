@@ -27,7 +27,7 @@
 }
 
 /* Pré inscrição */
-#premain {
+.premain {
 	display: none;
 }
 
@@ -281,7 +281,7 @@ ul.escudos > li {
 	}
 }
 
-.login-box {
+.form-box {
 	border: 1px solid #cecece;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
@@ -307,7 +307,7 @@ ul.escudos > li {
 			vertical-align: middle;
 		}
 	}
-	#form-login {
+	form {
 		margin-left:30px !important;
 		margin-right:30px !important;
 		margin-bottom: 30px !important;
@@ -332,14 +332,30 @@ ul.escudos > li {
 	color: #5cb85c;
 }
 
+.add-disabled {
+	color: rgba(92, 184, 92, 0.35);
+}
+
 .edit {
 	color: #5bc0de;
 	margin-left: 5px;
 	margin-right: 5px;
 }
 
+.edit-disabled {
+	color: rgba(91, 192, 222, 0.35);
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
 .del {
 	color: #d9534f;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+.del-disabled {
+	color: rgba(217, 83, 79, 0.35);
 	margin-left: 5px;
 	margin-right: 5px;
 }
@@ -360,4 +376,8 @@ ul.escudos > li {
 .headline-form {
 	margin-top: 20px;
 	margin-bottom: 20px;
+}
+
+.btn-link {
+	cursor: pointer;
 }

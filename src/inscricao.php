@@ -1,7 +1,7 @@
 <?php 
 require_once('header.php');
 ?>
-<main id="inscmain">
+<main class="inscmain">
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-8">
@@ -83,11 +83,17 @@ require_once('header.php');
 		</div><!-- row -->
 	</div><!-- contatiner -->
 </main>
-<main id="premain">
+<main class="premain">
 	<div class="container pre-inscricao">
+		<div class="row" style="margin-bottom: 20px;">
+			<div class="col-sm-12 col-md-6 col-lg-2 col-xl-2">
+				<button type="button" class="btn btn-link btn-lg form-control btn-voltar" data-div-hide="premain" data-div-show="inscmain">
+					<i class='fa fa-arrow-left'></i>&nbsp;&nbsp;&nbsp;Voltar
+				</button>
+			</div><!-- col-sm-8-->
+		</div><!-- row -->	
 		<div class="row">
-			<div class="col-sm-12">
-				<button id="btn-voltar" type="submit" class="btn btn-primary form-control" style="padding: 1.5rem 0.75rem;">Voltar</button>		
+			<div class="col-sm-12">	
 				<h2 class="headline-custom">Obrigado por se inscrever na liga Cartolas sem cartola</h2>
 				<p class="pre-msg">Agora falta só um pouco, aguarde a confirmação do pagamento e venha mitar conosco na liga.</p>				
 			</div><!-- col-sm-12 -->

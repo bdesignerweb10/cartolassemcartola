@@ -52,8 +52,8 @@ $(function() {
 				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
 				if(retorno.succeed) {
-					$('#premain').show(function() {
-						$('#inscmain').hide();
+					$('.premain').show(function() {
+						$('.inscmain').hide();
 
 						$('#nome').val('');
 						$('#email').val('');
@@ -70,13 +70,6 @@ $(function() {
 				}
 			}
 		});
-	});
-	
-	$("#btn-voltar").click(function(e) {
-		e.preventDefault();
-
-		$('#premain').hide();
-		$('#inscmain').show();
 	});
 	
 	$("#form-login").submit(function(e) {
@@ -115,7 +108,7 @@ $(function() {
   		// "lengthChange": false
     // });
 
-    $('.btn-add').click(function() {
+    $('.btn-add').click(function(e) {
 		e.preventDefault();
 		$('.mainform').show(function() {
 			$('.maintable').hide();
@@ -125,10 +118,12 @@ $(function() {
     $('.btn-edit').click(function(e) {
 		e.preventDefault();
 
-    	var id = $(this).prop('data-alt-id');
-    	var page = $(this).prop('data-page');
+    	var id = $(this).data('alt-id');
+    	var page = $(this).data('page');
 
-    	$('.headline').val('Alterando registro id #' + id);
+    	$('.headline-form').html('Alterando registro id #' + id);
+
+    	// fazer o ajax pra carregar os dados
 
 		$('.mainform').show(function() {
 			$('.maintable').hide();
@@ -137,6 +132,19 @@ $(function() {
 
     $('.btn-del').click(function(e) {
 		e.preventDefault();
+		// fazer o ajax que remove o registro e recarregar a pagina
+    });	
+
+    // criar codigo generico pra input de formularios
+
+    $('.btn-voltar').click(function(e) {
+		e.preventDefault();
+
+    	var hide = $(this).data('div-hide');
+    	var show = $(this).data('div-show');
+
+		$('.' + hide).hide();
+		$('.' + show).show();
     });	
 })
 

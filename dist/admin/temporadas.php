@@ -33,8 +33,8 @@ $anos = $conn->query("SELECT id, descricao FROM tbl_anos ORDER BY descricao ASC"
 						                <td>$dados->descricao</td>
 						                <td class='center'><i class='fa fa-check fa-2x add'></i></td>
 						                <td class='center'>
-						                	<i class='fa fa-edit fa-2x edit disabled'></i>
-						                	<i class='fa fa-trash fa-2x del disabled'></i>
+						                	<i class='fa fa-edit fa-2x edit-disabled'></i>
+						                	<i class='fa fa-trash fa-2x del-disabled'></i>
 					                	</td>
 						            </tr>";
 			        		}
@@ -63,15 +63,25 @@ $anos = $conn->query("SELECT id, descricao FROM tbl_anos ORDER BY descricao ASC"
 </main>
 <main class="mainform">
 	<div class="container">
+		<div class="row" style="margin-bottom: 20px;">
+			<div class="col-sm-12 col-md-6 col-lg-2 col-xl-2">
+				<button type="button" class="btn btn-link btn-lg form-control btn-voltar" data-div-hide="mainform" data-div-show="maintable">
+					<i class='fa fa-arrow-left'></i>&nbsp;&nbsp;&nbsp;Voltar
+				</button>	
+			</div><!-- col-sm-8-->
+		</div><!-- row -->	
 		<div class="row justify-content-md-center">
-			<div class="col-sm-12 col-md-10 col-lg-4 col-xl-4">
-				<h3 class="headline headline-form">Criando novo registro</h3>
+			<div class="col-sm-12 col-md-10 col-lg-4 col-xl-4 form-box">
+				<h3 class="headline headline-form">Criando um novo registro...</h3> 
 				<form id="form-temporadas" data-toggle="validator" action="acts/acts.temporadas.php" method="POST">
 		  			<div class="form-group">		    			
+						<label for="login">Nome da temporada</label>
 		    			<input type="text" class="form-control form-control-lg" id="descricao" name="descricao" aria-describedby="descricao" placeholder="Informe qual é a temporada..." data-error="Por favor, informe qual é a temporada." required>
 		    			<div class="help-block with-errors"></div>
 		    		</div>
-  					<button id="btn-temporadas" type="submit" class="btn btn-success btn-lg form-control" name="submit">Salvar dados</button>		
+  					<button id="btn-temporadas" type="submit" class="btn btn-success btn-lg form-control" name="submit">
+  						<i class='fa fa-save'></i> Salvar dados
+  					</button>
 				</form>
 			</div><!-- col-sm-8--> 
 		</div>

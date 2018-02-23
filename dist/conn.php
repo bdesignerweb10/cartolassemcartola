@@ -44,15 +44,15 @@ if ($result) {
 								$prim_rodada = $rod->id;
 							}
 
-							$_SESSION["temporada"] = 0;
-							$_SESSION["temporada_atual"] = $id_anos;
-							$_SESSION["mercado"] = 0;
-							$_SESSION["rodada"] = $prim_rodada;
-							$_SESSION["api_ligada"] = 0;
-							$_SESSION["email_pagseguro"] = "";
-							$_SESSION["token_pagseguro"] = "";
+							$_SESSION['temporada'] = 0;
+							$_SESSION['temporada_atual'] = $id_anos;
+							$_SESSION['mercado'] = 0;
+							$_SESSION['rodada'] = $prim_rodada;
+							$_SESSION['api_ligada'] = 0;
+							$_SESSION['email_pagseguro'] = "";
+							$_SESSION['token_pagseguro'] = "";
 
-							$qry_conf = "INSERT INTO tbl_config (temporada_aberta, temporada_atual, status_mercado, rodada_atual, api_ligada, email_pagseguro, token_pagseguro) VALUES ($temporada, $temporada_atual, $mercado, $rodada, $api_ligada, '$email_pagseguro', '$token_pagseguro')";
+							$qry_conf = "INSERT INTO tbl_config (temporada_aberta, temporada_atual, status_mercado, rodada_atual, api_ligada, email_pagseguro, token_pagseguro) VALUES ($_SESSION['temporada'], $_SESSION['temporada_atual'], $_SESSION['mercado'], $_SESSION['rodada'], $_SESSION['api_ligada'], '" . $_SESSION['email_pagseguro'] . "', '" . $_SESSION['token_pagseguro'] . "')";
 
 							if ($conn->query($qry_conf) !== TRUE) {
 						        throw new Exception("Erro ao inserir a inscrição: " . $qry_conf . "<br>" . $conn->error);
