@@ -129,17 +129,17 @@
 								<p class="ano">2014</p>
 							</div>							
 							<div class="col-sm-3">
-								<h2 class="pontuacao">103.68</h2>
+								<h2 class="pontuacao_temp">103.68</h2>
 								<h3 class="nome-torneio">Maior pontuação</h3>
 								<p class="ano">2014</p>
 							</div>
 							<div class="col-sm-3">
-								<h2 class="pontuacao">10.68</h2>
+								<h2 class="pontuacao_temp">10.68</h2>
 								<h3 class="nome-torneio">Menor pontuação</h3>
 								<p class="ano">2014</p>
 							</div>
 							<div class="col-sm-3">
-								<h2 class="pontuacao">56.32</h2>
+								<h2 class="pontuacao_temp">56.32</h2>
 								<h3 class="nome-torneio">Média de pontos</h3>
 								<p class="ano">2014</p>
 							</div>							
