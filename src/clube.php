@@ -124,7 +124,7 @@
 								<p class="ano">2014</p>
 							</div>	
 							<div class="col-sm-3">
-								<img src="img/kempes.png" class="img-fluid center-block">
+								<h2 class="posicao">X</h2>
 								<h3 class="nome-torneio">Copa Kempes</h3>
 								<p class="ano">2014</p>
 							</div>							
