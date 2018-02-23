@@ -76,21 +76,18 @@ $anos = $conn->query("SELECT id, descricao FROM tbl_anos ORDER BY descricao ASC"
 				<h3 class="headline headline-form">Criando um novo registro...</h3> 
 				<form id="form-anos" data-toggle="validator" action="acts/acts.anos.php" method="POST">
 		  			<div class="form-group">		    			
-<<<<<<< HEAD:src/admin/temporadas.php
 						<label for="login">Ano da temporada</label>
 		    			<input type="text" class="form-control form-control-lg" id="descricao" name="descricao" aria-describedby="descricao" placeholder="Informe o ano da temporada" data-error="Por favor, informe qual é a temporada." required>
 		    			<div class="help-block with-errors"></div>
 		    		</div>
   					<button id="btn-temporadas" type="submit" class="btn btn-success btn-lg form-control" name="submit">
   						<i class='fa fa-save'></i> Próximo
-=======
 						<label for="login">Ano (da temporada)</label>
 		    			<input type="text" class="form-control form-control-lg" id="descricao" name="descricao" aria-describedby="descricao" placeholder="Informe qual é o ano..." data-error="Por favor, informe qual é o ano." required>
 		    			<div class="help-block with-errors"></div>
 		    		</div>
   					<button id="btn-anos" type="submit" class="btn btn-success btn-lg form-control" name="submit">
   						<i class='fa fa-save'></i> Salvar dados
->>>>>>> 35abb06025210814d16da06f7d7a0a71b7dabda9:src/admin/anos.php
   					</button>
 				</form>
 			</div><!-- col-sm-8-->			
