@@ -71,7 +71,7 @@ $anos = $conn->query("SELECT id, descricao FROM tbl_rodadas ORDER BY descricao A
 			</div><!-- col-sm-8-->
 		</div><!-- row -->	
 		<div class="row justify-content-md-center">
-			<div class="col-sm-12 col-md-10 col-lg-4 col-xl-4">
+			<div class="col-sm-12 col-md-10 col-lg-4 col-xl-4 form-box">
 				<h3 class="headline headline-form">Criando um novo registro...</h3>
 				<form id="form-rodadas" data-toggle="validator" action="acts/acts.rodadas.php" method="POST">
 		  			<div class="form-group">		    			
