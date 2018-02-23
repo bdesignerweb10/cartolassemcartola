@@ -2,7 +2,7 @@
 ob_start();
 if (!isset($_SESSION)) session_start(); 
 
-//require_once("acts/errorhandling.php");
+require_once("acts/errorhandling.php");
 
 // DEV
 $conn = new mysqli("localhost", "root", "root", "cartolassemcartola");
