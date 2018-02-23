@@ -72,7 +72,7 @@
 				  </li>
 				</ul>
 			</div>	
-			<div class="tab-content">
+			<div class="tab-content col-sm-12">
 				<div class="tab-pane active" id="geral" role="tabpanel">
 					<div class="col-sm-12 historia">
 						<div class="row">					
@@ -115,7 +115,37 @@
 					</div><!-- col-sm-12 -->
 				</div><!-- tab-panel -->
 				
-				<div class="tab-pane" id="a2014" role="tabpanel">2014</div>
+				<div class="tab-pane" id="a2014" role="tabpanel">
+					<div class="col-sm-12 historia">
+						<div class="row">					
+							<div class="col-sm-3">
+								<img src="img/taca.png" class="img-fluid center-block">
+								<h3 class="nome-torneio">Cartolas sem cartola</h3>
+								<p class="ano">2014</p>
+							</div>	
+							<div class="col-sm-3">
+								<img src="img/kempes.png" class="img-fluid center-block">
+								<h3 class="nome-torneio">Copa Kempes</h3>
+								<p class="ano">2014</p>
+							</div>							
+							<div class="col-sm-3">
+								<h2 class="pontuacao">103.68</h2>
+								<h3 class="nome-torneio">Maior pontuação</h3>
+								<p class="ano">2014</p>
+							</div>
+							<div class="col-sm-3">
+								<h2 class="pontuacao">10.68</h2>
+								<h3 class="nome-torneio">Menor pontuação</h3>
+								<p class="ano">2014</p>
+							</div>
+							<div class="col-sm-3">
+								<h2 class="pontuacao">56.32</h2>
+								<h3 class="nome-torneio">Média de pontos</h3>
+								<p class="ano">2014</p>
+							</div>							
+						</div><!-- row -->		
+					</div><!-- col-sm-12 -->
+				</div>
 				<div class="tab-pane" id="a2015" role="tabpanel">2015</div>
 				<div class="tab-pane" id="a2016" role="tabpanel">2016</div>
 				<div class="tab-pane" id="a2017" role="tabpanel">2017</div>
