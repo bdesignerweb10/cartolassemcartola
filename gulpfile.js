@@ -79,6 +79,15 @@ gulp.task("js", ['cache:js'], function() {
 				.pipe(browserSync.stream());
 });
 
+/* Task minify js */
+gulp.task("admin-js", ['cache:js'], function() {
+	return gulp.src("./src/admin/js/app.js")
+				.pipe(uglify())
+				.on('error', notify.onError({title: "erro js", message: "<%= error.message %>"}))
+				.pipe(gulp.dest("./dist/admin/js"))
+				.pipe(browserSync.stream());
+});
+
 /* Task concat js */
 gulp.task("concat-js", function() {
 	return gulp.src([
@@ -107,10 +116,11 @@ gulp.task("server", function() {
 	gulp.watch("./src/*.php", ['php']);
 	gulp.watch("./src/acts/*.php", ['php']);
 	gulp.watch("./src/admin/*.php", ['php']);
-	gulp.watch("./src/admin/acts/*.php", ['php']);
+	gulp.watch("./src/admin/**/*.php", ['php']);
+	gulp.watch("./src/admin/js/**/*.js", ['js']);
 });
 
-gulp.task("default", ["sass", "php", "js", "concat-js", "move-img", "move-fonts", "move-acts", "move-admin", "move-admin-acts", "move-libs", "server"]);
+gulp.task("default", ["sass", "php", "js", "admin-js", "concat-js", "move-img", "move-fonts", "move-acts", "move-admin", "move-admin-acts", "move-libs", "server"]);
 
 
 

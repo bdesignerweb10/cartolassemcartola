@@ -1,50 +1,20 @@
 $(function() {
-	$('html, body').on('click', function(e) {
-		if (e.target == document.documentElement) {
-			$("html").removeClass("open-sidebar");
-		}
-	});
-
-	$(".js-open-sidebar").on("click", function(){
-		$("html").addClass("open-sidebar");
-	});
-
-	$("#regulamento").on("click", function(){
-		if(this.checked) {
-			$("#btn-inscricao").removeAttr("disabled");
-			$("#btn-inscricao").removeClass("disabled");
-		}
-		else {
-			$("#btn-inscricao").attr("disabled");
-			$("#btn-inscricao").addClass("disabled");
-		}
-	});
-
-	$("#pag-maos").on("click", function(){
-		$("#valor").val("R$ 30,00");
-	});
-
-	$("#pag-banco").on("click", function(){
-		$("#valor").val("R$ 30,00");
-	});
-
-	$("#pag-pagseguro").on("click", function(){
-		$("#valor").val("R$ 35,00");
-	});
 
 	$("form").submit(function(e) {
 		$('#loading').modal({
 			keyboard: false
 		});
 	});
-	
-	$("#form-inscricao").submit(function(e) {
+
+	// BEGIN LOGIN
+
+	$("#form-login").submit(function(e) {
 		e.preventDefault();
 
 		$.ajax({
 			type: "POST",
-			url: "acts/acts.inscricao.php",
-			data: $("#form-inscricao").serialize(),
+			url: "acts/acts.login.php",
+			data: $("#form-login").serialize(),
 			success: function(data)
 			{
 				$('#loading').modal('hide');
@@ -52,16 +22,7 @@ $(function() {
 				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
 				if(retorno.succeed) {
-					$('.premain').show(function() {
-						$('.inscmain').hide();
-
-						$('#nome').val('');
-						$('#email').val('');
-						$('#telefone').val('');
-						$('#time').val('');
-						$('input[name="forma-pagto"]').prop('checked', false);
-						$('#regulamento').prop('checked', false);
-					});
+					window.location.href = 'home.php';
 				}
 				else {
 					$('#alert-title').html(retorno.title);
@@ -71,8 +32,256 @@ $(function() {
 			}
 		});
 	});
-});
 
+	// END LOGIN
+
+	// BEGIN TEMPORADAS
+
+    $('#btn-voltar-temporadas').click(function(e) {
+		e.preventDefault();
+
+    	$('#id').val('');
+    	$('#id-temporadas').hide();
+    	$('#descricao').prop("readonly", null);
+    	$('#descricao').val('');
+    	$('#passo-ano').prop("disabled", null);
+    	$('#box-rodada').hide();
+
+    	$('#sel-content').html('');
+    	$('#passo-rodada').prop("disabled", null);
+    	$("#voltar-ano").prop("disabled", null);
+    	$('#box-confirmacao').hide();
+
+    	$('#resumo-temporada').html('');
+    	$('#resumo-rodadas').html('');
+
+		$('.mainform').hide();
+		$('.maintable').show();
+    });	
+
+    $('#btn-add-temporadas').click(function(e) {
+		e.preventDefault();
+
+		$('.maintable').hide();
+		$('.mainform').show();
+
+    	$('#id').val('');
+    	$('#id-temporadas').hide();
+
+    	$('#passo-confirmacao').data('act', 'add');
+    	$('#passo-confirmacao').data('alt-id', null);
+    });	
+
+    $('.btn-edit-temporadas').click(function(e) {
+		e.preventDefault();
+
+		$('.maintable').hide();
+		$('.mainform').show();
+
+    	var id = $(this).data('alt-id');
+
+    	$('#passo-confirmacao').data('act', 'edit');
+    	$('#passo-confirmacao').data('alt-id', id);
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.temporadas.php?act=showupd&idano=" + id,
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+			    	$('#id').val(id / 98478521);
+			    	$('#id-temporadas').show();
+					$('#descricao').val(retorno.descricao);
+					$('#descricao').prop("readonly", "readonly");
+			    	$('#passo-ano').prop("disabled", "disabled");
+
+    				$("#voltar-ano").prop("disabled", "disabled");
+			    	$('#passo-rodada').prop("disabled", null);
+					$('#box-rodada').show();
+
+					$('#sel-content').append('<div class="col-12"><div class="form-check" style="margin-bottom:20px;"><label class="form-check-label"><input type="checkbox" class="form-check-input sel-todos" />&nbsp;&nbsp;&nbsp;Selecionar todos</label></div></div>');
+
+					$.each(retorno.list, function(i, item) {
+						$('#sel-content').append('<div class="col-6"><label class="form-check-label"><input type="checkbox" id="rodada[' + item.id + ']" name="rodada[' + item.id + ']" class="form-check-input sel-rodadas" value="' + item.id + '" ' + (item.has_temporada ? 'checked' : '') + ' />&nbsp;&nbsp;&nbsp;Rodada #' + item.descricao + '</label></div>');
+					});
+				}
+				else {
+
+    				$('#id').val('');
+    				$('#id-temporadas').hide();
+			    	$('#descricao').prop("readonly", null);
+			    	$('#descricao').val('');
+			    	$('#passo-ano').prop("disabled", null);
+			    	$('#box-rodada').hide();
+
+			    	$('#sel-content').html('');
+			    	$('#passo-rodada').prop("disabled", null);
+			    	$("#voltar-ano").prop("disabled", null);
+			    	$('#box-confirmacao').hide();
+			    	
+			    	$('#resumo-temporada').html('');
+			    	$('#resumo-rodadas').html('');
+
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });	
+
+    $('.btn-del-temporadas').click(function(e) {
+		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+    	var id = $(this).data('alt-id');
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.temporadas.php?act=del&idano=" + id,
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('#alert-title').html("Registro removido com sucesso!");
+					$('#alert-content').html("A remoção do registro foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					$('#alert').modal('show');
+
+					$('#alert').on('hidden.bs.modal', function (e) {
+						window.location.reload();
+					});
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });	
+
+    $('#passo-ano').click(function(e) {
+    	e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.temporadas.php?act=selrod",
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('#sel-content').append('<div class="col-12"><div class="form-check" style="margin-bottom:20px;"><label class="form-check-label"><input type="checkbox" class="form-check-input sel-todos" />&nbsp;&nbsp;&nbsp;Selecionar todos</label></div></div>');
+
+					$.each(retorno.list, function(i, item) {
+						$('#sel-content').append('<div class="col-6"><label class="form-check-label"><input type="checkbox" id="rodada[' + item.id + ']" name="rodada[' + item.id + ']" class="form-check-input sel-rodadas" value="' + item.id + '" ' + (item.has_temporada ? 'checked' : '') + ' />&nbsp;&nbsp;&nbsp;Rodada #' + item.descricao + '</label></div>');
+					});
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+
+    	$('#descricao').prop("readonly", "readonly");
+    	$(this).prop("disabled", "disabled");
+    	$('#box-rodada').show();
+    });	
+
+	$('body').on('click', '.sel-todos', function() {
+		$(".sel-rodadas").prop('checked', $(".sel-todos").is(':checked'));
+	});
+
+    $('#voltar-ano').click(function(e) {
+    	e.preventDefault();
+
+    	$('#sel-content').html('');
+    	$('#descricao').prop("readonly", null);
+    	$('#passo-ano').prop("disabled", null);
+    	$('#box-rodada').hide();
+    });	
+
+    $('#passo-rodada').click(function(e) {
+    	e.preventDefault();
+
+    	$('#resumo-temporada').html("Temporada: " + $('#descricao').val());
+    	$('#resumo-rodadas').html("Total rodadas: " + $('.sel-rodadas:checked').length);
+
+    	$(".sel-todos").prop("disabled", "disabled");
+		var cloned_check = $("#sel-content").clone();
+    	$(".sel-rodadas").prop("disabled", "disabled");
+    	cloned_check.appendTo("#box-rodada").addClass('check-duplicated');
+
+    	$("#voltar-ano").prop("disabled", "disabled");
+    	$(this).prop("disabled", "disabled");
+    	$('#box-confirmacao').show();
+    });	
+
+    $('#voltar-rodada').click(function(e) {
+    	e.preventDefault();
+
+    	$(".sel-todos").prop("disabled", null);
+    	$(".sel-rodadas").prop("disabled", null);
+    	$(".check-duplicated").remove();
+    	$("#voltar-ano").prop("disabled", null);
+    	$("#passo-rodada").prop("disabled", null);
+    	$('#box-confirmacao').hide();
+    });	
+
+    $('#passo-confirmacao').click(function(e) {
+    	e.preventDefault();
+
+    	var act = $('#passo-confirmacao').data('act');
+    	var id = $('#passo-confirmacao').data('alt-id');
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.temporadas.php?act=" + act + "&idano=" + id,
+			data: $("#form-temporadas").serialize(),
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('#alert-title').html("Registro " + (act == 'add' ? "adicionado" : "editado") + " com sucesso!");
+					$('#alert-content').html("A " + (act == 'add' ? "adição" : "edição") + " do registro foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					$('#alert').modal('show');
+
+					$('#alert').on('hidden.bs.modal', function (e) {
+						window.location.reload();
+					})
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });
+
+    // END TEMPORADAS
+});
 
 /*!
  * Validator v0.11.9 for Bootstrap 3, by @1000hz

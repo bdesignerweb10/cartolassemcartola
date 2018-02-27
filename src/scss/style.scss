@@ -281,7 +281,7 @@ ul.escudos > li {
 	}
 }
 
-.form-box {
+.login-box {
 	border: 1px solid #cecece;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
@@ -312,6 +312,24 @@ ul.escudos > li {
 		margin-right:30px !important;
 		margin-bottom: 30px !important;
 	}
+}
+
+.form-box {
+	border: 1px solid #cecece;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	-webkit-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.15);
+	-moz-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.15);
+	box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.15);
+	margin-top: 2%;
+	margin-left: 10px;
+	margin-right: 10px;
+	padding: 0px !important;
+	background-color: white;
+	padding-left:30px !important;
+	padding-right:30px !important;
+	padding-bottom: 30px !important;
 }
 
 .datatable th {
@@ -366,7 +384,7 @@ ul.escudos > li {
 }
 
 .bigcolumn {
-	width: 70%;
+	width: 60%;
 }
 
 .mainform {
@@ -380,4 +398,30 @@ ul.escudos > li {
 
 .btn-link {
 	cursor: pointer;
+}
+
+#id-temporadas {
+	display:none;
+}
+
+#box-rodada {
+	display:none;
+}
+
+#box-confirmacao {
+	display:none;
+}
+
+.btn-voltar {
+	text-align: left;
+    padding: 0px;
+    margin-bottom: 20px;
+}
+
+.check-duplicated {
+	display:none;
+}
+
+#sel-temporada {
+  flex-direction: row !important;
 }
