@@ -9,7 +9,7 @@ $timestemp = $conn->query("SELECT t.id_anos AS id, a.descricao AS ano, COUNT(t.i
 ?>
 <main class="maintable">
 	<div class="container">
-		<h3 class="headline">Gerenciamento de de times por temporadas</h3>
+		<h3 class="headline">Gerenciamento de times por temporada</h3>
 		<div class="row">
 			<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
 				<table class="table table-striped table-bordered table-hover datatable" cellspacing="0" width="100%">

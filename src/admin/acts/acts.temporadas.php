@@ -127,14 +127,12 @@ if(isset($_GET['act'])) {
 								$rodada =  $_POST["rodada"];
 								$var_erros = "";
 
-								for($i = 0; $i <= count($rodada); $i++) {
-
-									$rodarray = $rodada[$i];
+								foreach ($rodada as $rodarray) {
 									if(isset($rodarray) && !empty($rodarray)) {
 										$qry_temporada = "INSERT INTO tbl_temporadas (id_anos, id_rodadas) VALUES ($id_ano, $rodarray)";
 
 										if ($conn->query($qry_temporada) !== TRUE) {
-											$var_erros .= "Erro ao inserir a temporada ($descricao/$rodarray): " . $conn->error . "<br />";
+											$var_erros .= "Erro ao alterar a temporada ($descricao/$rodarray): " . $conn->error . "<br />";
 										}
 									}
 								}
