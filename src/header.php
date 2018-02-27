@@ -1,8 +1,8 @@
 <?php 
 	require_once("conn.php");
 	
-	/*if(!$_SESSION["temporada"] && (basename($_SERVER['PHP_SELF']) != "inscricao.php" && basename($_SERVER['PHP_SELF']) != "regulamentos.php"))
-		header('location:inscricao.php');*/
+	if(!$_SESSION["temporada"] && (basename($_SERVER['PHP_SELF']) != "inscricao.php" && basename($_SERVER['PHP_SELF']) != "regulamentos.php"))
+		header('location:inscricao.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
