@@ -45,7 +45,7 @@ if (!isset($_SESSION["usu_id"]) || empty($_SESSION["usu_id"]) ||
 				<li class="nav-item">					
 					<a href="times_temporadas.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'times_temporadas.php' ? ' nav-active' : ''; ?>">
 					<i class="fa fa-list-ol"></i>	
-					Ativar Times
+					Ativar Inscrição
 					</a>
 				</li>
 				<li class="nav-item">					
@@ -70,6 +70,12 @@ if (!isset($_SESSION["usu_id"]) || empty($_SESSION["usu_id"]) ||
 					<a href="eventos.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'eventos.php' ? ' nav-active' : ''; ?>">
 					<i class="fa fa-beer"></i>	
 					Eventos
+					</a>
+				</li>
+				<li class="nav-item">					
+					<a href="usuarios.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'usuarios.php' ? ' nav-active' : ''; ?>">
+					<i class="fa fa-user"></i>	
+					Usuários
 					</a>
 				</li>
 				<li class="nav-item">					

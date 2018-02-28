@@ -14,7 +14,7 @@ if ($conn->connect_errno) {
     die("Failed to connect to MySQL: [$conn->connect_errno] $conn->connect_error");
 }
 
-$result = $conn->query("SELECT * FROM tbl_config LIMIT 1") or trigger_error($mysqli->error);
+$result = $conn->query("SELECT * FROM tbl_config LIMIT 1") or trigger_error($conn->error);
 
 if ($result) { 
     if($result->num_rows === 0) {
@@ -39,7 +39,7 @@ if ($result) {
 
 						if ($conn->query($qry_temp) === TRUE) {
 						
-							$res_rod = $conn->query("SELECT MIN(id) AS id FROM tbl_rodadas LIMIT 1") or trigger_error($mysqli->error);
+							$res_rod = $conn->query("SELECT MIN(id) AS id FROM tbl_rodadas LIMIT 1") or trigger_error($conn->error);
 					        while($rod = $res_rod->fetch_object()) {
 								$prim_rodada = $rod->id;
 							}
@@ -51,8 +51,9 @@ if ($result) {
 							$_SESSION["api_ligada"] = 0;
 							$_SESSION["email_pagseguro"] = "";
 							$_SESSION["token_pagseguro"] = "";
+							$_SESSION["inicio_temporada"] = "15/04";
 
-							$qry_conf = "INSERT INTO tbl_config (temporada_aberta, temporada_atual, status_mercado, rodada_atual, api_ligada, email_pagseguro, token_pagseguro) VALUES (" . $_SESSION["temporada"] . ", " . $_SESSION["temporada_atual"] . ", " . $_SESSION["mercado"] . ", " . $_SESSION["rodada"] . ", " . $_SESSION["api_ligada"] . ", '" . $_SESSION["email_pagseguro"] . "', '" . $_SESSION["token_pagseguro"] . "')";
+							$qry_conf = "INSERT INTO tbl_config (temporada_aberta, temporada_atual, status_mercado, rodada_atual, api_ligada, email_pagseguro, token_pagseguro, inicio_temporada) VALUES (" . $_SESSION["temporada"] . ", " . $_SESSION["temporada_atual"] . ", " . $_SESSION["mercado"] . ", " . $_SESSION["rodada"] . ", " . $_SESSION["api_ligada"] . ", '" . $_SESSION["email_pagseguro"] . "', '" . $_SESSION["token_pagseguro"] . "', '" . $_SESSION["inicio_temporada"] . "')";
 
 							if ($conn->query($qry_conf) !== TRUE) {
 						        throw new Exception("Erro ao inserir a inscrição: " . $qry_conf . "<br>" . $conn->error);
@@ -82,15 +83,17 @@ if ($result) {
 			$_SESSION["api_ligada"] = $dados->api_ligada;
 			$_SESSION["email_pagseguro"] = $dados->email_pagseguro;
 			$_SESSION["token_pagseguro"] = $dados->token_pagseguro;
+			$_SESSION["inicio_temporada"] = $dados->inicio_temporada;
 		}
 
-		$ano = $conn->query("SELECT descricao FROM tbl_anos WHERE id = " . $_SESSION["temporada_atual"]) or trigger_error($mysqli->error);
+		$ano = $conn->query("SELECT descricao FROM tbl_anos WHERE id = " . $_SESSION["temporada_atual"]) or trigger_error($conn->error);
 
 		while($res_ano = $ano->fetch_object()) {
 			$_SESSION["temp_atual"] = $res_ano->descricao;
 		}
 	}
 
+	$_SESSION["fake_id"] = 98478521;
 
 	function formataNomeEscudo($string){
 	    return strtolower(str_replace(' ', '', preg_replace(array("/(á|à|ã|â|ä)/","/(Á|À|Ã|Â|Ä)/","/(é|è|ê|ë)/","/(É|È|Ê|Ë)/","/(í|ì|î|ï)/","/(Í|Ì|Î|Ï)/","/(ó|ò|õ|ô|ö)/","/(Ó|Ò|Õ|Ô|Ö)/","/(ú|ù|û|ü)/","/(Ú|Ù|Û|Ü)/","/(ñ)/","/(Ñ)/"),explode(" ","a A e E i I o O u U n N"),$string)));

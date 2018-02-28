@@ -28,7 +28,7 @@ CREATE TABLE `tbl_anos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(4) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -46,6 +46,7 @@ CREATE TABLE `tbl_config` (
   `api_ligada` int(1) NOT NULL DEFAULT '0',
   `email_pagseguro` varchar(120) DEFAULT NULL,
   `token_pagseguro` varchar(120) DEFAULT NULL,
+  `inicio_temporada` varchar(5) NOT NULL,
   KEY `fkcon_anos_idx` (`temporada_atual`),
   KEY `fkcon_temporada_atual_idx` (`rodada_atual`,`temporada_atual`),
   CONSTRAINT `fkcon_anos` FOREIGN KEY (`temporada_atual`) REFERENCES `tbl_anos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -215,7 +216,7 @@ CREATE TABLE `tbl_times` (
   `historia` text,
   `ativo` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -260,10 +261,8 @@ CREATE TABLE `tbl_usuarios` (
   PRIMARY KEY (`id`),
   KEY `fk_times_id_idx` (`times_id`),
   CONSTRAINT `fk_times_id` FOREIGN KEY (`times_id`) REFERENCES `tbl_times` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-INSERT INTO `tbl_usuarios` (`usuario`, `senha`, `nivel`, `senha_provisoria`, `tentativas`) VALUES ('admin', MD5('adm@12345'), 1, 0, 0);
 
 --
 -- Dumping events for database 'cartolassemcartola'
@@ -282,4 +281,4 @@ INSERT INTO `tbl_usuarios` (`usuario`, `senha`, `nivel`, `senha_provisoria`, `te
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-21 15:06:49
+-- Dump completed on 2018-02-27 13:29:50

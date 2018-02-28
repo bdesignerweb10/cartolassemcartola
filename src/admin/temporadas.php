@@ -1,7 +1,7 @@
 <?php 
 require_once('header.php');
 
-$anos = $conn->query("SELECT id, descricao FROM tbl_anos ORDER BY descricao ASC") or trigger_error($mysqli->error);
+$anos = $conn->query("SELECT id, descricao FROM tbl_anos ORDER BY descricao ASC") or trigger_error($conn->error);
 ?>
 <main class="maintable">
 	<div class="container">
@@ -31,7 +31,7 @@ $anos = $conn->query("SELECT id, descricao FROM tbl_anos ORDER BY descricao ASC"
 				        	while($dados = $anos->fetch_object()) {
 
 								$rodadas = $conn->query("SELECT COUNT(id_anos) AS count FROM tbl_temporadas WHERE id_anos = " . $dados->id) 
-													or trigger_error($mysqli->error);
+													or trigger_error($conn->error);
 
 								$qtd_rodadas = 0;
 
@@ -43,27 +43,27 @@ $anos = $conn->query("SELECT id, descricao FROM tbl_anos ORDER BY descricao ASC"
 				        		echo "<tr>
 						                <td class='center'>$dados->id</td>
 						                <td>$dados->descricao</td>
-						                <td class='center'>" . ($dados->id == $_SESSION["temporada_atual"] ? "<i class='fa fa-check fa-2x add'></i>" : "&nbsp;") . "</td>
+						                <td class='center'>" . ($dados->id == $_SESSION["temporada_atual"] ? "<i class='fa fa-check fa-2x add' alt='Temporada Atual' title='Temporada é a atual'></i>" : "&nbsp;") . "</td>
 						                <td class='center'>$qtd_rodadas</td>
 						                <td class='center'>";
 
-						                $fake_id = $dados->id * 98478521;
+						                $fake_id = $dados->id * $_SESSION["fake_id"];
 
 						                if($dados->id < $_SESSION["temporada_atual"] || ($dados->id == $_SESSION["temporada_atual"] && $_SESSION["temporada"] == 1)) {
-						                	echo "<i class='fa fa-edit fa-2x edit-disabled'></i><i class='fa fa-trash fa-2x del-disabled'></i>";
+						                	echo "<i class='fa fa-edit fa-2x edit-disabled' alt='Edição da temporada $dados->id desabilitada' title='Edição da temporada $dados->id desabilitada'></i><i class='fa fa-trash fa-2x del-disabled' alt='Remoção da temporada $dados->id desabilitada' title='Remoção da temporada $dados->id desabilitada'></i>";
 						                }
 						                else {
-						                	echo "<a href='#' class='btn-edit-temporadas' data-alt-id='$fake_id'>
+						                	echo "<a href='#' class='btn-edit-temporadas' data-temporada='$fake_id' alt='Editar temporada $dados->id' title='Editar temporada $dados->id'>
 						                			<i class='fa fa-edit fa-2x edit'></i>
 					                			  </a>";
 
 					                		if($dados->id > $_SESSION["temporada_atual"]) {
-					                			echo "<a href='#' class='btn-del-temporadas' data-alt-id='$fake_id'>
+					                			echo "<a href='#' class='btn-del-temporadas' data-temporada='$fake_id' alt='Remover temporada $dados->id' title='Remover temporada $dados->id'>
 					                					<i class='fa fa-trash fa-2x del'></i>
 				                					  </a>";
 					                		}
 					                		else {
-					                			echo "<i class='fa fa-trash fa-2x del-disabled'></i>";
+					                			echo "<i class='fa fa-trash fa-2x del-disabled' alt='Remoção da temporada $dados->id desabilitada' title='Remoção da temporada $dados->id desabilitada'></i>";
 					                		}
 						                }
 						        echo "</td></tr>";

@@ -30,7 +30,7 @@ if(isset($_POST) && !empty($_POST) && $_POST["login"]) {
 			$senha = $_POST["senha"];
 
 			$usu_qry = $conn->query("SELECT id, times_id, usuario, senha, nivel, tentativas FROM tbl_usuarios WHERE usuario = '" . $login . "'") 
-							or trigger_error($mysqli->error);
+							or trigger_error($conn->error);
 
 			if ($usu_qry) { 
 			    if($usu_qry->num_rows === 0) {

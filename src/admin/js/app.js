@@ -6,7 +6,7 @@ $(function() {
 		});
 	});
 
-	// BEGIN LOGIN
+	// BEGIN LOGIN (login.php)
 
 	$("#form-login").submit(function(e) {
 		e.preventDefault();
@@ -33,9 +33,9 @@ $(function() {
 		});
 	});
 
-	// END LOGIN
+	// END LOGIN (login.php)
 
-	// BEGIN TEMPORADAS
+	// BEGIN TEMPORADAS (temporadas.php)
 
     $('#btn-voltar-temporadas').click(function(e) {
 		e.preventDefault();
@@ -69,7 +69,7 @@ $(function() {
     	$('#id-temporadas').hide();
 
     	$('#passo-confirmacao').data('act', 'add');
-    	$('#passo-confirmacao').data('alt-id', null);
+    	$('#passo-confirmacao').data('temporada', null);
     });	
 
     $('.btn-edit-temporadas').click(function(e) {
@@ -78,14 +78,14 @@ $(function() {
 		$('.maintable').hide();
 		$('.mainform').show();
 
-    	var id = $(this).data('alt-id');
+    	var temporada = $(this).data('temporada');
 
     	$('#passo-confirmacao').data('act', 'edit');
-    	$('#passo-confirmacao').data('alt-id', id);
+    	$('#passo-confirmacao').data('temporada', temporada);
 
 		$.ajax({
 			type: "POST",
-			url: "acts/acts.temporadas.php?act=showupd&idano=" + id,
+			url: "acts/acts.temporadas.php?act=showupd&idano=" + temporada,
 			success: function(data)
 			{
 				$('#loading').modal('hide');
@@ -93,7 +93,7 @@ $(function() {
 				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
 				if(retorno.succeed) {
-			    	$('#id').val(id / 98478521);
+			    	$('#id').val(temporada / 98478521);
 			    	$('#id-temporadas').show();
 					$('#descricao').val(retorno.descricao);
 					$('#descricao').prop("readonly", "readonly");
@@ -141,11 +141,11 @@ $(function() {
 			keyboard: false
 		});
 
-    	var id = $(this).data('alt-id');
+    	var temporada = $(this).data('temporada');
 
 		$.ajax({
 			type: "POST",
-			url: "acts/acts.temporadas.php?act=del&idano=" + id,
+			url: "acts/acts.temporadas.php?act=del&idano=" + temporada,
 			success: function(data)
 			{
 				$('#loading').modal('hide');
@@ -250,11 +250,11 @@ $(function() {
     	e.preventDefault();
 
     	var act = $('#passo-confirmacao').data('act');
-    	var id = $('#passo-confirmacao').data('alt-id');
+    	var temporada = $('#passo-confirmacao').data('temporada');
 
 		$.ajax({
 			type: "POST",
-			url: "acts/acts.temporadas.php?act=" + act + "&idano=" + id,
+			url: "acts/acts.temporadas.php?act=" + act + "&idano=" + temporada,
 			data: $("#form-temporadas").serialize(),
 			success: function(data)
 			{
@@ -280,7 +280,147 @@ $(function() {
 		});
     });
 
-    // END TEMPORADAS
+    // END TEMPORADAS (temporadas.php)
+
+	// BEGIN TIMES TEMPORADAS (times_temporadas.php)
+
+	$('.btn-times-temporada').click(function(e) {
+		e.preventDefault();
+
+    	var temporada = $(this).data('temporada');
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.times_temporadas.php?act=getanotemp&idano=" + temporada,
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('.maintable').hide();
+					$('.maintemporada').show();
+
+					$('#headline-temporada').html('Gerenciando times inscritos na temporada ' + retorno.descricao);
+
+					if(retorno.list.length > 0) {
+						$.each(retorno.list, function(i, item) {
+
+							var botao_ativar = (item.pode_ativar == 1 ? "<a href='#' class='btn-ativar-time' data-time='" + item.id_time +  "' data-temporada='" + temporada + "' alt='Inscrever " + item.time +  " na temporada' title='Inscrever " + item.time +  " na temporada'><i class='fa fa-rocket fa-2x edit'></i></a>" : "<i class='fa fa-rocket fa-2x edit-disabled' alt='Não é possível inscrever " + item.time +  " na temporada' title='Não é possível inscrever " + item.time +  " na temporada'></i>");
+							var botao_inativar = (item.pode_desativar == 1 ? "<a href='#' class='btn-desativar-time' data-time='" + item.id_time +  "' data-temporada='" + temporada + "' alt='Remover " + item.time +  " da temporada' title='Remover " + item.time +  " da temporada'><i class='fa fa-trash fa-2x del'></i></a>" : "<i class='fa fa-trash fa-2x del-disabled' alt='Não é possível remover " + item.time +  " da temporada' title='Não é possível remover " + item.time +  " da temporada'></i>");
+
+							$('#lista-times-temporada').append("<tr>" +
+						                							"<td class='center'>" + item.id +  "</td>" +
+						                							"<td>" + item.time + "</td>" +
+						                							"<td>" + item.presidente + "</td>" +
+						                							"<td class='center'>" + item.posicao_liga + " º</td>" +
+						                							"<td class='center'>" + item.pontuacao + " pts.</td>" +
+						                							"<td class='center'>" + (item.ativo == 1 ? "<i class='fa fa-check fa-2x add' alt='Time ativo' title='Time está ativo'></i>" : "<i class='fa fa-times fa-2x del' alt='Time inativo' title='Time ainda não está ativo'></i>") + "</td>" +
+						                							"<td class='center'>" + (item.ativo == 1 ? botao_inativar : botao_ativar) + "</td>" +
+					                							"</tr>");
+						});
+					}
+					else {
+						$('#lista-times-temporada').append("<tr><td colspan='7' class='center'>Não há dados a serem exibidos para a listagem.</td></tr>");
+					}
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+
+					$('#headline-temporada').html('');
+				}
+			}
+		});
+	});
+
+	$('body').on('click', '.btn-ativar-time', function(e) {
+		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+    	var time = $(this).data('time');
+    	var temporada = $(this).data('temporada');
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.times_temporadas.php?act=ativar&idtime=" + time + "&idano=" + temporada,
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('#alert-title').html("Você finalizou a inscrição do time!");
+					$('#alert-content').html("O time foi inscrito com sucesso na temporada! Ao fechar esta mensagem a página será recarregada.");
+					$('#alert').modal('show');
+
+					$('#alert').on('hidden.bs.modal', function (e) {
+						window.location.reload();
+					});
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });	
+
+	$('body').on('click', '.btn-desativar-time', function(e) {
+		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+    	var time = $(this).data('time');
+    	var temporada = $(this).data('temporada');
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.times_temporadas.php?act=desativar&idtime=" + time + "&idano=" + temporada,
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('#alert-title').html("Você removeu o time da temporada!");
+					$('#alert-content').html("O time selecionado foi removido da temporada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					$('#alert').modal('show');
+
+					$('#alert').on('hidden.bs.modal', function (e) {
+						window.location.reload();
+					});
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });	
+
+    $('#btn-voltar-lista-temporadas').click(function(e) {
+		e.preventDefault();
+    	
+		$('.maintable').show();
+		$('.maintemporada').hide();
+
+		$('#headline-temporada').html('');
+		$('#lista-times-temporada').html('');
+    });	
+
+    // END TIMES TEMPORADAS (times_temporadas.php)
 });
 
 /*!

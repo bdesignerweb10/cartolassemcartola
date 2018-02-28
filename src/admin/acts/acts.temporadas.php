@@ -1,14 +1,15 @@
 <?php
 
 require_once("../../conn.php");
+if (!isset($_SESSION["usu_id"]) || empty($_SESSION["usu_id"]) || 
+	!isset($_SESSION['usu_nivel']) || empty($_SESSION["usu_nivel"]) ||
+	$_SESSION['usu_nivel'] == "3" || $_SESSION["usu_id"] == "0") die('Você não tem permissão para acessar essa página!');
 
-if(isset($_GET['act'])) {
-
+if(isset($_GET['act']) && !empty($_GET['act'])) {
 	switch ($_GET['act']) {
-
 	    case 'selrod':
 			try {
-				$resrod = $conn->query("SELECT id, descricao FROM tbl_rodadas ORDER BY descricao ASC") or trigger_error($mysqli->error);
+				$resrod = $conn->query("SELECT id, descricao FROM tbl_rodadas ORDER BY descricao ASC") or trigger_error($conn->error);
 
 				$ret_rod = "[";
 
@@ -34,9 +35,14 @@ if(isset($_GET['act'])) {
 	        
 	    case 'showupd':
 			try {
-				$id = $_GET['idano'] / 98478521;
+				if(!isset($_GET['idano']) || empty($_GET['idano'])) {
+					$conn->rollback();
+					echo '{"succeed": false, "errno": 119, "title": "Parâmetro não encontrado!", "erro": "Parâmetro do ID do ano não enviado! Favor contatar o administrador mostrando o erro!"}';
+				}
 
-		    	$resrod = $conn->query("SELECT id, descricao FROM tbl_rodadas ORDER BY descricao ASC") or trigger_error($mysqli->error);
+				$id = $_GET['idano'] / $_SESSION["fake_id"];
+
+		    	$resrod = $conn->query("SELECT id, descricao FROM tbl_rodadas ORDER BY descricao ASC") or trigger_error($conn->error);
 
 				$ret_rod = "[";
 				$descricao = "";
@@ -50,7 +56,7 @@ if(isset($_GET['act'])) {
 							$temporada = $conn->query("SELECT id_rodadas FROM tbl_temporadas 
 															    	    WHERE id_anos    = " . $id . " 
 															      		  AND id_rodadas = " . $rodada->id) 
-													or trigger_error($mysqli->error);
+													or trigger_error($conn->error);
 
 							if ($temporada && $temporada->num_rows > 0) 
 								$has_temporada = "true";
@@ -62,7 +68,7 @@ if(isset($_GET['act'])) {
 					$ret_rod = substr($ret_rod, 0, -2);
 
 					$qry_get_ano = "SELECT descricao FROM tbl_anos WHERE id = " . $id . " LIMIT 1";
-		    		$resano = $conn->query($qry_get_ano) or trigger_error($mysqli->error);
+		    		$resano = $conn->query($qry_get_ano) or trigger_error($conn->error);
 
 					if ($resano && $resano->num_rows > 0) {
 		    			while($ano = $resano->fetch_object()) {
@@ -104,7 +110,7 @@ if(isset($_GET['act'])) {
 						$descricao = $_POST["descricao"];
 
 						$anoexist = $conn->query("SELECT id FROM tbl_anos WHERE descricao = '" . $descricao . "'") or 
-								trigger_error($mysqli->error);
+								trigger_error($conn->error);
 
 						if ($anoexist && $anoexist->num_rows > 0) {
 							echo '{"succeed": false, "errno": 115, "title": "Ano já cadastrado no banco de dados!", "erro": "Ano da temporada já foi cadastrado, favor revisar os dados e tentar novamente!"}';
@@ -112,7 +118,7 @@ if(isset($_GET['act'])) {
 							exit();
 						}
 
-						if($descricao <= $_SESSION["temp_atual"]) {
+						if($descricao < $_SESSION["temp_atual"]) {
 							echo '{"succeed": false, "errno": 116, "title": "Não é possível cadastrar temporadas anteriores a atual!", "erro": "Não é possivel cadastrar um ano de temporada que seja anterior a temporada atual. Favor revisar os dados e tentar novamente!"}';
 							$conn->rollback();
 							exit();
@@ -163,12 +169,17 @@ if(isset($_GET['act'])) {
 	        
 	    case 'edit':
 			try {
-				$id = $_GET['idano'] / 98478521;
-				
 				$conn->autocommit(FALSE);
 
+				if(!isset($_GET['idano']) || empty($_GET['idano'])) {
+					$conn->rollback();
+					echo '{"succeed": false, "errno": 119, "title": "Parâmetro não encontrado!", "erro": "Parâmetro do ID do ano não enviado! Favor contatar o administrador mostrando o erro!"}';
+				}
+
+				$id = $_GET['idano'] / $_SESSION["fake_id"];
+
 				$timestemp = $conn->query("SELECT COUNT(id) AS count FROM tbl_times_temporadas WHERE id_anos = " . $id) 
-												or trigger_error($mysqli->error);
+												or trigger_error($conn->error);
 
 				if ($timestemp && $timestemp->num_rows > 0) {
 					$qtdtimestemp = 0;
@@ -181,14 +192,14 @@ if(isset($_GET['act'])) {
 		        	}
 		        }
 
-				$ano = $conn->query("SELECT descricao FROM tbl_anos WHERE id = " . $id) or trigger_error($mysqli->error);
+				$ano = $conn->query("SELECT descricao FROM tbl_anos WHERE id = " . $id) or trigger_error($conn->error);
 
 				if ($ano && $ano->num_rows > 0) {
 					while($res_ano = $ano->fetch_object()) {
 						$descricao = $res_ano->descricao;
 					}
 
-					if($descricao <= $_SESSION["temp_atual"]) {
+					if($descricao < $_SESSION["temp_atual"]) {
 						echo '{"succeed": false, "errno": 116, "title": "Não é possível alterar temporadas anteriores ou iguais a atual!", "erro": "Não é possivel alterar um ano de temporada que seja anterior ou igual a temporada atual. Favor revisar os dados e tentar novamente!"}';
 						$conn->rollback();
 						exit();
@@ -231,11 +242,16 @@ if(isset($_GET['act'])) {
 
 	    case 'del':
 			try {
-				$id = $_GET['idano'] / 98478521;
-				
 				$conn->autocommit(FALSE);
+				
+				if(!isset($_GET['idano']) || empty($_GET['idano'])) {
+					$conn->rollback();
+					echo '{"succeed": false, "errno": 119, "title": "Parâmetro não encontrado!", "erro": "Parâmetro do ID do ano não enviado! Favor contatar o administrador mostrando o erro!"}';
+				}
 
-				$ano = $conn->query("SELECT descricao FROM tbl_anos WHERE id = " . $id) or trigger_error($mysqli->error);
+				$id = $_GET['idano'] / $_SESSION["fake_id"];
+				
+				$ano = $conn->query("SELECT descricao FROM tbl_anos WHERE id = " . $id) or trigger_error($conn->error);
 
 				if ($ano && $ano->num_rows > 0) {
 					while($res_ano = $ano->fetch_object()) {
@@ -250,7 +266,7 @@ if(isset($_GET['act'])) {
 				}
 
 				$timestemp = $conn->query("SELECT COUNT(id) AS count FROM tbl_times_temporadas WHERE id_anos = " . $id) 
-												or trigger_error($mysqli->error);
+												or trigger_error($conn->error);
 
 				if ($timestemp && $timestemp->num_rows > 0) {
 					$qtdtimestemp = 0;
@@ -282,5 +298,10 @@ if(isset($_GET['act'])) {
 				echo '{"succeed": false, "errno": 113, "title": "Erro ao salvar os dados!", "erro": "Ocorreu um erro ao salvar os dados: ' . $e->getMessage() . '"}';
 			}
 	        break;
+	    
+	    default:
+	       echo '{"succeed": false, "errno": 198, "title": "Ação não definida!", "erro": "Não foi definida a ação para a requisição. Favor contatar o administrador da página!"}';
 	}
+} else {
+	echo '{"succeed": false, "errno": 199, "title": "Ação não definida!", "erro": "Não foi definida a ação para a requisição. Favor contatar o administrador da página!"}';
 }
