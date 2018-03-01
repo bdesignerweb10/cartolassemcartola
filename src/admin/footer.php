@@ -34,6 +34,6 @@
 		
 		<script src="../js/main.js"></script>
 		<script src="js/app.js"></script>
-		<?php $conn->close(); ?>
+		<?php if($conn) $conn->close(); ?>
 	</body>
 </html>

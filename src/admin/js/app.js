@@ -40,8 +40,9 @@ $(function() {
     $('#btn-voltar-temporadas').click(function(e) {
 		e.preventDefault();
 
+    	$('#headline-temporada').html('');
+
     	$('#id').val('');
-    	$('#id-temporadas').hide();
     	$('#descricao').prop("readonly", null);
     	$('#descricao').val('');
     	$('#passo-ano').prop("disabled", null);
@@ -65,8 +66,9 @@ $(function() {
 		$('.maintable').hide();
 		$('.mainform').show();
 
+    	$('#headline-temporada').html('Cadastro de nova temporada');
+
     	$('#id').val('');
-    	$('#id-temporadas').hide();
 
     	$('#passo-confirmacao').data('act', 'add');
     	$('#passo-confirmacao').data('temporada', null);
@@ -93,8 +95,9 @@ $(function() {
 				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
 				if(retorno.succeed) {
+    				$('#headline-temporada').html('Editando a temporada ' + retorno.descricao);
+			    	
 			    	$('#id').val(temporada / 98478521);
-			    	$('#id-temporadas').show();
 					$('#descricao').val(retorno.descricao);
 					$('#descricao').prop("readonly", "readonly");
 			    	$('#passo-ano').prop("disabled", "disabled");
@@ -110,9 +113,9 @@ $(function() {
 					});
 				}
 				else {
+    				$('#headline-temporada').html('');
 
     				$('#id').val('');
-    				$('#id-temporadas').hide();
 			    	$('#descricao').prop("readonly", null);
 			    	$('#descricao').val('');
 			    	$('#passo-ano').prop("disabled", null);
@@ -302,7 +305,7 @@ $(function() {
 					$('.maintable').hide();
 					$('.maintemporada').show();
 
-					$('#headline-temporada').html('Gerenciando times inscritos na temporada ' + retorno.descricao);
+					$('#headline-time-temporada').html('Gerenciando times inscritos na temporada ' + retorno.descricao);
 
 					if(retorno.list.length > 0) {
 						$.each(retorno.list, function(i, item) {
@@ -330,7 +333,7 @@ $(function() {
 					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
 					$('#alert').modal('show');
 
-					$('#headline-temporada').html('');
+					$('#headline-time-temporada').html('');
 				}
 			}
 		});
@@ -416,11 +419,111 @@ $(function() {
 		$('.maintable').show();
 		$('.maintemporada').hide();
 
-		$('#headline-temporada').html('');
+		$('#headline-time-temporada').html('');
 		$('#lista-times-temporada').html('');
     });	
 
     // END TIMES TEMPORADAS (times_temporadas.php)
+
+	// BEGIN GERENCIAR TIMES (gerenciar_times.php)
+	
+    $('#btn-voltar-times').click(function(e) {
+		e.preventDefault();
+
+		$('.mainform').hide();
+		$('.maintable').show();
+
+    	$('#btn-salvar-time').data('id', null);
+    	$('#headline-ger-times').html('');
+		$('.headline-form').html('');
+    });	
+
+    $('.btn-edit-time').click(function(e) {
+		e.preventDefault();
+
+    	var id = $(this).data('id');
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.gerenciar_times.php?act=showupd&idtime=" + id,
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('.maintable').hide();
+					$('.mainform').show();
+
+    				$('#btn-salvar-time').data('id', id);
+			    	$('#headline-ger-times').html('Editar o time ' + retorno.dados.nome_time);
+					$('.headline-form').html('Edite as informações do time!');
+			    	
+			    	$('#id').val(retorno.dados.id);
+			    	$('#nome_time').val(retorno.dados.nome_time);
+			    	$('#nome_presidente').val(retorno.dados.nome_presidente);
+			    	$('#email').val(retorno.dados.email);
+			    	$('#telefone').val(retorno.dados.telefone);
+			    	$('#historia').val(retorno.dados.historia);
+				}
+				else {
+					$('.maintable').show();
+					$('.mainform').hide();
+    				
+    				$('#btn-salvar-time').data('id', null);
+			    	$('#headline-ger-times').html('');
+					$('.headline-form').html('');
+			    	
+			    	$('#id').val('');
+			    	$('#nome_time').val('');
+			    	$('#nome_presidente').val('');
+			    	$('#email').val('');
+			    	$('#telefone').val('');
+			    	$('#historia').val('');
+
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });	
+
+    $('#btn-salvar-time').click(function(e) {
+    	e.preventDefault();
+
+    	var id = $(this).data('id');
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.gerenciar_times.php?act=edit&idtime=" + id,
+			data: $("#form-temporadas").serialize(),
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('#alert-title').html($('#nome_time').val() + " alterado com sucesso!");
+					$('#alert-content').html("A alteração de " + $('#nome_time').val() + " foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					$('#alert').modal('show');
+
+					$('#alert').on('hidden.bs.modal', function (e) {
+						window.location.reload();
+					})
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });
+
+    // END GERENCIAR TIMES (gerenciar_times.php)
 });
 
 /*!

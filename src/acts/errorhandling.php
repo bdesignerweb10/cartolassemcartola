@@ -54,5 +54,4 @@ function ErrorHandler($type, $message, $file, $line)
 };
 
 $old_error_handler = set_error_handler("ErrorHandler");
-
-// other php code
+?>

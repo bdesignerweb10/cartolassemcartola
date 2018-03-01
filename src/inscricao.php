@@ -16,7 +16,7 @@ require_once('header.php');
 			    			<input type="email" class="form-control" id="email" name="email" aria-describedby="email" placeholder="Informe seu e-mail" data-error="Por favor, informe um e-mail correto." required>
 			    			<div class="help-block with-errors"></div>
 			            </div>         
-			  			<div class="form-inline">		  				
+			  			<div class="form-inline">
 			  				<input type="text" class="form-control mb-3 mr-sm-3 mb-sm-3" id="telefone" name="telefone" placeholder="Informe nº do telefone" data-error="Por favor, informe um número de telefone correto." data-mask="(00) 00000-0000" data-mask-selectonfocus="true" data-mask-clearifnotmatch="true" required>
 			  				<div class="help-block with-errors"></div>		  				
 			  				<input type="text" class="form-control mb-3 mr-sm-3 mb-sm-3" id="time" name="time" placeholder="Informe o seu time" data-error="Por favor, informe o nome de seu time." required>

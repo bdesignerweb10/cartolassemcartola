@@ -11,8 +11,21 @@ $conn = new mysqli("localhost", "root", "root", "cartolassemcartola");
 //$conn = new mysqli("cartolassemcar.mysql.dbaas.com.br", "cartolassemcar", "cart@12345", "cartolassemcar");
 
 if ($conn->connect_errno) {
-    die("Failed to connect to MySQL: [$conn->connect_errno] $conn->connect_error");
+    die("00000 - Failed to connect to MySQL: [$conn->connect_errno] $conn->connect_error");
 }
+
+// FYI:
+// PADRAO DE MENSAGEM DE ERROS:
+// 99999
+// |
+// --> Prefixo do nivel do sistema. 0 = conn | 1 = site | 2 = admin
+// 99999
+//  |
+//  --> Numero que indica o script. Sequencial em cada nivel de sistema
+// 99999
+//   |
+//   --> Tres seguintes numeros: Sequencial do lugar onde a mensagem foi apresentada. Vai facilitar na hora de buscar no codigo do porque do erro aconteceu
+
 
 $result = $conn->query("SELECT * FROM tbl_config LIMIT 1") or trigger_error($conn->error);
 
@@ -71,7 +84,7 @@ if ($result) {
 		        throw new Exception("Erro ao inserir o admin: " . $qry_admin . "<br>" . $conn->error);
 			}
 		} catch(Exception $e) {
-    		die("Ocorreu um erro ao fazer o setup do sistema: " . $e->getMessage());
+    		die("01001 - Ocorreu um erro ao fazer o setup do sistema: " . $e->getMessage());
 		}
     }
     else {
@@ -120,6 +133,6 @@ if ($result) {
 	}
 }
 else {
-    die("Erro ao buscar as configurações do sistema!");
+    die("01002 - Erro ao buscar as configurações do sistema!");
 }
 ?>

@@ -45,15 +45,15 @@ gulp.task("sass", ['cache:css'], function() {
 
  /* Task para mover a pasta admin para pasta dist */
  gulp.task("move-admin", function() { 
- 	return gulp.src('./src/admin/*.php') 
+ 	return gulp.src('./src/admin/**') 
  	.pipe(gulp.dest('./dist/admin'))
  });
 
  /* Task para mover a pasta admin/acts para pasta dist */
- gulp.task("move-admin-acts", function() { 
+ /*gulp.task("move-admin-acts", function() { 
  	return gulp.src('./src/admin/acts/*.php') 
  	.pipe(gulp.dest('./dist/admin/acts'))
- });
+ });*/
 
  /* Task para mover a pasta lib para pasta dist */
  gulp.task("move-libs", function() { 
@@ -67,6 +67,30 @@ gulp.task("php", function() {
 				.pipe(htmlmin({collapseWhitespace: true}))
 				.on('error', notify.onError({title: "erro js", message: "<%= error.message %>"}))
 				.pipe(gulp.dest("./dist/"))
+				.pipe(browserSync.stream());
+});
+
+gulp.task("php-admin", function() {
+	return gulp.src("./src/admin/*.php")
+				.pipe(htmlmin({collapseWhitespace: true}))
+				.on('error', notify.onError({title: "erro js", message: "<%= error.message %>"}))
+				.pipe(gulp.dest("./dist/admin/"))
+				.pipe(browserSync.stream());
+});
+
+gulp.task("php-acts", function() {
+	return gulp.src("./src/acts/*.php")
+				.pipe(htmlmin({collapseWhitespace: true}))
+				.on('error', notify.onError({title: "erro js", message: "<%= error.message %>"}))
+				.pipe(gulp.dest("./dist/acts/"))
+				.pipe(browserSync.stream());
+});
+
+gulp.task("php-admin-acts", function() {
+	return gulp.src("./src/admin/acts/*.php")
+				.pipe(htmlmin({collapseWhitespace: true}))
+				.on('error', notify.onError({title: "erro js", message: "<%= error.message %>"}))
+				.pipe(gulp.dest("./dist/admin/acts/"))
 				.pipe(browserSync.stream());
 });
 
@@ -113,23 +137,12 @@ gulp.task("server", function() {
 	gulp.watch("./src/scss/**/*.scss", ['sass']);
 	gulp.watch("./src/components/bootstrap/scss/**/*.scss", ['sass']);
 	gulp.watch("./src/js/**/*.js", ['js']);
+	gulp.watch("./src/admin/js/*.js", ['admin-js']);
 	gulp.watch("./src/*.php", ['php']);
-	gulp.watch("./src/acts/*.php", ['php']);
-	gulp.watch("./src/admin/*.php", ['php']);
-	gulp.watch("./src/admin/**/*.php", ['php']);
+	gulp.watch("./src/acts/*.php", ['php-acts']);
+	gulp.watch("./src/admin/*.php", ['php-admin']);		
+	gulp.watch("./src/admin/acts/*.php", ['php-admin-acts']);
 	gulp.watch("./src/admin/js/**/*.js", ['js']);
 });
 
-gulp.task("default", ["sass", "php", "js", "admin-js", "concat-js", "move-img", "move-fonts", "move-acts", "move-admin", "move-admin-acts", "move-libs", "server"]);
-
-
-
-
-
-
-
-
-
-
-
-
+gulp.task("default", ["sass", "php", "php-acts" , "php-admin" , "php-admin-acts" ,"js", "admin-js", "concat-js", "move-img", "move-fonts", "move-admin", "move-acts", "move-libs", "server"]);
