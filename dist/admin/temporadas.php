@@ -14,7 +14,7 @@ $anos = $conn->query("SELECT id, descricao FROM tbl_anos ORDER BY descricao ASC"
 			</div><!-- col-sm-8-->
 		</div><!-- row -->	
 		<div class="row">
-			<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+			<div class="col-12">
 				<table class="table table-striped table-bordered table-hover datatable" cellspacing="0" width="100%">
 			        <thead>
 			            <tr>
@@ -49,23 +49,23 @@ $anos = $conn->query("SELECT id, descricao FROM tbl_anos ORDER BY descricao ASC"
 
 						                $fake_id = $dados->id * $_SESSION["fake_id"];
 
-						                if($dados->id < $_SESSION["temporada_atual"] || ($dados->id == $_SESSION["temporada_atual"] && $_SESSION["temporada"] == 1)) {
-						                	echo "<i class='fa fa-edit fa-2x edit-disabled' alt='Edição da temporada $dados->id desabilitada' title='Edição da temporada $dados->id desabilitada'></i><i class='fa fa-trash fa-2x del-disabled' alt='Remoção da temporada $dados->id desabilitada' title='Remoção da temporada $dados->id desabilitada'></i>";
-						                }
-						                else {
-						                	echo "<a href='#' class='btn-edit-temporadas' data-temporada='$fake_id' alt='Editar temporada $dados->id' title='Editar temporada $dados->id'>
-						                			<i class='fa fa-edit fa-2x edit'></i>
-					                			  </a>";
+				                if($dados->id < $_SESSION["temporada_atual"] || ($dados->id == $_SESSION["temporada_atual"] && $_SESSION["temporada"] == 1)) {
+				                	echo "<i class='fa fa-edit fa-2x edit-disabled' alt='Edição da temporada $dados->id desabilitada' title='Edição da temporada $dados->id desabilitada'></i><i class='fa fa-trash fa-2x del-disabled' alt='Remoção da temporada $dados->id desabilitada' title='Remoção da temporada $dados->id desabilitada'></i>";
+				                }
+				                else {
+				                	echo "<a href='#' class='btn-edit-temporadas' data-temporada='$fake_id' alt='Editar temporada $dados->id' title='Editar temporada $dados->id'>
+				                			<i class='fa fa-edit fa-2x edit'></i>
+			                			  </a>";
 
-					                		if($dados->id > $_SESSION["temporada_atual"]) {
-					                			echo "<a href='#' class='btn-del-temporadas' data-temporada='$fake_id' alt='Remover temporada $dados->id' title='Remover temporada $dados->id'>
-					                					<i class='fa fa-trash fa-2x del'></i>
-				                					  </a>";
-					                		}
-					                		else {
-					                			echo "<i class='fa fa-trash fa-2x del-disabled' alt='Remoção da temporada $dados->id desabilitada' title='Remoção da temporada $dados->id desabilitada'></i>";
-					                		}
-						                }
+			                		if($dados->id > $_SESSION["temporada_atual"]) {
+			                			echo "<a href='#' class='btn-del-temporadas' data-temporada='$fake_id' alt='Remover temporada $dados->id' title='Remover temporada $dados->id'>
+			                					<i class='fa fa-trash fa-2x del'></i>
+		                					  </a>";
+			                		}
+			                		else {
+			                			echo "<i class='fa fa-trash fa-2x del-disabled' alt='Remoção da temporada $dados->id desabilitada' title='Remoção da temporada $dados->id desabilitada'></i>";
+			                		}
+				                }
 						        echo "</td></tr>";
 							}
 			        	}
@@ -85,7 +85,7 @@ $anos = $conn->query("SELECT id, descricao FROM tbl_anos ORDER BY descricao ASC"
 	<div class="container">
 		<div class="row" style="margin-bottom: 10px;">
 			<div class="col-sm-12">
-				<h2 class="headline">Cadastro de nova temporada</h3>
+				<h3 class="headline" id="headline-temporada"></h3>
 			</div><!-- col-sm-8-->
 		</div><!-- row -->	
 		<div class="row" style="margin-bottom: 10px;">
@@ -99,7 +99,7 @@ $anos = $conn->query("SELECT id, descricao FROM tbl_anos ORDER BY descricao ASC"
 			<div class="row justify-content-md-center">
 				<div id="box-ano" class="col-sm-12 col-md-10 col-lg-3 col-xl-3 form-box">
 					<h3 class="headline headline-form">Informe o ano!</h3> 
-		  			<div id="id-temporadas" class="form-group">		    			
+		  			<div class="form-group">		    			
 						<label for="id">ID</label>
 		    			<input type="number" class="form-control form-control-lg" id="id" name="id" aria-describedby="id" disabled>
 		    		</div>
@@ -133,7 +133,7 @@ $anos = $conn->query("SELECT id, descricao FROM tbl_anos ORDER BY descricao ASC"
 						<h3 style="font-weight: 300;" id="resumo-rodadas"></h3>
 					</div>	
   					<button type="button" class="btn btn-success btn-lg form-control" id="passo-confirmacao">
-  						<i class='fa fa-save'></i> Criar temporada
+  						<i class='fa fa-save'></i> Salvar dados
   					</button>
 				</div><!-- col-sm-8--> 
 			</div>

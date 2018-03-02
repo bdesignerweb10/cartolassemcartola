@@ -3,13 +3,13 @@
 require_once("../../conn.php");
 if (!isset($_SESSION["usu_id"]) || empty($_SESSION["usu_id"]) || 
 	!isset($_SESSION['usu_nivel']) || empty($_SESSION["usu_nivel"]) ||
-	$_SESSION['usu_nivel'] == "3" || $_SESSION["usu_id"] == "0") die('Você não tem permissão para acessar essa página!');
+	$_SESSION['usu_nivel'] == "3" || $_SESSION["usu_id"] == "0") die('22001 - Você não tem permissão para acessar essa página!');
 
 if(isset($_GET['act']) && !empty($_GET['act'])) {
 	switch ($_GET['act']) {
 	    case 'selrod':
 			try {
-				$resrod = $conn->query("SELECT id, descricao FROM tbl_rodadas ORDER BY descricao ASC") or trigger_error($conn->error);
+				$resrod = $conn->query("SELECT id, descricao FROM tbl_rodadas ORDER BY descricao ASC") or trigger_error("22002 - " . $conn->error);
 
 				$ret_rod = "[";
 
@@ -28,7 +28,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 				
 				echo '{"succeed": true, "list": ' . $ret_rod . '}';
 			} catch(Exception $e) {
-				echo '{"succeed": false, "errno": 513, "title": "Erro ao carregar os dados!", "erro": "Ocorreu um erro ao carregar os dados: ' . $e->getMessage() . '"}';
+				echo '{"succeed": false, "errno": 22003, "title": "Erro ao carregar os dados!", "erro": "Ocorreu um erro ao carregar os dados: ' . $e->getMessage() . '"}';
 			}
 
 	        break;
@@ -37,12 +37,12 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 			try {
 				if(!isset($_GET['idano']) || empty($_GET['idano'])) {
 					$conn->rollback();
-					echo '{"succeed": false, "errno": 119, "title": "Parâmetro não encontrado!", "erro": "Parâmetro do ID do ano não enviado! Favor contatar o administrador mostrando o erro!"}';
+					echo '{"succeed": false, "errno": 22004, "title": "Parâmetro não encontrado!", "erro": "Parâmetro do ID do ano não enviado! Favor contatar o administrador mostrando o erro!"}';
 				}
 
 				$id = $_GET['idano'] / $_SESSION["fake_id"];
 
-		    	$resrod = $conn->query("SELECT id, descricao FROM tbl_rodadas ORDER BY descricao ASC") or trigger_error($conn->error);
+		    	$resrod = $conn->query("SELECT id, descricao FROM tbl_rodadas ORDER BY descricao ASC") or trigger_error("22005 - " . $conn->error);
 
 				$ret_rod = "[";
 				$descricao = "";
@@ -56,7 +56,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 							$temporada = $conn->query("SELECT id_rodadas FROM tbl_temporadas 
 															    	    WHERE id_anos    = " . $id . " 
 															      		  AND id_rodadas = " . $rodada->id) 
-													or trigger_error($conn->error);
+													or trigger_error("22006 - " . $conn->error);
 
 							if ($temporada && $temporada->num_rows > 0) 
 								$has_temporada = "true";
@@ -68,7 +68,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 					$ret_rod = substr($ret_rod, 0, -2);
 
 					$qry_get_ano = "SELECT descricao FROM tbl_anos WHERE id = " . $id . " LIMIT 1";
-		    		$resano = $conn->query($qry_get_ano) or trigger_error($conn->error);
+		    		$resano = $conn->query($qry_get_ano) or trigger_error("22007 - " . $conn->error);
 
 					if ($resano && $resano->num_rows > 0) {
 		    			while($ano = $resano->fetch_object()) {
@@ -83,7 +83,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 				
 				echo '{"succeed": true, "descricao": ' . $descricao . ', "list": ' . $ret_rod . '}';
 			} catch(Exception $e) {
-				echo '{"succeed": false, "errno": 513, "title": "Erro ao carregar os dados!", "erro": "Ocorreu um erro ao carregar os dados: ' . $e->getMessage() . '"}';
+				echo '{"succeed": false, "errno": 22008, "title": "Erro ao carregar os dados!", "erro": "Ocorreu um erro ao carregar os dados: ' . $e->getMessage() . '"}';
 			}
 
 	        break;
@@ -102,7 +102,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 					}
 
 					if(!$isValid) {
-						echo '{"succeed": false, "errno": 110, "title": "Erro em um ou mais campos do formulário!", "erro": "Ocorreram erros nos seguintes campos do formulário: <b>' . $errMsg . '</b>"}';
+						echo '{"succeed": false, "errno": 22009, "title": "Erro em um ou mais campos do formulário!", "erro": "Ocorreram erros nos seguintes campos do formulário: <b>' . $errMsg . '</b>"}';
 						$conn->rollback();
 						exit();
 					}
@@ -110,16 +110,16 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 						$descricao = $_POST["descricao"];
 
 						$anoexist = $conn->query("SELECT id FROM tbl_anos WHERE descricao = '" . $descricao . "'") or 
-								trigger_error($conn->error);
+								trigger_error("22010 - " . $conn->error);
 
 						if ($anoexist && $anoexist->num_rows > 0) {
-							echo '{"succeed": false, "errno": 115, "title": "Ano já cadastrado no banco de dados!", "erro": "Ano da temporada já foi cadastrado, favor revisar os dados e tentar novamente!"}';
+							echo '{"succeed": false, "errno": 22011, "title": "Ano já cadastrado no banco de dados!", "erro": "Ano da temporada já foi cadastrado, favor revisar os dados e tentar novamente!"}';
 							$conn->rollback();
 							exit();
 						}
 
 						if($descricao < $_SESSION["temp_atual"]) {
-							echo '{"succeed": false, "errno": 116, "title": "Não é possível cadastrar temporadas anteriores a atual!", "erro": "Não é possivel cadastrar um ano de temporada que seja anterior a temporada atual. Favor revisar os dados e tentar novamente!"}';
+							echo '{"succeed": false, "errno": 22012, "title": "Não é possível cadastrar temporadas anteriores a atual!", "erro": "Não é possivel cadastrar um ano de temporada que seja anterior a temporada atual. Favor revisar os dados e tentar novamente!"}';
 							$conn->rollback();
 							exit();
 						}
@@ -156,14 +156,14 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 					}
 				}
 				else {
-					echo '{"succeed": false, "errno": 112, "title": "Erro ao enviar o formulário!", "erro": "Ocorreu um erro ao tentar enviar seu formulário, favor recarregar a página e tentar novamente!"}';
+					echo '{"succeed": false, "errno": 22013, "title": "Erro ao enviar o formulário!", "erro": "Ocorreu um erro ao tentar enviar seu formulário, favor recarregar a página e tentar novamente!"}';
 					$conn->rollback();
 					exit();
 				}
 			} catch(Exception $e) {
 				$conn->rollback();
 
-				echo '{"succeed": false, "errno": 113, "title": "Erro ao salvar os dados!", "erro": "Ocorreu um erro ao salvar os dados: ' . $e->getMessage() . '"}';
+				echo '{"succeed": false, "errno": 22014, "title": "Erro ao salvar os dados!", "erro": "Ocorreu um erro ao salvar os dados: ' . $e->getMessage() . '"}';
 			}
 	        break;
 	        
@@ -173,13 +173,13 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 
 				if(!isset($_GET['idano']) || empty($_GET['idano'])) {
 					$conn->rollback();
-					echo '{"succeed": false, "errno": 119, "title": "Parâmetro não encontrado!", "erro": "Parâmetro do ID do ano não enviado! Favor contatar o administrador mostrando o erro!"}';
+					echo '{"succeed": false, "errno": 22015, "title": "Parâmetro não encontrado!", "erro": "Parâmetro do ID do ano não enviado! Favor contatar o administrador mostrando o erro!"}';
 				}
 
 				$id = $_GET['idano'] / $_SESSION["fake_id"];
 
 				$timestemp = $conn->query("SELECT COUNT(id) AS count FROM tbl_times_temporadas WHERE id_anos = " . $id) 
-												or trigger_error($conn->error);
+												or trigger_error("22016 - " . $conn->error);
 
 				if ($timestemp && $timestemp->num_rows > 0) {
 					$qtdtimestemp = 0;
@@ -192,7 +192,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 		        	}
 		        }
 
-				$ano = $conn->query("SELECT descricao FROM tbl_anos WHERE id = " . $id) or trigger_error($conn->error);
+				$ano = $conn->query("SELECT descricao FROM tbl_anos WHERE id = " . $id) or trigger_error("22017 - " . $conn->error);
 
 				if ($ano && $ano->num_rows > 0) {
 					while($res_ano = $ano->fetch_object()) {
@@ -200,7 +200,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 					}
 
 					if($descricao < $_SESSION["temp_atual"]) {
-						echo '{"succeed": false, "errno": 116, "title": "Não é possível alterar temporadas anteriores ou iguais a atual!", "erro": "Não é possivel alterar um ano de temporada que seja anterior ou igual a temporada atual. Favor revisar os dados e tentar novamente!"}';
+						echo '{"succeed": false, "errno": 22018, "title": "Não é possível alterar temporadas anteriores ou iguais a atual!", "erro": "Não é possivel alterar um ano de temporada que seja anterior ou igual a temporada atual. Favor revisar os dados e tentar novamente!"}';
 						$conn->rollback();
 						exit();
 					}
@@ -236,7 +236,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 			} catch(Exception $e) {
 				$conn->rollback();
 
-				echo '{"succeed": false, "errno": 113, "title": "Erro ao salvar os dados!", "erro": "Ocorreu um erro ao salvar os dados: ' . $e->getMessage() . '"}';
+				echo '{"succeed": false, "errno": 22019, "title": "Erro ao salvar os dados!", "erro": "Ocorreu um erro ao salvar os dados: ' . $e->getMessage() . '"}';
 			}
 	        break;
 
@@ -246,12 +246,12 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 				
 				if(!isset($_GET['idano']) || empty($_GET['idano'])) {
 					$conn->rollback();
-					echo '{"succeed": false, "errno": 119, "title": "Parâmetro não encontrado!", "erro": "Parâmetro do ID do ano não enviado! Favor contatar o administrador mostrando o erro!"}';
+					echo '{"succeed": false, "errno": 22020, "title": "Parâmetro não encontrado!", "erro": "Parâmetro do ID do ano não enviado! Favor contatar o administrador mostrando o erro!"}';
 				}
 
 				$id = $_GET['idano'] / $_SESSION["fake_id"];
 				
-				$ano = $conn->query("SELECT descricao FROM tbl_anos WHERE id = " . $id) or trigger_error($conn->error);
+				$ano = $conn->query("SELECT descricao FROM tbl_anos WHERE id = " . $id) or trigger_error("22021 - " . $conn->error);
 
 				if ($ano && $ano->num_rows > 0) {
 					while($res_ano = $ano->fetch_object()) {
@@ -259,14 +259,14 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 					}
 
 					if($descricao <= $_SESSION["temp_atual"]) {
-						echo '{"succeed": false, "errno": 116, "title": "Não é possível remover temporadas anteriores ou iguais a atual!", "erro": "Não é possivel remover um ano de temporada que seja anterior ou igual a temporada atual. Favor revisar os dados e tentar novamente!"}';
+						echo '{"succeed": false, "errno": 22022, "title": "Não é possível remover temporadas anteriores ou iguais a atual!", "erro": "Não é possivel remover um ano de temporada que seja anterior ou igual a temporada atual. Favor revisar os dados e tentar novamente!"}';
 						$conn->rollback();
 						exit();
 					}
 				}
 
 				$timestemp = $conn->query("SELECT COUNT(id) AS count FROM tbl_times_temporadas WHERE id_anos = " . $id) 
-												or trigger_error($conn->error);
+												or trigger_error("22023 - " . $conn->error);
 
 				if ($timestemp && $timestemp->num_rows > 0) {
 					$qtdtimestemp = 0;
@@ -295,15 +295,14 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 			} catch(Exception $e) {
 				$conn->rollback();
 
-				echo '{"succeed": false, "errno": 113, "title": "Erro ao salvar os dados!", "erro": "Ocorreu um erro ao salvar os dados: ' . $e->getMessage() . '"}';
+				echo '{"succeed": false, "errno": 22024, "title": "Erro ao salvar os dados!", "erro": "Ocorreu um erro ao salvar os dados: ' . $e->getMessage() . '"}';
 			}
 	        break;
 	    
 	    default:
-	       echo '{"succeed": false, "errno": 198, "title": "Ação não definida!", "erro": "Não foi definida a ação para a requisição. Favor contatar o administrador da página!"}';
+	       echo '{"succeed": false, "errno": 22025, "title": "Ação não definida!", "erro": "Não foi definida a ação para a requisição. Favor contatar o administrador da página!"}';
 	}
 } else {
-	echo '{"succeed": false, "errno": 199, "title": "Ação não definida!", "erro": "Não foi definida a ação para a requisição. Favor contatar o administrador da página!"}';
+	echo '{"succeed": false, "errno": 22026, "title": "Ação não definida!", "erro": "Não foi definida a ação para a requisição. Favor contatar o administrador da página!"}';
 }
-
 ?>

@@ -144,17 +144,4 @@ gulp.task("server", function() {
 	gulp.watch("./src/admin/acts/*.php", ['php-admin-acts']);
 	gulp.watch("./src/admin/js/**/*.js", ['js']);
 });
-
 gulp.task("default", ["sass", "php", "php-acts" , "php-admin" , "php-admin-acts" ,"js", "admin-js", "concat-js", "move-img", "move-fonts", "move-admin", "move-acts", "move-libs", "server"]);
-
-
-
-
-
-
-
-
-
-
-
-

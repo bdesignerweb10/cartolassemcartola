@@ -1,5 +1,5 @@
 <?php
-	require_once('header_login.php');
+require_once('header_login.php');
 ?>
 <main>
 	<div class="container-fluid">
@@ -28,5 +28,5 @@
 	</div><!-- contatiner -->
 </main>
 <?php
-	require_once('footer.php');
+require_once('footer.php');
 ?>

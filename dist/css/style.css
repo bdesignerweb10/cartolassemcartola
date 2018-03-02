@@ -8771,9 +8771,6 @@ ul.escudos > li {
 .btn-link {
   cursor: pointer; }
 
-#id-temporadas {
-  display: none; }
-
 #box-rodada {
   display: none; }
 
@@ -8790,3 +8787,6 @@ ul.escudos > li {
 
 .maintemporada {
   display: none; }
+
+#box-ano .row {
+  margin-bottom: 10px; }

@@ -62,12 +62,12 @@ if(isset($_POST) && !empty($_POST) && $_POST["nome"]) {
 
 
 	if(!isset($_POST["regulamento"]) || empty($_POST["regulamento"])) {
-		echo '{"succeed": false, "errno": 511, "title": "Erro ao enviar o formulário!", "erro": "Você precisa marcar que aceita o regulamento para enviar o formulário!"}';
+		echo '{"succeed": false, "errno": 11001, "title": "Erro ao enviar o formulário!", "erro": "Você precisa marcar que aceita o regulamento para enviar o formulário!"}';
 		exit();
 	}
 
 	if(!$isValid) {
-		echo '{"succeed": false, "errno": 510, "title": "Erro em um ou mais campos do formulário!", "erro": "Ocorreram erros nos seguintes campos do formulário: <b>' . $errMsg . '</b>"}';
+		echo '{"succeed": false, "errno": 11002, "title": "Erro em um ou mais campos do formulário!", "erro": "Ocorreram erros nos seguintes campos do formulário: <b>' . $errMsg . '</b>"}';
 	}
 	else {
 		try {
@@ -83,11 +83,11 @@ if(isset($_POST) && !empty($_POST) && $_POST["nome"]) {
 											     WHERE UPPER(nome_time) LIKE '%" . strtoupper($time) . "%'
 											        OR UPPER(email) LIKE '%" . strtoupper($email) . "%'
 											        OR UPPER(nome_presidente) LIKE '%" . strtoupper($nome) . "%'") or 
-								trigger_error($conn->error);
+								trigger_error("11003 - " . $conn->error);
 
 			if ($time_exist) { 
 			    if($time_exist->num_rows > 0) {
-					echo '{"succeed": false, "errno": 515, "title": "Time já cadastrado no banco de dados!", "erro": "O time ou presidente já foi cadastrado, favor escolher outros dados!"}';
+					echo '{"succeed": false, "errno": 11004, "title": "Time já cadastrado no banco de dados!", "erro": "O time ou presidente já foi cadastrado, favor escolher outros dados!"}';
 					exit();
 			    }
 			}
@@ -149,7 +149,7 @@ if(isset($_POST) && !empty($_POST) && $_POST["nome"]) {
 						} catch (Exception $e) {
     						$conn->rollback();
 
-							echo '{"succeed": false, "errno": 514, "title": "Erro ao enviar o e-mail!", "erro": "Ocorreu um erro ao enviar o e-mail: ' . $mail->ErrorInfo . '"}';
+							echo '{"succeed": false, "errno": 11005, "title": "Erro ao enviar o e-mail!", "erro": "Ocorreu um erro ao enviar o e-mail: ' . $mail->ErrorInfo . '"}';
 						}
 					} else {
 				        throw new Exception("Erro ao inserir o usuário: " . $qry_usu . "<br>" . $conn->error);
@@ -163,11 +163,10 @@ if(isset($_POST) && !empty($_POST) && $_POST["nome"]) {
 		} catch(Exception $e) {
 			$conn->rollback();
 
-			echo '{"succeed": false, "errno": 513, "title": "Erro ao salvar os dados!", "erro": "Ocorreu um erro ao salvar os dados: ' . $e->getMessage() . '"}';
+			echo '{"succeed": false, "errno": 11006, "title": "Erro ao salvar os dados!", "erro": "Ocorreu um erro ao salvar os dados: ' . $e->getMessage() . '"}';
 		}
 	}
 }
 else 
-	echo '{"succeed": false, "errno": 912, "title": "Erro ao enviar o formulário!", "erro": "Ocorreu um erro ao tentar enviar seu formulário, favor recarregar a página e tentar novamente!"}';
-
+	echo '{"succeed": false, "errno": 11007, "title": "Erro ao enviar o formulário!", "erro": "Ocorreu um erro ao tentar enviar seu formulário, favor recarregar a página e tentar novamente!"}';
 ?>

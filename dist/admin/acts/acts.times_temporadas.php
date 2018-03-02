@@ -3,7 +3,7 @@
 require_once("../../conn.php");
 if (!isset($_SESSION["usu_id"]) || empty($_SESSION["usu_id"]) || 
 	!isset($_SESSION['usu_nivel']) || empty($_SESSION["usu_nivel"]) ||
-	$_SESSION['usu_nivel'] == "3" || $_SESSION["usu_id"] == "0") die('Você não tem permissão para acessar essa página!');
+	$_SESSION['usu_nivel'] == "3" || $_SESSION["usu_id"] == "0") die('23001 - Você não tem permissão para acessar essa página!');
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -18,13 +18,13 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 			try {
 				if(!isset($_GET['idano']) || empty($_GET['idano'])) {
 					$conn->rollback();
-					echo '{"succeed": false, "errno": 119, "title": "Parâmetro não encontrado!", "erro": "Parâmetro do ID do ano não enviado! Favor contatar o administrador mostrando o erro!"}';
+					echo '{"succeed": false, "errno": 23002, "title": "Parâmetro não encontrado!", "erro": "Parâmetro do ID do ano não enviado! Favor contatar o administrador mostrando o erro!"}';
 				}
 
 				$id = $_GET['idano'] / $_SESSION["fake_id"];
 				$descricao = "";
 
-		    	$resano = $conn->query("SELECT descricao FROM tbl_anos WHERE id = $id") or trigger_error($conn->error);
+		    	$resano = $conn->query("SELECT descricao FROM tbl_anos WHERE id = $id") or trigger_error("23003 - " . $conn->error);
 
 				if ($resano && $resano->num_rows > 0) {
 	    			while($ano = $resano->fetch_object()) {
@@ -34,7 +34,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 		    		$resinsc = $conn->query("SELECT i.id_times AS id, t.nome_time AS time, t.nome_presidente AS presidente, i.ativo AS ativo
 		    								   FROM tbl_inscricao i
 		    						     INNER JOIN tbl_times t ON t.id = i.id_times
-		    								  WHERE i.id_anos = $id") or trigger_error($conn->error);
+		    								  WHERE i.id_anos = $id") or trigger_error("23004 - " . $conn->error);
 
 					$list_times = "[";
 
@@ -43,14 +43,14 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 		    				$pontuacao = 0;
 		    				$posicao_liga = 0;
 
-		    				$querypont = $conn->query("SELECT COALESCE(SUM(pontuacao), 0) AS total FROM tbl_times_temporadas WHERE id_anos = $id AND id_times = $inscricoes->id") or trigger_error($conn->error);
+		    				$querypont = $conn->query("SELECT COALESCE(SUM(pontuacao), 0) AS total FROM tbl_times_temporadas WHERE id_anos = $id AND id_times = $inscricoes->id") or trigger_error("23005 - " . $conn->error);
 							if ($querypont && $querypont->num_rows > 0) {
 				    			while($pont = $querypont->fetch_object()) {
 				    				$pontuacao = $pont->total;
 				    			}
 			    			}
 
-		    				$querypos = $conn->query("SELECT COALESCE(posicao_liga, 0) AS posicao_liga FROM tbl_times_temporadas WHERE id_anos = $id AND id_times = $inscricoes->id AND id_rodadas = " . $_SESSION["rodada"]) or trigger_error($conn->error);
+		    				$querypos = $conn->query("SELECT COALESCE(posicao_liga, 0) AS posicao_liga FROM tbl_times_temporadas WHERE id_anos = $id AND id_times = $inscricoes->id AND id_rodadas = " . $_SESSION["rodada"]) or trigger_error("23006 - " . $conn->error);
 							if ($querypos && $querypos->num_rows > 0) {
 				    			while($pos = $querypos->fetch_object()) {
 				    				$posicao_liga = $pos->posicao_liga;
@@ -84,7 +84,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 		        	throw new Exception("Erro ao selecionar o ano: " . $conn->error);
 
 			} catch(Exception $e) {
-				echo '{"succeed": false, "errno": 513, "title": "Erro ao carregar os dados!", "erro": "Ocorreu um erro ao carregar os dados: ' . $e->getMessage() . '"}';
+				echo '{"succeed": false, "errno": 23007, "title": "Erro ao carregar os dados!", "erro": "Ocorreu um erro ao carregar os dados: ' . $e->getMessage() . '"}';
 			}
 
 	        break;
@@ -95,13 +95,13 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 
 				if(!isset($_GET['idano']) || empty($_GET['idano'])) {
 					$conn->rollback();
-					echo '{"succeed": false, "errno": 119, "title": "Parâmetro não encontrado!", "erro": "Parâmetro do ID do ano não enviado! Favor contatar o administrador mostrando o erro!"}';
+					echo '{"succeed": false, "errno": 23008, "title": "Parâmetro não encontrado!", "erro": "Parâmetro do ID do ano não enviado! Favor contatar o administrador mostrando o erro!"}';
 					exit();
 				}
 
 				if(!isset($_GET['idtime']) || empty($_GET['idtime'])) {
 					$conn->rollback();
-					echo '{"succeed": false, "errno": 119, "title": "Parâmetro não encontrado!", "erro": "Parâmetro do ID do time não enviado! Favor contatar o administrador mostrando o erro!"}';
+					echo '{"succeed": false, "errno": 23009, "title": "Parâmetro não encontrado!", "erro": "Parâmetro do ID do time não enviado! Favor contatar o administrador mostrando o erro!"}';
 					exit();
 				}
 
@@ -121,7 +121,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 					if ($conn->query($upd_times) === TRUE) {
 
 						$seltemps = $conn->query("SELECT id_rodadas FROM tbl_temporadas WHERE id_anos = $id_ano") 
-									or trigger_error($conn->error);
+									or trigger_error("23010 - " . $conn->error);
 
 						if ($seltemps && $seltemps->num_rows > 0) {
 							$var_erros = "";
@@ -138,7 +138,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 				        		throw new Exception($var_erros);
 							}
 
-							$sqltime = $conn->query("SELECT nome_presidente, email FROM tbl_times WHERE id = $id_time") or trigger_error($conn->error);
+							$sqltime = $conn->query("SELECT nome_presidente, email FROM tbl_times WHERE id = $id_time") or trigger_error("23011 - " . $conn->error);
 
 							$nome = "";
 							$email = "";
@@ -150,7 +150,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 				    			}
 				    		}
 
-							$sqlano = $conn->query("SELECT descricao FROM tbl_anos WHERE id = $id_ano") or trigger_error($conn->error);
+							$sqlano = $conn->query("SELECT descricao FROM tbl_anos WHERE id = $id_ano") or trigger_error("23012 - " . $conn->error);
 
 							$temporada = "";
 
@@ -190,7 +190,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 							} catch (Exception $e) {
 	    						$conn->rollback();
 
-								echo '{"succeed": false, "errno": 114, "title": "Erro ao enviar o e-mail!", "erro": "Ocorreu um erro ao enviar o e-mail: ' . $mail->ErrorInfo . '"}';
+								echo '{"succeed": false, "errno": 23013, "title": "Erro ao enviar o e-mail!", "erro": "Ocorreu um erro ao enviar o e-mail: ' . $mail->ErrorInfo . '"}';
 							}
 			    		} else {
 					        throw new Exception("Erro ao ativar o time na temporada: Não há uma temporada com rodadas criada para esse ano!");
@@ -203,7 +203,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 				}
 			} catch(Exception $e) {
 				$conn->rollback();
-				echo '{"succeed": false, "errno": 113, "title": "Erro ao salvar os dados!", "erro": "Ocorreu um erro ao salvar os dados: ' . $e->getMessage() . '"}';
+				echo '{"succeed": false, "errno": 23014, "title": "Erro ao salvar os dados!", "erro": "Ocorreu um erro ao salvar os dados: ' . $e->getMessage() . '"}';
 				exit();
 			}
 	        break;
@@ -214,11 +214,11 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 
 				if(!isset($_GET['idano']) || empty($_GET['idano'])) {
 					$conn->rollback();
-					echo '{"succeed": false, "errno": 119, "title": "Parâmetro não encontrado!", "erro": "Parâmetro do ID do ano não enviado! Favor contatar o administrador mostrando o erro!"}';
+					echo '{"succeed": false, "errno": 23015, "title": "Parâmetro não encontrado!", "erro": "Parâmetro do ID do ano não enviado! Favor contatar o administrador mostrando o erro!"}';
 				}
 				if(!isset($_GET['idtime']) || empty($_GET['idtime'])) {
 					$conn->rollback();
-					echo '{"succeed": false, "errno": 119, "title": "Parâmetro não encontrado!", "erro": "Parâmetro do ID do time não enviado! Favor contatar o administrador mostrando o erro!"}';
+					echo '{"succeed": false, "errno": 23016, "title": "Parâmetro não encontrado!", "erro": "Parâmetro do ID do time não enviado! Favor contatar o administrador mostrando o erro!"}';
 				}
 
 				$id_ano = $_GET['idano'] / $_SESSION["fake_id"];
@@ -238,7 +238,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 
 						$sqldeltimetemp = "DELETE FROM tbl_times_temporadas WHERE id_times = $id_time AND id_anos = $id_ano";
 						if ($conn->query($sqldeltimetemp) === TRUE) {
-							$sqltime = $conn->query("SELECT nome_presidente, email FROM tbl_times WHERE id = $id_time") or trigger_error($conn->error);
+							$sqltime = $conn->query("SELECT nome_presidente, email FROM tbl_times WHERE id = $id_time") or trigger_error("23017 - " . $conn->error);
 
 							$nome = "";
 							$email = "";
@@ -250,7 +250,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 				    			}
 				    		}
 
-							$sqlano = $conn->query("SELECT descricao FROM tbl_anos WHERE id = $id_ano") or trigger_error($conn->error);
+							$sqlano = $conn->query("SELECT descricao FROM tbl_anos WHERE id = $id_ano") or trigger_error("23018 - " . $conn->error);
 
 							$temporada = "";
 
@@ -291,7 +291,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 							} catch (Exception $e) {
 	    						$conn->rollback();
 
-								echo '{"succeed": false, "errno": 114, "title": "Erro ao enviar o e-mail!", "erro": "Ocorreu um erro ao enviar o e-mail: ' . $mail->ErrorInfo . '"}';
+								echo '{"succeed": false, "errno": 23019, "title": "Erro ao enviar o e-mail!", "erro": "Ocorreu um erro ao enviar o e-mail: ' . $mail->ErrorInfo . '"}';
 							}
 						} else {
 					        throw new Exception("Erro ao remover o mapa de rodadas da temporada para o time: " . $sqldeltimetemp . "<br>" . $conn->error);
@@ -304,19 +304,14 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 				}
 			} catch(Exception $e) {
 				$conn->rollback();
-				echo '{"succeed": false, "errno": 113, "title": "Erro ao salvar os dados!", "erro": "Ocorreu um erro ao salvar os dados: ' . $e->getMessage() . '"}';
+				echo '{"succeed": false, "errno": 23020, "title": "Erro ao salvar os dados!", "erro": "Ocorreu um erro ao salvar os dados: ' . $e->getMessage() . '"}';
 			}
 	        break;
 	    
 	    default:
-	       echo '{"succeed": false, "errno": 198, "title": "Ação não definida!", "erro": "Não foi definida a ação para a requisição. Favor contatar o administrador da página!"}';
+	       echo '{"succeed": false, "errno": 23021, "title": "Ação não definida!", "erro": "Não foi definida a ação para a requisição. Favor contatar o administrador da página!"}';
 	}
 } else {
-	echo '{"succeed": false, "errno": 199, "title": "Ação não definida!", "erro": "Não foi definida a ação para a requisição. Favor contatar o administrador da página!"}';
+	echo '{"succeed": false, "errno": 23022, "title": "Ação não definida!", "erro": "Não foi definida a ação para a requisição. Favor contatar o administrador da página!"}';
 }
-
-function sendMail($nome, $email, $temporada, $tipo) {
-	
-}
-
 ?>

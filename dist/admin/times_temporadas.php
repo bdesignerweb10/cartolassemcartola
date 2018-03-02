@@ -1,6 +1,5 @@
 <?php 
 require_once('header.php');
-
 $timestemp = $conn->query("SELECT t.id_anos AS id, a.descricao AS ano, COUNT(t.id_rodadas) AS qtd_rodadas
    							 FROM tbl_temporadas t
    					   INNER JOIN tbl_anos AS a ON a.id = t.id_anos
@@ -45,16 +44,16 @@ $timestemp = $conn->query("SELECT t.id_anos AS id, a.descricao AS ano, COUNT(t.i
 						                <td class='center'>$qtd_times</td>
 						                <td class='center'>";
 
-						                $fake_id = $dados->id * $_SESSION["fake_id"];
+				                $fake_id = $dados->id * $_SESSION["fake_id"];
 
-						                if($dados->id < $_SESSION["temporada_atual"] || ($dados->id == $_SESSION["temporada_atual"] && $_SESSION["temporada"] == 1)) {
-						                	echo "<i class='fa fa-edit fa-2x edit-disabled' alt='Edição desabilitada' title='Edição dos times da temporada $dados->id desabilitada'></i>";
-						                }
-						                else {
-						                	echo "<a href='#' class='btn-times-temporada' data-temporada='$fake_id' alt='Editar os times da temporada $dados->id' title='Editar os times da temporada $dados->id'>
-						                			<i class='fa fa-edit fa-2x edit'></i>
-					                			  </a>";
-						                }
+				                if($dados->id < $_SESSION["temporada_atual"] || ($dados->id == $_SESSION["temporada_atual"] && $_SESSION["temporada"] == 1)) {
+				                	echo "<i class='fa fa-edit fa-2x edit-disabled' alt='Edição desabilitada' title='Edição dos times da temporada $dados->id desabilitada'></i>";
+				                }
+				                else {
+				                	echo "<a href='#' class='btn-times-temporada' data-temporada='$fake_id' alt='Editar os times da temporada $dados->id' title='Editar os times da temporada $dados->id'>
+				                			<i class='fa fa-edit fa-2x edit'></i>
+			                			  </a>";
+				                }
 						        echo "</td></tr>";
 							}
 			        	}
@@ -72,7 +71,7 @@ $timestemp = $conn->query("SELECT t.id_anos AS id, a.descricao AS ano, COUNT(t.i
 </main>
 <main class="maintemporada">
 	<div class="container">
-		<h3 class="headline" id="headline-temporada"></h3>
+		<h3 class="headline" id="headline-time-temporada"></h3>
 		<div class="row" style="margin-bottom: 10px;">
 			<div class="col-sm-12 col-md-6 col-lg-2 col-xl-2">
 				<button type="button" id="btn-voltar-lista-temporadas" class="btn btn-link btn-lg form-control btn-voltar">

@@ -114,6 +114,9 @@ if (!isset($_SESSION["usu_id"]) || empty($_SESSION["usu_id"]) ||
 					<span class="mark">
 						<i class="fa fa-user fa-2x"></i>												
 					</span> 
+					<span class="mark">
+						<a href="logout.php">Sair</a>
+					</span> 
 				</div><!-- liga-logo -->
 			</div><!-- container -->	
 		</div><!-- header -->
