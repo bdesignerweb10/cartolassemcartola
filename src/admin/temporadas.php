@@ -15,7 +15,7 @@ $anos = $conn->query("SELECT id, descricao FROM tbl_anos ORDER BY descricao ASC"
 		</div><!-- row -->	
 		<div class="row">
 			<div class="col-12">
-				<table class="table table-striped table-bordered table-hover datatable" cellspacing="0" width="100%">
+				<table class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
 			        <thead>
 			            <tr>
 			                <th class='center'>#</th>
@@ -41,7 +41,7 @@ $anos = $conn->query("SELECT id, descricao FROM tbl_anos ORDER BY descricao ASC"
 						        	}
 						        }
 				        		echo "<tr>
-						                <td class='center'>$dados->id</td>
+      									<th scope='row' class='center'>$dados->id</th>
 						                <td>$dados->descricao</td>
 						                <td class='center'>" . ($dados->id == $_SESSION["temporada_atual"] ? "<i class='fa fa-check fa-2x add' alt='Temporada Atual' title='Temporada é a atual'></i>" : "&nbsp;") . "</td>
 						                <td class='center'>$qtd_rodadas</td>

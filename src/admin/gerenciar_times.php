@@ -12,7 +12,7 @@ $timeslist = $conn->query("SELECT t.id AS id, t.nome_time AS time, t.nome_presid
 		<h3 class="headline">Gerenciamento de times</h3>
 		<div class="row">
 			<div class="col-12">
-				<table class="table table-striped table-bordered table-hover datatable" cellspacing="0" width="100%">
+				<table class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
 			        <thead>
 			            <tr>
 			                <th class='center'>#</th>
@@ -32,7 +32,7 @@ $timeslist = $conn->query("SELECT t.id AS id, t.nome_time AS time, t.nome_presid
 				                $fake_id = $time->id * $_SESSION["fake_id"];
 
 				        		echo "<tr>
-						                <td class='center'>$time->id</td>
+      									<th scope='row' class='center'>$time->id</th>
 								        <td class='center'><img src='../img/escudos/$time->escudo' class='img-fluid'></td>
 						                <td>$time->time</td>
 						                <td>$time->presidente</td>
@@ -46,7 +46,7 @@ $timeslist = $conn->query("SELECT t.id AS id, t.nome_time AS time, t.nome_presid
 			                			  	</a>";
 
                 			  	if($time->status == 1) {
-		                			echo "<a href='#' class='btn-desativar-time' alt='Desativar $time->time' title='Desativar $time->time no sistema' data-id='$fake_id'><i class='fa fa-ban fa-2x del'></i>";
+		                			echo "<a href='#' class='btn-desativar-time' data-id='$fake_id' alt='Desativar $time->time' title='Desativar $time->time no sistema'><i class='fa fa-ban fa-2x del'></i>";
 		                		}
 		                		else {
 		                			echo "<i class='fa fa-ban fa-2x del-disabled' alt='Desativar $time->time está desabilitada' title='Função de desativação do $time->time está desabilitada'></i>";

@@ -320,11 +320,11 @@ $(function() {
 					if(retorno.list.length > 0) {
 						$.each(retorno.list, function(i, item) {
 
-							var botao_ativar = (item.pode_ativar == 1 ? "<a href='#' class='btn-ativar-time' data-time='" + item.id_time +  "' data-temporada='" + temporada + "' alt='Inscrever " + item.time +  " na temporada' title='Inscrever " + item.time +  " na temporada'><i class='fa fa-rocket fa-2x edit'></i></a>" : "<i class='fa fa-rocket fa-2x edit-disabled' alt='Não é possível inscrever " + item.time +  " na temporada' title='Não é possível inscrever " + item.time +  " na temporada'></i>");
-							var botao_inativar = (item.pode_desativar == 1 ? "<a href='#' class='btn-desativar-time' data-time='" + item.id_time +  "' data-temporada='" + temporada + "' alt='Remover " + item.time +  " da temporada' title='Remover " + item.time +  " da temporada'><i class='fa fa-trash fa-2x del'></i></a>" : "<i class='fa fa-trash fa-2x del-disabled' alt='Não é possível remover " + item.time +  " da temporada' title='Não é possível remover " + item.time +  " da temporada'></i>");
+							var botao_ativar = (item.pode_ativar == 1 ? "<a href='#' class='btn-ativar-inscricao' data-time='" + item.id_time +  "' data-temporada='" + temporada + "' alt='Inscrever " + item.time +  " na temporada' title='Inscrever " + item.time +  " na temporada'><i class='fa fa-rocket fa-2x edit'></i></a>" : "<i class='fa fa-rocket fa-2x edit-disabled' alt='Não é possível inscrever " + item.time +  " na temporada' title='Não é possível inscrever " + item.time +  " na temporada'></i>");
+							var botao_inativar = (item.pode_desativar == 1 ? "<a href='#' class='btn-desativar-inscricao' data-time='" + item.id_time +  "' data-temporada='" + temporada + "' alt='Remover " + item.time +  " da temporada' title='Remover " + item.time +  " da temporada'><i class='fa fa-trash fa-2x del'></i></a>" : "<i class='fa fa-trash fa-2x del-disabled' alt='Não é possível remover " + item.time +  " da temporada' title='Não é possível remover " + item.time +  " da temporada'></i>");
 
 							$('#lista-times-temporada').append("<tr>" +
-						                							"<td class='center'>" + item.id +  "</td>" +
+						                							"<th scope='row' class='center'>" + item.id +  "</th>" +
 						                							"<td>" + item.time + "</td>" +
 						                							"<td>" + item.presidente + "</td>" +
 						                							"<td class='center'>" + item.posicao_liga + " º</td>" +
@@ -349,7 +349,7 @@ $(function() {
 		});
 	});
 
-	$('body').on('click', '.btn-ativar-time', function(e) {
+	$('body').on('click', '.btn-ativar-inscricao', function(e) {
 		e.preventDefault();
 
 		$('#loading').modal({
@@ -386,7 +386,7 @@ $(function() {
 		});
     });	
 
-	$('body').on('click', '.btn-desativar-time', function(e) {
+	$('body').on('click', '.btn-desativar-inscricao', function(e) {
 		e.preventDefault();
 
 		$('#loading').modal({
@@ -500,6 +500,42 @@ $(function() {
 		});
     });	
 
+    $('.btn-desativar-time').click(function(e) {
+		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+    	var id = $(this).data('id');
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.gerenciar_times.php?act=desativar&idtime=" + id,
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('#alert-title').html("Você desativou o time!");
+					$('#alert-content').html("O time selecionado foi desativado com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					$('#alert').modal('show');
+
+					$('#alert').on('hidden.bs.modal', function (e) {
+						window.location.reload();
+					});
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });	
+
     $('#btn-salvar-time').click(function(e) {
     	e.preventDefault();
 
@@ -534,6 +570,244 @@ $(function() {
     });
 
     // END GERENCIAR TIMES (gerenciar_times.php)
+
+	// BEGIN PONTUACAO (pontuacoes.php)
+
+    $('.btn-salvar-pontuacoes').click(function(e) {
+    	e.preventDefault();
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.pontuacoes.php?act=updpont",
+			data: $("#form-pontuacoes").serialize(),
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('#alert-title').html("Pontuações lançadas com sucesso!");
+					$('#alert-content').html("As pontuações dos times na rodada foram atualizadas com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					$('#alert').modal('show');
+
+					$('#alert').on('hidden.bs.modal', function (e) {
+						window.location.reload();
+					})
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });	
+
+    // END PONTUACAO (pontuacoes.php)
+
+	// BEGIN CONFIGURAÇÕES (configuracoes.php)
+
+    $('#btn-abrir-temporada').click(function(e) {
+    	e.preventDefault();
+
+		$('#confirm-title').html("ATENÇÃO!!");
+		$('#confirm-content').html("Você irá ABRIR a temporada e o sistema estará pronto para ser usado!<br /><br />Esse processo é IRREVERSÍVEL!");
+		$('#confirm').modal('show');
+
+    	$('#btn-confirm-modal').click(function(e) {
+			$('#confirm').modal('hide');
+			
+			$('#loading').modal({
+				keyboard: false
+			});
+
+			$.ajax({
+				type: "POST",
+				url: "acts/acts.configuracoes.php?act=abrirtemporada",
+				success: function(data)
+				{
+					$('#loading').modal('hide');
+
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+					if(retorno.succeed) {
+						$('#alert-title').html("Temporada aberta com sucesso!");
+						$('#alert-content').html("A temporada foi aberta com sucesso! Que começem os jogos!<br /><br />Ao fechar esta mensagem a página será recarregada.");
+						$('#alert').modal('show');
+
+						$('#alert').on('hidden.bs.modal', function (e) {
+							window.location.reload();
+						})
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+					}
+				}
+	    	});
+	    });	
+    });	
+
+    $('#btn-fechar-temporada').click(function(e) {
+    	e.preventDefault();
+
+		$('#confirm-title').html("ATENÇÃO!!");
+		$('#confirm-content').html("Você irá ENCERRAR a temporada e a temporada será alterada para do próximo ano!<br /><br />Esse processo é IRREVERSÍVEL!");
+		$('#confirm').modal('show');
+
+    	$('#btn-confirm-modal').click(function(e) {
+			$('#confirm').modal('hide');
+
+			$('#loading').modal({
+				keyboard: false
+			});
+
+			$.ajax({
+				type: "POST",
+				url: "acts/acts.configuracoes.php?act=fechartemporada",
+				success: function(data)
+				{
+					$('#loading').modal('hide');
+
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+					if(retorno.succeed) {
+						$('#alert-title').html("Temporada encerrada com sucesso!");
+						$('#alert-content').html("A temporada foi encerrada com sucesso! Seja bem vindo a temporada " + retorno.rodada + " e até ano que vem!<br /><br />Ao fechar esta mensagem a página será recarregada.");
+						$('#alert').modal('show');
+
+						$('#alert').on('hidden.bs.modal', function (e) {
+							window.location.reload();
+						});
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+					}
+				}
+			});
+    	});
+    });	
+
+    $('#btn-abrir-mercado').click(function(e) {
+    	e.preventDefault();
+
+		$('#confirm-title').html("ATENÇÃO!!");
+		$('#confirm-content').html("Você irá ABRIR o mercado e a rodada atual será alterada!<br /><br />Esse processo é IRREVERSÍVEL!");
+		$('#confirm').modal('show');
+
+    	$('#btn-confirm-modal').click(function(e) {
+			$('#confirm').modal('hide');
+
+			$('#loading').modal({
+				keyboard: false
+			});
+
+			$.ajax({
+				type: "POST",
+				url: "acts/acts.configuracoes.php?act=abrirmercado",
+				success: function(data)
+				{
+					$('#loading').modal('hide');
+
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+					if(retorno.succeed) {
+						$('#alert-title').html("Mercado aberto com sucesso!");
+						$('#alert-content').html("O mercado foi aberto com sucesso! Você está na rodada " + retorno.rodada + "!<br /><br />Ao fechar esta mensagem a página será recarregada.");
+						$('#alert').modal('show');
+
+						$('#alert').on('hidden.bs.modal', function (e) {
+							window.location.reload();
+						})
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+					}
+				}
+			});
+    	});
+    });	
+
+    $('#btn-fechar-mercado').click(function(e) {
+    	e.preventDefault();
+
+		$('#confirm-title').html("ATENÇÃO!!");
+		$('#confirm-content').html("Você irá FECHAR o mercado! Aproveite para lançar e conferir as pontuações!<br /><br />Esse processo é IRREVERSÍVEL!");
+		$('#confirm').modal('show');
+
+    	$('#btn-confirm-modal').click(function(e) {
+			$('#confirm').modal('hide');
+
+			$('#loading').modal({
+				keyboard: false
+			});
+
+			$.ajax({
+				type: "POST",
+				url: "acts/acts.configuracoes.php?act=fecharmercado",
+				success: function(data)
+				{
+					$('#loading').modal('hide');
+
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+					if(retorno.succeed) {
+						$('#alert-title').html("Mercado fechado com sucesso!");
+						$('#alert-content').html("O mercado foi fechado com sucesso! Não se esqueça de lançar e conferir a pontuação de todos os times!<br /><br />Ao fechar esta mensagem a página será recarregada.");
+						$('#alert').modal('show');
+
+						$('#alert').on('hidden.bs.modal', function (e) {
+							window.location.reload();
+						})
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+					}
+				}
+			});
+		});
+    });	
+
+    $('#btn-dados-config').click(function(e) {
+    	e.preventDefault();
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.configuracoes.php?act=upddados",
+			data: $("#form-config").serialize(),
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('#alert-title').html("Dados alterados com sucesso!");
+					$('#alert-content').html("As configurações foram alteradas com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					$('#alert').modal('show');
+
+					$('#alert').on('hidden.bs.modal', function (e) {
+						window.location.reload();
+					})
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });	
+
+    // END CONFIGURAÇÕES (configuracoes.php)
 });
 
 /*!

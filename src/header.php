@@ -31,7 +31,7 @@
 			</div><!-- sidebar-header -->
 
 			<ul class="nav">
-				<?php if($_SESSION["$temporada"]) : ?>
+				<?php if($_SESSION["temporada"] == 1) : ?>
 					<li class="nav-item">					
 						<a href="index.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? ' nav-active' : ''; ?>">
 						<i class="fa fa-bar-chart"></i>	
@@ -63,7 +63,7 @@
 						</a>
 					</li>
 				<?php endif; ?>
-				<?php if(!$_SESSION["$temporada"]) : ?>
+				<?php if(!$_SESSION["temporada"] == 1) : ?>
 					<li class="nav-item">					
 						<a href="inscricao.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'inscricao.php' ? ' nav-active' : ''; ?>">
 						<i class="fa fa-check-square-o"></i>	
@@ -104,11 +104,11 @@
 				</div><!-- liga -->
 
 				<div class="liga-logo">
-					<?php if ($_SESSION["$temporada"]) : ?>
+					<?php if ($_SESSION["temporada"] == 1) : ?>
 					<div class="calendario hidden-xs-down">
 						<i class="fa fa-calendar fa-2x"></i>
 					</div>					
-					<?php if ($_SESSION["mercado"]) : ?>
+					<?php if ($_SESSION["mercado"] == 1) : ?>
 						<span class="mark-merc hidden-xs-down">Mercado aberto</span>
 						<span class="mark">
 							<i class="fa fa-hourglass-start fa-2x"></i>												

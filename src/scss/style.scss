@@ -338,11 +338,6 @@ ul.escudos > li {
 	padding-bottom: 30px !important;
 }
 
-.datatable th {
-	white-space: nowrap;
-	overflow: hidden;
-}
-
 .table-bordered, .table-bordered th, .table-bordered td {
     border: 1px solid #cccdce;
 	vertical-align: middle !important;
@@ -432,4 +427,12 @@ ul.escudos > li {
 	.row {
 		margin-bottom: 10px;
 	}
+}
+
+.text-column {
+	width: 40%;
+}
+
+.checkbox label .toggle, .checkbox-inline .toggle {
+	margin-left: 0px !important;
 }
