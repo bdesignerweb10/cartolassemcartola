@@ -10,16 +10,14 @@ $(function() {
 		$("html").addClass("open-sidebar");
 	});
 
-	$("form").submit(function(e) {
-		$('#loading').modal({
-			keyboard: false
-		});
-	});
-
 	// BEGIN LOGIN (login.php)
 
 	$("#form-login").submit(function(e) {
 		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
 
 		$.ajax({
 			type: "POST",
@@ -87,13 +85,14 @@ $(function() {
     $('.btn-edit-temporadas').click(function(e) {
 		e.preventDefault();
 
+		$('#loading').modal({
+			keyboard: false
+		});
+
 		$('.maintable').hide();
 		$('.mainform').show();
 
     	var temporada = $(this).data('temporada');
-
-    	$('#passo-confirmacao').data('act', 'edit');
-    	$('#passo-confirmacao').data('temporada', temporada);
 
 		$.ajax({
 			type: "POST",
@@ -105,9 +104,12 @@ $(function() {
 				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
 				if(retorno.succeed) {
+			    	$('#passo-confirmacao').data('act', 'edit');
+			    	$('#passo-confirmacao').data('temporada', temporada);
+
     				$('#headline-temporada').html('Editando a temporada ' + retorno.descricao);
 			    	
-			    	$('#id').val(temporada / 98478521);
+			    	$('#id').val(retorno.id);
 					$('#descricao').val(retorno.descricao);
 					$('#descricao').prop("readonly", "readonly");
 			    	$('#passo-ano').prop("disabled", "disabled");
@@ -262,6 +264,10 @@ $(function() {
     $('#passo-confirmacao').click(function(e) {
     	e.preventDefault();
 
+		$('#loading').modal({
+			keyboard: false
+		});
+
     	var act = $('#passo-confirmacao').data('act');
     	var temporada = $('#passo-confirmacao').data('temporada');
 
@@ -299,6 +305,10 @@ $(function() {
 
 	$('.btn-times-temporada').click(function(e) {
 		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
 
     	var temporada = $(this).data('temporada');
 
@@ -451,6 +461,10 @@ $(function() {
     $('.btn-edit-time').click(function(e) {
 		e.preventDefault();
 
+		$('#loading').modal({
+			keyboard: false
+		});
+
     	var id = $(this).data('id');
 
 		$.ajax({
@@ -539,6 +553,10 @@ $(function() {
     $('#btn-salvar-time').click(function(e) {
     	e.preventDefault();
 
+		$('#loading').modal({
+			keyboard: false
+		});
+
     	var id = $(this).data('id');
 
 		$.ajax({
@@ -575,6 +593,10 @@ $(function() {
 
     $('.btn-salvar-pontuacoes').click(function(e) {
     	e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
 
 		$.ajax({
 			type: "POST",
@@ -779,6 +801,10 @@ $(function() {
     $('#btn-dados-config').click(function(e) {
     	e.preventDefault();
 
+		$('#loading').modal({
+			keyboard: false
+		});
+
 		$.ajax({
 			type: "POST",
 			url: "acts/acts.configuracoes.php?act=upddados",
@@ -808,6 +834,180 @@ $(function() {
     });	
 
     // END CONFIGURAÇÕES (configuracoes.php)
+
+	// BEGIN EVENTOS (eventos.php)
+
+    $('#btn-voltar-eventos').click(function(e) {
+		e.preventDefault();
+
+		$('.mainform').hide();
+		$('.maintable').show();
+
+    	$('#btn-salvar-evento').data('id', null);
+    	$('#btn-salvar-evento').data('act', null);
+    	$('#headline-ger-eventos').html('');
+		$('.headline-form').html('');
+
+    	$('#id').val('');
+    	$('#titulo').val('');
+    	$('#data').val('');
+    	$('#local').val('');
+    	$('#descricao').val('');
+    	$('#ativo').bootstrapToggle('off');
+    });	
+
+    $('#btn-add-eventos').click(function(e) {
+		e.preventDefault();
+
+		$('.maintable').hide();
+		$('.mainform').show();
+
+		$('#btn-salvar-evento').data('id', null);
+    	$('#btn-salvar-evento').data('act', 'add');
+    	$('#headline-ger-times').html('Cadastrar novo evento');
+		$('.headline-form').html('Insira as informações do novo evento!');
+
+    	$('#id').val('');
+    	$('#titulo').val('');
+    	$('#data').val('');
+    	$('#local').val('');
+    	$('#descricao').val('');
+    	$('#ativo').bootstrapToggle('off');
+    });	
+
+    $('.btn-edit-eventos').click(function(e) {
+		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+    	var id = $(this).data('id');
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.eventos.php?act=showupd&idevento=" + id,
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('.maintable').hide();
+					$('.mainform').show();
+
+			    	$('#btn-salvar-evento').data('act', 'edit');
+			    	$('#btn-salvar-evento').data('id', id);
+    				$('#headline-temporada').html('Editando o evento ' + retorno.titulo);
+					$('.headline-form').html('Edite as informações do evento!');
+
+			    	$('#id').val(retorno.id);
+			    	$('#titulo').val(retorno.titulo);
+			    	$('#data').val(retorno.data);
+			    	$('#local').val(retorno.local);
+			    	$('#descricao').val(retorno.descricao);
+			    	$('#ativo').bootstrapToggle(retorno.ativo == 1 ? 'on' : 'off');
+				}
+				else {
+					$('.mainform').hide();
+					$('.maintable').show();
+
+			    	$('#btn-salvar-evento').data('id', null);
+			    	$('#btn-salvar-evento').data('act', null);
+			    	$('#headline-ger-eventos').html('');
+					$('.headline-form').html('');
+
+			    	$('#id').val('');
+			    	$('#titulo').val('');
+			    	$('#data').val('');
+			    	$('#local').val('');
+			    	$('#descricao').val('');
+			    	$('#ativo').bootstrapToggle('off');
+
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });	
+
+    $('.btn-del-eventos').click(function(e) {
+		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+    	var id = $(this).data('id');
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.eventos.php?act=del&idevento=" + id,
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('#alert-title').html("Evento removido com sucesso!");
+					$('#alert-content').html("A remoção do evento foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					$('#alert').modal('show');
+
+					$('#alert').on('hidden.bs.modal', function (e) {
+						window.location.reload();
+					});
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });	
+
+    $('#btn-salvar-evento').click(function(e) {
+    	e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+    	var id = $(this).data('id');
+    	var act = $(this).data('act');
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.eventos.php?act=" + act + "&idevento=" + id,
+			data: $("#form-eventos").serialize(),
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('#alert-title').html($('#titulo').val() + (act == 'add' ? " adicionado " : " editado ") + "com sucesso!");
+					$('#alert-content').html("A " + (act == 'add' ? " adição " : " edição ") + " de " + $('#titulo').val() + " foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					$('#alert').modal('show');
+
+					$('#alert').on('hidden.bs.modal', function (e) {
+						window.location.reload();
+					})
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });
+
+    // END EVENTOS (eventos.php)
 });
 
 /*!

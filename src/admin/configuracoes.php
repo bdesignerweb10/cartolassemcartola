@@ -58,21 +58,21 @@ if (!isset($_SESSION["usu_id"]) || empty($_SESSION["usu_id"]) ||
 			    		</div>
 					</div>
 				</fieldset>
-					<fieldset class="form-group" style="margin-bottom: 0rem; ">
+				<fieldset class="form-group" style="margin-bottom: 0rem; ">
 					<legend>Alterar Dados</legend>
 					<form id="form-config" data-toggle="validator" action="acts/acts.configuracoes.php" method="POST">
     					<div class="row">
 				  			<div class="col-sm-12 col-md-6 col-lg-2 col-xl-2">		    			
 								<label for="inicio_temporada">Início Temp.</label>
-				    			<input type="text" class="form-control form-control-lg" id="inicio_temporada" name="inicio_temporada" aria-describedby="inicio_temporada" placeholder="Informe o dia e mês de início da temporada..." data-error="Por favor, informe o dia e mês de início da temporada." value="<?php echo $_SESSION["inicio_temporada"]; ?>" data-mask="00/00" data-mask-selectonfocus="true" data-mask-clearifnotmatch="true" required>
+				    			<input type="text" class="form-control form-control-lg" id="inicio_temporada" name="inicio_temporada" aria-describedby="inicio_temporada" placeholder="Informe o dia e mês de início da temporada..." data-error="Por favor, informe o dia e mês de início da temporada." value="<?php echo $_SESSION["inicio_temporada"]; ?>" data-mask="00/00" data-mask-selectonfocus="true" data-mask-clearifnotmatch="true" maxlength="5" required />
 				    		</div>
 				  			<div class="col-sm-12 col-md-12 col-lg-5 col-xl-5">		    			
 								<label for="email_pagseguro">E-mail Pagseguro</label>
-				    			<input type="text" class="form-control form-control-lg" id="email_pagseguro" name="email_pagseguro" aria-describedby="email_pagseguro" placeholder="Informe o e-mail do pagseguro..." data-error="Por favor, informe o e-mail do pagseguro." value="<?php echo $_SESSION["email_pagseguro"]; ?>">
+				    			<input type="text" class="form-control form-control-lg" id="email_pagseguro" name="email_pagseguro" aria-describedby="email_pagseguro" placeholder="Informe o e-mail do pagseguro..." data-error="Por favor, informe o e-mail do pagseguro." value="<?php echo $_SESSION["email_pagseguro"]; ?>" maxlength="120" />
 				    		</div>
 				  			<div class="col-sm-12 col-md-12 col-lg-5 col-xl-5">		    			
 								<label for="token_pagseguro">Token Pagseguro</label>
-				    			<input type="text" class="form-control form-control-lg" id="token_pagseguro" name="token_pagseguro" aria-describedby="token_pagseguro" placeholder="Informe o token do pagseguro..." data-error="Por favor, informe o token do pagseguro." value="<?php echo $_SESSION["token_pagseguro"]; ?>">
+				    			<input type="text" class="form-control form-control-lg" id="token_pagseguro" name="token_pagseguro" aria-describedby="token_pagseguro" placeholder="Informe o token do pagseguro..." data-error="Por favor, informe o token do pagseguro." value="<?php echo $_SESSION["token_pagseguro"]; ?>" maxlength="120" />
 				    		</div>
 						</div>
     					<div class="row">

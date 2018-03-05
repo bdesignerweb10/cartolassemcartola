@@ -12,12 +12,12 @@ require_once('header_login.php');
 				<form id="form-login" data-toggle="validator" action="acts/acts.login.php" method="POST">
 		  			<div class="form-group">		    			
 						<label for="login">Usuário</label>
-		    			<input type="text" class="form-control form-control-lg" id="login" name="login" aria-describedby="nome" placeholder="Digite seu usuário..." data-error="Por favor, informe o login." required>
+		    			<input type="text" class="form-control form-control-lg" id="login" name="login" aria-describedby="nome" placeholder="Digite seu usuário..." data-error="Por favor, informe o login." maxlength="120" required>
 		    			<div class="help-block with-errors"></div>
 		    		</div>
 					<div class="form-group">
 						<label for="exampleInputPassword1">Senha</label>
-						<input type="password" class="form-control form-control-lg" id="senha" name="senha" placeholder="Digite sua senha..." data-error="Por favor, informe a senha." required>
+						<input type="password" class="form-control form-control-lg" id="senha" name="senha" placeholder="Digite sua senha..." data-error="Por favor, informe a senha." maxlength="120" required>
 					</div>
   					<button id="btn-login" type="submit" class="btn btn-success btn-lg form-control" name="submit">
   						<i class='fa fa-home'></i> Entrar

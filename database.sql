@@ -282,3 +282,27 @@ CREATE TABLE `tbl_usuarios` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2018-02-27 13:29:50
+-- MySQL Workbench Synchronization
+-- Generated: 2018-03-03 14:37
+-- Model: New Model
+-- Version: 1.0
+-- Project: Name of the project
+-- Author: Pedro Pilz
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
+
+ALTER TABLE `cartolassemcartola`.`tbl_config` 
+CHANGE COLUMN `inicio_temporada` `inicio_temporada` VARCHAR(5) NULL DEFAULT NULL ;
+
+ALTER TABLE `cartolassemcartola`.`tbl_times_temporadas` 
+CHANGE COLUMN `pontuacao` `pontuacao` REAL NOT NULL DEFAULT 0 ;
+
+ALTER TABLE `cartolassemcartola`.`tbl_eventos` 
+ADD COLUMN `local` VARCHAR(120) NULL DEFAULT NULL AFTER `data`;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
