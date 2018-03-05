@@ -95,6 +95,22 @@
 	align-items:center;
 }
 
+/* Pontuação */
+
+.tbl-scouts{
+	color: #fff;
+}
+
+.positivo{
+	font-weight: bold;
+	color: #34a544;
+}
+
+.negativo{
+	font-weight: bold;
+	color: #f3091d;
+}
+
 /* Inscrição */
 .inscricao{
 	background-color: #fff;
@@ -286,7 +302,6 @@ ul.escudos > li {
 		text-align: center;
 	}
 }
-
 .login-box {
 	border: 1px solid #cecece;
 	-webkit-border-radius: 3px;
@@ -433,3 +448,5 @@ ul.escudos > li {
 		margin-bottom: 10px;
 	}
 }
+
+

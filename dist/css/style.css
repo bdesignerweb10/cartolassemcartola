@@ -8523,6 +8523,18 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   margin-bottom: 5px;
   align-items: center; }
 
+/* Pontuação */
+.tbl-scouts {
+  color: #fff; }
+
+.positivo {
+  font-weight: bold;
+  color: #34a544; }
+
+.negativo {
+  font-weight: bold;
+  color: #f3091d; }
+
 /* Inscrição */
 .inscricao {
   background-color: #fff;

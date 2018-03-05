@@ -1,8 +1,8 @@
 <?php 
 	require_once("conn.php");
 	
-	if(!$_SESSION["temporada"] && (basename($_SERVER['PHP_SELF']) != "inscricao.php" && basename($_SERVER['PHP_SELF']) != "regulamentos.php"))
-		header('location:inscricao.php');
+	/*if(!$_SESSION["temporada"] && (basename($_SERVER['PHP_SELF']) != "inscricao.php" && basename($_SERVER['PHP_SELF']) != "regulamentos.php"))
+		header('location:inscricao.php');*/
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,11 +31,11 @@
 			</div><!-- sidebar-header -->
 
 			<ul class="nav">
-				<?php if($_SESSION["$temporada"]) : ?>
+				<?php if(!$_SESSION["$temporada"]) : ?>
 					<li class="nav-item">					
 						<a href="index.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? ' nav-active' : ''; ?>">
-						<i class="fa fa-bar-chart"></i>	
-						Dashboard
+						<i class="fa fa-home"></i>	
+						Dashboard 
 						</a>
 					</li>
 					<li class="nav-item">					
@@ -54,6 +54,12 @@
 						<a href="mata-mata.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'mata-mata.php' ? ' nav-active' : ''; ?>">
 						<i class="fa fa-trophy"></i>	
 						Mata-Mata
+						</a>
+					</li>
+					<li class="nav-item">					
+						<a href="pontuacao.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'pontuacao.php' ? ' nav-active' : ''; ?>">
+						<i class="fa fa-bar-chart"></i>	
+						Pontuação
 						</a>
 					</li>
 					<li class="nav-item">					
