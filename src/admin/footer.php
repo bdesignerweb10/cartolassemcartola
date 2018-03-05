@@ -1,4 +1,4 @@
-		<div id="alert" class="modal fade" data-backdrop="static">
+		<div id="alert" class="modal" data-backdrop="static">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -15,7 +15,26 @@
 					</div>
 				</div>
 			</div>
-		</div>		
+		</div>
+		<div id="confirm" class="modal" data-backdrop="static">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 id="confirm-title" class="modal-title">Modal title</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				<div class="modal-body">
+					<p id="confirm-content"></p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+						<button type="button" class="btn btn-danger" id="btn-confirm-modal">Continuar</button>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div id="loading" class="modal" data-backdrop="static">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
@@ -34,6 +53,7 @@
 		
 		<script src="../js/main.js"></script>
 		<script src="js/app.js"></script>
+		<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 		<?php if($conn) $conn->close(); ?>
 	</body>
 </html>

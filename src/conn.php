@@ -52,25 +52,22 @@ if ($result) {
 
 						if ($conn->query($qry_temp) === TRUE) {
 						
-							$res_rod = $conn->query("SELECT MIN(id) AS id FROM tbl_rodadas LIMIT 1") or trigger_error($conn->error);
-					        while($rod = $res_rod->fetch_object()) {
-								$prim_rodada = $rod->id;
-							}
+							$res_rod = $conn->query("SELECT MIN(id_rodadas) AS id FROM tbl_temporadas WHERE id_anos = $id_anos LIMIT 1") or trigger_error($conn->error);
 
-							$_SESSION["temporada"] = 0;
-							$_SESSION["temporada_atual"] = $id_anos;
-							$_SESSION["mercado"] = 0;
-							$_SESSION["rodada"] = $prim_rodada;
-							$_SESSION["api_ligada"] = 0;
-							$_SESSION["email_pagseguro"] = "";
-							$_SESSION["token_pagseguro"] = "";
-							$_SESSION["inicio_temporada"] = "15/04";
+								$_SESSION["temporada"] = 0;
+								$_SESSION["temporada_atual"] = $id_anos;
+								$_SESSION["mercado"] = 1;
+								$_SESSION["rodada"] = 'NULL';
+								$_SESSION["api_ligada"] = 0;
+								$_SESSION["email_pagseguro"] = "";
+								$_SESSION["token_pagseguro"] = "";
+								$_SESSION["inicio_temporada"] = "15/04";
 
-							$qry_conf = "INSERT INTO tbl_config (temporada_aberta, temporada_atual, status_mercado, rodada_atual, api_ligada, email_pagseguro, token_pagseguro, inicio_temporada) VALUES (" . $_SESSION["temporada"] . ", " . $_SESSION["temporada_atual"] . ", " . $_SESSION["mercado"] . ", " . $_SESSION["rodada"] . ", " . $_SESSION["api_ligada"] . ", '" . $_SESSION["email_pagseguro"] . "', '" . $_SESSION["token_pagseguro"] . "', '" . $_SESSION["inicio_temporada"] . "')";
+								$qry_conf = "INSERT INTO tbl_config (temporada_aberta, temporada_atual, status_mercado, rodada_atual, api_ligada, email_pagseguro, token_pagseguro, inicio_temporada) VALUES (" . $_SESSION["temporada"] . ", " . $_SESSION["temporada_atual"] . ", " . $_SESSION["mercado"] . ", " . $_SESSION["rodada"] . ", " . $_SESSION["api_ligada"] . ", '" . $_SESSION["email_pagseguro"] . "', '" . $_SESSION["token_pagseguro"] . "', '" . $_SESSION["inicio_temporada"] . "')";
 
-							if ($conn->query($qry_conf) !== TRUE) {
-						        throw new Exception("Erro ao inserir a inscrição: " . $qry_conf . "<br>" . $conn->error);
-							}
+								if ($conn->query($qry_conf) !== TRUE) {
+							        throw new Exception("Erro ao inserir a inscrição: " . $qry_conf . "<br>" . $conn->error);
+								}
 						} else {
 					        throw new Exception("Erro ao inserir o setup de temporadas: " . $qry_temp . "<br>" . $conn->error);
 						}
@@ -103,6 +100,16 @@ if ($result) {
 
 		while($res_ano = $ano->fetch_object()) {
 			$_SESSION["temp_atual"] = $res_ano->descricao;
+		}
+
+		if(isset($_SESSION["rodada"]) && !empty($_SESSION["rodada"]) && $_SESSION["rodada"] != 'NULL') {
+			$rodada = $conn->query("SELECT descricao FROM tbl_rodadas WHERE id = " . $_SESSION["rodada"]) or trigger_error($conn->error);
+
+			while($res_rodada = $rodada->fetch_object()) {
+				$_SESSION["rod_atual"] = $res_rodada->descricao;
+			}
+		} else {
+			$_SESSION["rod_atual"] = '1';
 		}
 	}
 

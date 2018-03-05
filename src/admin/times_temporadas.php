@@ -10,7 +10,7 @@ $timestemp = $conn->query("SELECT t.id_anos AS id, a.descricao AS ano, COUNT(t.i
 		<h3 class="headline">Gerenciamento de times por temporada</h3>
 		<div class="row">
 			<div class="col-12">
-				<table class="table table-striped table-bordered table-hover datatable" cellspacing="0" width="100%">
+				<table class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
 			        <thead>
 			            <tr>
 			                <th class='center'>#</th>
@@ -37,7 +37,7 @@ $timestemp = $conn->query("SELECT t.id_anos AS id, a.descricao AS ano, COUNT(t.i
 						        }
 
 				        		echo "<tr>
-						                <td>$dados->id</td>
+      									<th scope='row' class='center'>$dados->id</th>
 						                <td>$dados->ano</td>
 						                <td class='center'>" . ($dados->id == $_SESSION["temporada_atual"] ? "<i class='fa fa-check fa-2x add' alt='Temporada Atual' title='Temporada é a atual'></i>" : "&nbsp;") . "</td>
 						                <td class='center'>$dados->qtd_rodadas</td>
@@ -81,7 +81,7 @@ $timestemp = $conn->query("SELECT t.id_anos AS id, a.descricao AS ano, COUNT(t.i
 		</div><!-- row -->	
 		<div class="row">
 			<div class="col-12">
-				<table class="table table-striped table-bordered table-hover datatable" cellspacing="0" width="100%">
+				<table class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
 			        <thead>
 			            <tr>
 			                <th class='center'>#</th>

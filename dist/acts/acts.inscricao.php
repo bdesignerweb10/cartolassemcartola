@@ -106,7 +106,7 @@ if(isset($_POST) && !empty($_POST) && $_POST["nome"]) {
 				if ($conn->query($qry_insc) === TRUE) {
 
 					$qry_usu = "INSERT INTO tbl_usuarios (times_id, usuario, senha, senha_provisoria, nivel, tentativas)
-								 				  VALUES ($id_time, '$email', '" . md5(geraSenha(6)) . "', 1, 0, 0)";
+								 				  VALUES ($id_time, '$email', '" . md5(geraSenha(6)) . "', 1, 3, 0)";
 
 					if ($conn->query($qry_usu) === TRUE) {
 
