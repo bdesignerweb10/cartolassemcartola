@@ -1,12 +1,16 @@
 <?php 
-	require_once("conn.php");
-if ($_SESSION["user_ativado"] && 
-	(!isset($_SESSION["usu_id"]) || empty($_SESSION["usu_id"]) || 
-	!isset($_SESSION['usu_nivel']) || empty($_SESSION["usu_nivel"]) || 
-	$_SESSION["usu_id"] == "0")) header('Location: login.php');
-	
-	if(!$_SESSION["temporada"] && (basename($_SERVER['PHP_SELF']) != "inscricao.php" && basename($_SERVER['PHP_SELF']) != "regulamentos.php"))
-		header('location:inscricao.php');
+require_once("conn.php");
+if($_SESSION["temporada"] == 0 && (basename($_SERVER['PHP_SELF']) != "inscricao.php" && basename($_SERVER['PHP_SELF']) != "regulamentos.php"))
+	header('Location: inscricao.php');
+else {
+	if ($_SESSION["user_ativado"] &&
+		basename($_SERVER['PHP_SELF']) != "inscricao.php" && 
+		basename($_SERVER['PHP_SELF']) != "regulamentos.php" &&
+		(!isset($_SESSION["usu_id"]) || empty($_SESSION["usu_id"]) || 
+		!isset($_SESSION['usu_nivel']) || empty($_SESSION["usu_nivel"]) || 
+		$_SESSION["usu_id"] == "0")) 
+		header('Location: login.php');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,7 +40,7 @@ if ($_SESSION["user_ativado"] &&
 
 			<ul class="nav">
 
-				<?php if($_SESSION["$temporada"] == 1) : ?>
+				<?php if($_SESSION["temporada"] == "1") : ?>
 					<li class="nav-item">					
 						<a href="index.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? ' nav-active' : ''; ?>">
 						<i class="fa fa-home"></i>	
@@ -74,7 +78,7 @@ if ($_SESSION["user_ativado"] &&
 						</a>
 					</li>
 				<?php endif; ?>
-				<?php if($_SESSION["temporada"] == 0) : ?>
+				<?php if($_SESSION["temporada"] == "0") : ?>
 					<li class="nav-item">					
 						<a href="inscricao.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'inscricao.php' ? ' nav-active' : ''; ?>">
 						<i class="fa fa-check-square-o"></i>	
