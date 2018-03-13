@@ -101,11 +101,11 @@ $anos = $conn->query("SELECT id, descricao FROM tbl_anos ORDER BY descricao ASC"
 					<h3 class="headline headline-form">Informe o ano!</h3> 
 		  			<div class="form-group">		    			
 						<label for="id">ID</label>
-		    			<input type="number" class="form-control form-control-lg" id="id" name="id" aria-describedby="id" disabled>
+		    			<input type="number" class="form-control form-control-lg" id="id" name="id" aria-describedby="id" maxlength="11" disabled>
 		    		</div>
 		  			<div class="form-group">		    			
 						<label for="descricao">Ano (da temporada)</label>
-		    			<input type="number" class="form-control form-control-lg" id="descricao" name="descricao" aria-describedby="descricao" placeholder="Informe o ano..." data-error="Por favor, informe o ano." data-mask="0000" data-mask-selectonfocus="true" data-mask-clearifnotmatch="true" required>
+		    			<input type="number" class="form-control form-control-lg" id="descricao" name="descricao" aria-describedby="descricao" placeholder="Informe o ano..." data-error="Por favor, informe o ano." data-mask="0000" data-mask-selectonfocus="true" data-mask-clearifnotmatch="true" maxlength="4" required>
 		    			<div class="help-block with-errors"></div>
 		    		</div>
   					<button type="submit" class="btn btn-primary btn-lg form-control" id="passo-ano">

@@ -114,6 +114,7 @@ if ($result) {
 	}
 
 	$_SESSION["fake_id"] = 98478521;
+	$_SESSION["user_ativado"] = true;
 
 	function formataNomeEscudo($string){
 	    return strtolower(str_replace(' ', '', preg_replace(array("/(á|à|ã|â|ä)/","/(Á|À|Ã|Â|Ä)/","/(é|è|ê|ë)/","/(É|È|Ê|Ë)/","/(í|ì|î|ï)/","/(Í|Ì|Î|Ï)/","/(ó|ò|õ|ô|ö)/","/(Ó|Ò|Õ|Ô|Ö)/","/(ú|ù|û|ü)/","/(Ú|Ù|Û|Ü)/","/(ñ)/","/(Ñ)/"),explode(" ","a A e E i I o O u U n N"),$string)));
@@ -137,6 +138,29 @@ if ($result) {
 		$retorno .= $caracteres[$rand-1];
 		}
 		return $retorno;
+	}
+
+	function url_origin( $s, $use_forwarded_host = false )
+	{
+	    $ssl      = ( ! empty( $s['HTTPS'] ) && $s['HTTPS'] == 'on' );
+	    $sp       = strtolower( $s['SERVER_PROTOCOL'] );
+	    $protocol = substr( $sp, 0, strpos( $sp, '/' ) ) . ( ( $ssl ) ? 's' : '' );
+	    $port     = $s['SERVER_PORT'];
+	    $port     = ( ( ! $ssl && $port=='80' ) || ( $ssl && $port=='443' ) ) ? '' : ':'.$port;
+	    $host     = ( $use_forwarded_host && isset( $s['HTTP_X_FORWARDED_HOST'] ) ) ? $s['HTTP_X_FORWARDED_HOST'] : ( isset( $s['HTTP_HOST'] ) ? $s['HTTP_HOST'] : null );
+	    $host     = isset( $host ) ? $host : $s['SERVER_NAME'] . $port;
+	    return $protocol . '://' . $host;
+	}
+
+	function full_url( $s, $use_forwarded_host = false )
+	{
+	    return htmlspecialchars(url_origin( $s, $use_forwarded_host) . $s['REQUEST_URI'], ENT_QUOTES, 'UTF-8' );
+	}
+
+	function full_path()
+	{
+		$x = pathinfo(full_url($_SERVER));
+	    return $x['dirname'] . "/";
 	}
 }
 else {

@@ -43,18 +43,20 @@ if (!isset($_SESSION["usu_id"]) || empty($_SESSION["usu_id"]) ||
 					Temporadas
 					</a>
 				</li>
-				<li class="nav-item">					
-					<a href="times_temporadas.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'times_temporadas.php' ? ' nav-active' : ''; ?>">
-					<i class="fa fa-list-ol"></i>	
-					Ativar Inscrição
-					</a>
-				</li>
-				<li class="nav-item">					
-					<a href="gerenciar_times.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'gerenciar_times.php' ? ' nav-active' : ''; ?>">
-					<i class="fa fa-soccer-ball-o"></i>	
-					Gerenciar Times
-					</a>
-				</li>
+				<?php if($_SESSION['usu_nivel'] == "1") : ?>
+					<li class="nav-item">					
+						<a href="times_temporadas.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'times_temporadas.php' ? ' nav-active' : ''; ?>">
+						<i class="fa fa-list-ol"></i>	
+						Ativar Inscrição
+						</a>
+					</li>
+					<li class="nav-item">					
+						<a href="gerenciar_times.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'gerenciar_times.php' ? ' nav-active' : ''; ?>">
+						<i class="fa fa-soccer-ball-o"></i>	
+						Gerenciar Times
+						</a>
+					</li>
+				<?php endif; ?>
 				<li class="nav-item">					
 					<a href="pontuacoes.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'pontuacoes.php' ? ' nav-active' : ''; ?>">
 					<i class="fa fa-calculator"></i>	
@@ -73,18 +75,20 @@ if (!isset($_SESSION["usu_id"]) || empty($_SESSION["usu_id"]) ||
 					Eventos
 					</a>
 				</li>
-				<li class="nav-item">					
-					<a href="usuarios.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'usuarios.php' ? ' nav-active' : ''; ?>">
-					<i class="fa fa-user"></i>	
-					Usuários
-					</a>
-				</li>
-				<li class="nav-item">					
-					<a href="configuracoes.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'configuracoes.php' ? ' nav-active' : ''; ?>">
-					<i class="fa fa-cogs"></i>	
-					Configurações
-					</a>
-				</li>
+				<?php if($_SESSION['usu_nivel'] == "1") : ?>
+					<li class="nav-item">					
+						<a href="usuarios.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'usuarios.php' ? ' nav-active' : ''; ?>">
+						<i class="fa fa-user"></i>	
+						Usuários
+						</a>
+					</li>
+					<li class="nav-item">					
+						<a href="configuracoes.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'configuracoes.php' ? ' nav-active' : ''; ?>">
+						<i class="fa fa-cogs"></i>	
+						Configurações
+						</a>
+					</li>
+				<?php endif; ?>
 			</ul>
 		</div><!-- sidebar -->
 	</nav>

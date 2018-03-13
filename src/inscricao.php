@@ -1,5 +1,7 @@
 <?php 
 require_once('header.php');
+if($_SESSION["temporada"])
+	header('location:index.php');
 ?>
 <main class="inscmain">
 	<div class="container">

@@ -32,14 +32,136 @@ $(function() {
 		$("#valor").val("R$ 35,00");
 	});
 
-	$("form").submit(function(e) {
+	// BEGIN LOGIN (login.php)
+
+	$("#form-login").submit(function(e) {
+		e.preventDefault();
+
 		$('#loading').modal({
 			keyboard: false
 		});
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.login.php?act=login",
+			data: $("#form-login").serialize(),
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					window.location.href = 'index.php';
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+
+					if(retorno.errno == "12010") {
+						$('#alert').on('hidden.bs.modal', function (e) {
+							window.location.href = 'provisoria.php';
+						});
+					}
+				}
+			}
+		});
 	});
+
+	$('#btn-esqueceu-senha').click(function(e) {
+		e.preventDefault();
+
+		$('.mainlogin').hide();
+		$('.mainform').show();
+	});
+
+	$('#btn-recuperar-senha').click(function(e) {
+		e.preventDefault();
+		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.login.php?act=reset",
+			data: $("#form-recuperar").serialize(),
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('#alert-title').html("Solicitação enviada com sucesso!");
+					$('#alert-content').html("Sua requisição para resetar sua senha foi realizada com sucesso. Aguarde o e-mail com as informações! Ao fechar esta mensagem a página será recarregada.");
+					$('#alert').modal('show');
+
+					$('#alert').on('hidden.bs.modal', function (e) {
+						window.location.reload();
+					});
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+	});
+
+	// END LOGIN (login.php)
+
+	// BEGIN PROVISORIA (provisoria.php)
+
+	$("#form-provisoria").submit(function(e) {
+		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.provisoria.php",
+			data: $("#form-provisoria").serialize(),
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('#alert-title').html("Senha alterada com sucesso!");
+					$('#alert-content').html('Sua senha foi alterada definitivamente com sucesso! Ao fechar a mensagem você será redirecionado para o site!');
+					$('#alert').modal('show');
+
+					$('#alert').on('hidden.bs.modal', function (e) {
+						window.location.href = 'index.php';
+					});
+
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+	});
+
+	// END PROVISORIA (provisoria.php)
 	
+	// BEGIN INSCRICAO (inscricao.php)
+
 	$("#form-inscricao").submit(function(e) {
 		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
 
 		$.ajax({
 			type: "POST",
@@ -71,6 +193,9 @@ $(function() {
 			}
 		});
 	});
+
+	// END INSCRICAO (inscricao.php)
+
 });
 
 

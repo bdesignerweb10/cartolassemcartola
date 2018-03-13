@@ -21,7 +21,7 @@ $(function() {
 
 		$.ajax({
 			type: "POST",
-			url: "acts/acts.login.php",
+			url: "acts/acts.login.php?act=login",
 			data: $("#form-login").serialize(),
 			success: function(data)
 			{
@@ -31,6 +31,55 @@ $(function() {
 
 				if(retorno.succeed) {
 					window.location.href = 'home.php';
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+
+					if(retorno.errno == "21010") {
+						$('#alert').on('hidden.bs.modal', function (e) {
+							window.location.href = '../provisoria.php';
+						});
+					}
+				}
+			}
+		});
+	});
+
+	$('#btn-esqueceu-senha').click(function(e) {
+		e.preventDefault();
+
+		$('.mainlogin').hide();
+		$('.mainform').show();
+	});
+
+	$('#btn-recuperar-senha').click(function(e) {
+		e.preventDefault();
+		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.login.php?act=reset",
+			data: $("#form-recuperar").serialize(),
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('#alert-title').html("Solicitação enviada com sucesso!");
+					$('#alert-content').html("Sua requisição para resetar sua senha foi realizada com sucesso. Aguarde o e-mail com as informações! Ao fechar esta mensagem a página será recarregada.");
+					$('#alert').modal('show');
+
+					$('#alert').on('hidden.bs.modal', function (e) {
+						window.location.reload();
+					});
 				}
 				else {
 					$('#alert-title').html(retorno.title);
@@ -854,6 +903,7 @@ $(function() {
     	$('#local').val('');
     	$('#descricao').val('');
     	$('#ativo').bootstrapToggle('off');
+    	$('#lista-participantes-evento').html('');
     });	
 
     $('#btn-add-eventos').click(function(e) {
@@ -873,6 +923,7 @@ $(function() {
     	$('#local').val('');
     	$('#descricao').val('');
     	$('#ativo').bootstrapToggle('off');
+		$('#lista-participantes-evento').html('');
     });	
 
     $('.btn-edit-eventos').click(function(e) {
@@ -899,15 +950,30 @@ $(function() {
 
 			    	$('#btn-salvar-evento').data('act', 'edit');
 			    	$('#btn-salvar-evento').data('id', id);
-    				$('#headline-temporada').html('Editando o evento ' + retorno.titulo);
+    				$('#headline-temporada').html('Editando o evento ' + retorno.dados.titulo);
 					$('.headline-form').html('Edite as informações do evento!');
 
-			    	$('#id').val(retorno.id);
-			    	$('#titulo').val(retorno.titulo);
-			    	$('#data').val(retorno.data);
-			    	$('#local').val(retorno.local);
-			    	$('#descricao').val(retorno.descricao);
-			    	$('#ativo').bootstrapToggle(retorno.ativo == 1 ? 'on' : 'off');
+					var d = new Date(retorno.dados.data * 1000);
+
+			    	$('#id').val(retorno.dados.id);
+			    	$('#titulo').val(retorno.dados.titulo);
+			    	$('#data').val(d.toDatetimeLocal());
+			    	$('#local').val(retorno.dados.local);
+			    	$('#descricao').val(retorno.dados.descricao);
+			    	$('#ativo').bootstrapToggle(retorno.dados.ativo == 1 ? 'on' : 'off');
+
+			    	if(retorno.list.length > 0) {
+						$.each(retorno.list, function(i, item) {
+							$('#lista-participantes-evento').append("<tr>" +
+						                							"<td>" + item.time + "</td>" +
+						                							"<td>" + item.presidente + "</td>" +
+						                							"<td class='center'><a href='#' class='btn-del-presenca-evento' data-id='" + item.id_time + "' data-evento='" + id + "' alt='Remover " + item.time + " do evento' title='Remover " + item.time + " do evento'><i class='fa fa-trash fa-2x del'></i></a></td>" +
+					                							"</tr>");
+						});
+					}
+					else {
+						$('#lista-participantes-evento').append("<tr><td colspan='3' class='center'>Não há dados a serem exibidos para a listagem.</td></tr>");
+					}
 				}
 				else {
 					$('.mainform').hide();
@@ -924,6 +990,7 @@ $(function() {
 			    	$('#local').val('');
 			    	$('#descricao').val('');
 			    	$('#ativo').bootstrapToggle('off');
+			    	$('#lista-participantes-evento').html('');
 
 					$('#alert-title').html(retorno.title);
 					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
@@ -979,9 +1046,16 @@ $(function() {
     	var id = $(this).data('id');
     	var act = $(this).data('act');
 
+    	if(act == "edit") {
+    		var url = "acts/acts.eventos.php?act=" + act + "&idevento=" + id;
+    	}
+    	else {
+    		var url = "acts/acts.eventos.php?act=" + act;
+    	}
+
 		$.ajax({
 			type: "POST",
-			url: "acts/acts.eventos.php?act=" + act + "&idevento=" + id,
+			url: url,
 			data: $("#form-eventos").serialize(),
 			success: function(data)
 			{
@@ -1007,8 +1081,357 @@ $(function() {
 		});
     });
 
+	$('body').on('click', '.btn-del-presenca-evento', function(e) {
+		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+    	var id = $(this).data('id');
+    	var evento = $(this).data('evento');
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.eventos.php?act=delp&idtime=" + id + "&idevento=" + evento,
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('#alert-title').html("Você removeu o time do evento!");
+					$('#alert-content').html("O time selecionado foi removido do evento com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					$('#alert').modal('show');
+
+					$('#alert').on('hidden.bs.modal', function (e) {
+						window.location.reload();
+					});
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });	
+
     // END EVENTOS (eventos.php)
+
+	// BEGIN USUÁRIOS (usuarios.php)
+
+    $('.btn-voltar-usuarios').click(function(e) {
+		e.preventDefault();
+
+		$('.mainform').hide();
+		$('.mainadd').hide();
+		$('.maintable').show();
+
+    	$('#headline-add-usuarios').html('');
+		$('.headline-form').html('');
+    	$('#headline-edit-usuarios').html('');
+		$('.headline-form-edit').html('');
+
+    	$('#id').val('');
+    	$('#time-usuario').html('');
+    	$('#user').val('');
+    	$('#password').val('');
+    	$('#nivel').val('');
+
+    	$('#usuario').val('');
+    	$('#senha').val('');
+    });	
+
+    $('#btn-add-usuarios').click(function(e) {
+		e.preventDefault();
+
+		$('.mainform').hide();
+		$('.maintable').hide();
+		$('.mainadd').show();
+
+    	$('#headline-add-usuarios').html('Cadastrar novo usuário administrador');
+		$('.headline-form-add').html('Insira as informações do novo admin!');
+    	$('#headline-edit-usuarios').html('');
+		$('.headline-form-edit').html('');
+
+    	$('#usuario').val('');
+    	$('#senha').val('');
+    });	
+
+    $('#btn-incluir-usuario').click(function(e) {
+		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.usuarios.php?act=add",
+			data: $("#form-usuarios-add").serialize(),
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('#alert-title').html($('#usuario').val() + " adicionado com sucesso!");
+					$('#alert-content').html("A inclusão de <b>" + $('#usuario').val() + "</b> foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					$('#alert').modal('show');
+
+					$('#alert').on('hidden.bs.modal', function (e) {
+						window.location.reload();
+					})
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });
+
+    $('.btn-edit-usuarios').click(function(e) {
+		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+    	var id = $(this).data('id');
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.usuarios.php?act=showupd&idusuario=" + id,
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('.maintable').hide();
+					$('.mainadd').hide();
+					$('.mainform').show();
+
+			    	$('#btn-editar-usuario').data('id', id);
+			    	$('#btn-desativar-usuario').data('id', id);
+    				$('#headline-edit-usuarios').html('Editando o usuário ' + retorno.dados.usuario);
+					$('.headline-form-edit').html('Edite as informações do usuário!');
+
+			    	$('#id').val(retorno.dados.id);
+			    	$('#time-usuario').html(retorno.dados.time);
+			    	$('#user').val(retorno.dados.usuario);
+			    	$('#password').val(retorno.dados.senha);
+			    	$('#nivel').val(retorno.dados.nivel);
+				}
+				else {
+					$('.mainadd').hide();
+					$('.mainform').hide();
+					$('.maintable').show();
+
+			    	$('#btn-editar-usuario').data('id', null);
+			    	$('#btn-desativar-usuario').data('id', null);
+    				$('#headline-edit-usuarios').html('');
+					$('.headline-form-edit').html('');
+
+			    	$('#id').val('');
+			    	$('#time-usuario').html('');
+			    	$('#user').val('');
+			    	$('#password').val('');
+			    	$('#nivel').val('');
+
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });	
+
+    $('.btn-del-usuarios').click(function(e) {
+		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+    	var id = $(this).data('id');
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.usuarios.php?act=del&idusuario=" + id,
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('#alert-title').html("Usuário removido com sucesso!");
+					$('#alert-content').html("A remoção do usuário foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					$('#alert').modal('show');
+
+					$('#alert').on('hidden.bs.modal', function (e) {
+						window.location.reload();
+					});
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });	
+
+    $('#btn-editar-usuario').click(function(e) {
+		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+		
+    	var id = $(this).data('id');
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.usuarios.php?act=edit&idusuario=" + id,
+			data: $("#form-usuarios-edit").serialize(),
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('#alert-title').html($('#user').val() + " alterado com sucesso!");
+					$('#alert-content').html("A alteração de <b>" + $('#user').val() + "</b> foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					$('#alert').modal('show');
+
+					$('#alert').on('hidden.bs.modal', function (e) {
+						window.location.reload();
+					})
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });
+
+	$('.btn-resetar-senha').click(function(e) {
+		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+		
+    	var id = $(this).data('id');
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.usuarios.php?act=reset&idusuario=" + id,
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('#alert-title').html("Senha do usuário resetada com sucesso!");
+					$('#alert-content').html("A senha do usuário foi resetada com sucesso!");
+					$('#alert').modal('show');
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });
+
+	$('#btn-desativar-usuario').click(function(e) {
+		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+		
+    	var id = $(this).data('id');
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.usuarios.php?act=deactivate&idusuario=" + id,
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('#alert-title').html("Usuário desativado com sucesso!");
+					$('#alert-content').html("O usuário foi desativado com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					$('#alert').modal('show');
+
+					$('#alert').on('hidden.bs.modal', function (e) {
+						window.location.reload();
+					});
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });
+
+    // END USUÁRIOS (usuarios.php)
+
+	// BEGIN MATA-MATA (mata-mata.php)
+	
+	// END MATA-MATA (mata-mata.php)
 });
+
+Date.prototype.toDatetimeLocal =
+  function toDatetimeLocal() {
+    var
+      date = this,
+      ten = function (i) {
+        return (i < 10 ? '0' : '') + i;
+      },
+      YYYY = date.getFullYear(),
+      MM = ten(date.getMonth() + 1),
+      DD = ten(date.getDate()),
+      HH = ten(date.getHours()),
+      II = ten(date.getMinutes()),
+      SS = ten(date.getSeconds())
+    ;
+    return YYYY + '-' + MM + '-' + DD + 'T' +
+             HH + ':' + II + ':' + SS;
+  };
+
+Date.prototype.fromDatetimeLocal = (function (BST) {
+  // BST should not be present as UTC time
+  return new Date(BST).toISOString().slice(0, 16) === BST ?
+    // if it is, it needs to be removed
+    function () {
+      return new Date(
+        this.getTime() +
+        (this.getTimezoneOffset() * 60000)
+      ).toISOString();
+    } :
+    // otherwise can just be equivalent of toISOString
+    Date.prototype.toISOString;
+}('2006-06-06T06:06'));
 
 /*!
  * Validator v0.11.9 for Bootstrap 3, by @1000hz

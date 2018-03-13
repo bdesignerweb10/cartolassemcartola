@@ -88,30 +88,30 @@ $timeslist = $conn->query("SELECT t.id AS id, t.nome_time AS time, t.nome_presid
 					<div class="row">
 			  			<div class="col-sm-4 col-md-4 col-lg-2 col-xl-2">		    			
 							<label for="id">ID</label>
-			    			<input type="number" class="form-control form-control-lg" id="id" name="id" aria-describedby="id" disabled>
+			    			<input type="number" class="form-control form-control-lg" id="id" name="id" aria-describedby="id" maxlength="11" disabled />
 			    		</div>
 			  			<div class="col-sm-8 col-md-8 col-lg-10 col-xl-10">		    			
 							<label for="nome_time">Nome do Time</label>
-			    			<input type="text" class="form-control form-control-lg" id="nome_time" name="nome_time" aria-describedby="nome_time" placeholder="Informe o nome do time..." data-error="Por favor, informe o nome do time." required>
+			    			<input type="text" class="form-control form-control-lg" id="nome_time" name="nome_time" aria-describedby="nome_time" placeholder="Informe o nome do time..." data-error="Por favor, informe o nome do time." maxlength="120" required>
 			    			<div class="help-block with-errors"></div>
 			    		</div>
 					</div>
 					<div class="row">
 			  			<div class="col-12">		    			
 							<label for="nome_presidente">Nome do Presidente</label>
-			    			<input type="text" class="form-control form-control-lg" id="nome_presidente" name="nome_presidente" aria-describedby="nome_presidente" placeholder="Informe o nome do presidente..." data-error="Por favor, informe o nome do presidente." required>
+			    			<input type="text" class="form-control form-control-lg" id="nome_presidente" name="nome_presidente" aria-describedby="nome_presidente" placeholder="Informe o nome do presidente..." data-error="Por favor, informe o nome do presidente." maxlength="120" required>
 			    			<div class="help-block with-errors"></div>
 			    		</div>
 					</div>
 					<div class="row">
 			  			<div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">		    			
 							<label for="nome_presidente">E-mail</label>
-			    			<input type="email" class="form-control form-control-lg" id="email" name="email" aria-describedby="email" placeholder="Informe o e-mail..." data-error="Por favor, informe o e-mail." required>
+			    			<input type="email" class="form-control form-control-lg" id="email" name="email" aria-describedby="email" placeholder="Informe o e-mail..." data-error="Por favor, informe o e-mail." maxlength="120" required>
 			    			<div class="help-block with-errors"></div>
 			    		</div>
 			  			<div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">		    			
 							<label for="telefone">Telefone</label>
-			    			<input type="text" class="form-control form-control-lg" id="telefone" name="telefone" aria-describedby="telefone" placeholder="Informe nº do telefone..." data-error="Por favor, informe um número de telefone correto." data-mask="(00) 00000-0000" data-mask-selectonfocus="true" data-mask-clearifnotmatch="true" required>
+			    			<input type="text" class="form-control form-control-lg" id="telefone" name="telefone" aria-describedby="telefone" placeholder="Informe nº do telefone..." data-error="Por favor, informe um número de telefone correto." data-mask="(00) 00000-0000" data-mask-selectonfocus="true" data-mask-clearifnotmatch="true" maxlength="15" required>
 			    			<div class="help-block with-errors"></div>
 			    		</div>
 					</div>

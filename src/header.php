@@ -1,8 +1,12 @@
 <?php 
 	require_once("conn.php");
+if ($_SESSION["user_ativado"] && 
+	(!isset($_SESSION["usu_id"]) || empty($_SESSION["usu_id"]) || 
+	!isset($_SESSION['usu_nivel']) || empty($_SESSION["usu_nivel"]) || 
+	$_SESSION["usu_id"] == "0")) header('Location: login.php');
 	
-	/*if(!$_SESSION["temporada"] && (basename($_SERVER['PHP_SELF']) != "inscricao.php" && basename($_SERVER['PHP_SELF']) != "regulamentos.php"))
-		header('location:inscricao.php');*/
+	if(!$_SESSION["temporada"] && (basename($_SERVER['PHP_SELF']) != "inscricao.php" && basename($_SERVER['PHP_SELF']) != "regulamentos.php"))
+		header('location:inscricao.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">

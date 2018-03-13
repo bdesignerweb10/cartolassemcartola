@@ -46,7 +46,7 @@ CREATE TABLE `tbl_config` (
   `api_ligada` int(1) NOT NULL DEFAULT '0',
   `email_pagseguro` varchar(120) DEFAULT NULL,
   `token_pagseguro` varchar(120) DEFAULT NULL,
-  `inicio_temporada` varchar(5) NOT NULL,
+  `inicio_temporada` varchar(5) DEFAULT NULL,
   KEY `fkcon_anos_idx` (`temporada_atual`),
   KEY `fkcon_temporada_atual_idx` (`rodada_atual`,`temporada_atual`),
   CONSTRAINT `fkcon_anos` FOREIGN KEY (`temporada_atual`) REFERENCES `tbl_anos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -65,6 +65,7 @@ CREATE TABLE `tbl_eventos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `titulo` varchar(60) NOT NULL,
   `data` datetime NOT NULL,
+  `local` varchar(120) DEFAULT NULL,
   `descricao` varchar(240) NOT NULL,
   `ativo` int(1) NOT NULL,
   `criado_por` int(11) NOT NULL,
@@ -281,28 +282,4 @@ CREATE TABLE `tbl_usuarios` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-27 13:29:50
--- MySQL Workbench Synchronization
--- Generated: 2018-03-03 14:37
--- Model: New Model
--- Version: 1.0
--- Project: Name of the project
--- Author: Pedro Pilz
-
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
-
-ALTER TABLE `cartolassemcartola`.`tbl_config` 
-CHANGE COLUMN `inicio_temporada` `inicio_temporada` VARCHAR(5) NULL DEFAULT NULL ;
-
-ALTER TABLE `cartolassemcartola`.`tbl_times_temporadas` 
-CHANGE COLUMN `pontuacao` `pontuacao` REAL NOT NULL DEFAULT 0 ;
-
-ALTER TABLE `cartolassemcartola`.`tbl_eventos` 
-ADD COLUMN `local` VARCHAR(120) NULL DEFAULT NULL AFTER `data`;
-
-
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+-- Dump completed on 2018-03-05 22:00:24

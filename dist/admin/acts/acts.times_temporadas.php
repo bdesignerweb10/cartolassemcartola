@@ -119,80 +119,113 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 
 					if ($conn->query($upd_times) === TRUE) {
 
-						$seltemps = $conn->query("SELECT id_rodadas FROM tbl_temporadas WHERE id_anos = $id_ano") 
+						$email = "";
+						$senha = geraSenha(6);
+
+						$selusuario = $conn->query("SELECT usuario FROM tbl_usuarios WHERE times_id = $id_time") 
 									or trigger_error("23010 - " . $conn->error);
 
-						if ($seltemps && $seltemps->num_rows > 0) {
-							$var_erros = "";
-
-			    			while($temp = $seltemps->fetch_object()) {
-			    				$ins_time_temp = "INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ($id_time, $id_ano, $temp->id_rodadas, 0, NULL, " . $_SESSION["usu_id"] . ", NOW())";
-
-								if ($conn->query($ins_time_temp) !== TRUE) {
-									$var_erros .= "Erro ao inserir o mapa de rodadas da temporada para o time: " . $ins_time_temp . "<br>" . $conn->error . "<br>";
-								}
+						if ($selusuario && $selusuario->num_rows > 0) {
+			    			while($usuario = $selusuario->fetch_object()) {
+			    				$email = $usuario->usuario;
 			    			}
+						}
 
-							if(strlen($var_erros) > 0) {
-				        		throw new Exception($var_erros);
-							}
+						$upd_usuario = "UPDATE tbl_usuarios 
+						  			       SET senha = '" . md5($senha) . "',
+						  			           senha_provisoria = 1,
+						  			           tentativas = 0
+						  			     WHERE times_id = $id_time
+						  			       AND usuario = '" . $email . "'";
 
-							$sqltime = $conn->query("SELECT nome_presidente, email FROM tbl_times WHERE id = $id_time") or trigger_error("23011 - " . $conn->error);
+						if ($conn->query($upd_usuario) === TRUE) {
+							$seltemps = $conn->query("SELECT id_rodadas FROM tbl_temporadas WHERE id_anos = $id_ano") 
+										or trigger_error("23010 - " . $conn->error);
 
-							$nome = "";
-							$email = "";
+							if ($seltemps && $seltemps->num_rows > 0) {
+								$var_erros = "";
 
-							if ($sqltime && $sqltime->num_rows > 0) {
-				    			while($time = $sqltime->fetch_object()) {
-				    				$nome = $time->nome_presidente;
-				    				$email = $time->email;
+				    			while($temp = $seltemps->fetch_object()) {
+				    				$ins_time_temp = "INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ($id_time, $id_ano, $temp->id_rodadas, 0, NULL, " . $_SESSION["usu_id"] . ", NOW())";
+
+									if ($conn->query($ins_time_temp) !== TRUE) {
+										$var_erros .= "Erro ao inserir o mapa de rodadas da temporada para o time: " . $ins_time_temp . "<br>" . $conn->error . "<br>";
+									}
 				    			}
-				    		}
 
-							$sqlano = $conn->query("SELECT descricao FROM tbl_anos WHERE id = $id_ano") or trigger_error("23012 - " . $conn->error);
+								if(strlen($var_erros) > 0) {
+					        		throw new Exception($var_erros);
+								}
 
-							$temporada = "";
+								$sqltime = $conn->query("SELECT nome_presidente, email FROM tbl_times WHERE id = $id_time") or trigger_error("23011 - " . $conn->error);
 
-							if ($sqlano && $sqlano->num_rows > 0) {
-				    			while($ano = $sqlano->fetch_object()) {
-				    				$temporada = $ano->descricao;
-				    			}
-				    		}
+								$nome = "";
+								$email = "";
 
-				    		try {
-								$mail = new PHPMailer(true); 
+								if ($sqltime && $sqltime->num_rows > 0) {
+					    			while($time = $sqltime->fetch_object()) {
+					    				$nome = $time->nome_presidente;
+					    				$email = $time->email;
+					    			}
+					    		}
 
-								$mail->isSMTP();
-							    $mail->Host = 'email-ssl.com.br';
-							    $mail->SMTPAuth = true;
-							    $mail->Username = 'contato@cartolassemcartola.com.br';
-							    $mail->Password = '34#Edc78*Bhu';
-							    $mail->Port = 465;
-								$mail->SMTPSecure = 'ssl';
+								$sqlano = $conn->query("SELECT descricao FROM tbl_anos WHERE id = $id_ano") or trigger_error("23012 - " . $conn->error);
 
-							    $mail->setFrom('contato@cartolassemcartola.com.br', 'Contato | Cartolas Sem Cartola');
-							    $mail->addReplyTo('presidente@cartolassemcartola.com.br', 'Presidente | Cartolas Sem Cartola');
-							    $mail->addAddress($email, $nome);
-							    $mail->addBCC('presidente@cartolassemcartola.com.br', 'Presidente | Cartolas Sem Cartola');
-							    $mail->addBCC('contato@cartolassemcartola.com.br', 'Contato | Cartolas Sem Cartola');
+								$temporada = "";
 
-							    $mail->isHTML(true);
+								if ($sqlano && $sqlano->num_rows > 0) {
+					    			while($ano = $sqlano->fetch_object()) {
+					    				$temporada = $ano->descricao;
+					    			}
+					    		}
 
-							    $mail->Subject = utf8_decode("[Cartolas Sem Cartola] Seja bem vindo à liga e a nova temporada, parça!");
-							    $mail->Body    = utf8_decode("<html><head></head><body><table width='600' border='0' align='center' cellpadding='0' cellspacing='0' style='background-color:#e9e9e9;'><tr><td style='background-color:#fc8f3e; width:600px; height:106px;'><h3 style='font-family:Verdana, Geneva, sans-serif; color:#fff; padding-top:15px;' align='center'>Inscrição confirmada</h3></td></tr><tr><td><p style='font-family:Verdana, Geneva, sans-serif; padding-left:20px; padding-top:20px;'>Parabéns Cartoleiro " . $nome . "!</p><p style='font-family:Verdana, Geneva, sans-serif; padding-left:20px;'>Sua inscrição foi concluida com sucesso! Você encarou o desafio, agora está inscrito na nossa liga para a temporada <b>" . $temporada . "</b>!</p><p style='font-family:Verdana, Geneva, sans-serif; padding-left:20px;'>Lembrando que a temporada começa dia <b>" . $_SESSION["inicio_temporada"] . "/" . $temporada . "</b>, então fica esperto pra não perder nenhuma rodada e depois jogar a culpa no SPORT!</p><p style='font-family:Verdana, Geneva, sans-serif; padding-left:20px;'>Caso tenha alguma dúvida ou sugestão, entre em contato por:</p><p style='font-family:Verdana, Geneva, sans-serif; padding-left:20px;'> - (19) 99897-0090<br /> - <a href='mailto:contato@cartolassemcartola.com.br'>contato@cartolassemcartola.com.br</a></p><p style='font-family:Verdana, Geneva, sans-serif; padding-left:20px;'>Boa Sorte e boas mitadas!</p><p style='font-family:Verdana, Geneva, sans-serif; padding-left:20px; padding-bottom:20px;'>Att,</p></td></tr><tr><td style='background-color:#fc8f3e; width:600px; height:106px;'><h3 style='font-family:Verdana, Geneva, sans-serif; color:#fff; padding-top:15px;' align='center'>Equipe Cartolas sem cartola</h3></td></tr></table></body></html>");
-							    $mail->AltBody = utf8_decode("Parabéns Cartoleiro " . $nome . "! Sua inscrição foi concluida com sucesso! Você encarou o desafio, agora está inscrito na nossa liga para a temporada " . $temporada . "! Lembrando que a temporada começa dia " . $_SESSION["inicio_temporada"] . "/" . $temporada . ", então fica esperto pra não perder nenhuma rodada e depois jogar a culpa no SPORT! Caso tenha alguma dúvida ou sugestão, entre em contato por: (19) 99897-0090 ou contato@cartolassemcartola.com.br. Boa Sorte e boas mitadas! Att., Equipe Cartolas sem Cartola.");
-    							$mail->send();
+					    		try {
+									$mail = new PHPMailer(true); 
 
-								$conn->commit();
+									$mail->isSMTP();
+								    $mail->Host = 'email-ssl.com.br';
+								    $mail->SMTPAuth = true;
+								    $mail->Username = 'contato@cartolassemcartola.com.br';
+								    $mail->Password = '34#Edc78*Bhu';
+								    $mail->Port = 465;
+									$mail->SMTPSecure = 'ssl';
 
-								echo '{"succeed": true}';
-							} catch (Exception $e) {
-	    						$conn->rollback();
+								    $mail->setFrom('contato@cartolassemcartola.com.br', 'Contato | Cartolas Sem Cartola');
+								    $mail->addReplyTo('presidente@cartolassemcartola.com.br', 'Presidente | Cartolas Sem Cartola');
+								    $mail->addAddress($email, $nome);
+								    $mail->addBCC('presidente@cartolassemcartola.com.br', 'Presidente | Cartolas Sem Cartola');
+								    $mail->addBCC('contato@cartolassemcartola.com.br', 'Contato | Cartolas Sem Cartola');
 
-								echo '{"succeed": false, "errno": 23013, "title": "Erro ao enviar o e-mail!", "erro": "Ocorreu um erro ao enviar o e-mail: ' . $mail->ErrorInfo . '"}';
+								    $mail->isHTML(true);
+
+								    $mail->Subject = utf8_decode("[Cartolas Sem Cartola] Seja bem vindo à liga e a nova temporada, parça!");
+								    $mail->Body    = utf8_decode("<html><head></head><body><table width='600' border='0' align='center' cellpadding='0' cellspacing='0' style='background-color:#e9e9e9;'><tr><td style='background-color:#fc8f3e; width:600px; height:106px;'><h3 style='font-family:Verdana, Geneva, sans-serif; color:#fff; padding-top:15px;' align='center'>Inscrição confirmada</h3></td></tr><tr><td><p style='font-family:Verdana, Geneva, sans-serif; padding-left:20px; padding-top:20px;'>Parabéns Cartoleiro " . $nome . "!</p><p style='font-family:Verdana, Geneva, sans-serif; padding-left:20px;'>Sua inscrição foi concluida com sucesso! Você encarou o desafio, agora está inscrito na nossa liga para a temporada <b>" . $temporada . "</b>!</p><p style='font-family:Verdana, Geneva, sans-serif; padding-left:20px;'>Lembrando que a temporada começa dia <b>" . $_SESSION["inicio_temporada"] . "/" . $temporada . "</b>, então fica esperto pra não perder nenhuma rodada e depois jogar a culpa no SPORT!</p><p style='font-family:Verdana, Geneva, sans-serif; padding-left:20px;'>Caso tenha alguma dúvida ou sugestão, entre em contato por:</p><p style='font-family:Verdana, Geneva, sans-serif; padding-left:20px;'> - (19) 99897-0090<br /> - <a href='mailto:contato@cartolassemcartola.com.br'>contato@cartolassemcartola.com.br</a></p><p style='font-family:Verdana, Geneva, sans-serif; padding-left:20px;'>Boa Sorte e boas mitadas!</p><p style='font-family:Verdana, Geneva, sans-serif; padding-left:20px; padding-bottom:20px;'>Att,</p></td></tr><tr><td style='background-color:#fc8f3e; width:600px; height:106px;'><h3 style='font-family:Verdana, Geneva, sans-serif; color:#fff; padding-top:15px;' align='center'>Equipe Cartolas sem cartola</h3></td></tr></table></body></html>");
+								    $mail->AltBody = utf8_decode("Parabéns Cartoleiro " . $nome . "! Sua inscrição foi concluida com sucesso! Você encarou o desafio, agora está inscrito na nossa liga para a temporada " . $temporada . "! Lembrando que a temporada começa dia " . $_SESSION["inicio_temporada"] . "/" . $temporada . ", então fica esperto pra não perder nenhuma rodada e depois jogar a culpa no SPORT! Caso tenha alguma dúvida ou sugestão, entre em contato por: (19) 99897-0090 ou contato@cartolassemcartola.com.br. Boa Sorte e boas mitadas! Att., Equipe Cartolas sem Cartola.");
+	    							$mail->send();
+
+	    							if($_SESSION["user_ativado"]) {
+			    						$actual_link = str_replace('admin/', '', str_replace('acts/', '', full_path()));
+									    
+									    $mail->Subject = utf8_decode("[Cartolas Sem Cartola] Seu usuário do Cartolas sem Cartola, presidente!");
+									    $mail->Body    = utf8_decode("<html><head></head><body><table width='600' border='0' align='center' cellpadding='0' cellspacing='0' style='background-color:#e9e9e9;'><tr><td style='background-color:#fc8f3e; width:600px; height:106px;'><h3 style='font-family:Verdana, Geneva, sans-serif; color:#fff; padding-top:15px;' align='center'>Sua senha provisória do Cartolas sem Cartola</h3></td></tr><tr><td><p style='font-family:Verdana, Geneva, sans-serif; padding-left:20px; padding-top:20px;'>Olá cartoleiro " . $nome . "!</p><p style='font-family:Verdana, Geneva, sans-serif; padding-left:20px;'>Como você foi um bom menino e já fez o pagamento da sua inscrição agora segue seu usuario e sua senha provisória para que você consiga acessar ao site:</p><p style='font-family:Verdana, Geneva, sans-serif; padding-left:20px;'><b>Login: </b>" . $email . "<br /><b>Senha provisória: </b>" . $senha . "</p><p style='font-family:Verdana, Geneva, sans-serif; padding-left:20px;'><a href='$actual_link'>Acesse o site agora mesmo para alterar a sua senha e desfrutar de tudo que o portal tem a oferecer!</a></p><p style='font-family:Verdana, Geneva, sans-serif; padding-left:20px;'>Caso tenha alguma dúvida ou sugestão, entre em contato por:</p><p style='font-family:Verdana, Geneva, sans-serif; padding-left:20px;'> - (19) 99897-0090<br /> - <a href='mailto:contato@cartolassemcartola.com.br'>contato@cartolassemcartola.com.br</a></p><p style='font-family:Verdana, Geneva, sans-serif; padding-left:20px; padding-bottom:20px;'>Att,</p></td></tr><tr><td style='background-color:#fc8f3e; width:600px; height:106px;'><h3 style='font-family:Verdana, Geneva, sans-serif; color:#fff; padding-top:15px;' align='center'>Equipe Cartolas sem Cartola</h3></td></tr></table></body></html>");
+									    $mail->AltBody = utf8_decode("Olá cartoleiro " . $nome . "! Como você foi um bom menino e já fez o pagamento da sua inscrição agora segue seu usuario e sua senha provisória para que você consiga acessar ao site: Login: " . $email . " | Senha provisória: " . $senha . " | Acesse o site ($actual_link) agora mesmo para alterar a sua senha e desfrutar de tudo que o portal tem a oferecer! Caso tenha alguma dúvida ou sugestão, entre em contato por: (19) 99897-0090 ou contato@cartolassemcartola.com.br. Att., Equipe Cartolas sem Cartola.");
+
+									    $mail->send();
+	    							}
+
+									$conn->commit();
+
+									echo '{"succeed": true}';
+								} catch (Exception $e) {
+		    						$conn->rollback();
+
+									echo '{"succeed": false, "errno": 23013, "title": "Erro ao enviar o e-mail!", "erro": "Ocorreu um erro ao enviar o e-mail: ' . $mail->ErrorInfo . '"}';
+								}
+				    		} else {
+						        throw new Exception("Erro ao ativar o time na temporada: Não há uma temporada com rodadas criada para esse ano!");
 							}
-			    		} else {
-					        throw new Exception("Erro ao ativar o time na temporada: Não há uma temporada com rodadas criada para esse ano!");
+						} else {
+					        throw new Exception("Erro ao ativar o usuário: " . $upd_usuario . "<br>" . $conn->error);
 						}
 					} else {
 				        throw new Exception("Erro ao ativar o time: " . $upd_times . "<br>" . $conn->error);

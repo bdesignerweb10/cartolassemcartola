@@ -1,5 +1,4 @@
 <?php
-
 require_once("../conn.php");
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -106,13 +105,13 @@ if(isset($_POST) && !empty($_POST) && $_POST["nome"]) {
 				if ($conn->query($qry_insc) === TRUE) {
 
 					$qry_usu = "INSERT INTO tbl_usuarios (times_id, usuario, senha, senha_provisoria, nivel, tentativas)
-								 				  VALUES ($id_time, '$email', '" . md5(geraSenha(6)) . "', 1, 3, 0)";
+								 				  VALUES ($id_time, '$email', '', 1, 3, 0)";
 
 					if ($conn->query($qry_usu) === TRUE) {
 
 					    if($forma_pagto == 1 || $forma_pagto == 2) {
-					    	$msg_html = "<p style='font-family:Verdana, Geneva, sans-serif; padding-left:20px;'>O pagamento ($valor) deverá ser feito diretamente com o mini-tesoureiro ou através de deposito/transferência bancária.</p><p style='font-family:Verdana, Geneva, sans-serif; padding-left:20px;'>Banco Itaú</p><p style='font-family:Verdana, Geneva, sans-serif; padding-left:20px;'>Agência: 4890 <br />C/C: 1441-6<br />CPF: 358.640.518-27<br />Titular: Bruno Gomes da Silva (Gigante Léo)</p>";
-					    	$msg_plain = "O pagamento ($valor) deverá ser diretamente com o mini-tesoureiro ou através de deposito/transferência bancária. Banco Itaú - Agência: 4890 | C/C: 1441-6 | CPF: 358.640.518-27 | Titular: Bruno Gomes da Silva (Gigante Léo)";
+					    	$msg_html = "<p style='font-family:Verdana, Geneva, sans-serif; padding-left:20px;'>O pagamento ($valor) deverá ser feito diretamente com o mini-tesoureiro ou através de deposito/transferência bancária.</p><p style='font-family:Verdana, Geneva, sans-serif; padding-left:20px;'>Banco Itaú</p><p style='font-family:Verdana, Geneva, sans-serif; padding-left:20px;'>Agência: 4890 <br />C/C: 1441-6<br />CPF: 358.640.578-27<br />Titular: Bruno Gomes da Silva (Gigante Léo)</p>";
+					    	$msg_plain = "O pagamento ($valor) deverá ser diretamente com o mini-tesoureiro ou através de deposito/transferência bancária. Banco Itaú - Agência: 4890 | C/C: 1441-6 | CPF: 358.640.578-27 | Titular: Bruno Gomes da Silva (Gigante Léo)";
 					    } else {
 					    	$msg_html = "<p style='font-family:Verdana, Geneva, sans-serif; padding-left:20px;'>O pagamento ($valor) deverá ser feito pelo PAGSEGURO. Fica tranquilo, é seguro e dá pra parcelar, sem perreco!</p><p style='font-family:Verdana, Geneva, sans-serif; padding-left:20px;'>Assim que o mesmo for autorizado e dado baixa, seu cadastro automaticamente validado.</p>";
 					    	$msg_plain = "O pagamento ($valor) deverá ser feito pelo PAGSEGURO. Fica tranquilo, é seguro e dá pra parcelar, sem perreco! Assim que o mesmo for autorizado e dado baixa, seu cadastro automaticamente validado.";
@@ -141,7 +140,6 @@ if(isset($_POST) && !empty($_POST) && $_POST["nome"]) {
 						    $mail->AltBody = utf8_decode("Olá cartoleiro " . $nome . "! Já recebemos sua inscrição, efetuando o pagamento sua inscrição será validada. " . $msg_plain . " | Caso tenha alguma dúvida ou sugestão, entre em contato por: (19) 99897-0090 ou contato@cartolassemcartola.com.br. Att., Equipe Cartolas sem Cartola.");
 
 						    $mail->send();
-						    // TODO: enviar e-mail de criação de novo usuário
 
 							$conn->commit();
 						

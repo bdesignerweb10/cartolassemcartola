@@ -91,7 +91,7 @@ $qrypontuacao = $conn->query("SELECT t.id AS id, t.nome_presidente AS presidente
 															</select>
 														</div>
 														<div class='col-sm-12 col-md-12 col-lg-7 col-xl-7'>
-					  										<input type='text' class='form-control' id='pontuacao[$fake_id]' name='pontuacao[$fake_id]' placeholder='0,00' value='" . number_format($time->pontuacao, 2) . "' data-mask='##0,00' data-mask-selectonfocus='true' data-mask-clearifnotmatch='true' data-mask-reverse='true' " . ($flag_merc_aberto ? "disabled" : "") . "/>
+					  										<input type='text' class='form-control' id='pontuacao[$fake_id]' name='pontuacao[$fake_id]' placeholder='0,00' value='" . number_format($time->pontuacao, 2) . "' data-mask='##0,00' data-mask-selectonfocus='true' data-mask-clearifnotmatch='true' data-mask-reverse='true' " . ($flag_merc_aberto ? "disabled" : "") . " maxlength='6' />
 														</div>
 				  									</div>
 								                </td></tr>";
