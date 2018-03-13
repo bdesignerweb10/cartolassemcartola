@@ -80,7 +80,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 
 				$ret_rod .= "]";
 				
-				echo '{"succeed": true, "descricao": ' . $descricao . ', "list": ' . $ret_rod . '}';
+				echo '{"succeed": true, "id": ' . $id . ', "descricao": ' . $descricao . ', "list": ' . $ret_rod . '}';
 			} catch(Exception $e) {
 				echo '{"succeed": false, "errno": 22008, "title": "Erro ao carregar os dados!", "erro": "Ocorreu um erro ao carregar os dados: ' . $e->getMessage() . '"}';
 			}

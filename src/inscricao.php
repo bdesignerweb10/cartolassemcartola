@@ -9,17 +9,17 @@ require_once('header.php');
 				<div class="inscricao">
 					<form id="form-inscricao" data-toggle="validator" action="acts/acts.inscricao.php" method="POST">
 			  			<div class="form-group">		    			
-			    			<input type="text" class="form-control" id="nome" name="nome" aria-describedby="nome" placeholder="Informe o nome do presidente" data-error="Por favor, informe o nome do presidente." required>
+			    			<input type="text" class="form-control" id="nome" name="nome" aria-describedby="nome" placeholder="Informe o nome do presidente" data-error="Por favor, informe o nome do presidente." maxlength="120" required>
 			    			<div class="help-block with-errors"></div>
 			    		</div>
 			  			<div class="form-group">
-			    			<input type="email" class="form-control" id="email" name="email" aria-describedby="email" placeholder="Informe seu e-mail" data-error="Por favor, informe um e-mail correto." required>
+			    			<input type="email" class="form-control" id="email" name="email" aria-describedby="email" placeholder="Informe seu e-mail" data-error="Por favor, informe um e-mail correto." maxlength="120" required>
 			    			<div class="help-block with-errors"></div>
 			            </div>         
 			  			<div class="form-inline">
-			  				<input type="text" class="form-control mb-3 mr-sm-3 mb-sm-3" id="telefone" name="telefone" placeholder="Informe nº do telefone" data-error="Por favor, informe um número de telefone correto." data-mask="(00) 00000-0000" data-mask-selectonfocus="true" data-mask-clearifnotmatch="true" required>
+			  				<input type="text" class="form-control mb-3 mr-sm-3 mb-sm-3" id="telefone" name="telefone" placeholder="Informe nº do telefone" data-error="Por favor, informe um número de telefone correto." data-mask="(00) 00000-0000" data-mask-selectonfocus="true" data-mask-clearifnotmatch="true" maxlength="15" required>
 			  				<div class="help-block with-errors"></div>		  				
-			  				<input type="text" class="form-control mb-3 mr-sm-3 mb-sm-3" id="time" name="time" placeholder="Informe o seu time" data-error="Por favor, informe o nome de seu time." required>
+			  				<input type="text" class="form-control mb-3 mr-sm-3 mb-sm-3" id="time" name="time" placeholder="Informe o seu time" data-error="Por favor, informe o nome de seu time." maxlength="120" required>
 			  				<div class="help-block with-errors"></div>
 			  				<input type="text" class="form-control mb-2 mr-sm-2 mb-sm-3" id="valor" name="valor" value="R$ 30,00" data-mask="R$ 00,00" data-mask-selectonfocus="true" data-mask-clearifnotmatch="true" readonly="readonly">
 			  			</div>

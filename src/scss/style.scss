@@ -553,3 +553,15 @@ ul.escudos > li {
 		margin-bottom: 10px;
 	}
 }
+
+.text-column {
+	width: 40%;
+}
+
+.checkbox label .toggle, .checkbox-inline .toggle {
+	margin-left: 0px !important;
+}
+
+.toggle.btn {
+    min-width: 100px !important;
+}
