@@ -36,8 +36,7 @@ if ($_SESSION["user_ativado"] &&
 
 			<ul class="nav">
 
-				<?php if(!$_SESSION["$temporada"]) : ?>
-
+				<?php if($_SESSION["$temporada"] == 1) : ?>
 					<li class="nav-item">					
 						<a href="index.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? ' nav-active' : ''; ?>">
 						<i class="fa fa-home"></i>	
@@ -75,7 +74,7 @@ if ($_SESSION["user_ativado"] &&
 						</a>
 					</li>
 				<?php endif; ?>
-				<?php if(!$_SESSION["temporada"] == 1) : ?>
+				<?php if($_SESSION["temporada"] == 0) : ?>
 					<li class="nav-item">					
 						<a href="inscricao.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'inscricao.php' ? ' nav-active' : ''; ?>">
 						<i class="fa fa-check-square-o"></i>	

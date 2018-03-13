@@ -1396,9 +1396,9 @@ $(function() {
 
     // END USUÁRIOS (usuarios.php)
 
-	// BEGIN MATA-MATA (mata-mata.php)
+	// BEGIN MATA-MATA (mata_mata.php)
 	
-	// END MATA-MATA (mata-mata.php)
+	// END MATA-MATA (mata_mata.php)
 });
 
 Date.prototype.toDatetimeLocal =

@@ -1,11 +1,9 @@
 <?php
 	require_once('header.php');
 ?>
-
 	<main>
 		<div class="container">
 			<h1 class="headline">Dashboard</h1>
-
 			<div class="row">
 				<div class="col-sm-5">
 					<article>
