@@ -32,7 +32,7 @@
 
 			<ul class="nav">
 
-				<?php if($_SESSION["$temporada"]) : ?>
+				<?php if(!$_SESSION["$temporada"]) : ?>
 
 					<li class="nav-item">					
 						<a href="index.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? ' nav-active' : ''; ?>">
@@ -47,9 +47,9 @@
 						</a>
 					</li>
 					<li class="nav-item">					
-						<a href="rodada.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'rodada.php' ? ' nav-active' : ''; ?>">
-						<i class="fa fa-table"></i>	
-						Rodada a Rodada
+						<a href="clube.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'clube.php' ? ' nav-active' : ''; ?>">
+						<i class="fa fa-id-card"></i>	
+						Historia do Clube
 						</a>
 					</li>
 					<li class="nav-item">					

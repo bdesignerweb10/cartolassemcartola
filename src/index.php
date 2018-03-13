@@ -75,7 +75,7 @@
 							</div><!-- card-block -->
 							<footer>
 								<div class="card-footer">
-									<button class="btn btn-primary">Acompanhar meu desempenho</button>					
+									<a href="rodada.php"><button class="btn btn-primary">Acompanhar meu desempenho</button></a>					
 								</div><!-- card-footer -->
 							</footer>				
 						</div><!-- card -->

@@ -8625,7 +8625,8 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   text-transform: uppercase; }
 
 .fundo {
-  background: url(../img/torcida.png) no-repeat; }
+  background: url(../img/torcida.png) no-repeat;
+  margin-left: 3px; }
 
 .brasao {
   padding-top: 15px; }
@@ -8670,6 +8671,84 @@ ul.escudos > li {
 
 .dropdown-item:focus, .dropdown-item:hover {
   background-color: #efefef; }
+
+/* Estatistica Rodada a rodada */
+.img-estatistica {
+  background: url(../img/estatistica.png) no-repeat;
+  height: 200px;
+  margin-left: 3px; }
+
+.headline-est {
+  margin-left: 50px;
+  color: #fff;
+  font-weight: bold; }
+
+/*td, th {
+  margin: 0;
+  white-space: nowrap;
+  border-top-width: 0px;
+}*/
+.table-responsive > .fixed-column {
+  position: absolute;
+  display: inline-block;
+  width: auto;
+  border-right: 1px solid #ddd; }
+
+.time-rodada {
+  position: absolute;
+  width: 233px; }
+
+.titulo {
+  font-weight: bold;
+  color: #293541; }
+
+.ruim {
+  color: #f22436; }
+
+.badge.ruim {
+  background-color: #f22436; }
+
+.regular {
+  color: #9f7d15; }
+
+.badge.regular {
+  background-color: #9f7d15; }
+
+.bom {
+  color: #0070c0; }
+
+.badge.bom {
+  background-color: #0070c0; }
+
+.excelente {
+  color: #217346; }
+
+.badge.excelente {
+  background-color: #217346; }
+
+.mitou {
+  color: #ed7d31; }
+
+.badge.mitou {
+  background-color: #ed7d31; }
+
+.media-parcial {
+  color: #1e3e84;
+  font-weight: bold; }
+
+.badge.media-parcial {
+  background-color: #1e3e84; }
+
+.media-camp {
+  color: #175b0c;
+  font-weight: bold; }
+
+.badge.media-camp {
+  background-color: #175b0c; }
+
+.legenda {
+  list-style: none;
+  padding-top: 10px; }
 
 @media screen and (min-width: 20em) {
   ul.escudos > li {
