@@ -39,7 +39,7 @@ if (!isset($_SESSION["prov_id"]) || empty($_SESSION["prov_id"]) ||
 			    			<div class="help-block with-errors"></div>
 			    		</div>
 						<div class="form-group">
-							<label for="senha_antiga">Senha Antiga</label>
+							<label for="senha_antiga">Senha Enviada no E-Mail</label>
 							<input type="password" class="form-control form-control-lg" id="senha_antiga" name="senha_antiga" placeholder="Digite sua senha antiga..." data-error="Por favor, informe a senha antiga." maxlength="120" required>
 						</div>
 						<div class="form-group">

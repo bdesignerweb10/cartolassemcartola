@@ -74,7 +74,7 @@ if(isset($_POST) && !empty($_POST) && $_POST["nome"]) {
 			$email = $_POST["email"];
 			$telefone = $_POST["telefone"];
 			$time = $_POST["time"];
-			$escudo = formataNomeEscudo($time);
+			$escudo = formataNomeEscudo($time) . ".png";
 			$valor = $_POST["valor"];
 			$forma_pagto = $_POST["forma-pagto"];
 
@@ -94,7 +94,7 @@ if(isset($_POST) && !empty($_POST) && $_POST["nome"]) {
 			$conn->autocommit(FALSE);
 
 			$qry_time = "INSERT INTO tbl_times (nome_time, escudo_time, nome_presidente, email, telefone, ativo) 
-							  			VALUES ('$time', '$escudo.png', '$nome', '$email', '$telefone', 0)";
+							  			VALUES ('$time', '$escudo', '$nome', '$email', '$telefone', 0)";
 
 			if ($conn->query($qry_time) === TRUE) {
 

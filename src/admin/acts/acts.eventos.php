@@ -85,7 +85,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 						$data = strtotime($_POST["data"]);
 						$local = (isset($_POST["local"]) ? $_POST["local"] : "");
 						$descricao = $_POST["descricao"];
-						$ativo = (isset($_POST["ativo"]) ? $_POST["ativo"] : "0");
+						$ativo = (isset($_POST["ativo"]) && $_POST["ativo"] == "on" ? "1" : "0");
 
 						if(time() >= $data) {
 							echo '{"succeed": false, "errno": 27009, "title": "Data do evento precisa ser futura!", "erro": "A data do evento precisa ser posterior a atual. Favor revisar e tentar novamente!"}';
@@ -155,7 +155,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 						$data = strtotime($_POST["data"]);
 						$local = (isset($_POST["local"]) ? $_POST["local"] : "");
 						$descricao = $_POST["descricao"];
-						$ativo = (isset($_POST["ativo"]) ? $_POST["ativo"] : "0");
+						$ativo = (isset($_POST["ativo"]) && $_POST["ativo"] == "on" ? "1" : "0");
 
 						if(time() >= $data) {
 							echo '{"succeed": false, "errno": 27011, "title": "Data do evento precisa ser futura!", "erro": "A data do evento precisa ser posterior a atual. Favor revisar e tentar novamente!"}';

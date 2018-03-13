@@ -4,6 +4,10 @@ if (!isset($_SESSION)) session_start();
 
 //require_once("acts/errorhandling.php");
 
+// ########################################
+// ############ CONN DATABASE #############
+// ########################################
+
 // DEV
 $conn = new mysqli("localhost", "root", "root", "cartolassemcartola");
 
@@ -14,7 +18,10 @@ if ($conn->connect_errno) {
     die("00000 - Failed to connect to MySQL: [$conn->connect_errno] $conn->connect_error");
 }
 
-// FYI:
+// ########################################
+// ################# INFO: ################
+// ########################################
+
 // PADRAO DE MENSAGEM DE ERROS:
 // 99999
 // |
@@ -26,6 +33,10 @@ if ($conn->connect_errno) {
 //   |
 //   --> Tres seguintes numeros: Sequencial do lugar onde a mensagem foi apresentada. Vai facilitar na hora de buscar no codigo do porque do erro aconteceu
 
+
+// ########################################
+// #### CARREGANDO AS VARS DE SESSAO ######
+// ########################################
 
 $result = $conn->query("SELECT * FROM tbl_config LIMIT 1") or trigger_error($conn->error);
 
@@ -113,8 +124,18 @@ if ($result) {
 		}
 	}
 
+	// ########################################
+	// ################ SETS ##################
+	// ########################################
+
 	$_SESSION["fake_id"] = 98478521;
 	$_SESSION["user_ativado"] = true;
+
+	date_default_timezone_set('America/Sao_Paulo');
+
+	// ########################################
+	// ############# FUNCTIONS ################
+	// ########################################
 
 	function formataNomeEscudo($string){
 	    return strtolower(str_replace(' ', '', preg_replace(array("/(á|à|ã|â|ä)/","/(Á|À|Ã|Â|Ä)/","/(é|è|ê|ë)/","/(É|È|Ê|Ë)/","/(í|ì|î|ï)/","/(Í|Ì|Î|Ï)/","/(ó|ò|õ|ô|ö)/","/(Ó|Ò|Õ|Ô|Ö)/","/(ú|ù|û|ü)/","/(Ú|Ù|Û|Ü)/","/(ñ)/","/(Ñ)/"),explode(" ","a A e E i I o O u U n N"),$string)));

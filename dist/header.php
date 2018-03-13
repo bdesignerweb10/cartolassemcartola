@@ -6,6 +6,7 @@ else {
 	if ($_SESSION["user_ativado"] &&
 		basename($_SERVER['PHP_SELF']) != "inscricao.php" && 
 		basename($_SERVER['PHP_SELF']) != "regulamentos.php" &&
+		basename($_SERVER['PHP_SELF']) != "index.php" &&
 		(!isset($_SESSION["usu_id"]) || empty($_SESSION["usu_id"]) || 
 		!isset($_SESSION['usu_nivel']) || empty($_SESSION["usu_nivel"]) || 
 		$_SESSION["usu_id"] == "0")) 
