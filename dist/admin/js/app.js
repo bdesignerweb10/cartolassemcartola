@@ -1595,7 +1595,7 @@ $(function() {
     	$('#box-times').hide();
     });	
 
-	$('body').on('click', '.sel-times', function() {
+	$('body').on('click', '.sel-times', function(e) {
 		if(($('.sel-times:checked').length) > $('#total_times').val()) {
     		e.preventDefault();
 
