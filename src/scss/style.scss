@@ -513,10 +513,6 @@ ul.escudos > li {
 	width: 60%;
 }
 
-.mainform {
-	display: none;
-}
-
 .headline-form {
 	margin-top: 20px;
 	margin-bottom: 20px;
@@ -526,26 +522,14 @@ ul.escudos > li {
 	cursor: pointer;
 }
 
-#box-rodada {
-	display:none;
-}
-
-#box-confirmacao {
-	display:none;
+#box-rodada, #box-confirmacao, .mainform, .check-duplicated, .maintemporada, .mainadd, #box-confrontos, #box-times {
+	display: none;
 }
 
 .btn-voltar {
 	text-align: left;
     padding: 0px;
     margin-bottom: 20px;
-}
-
-.check-duplicated {
-	display:none;
-}
-
-.maintemporada {
-	display: none;
 }
 
 #box-ano {
@@ -566,6 +550,9 @@ ul.escudos > li {
     min-width: 100px !important;
 }
 
-.mainadd {
-	display: none;
+.label-versus {
+    display: block;
+    text-align: center;
+    line-height: 150%;
+    font-size: 1.2em;
 }

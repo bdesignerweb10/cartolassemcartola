@@ -74,7 +74,7 @@ if(isset($_POST) && !empty($_POST) && $_POST["nome"]) {
 			$email = $_POST["email"];
 			$telefone = $_POST["telefone"];
 			$time = $_POST["time"];
-			$escudo = formataNomeEscudo($time) . ".png";
+			$escudo = formataNomeEscudo($time);
 			$valor = $_POST["valor"];
 			$forma_pagto = $_POST["forma-pagto"];
 

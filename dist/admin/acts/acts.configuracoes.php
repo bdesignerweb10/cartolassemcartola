@@ -11,6 +11,8 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 				$qrytempaberta = "UPDATE tbl_config SET temporada_aberta = 1";
 
 				if ($conn->query($qrytempaberta) === TRUE) {
+					require_once("acts.inscricoes_encerradas.php");
+
 					$conn->commit();
 					$_SESSION["temporada"] = 1;
 					echo '{"succeed": true}';

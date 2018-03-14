@@ -1397,6 +1397,301 @@ $(function() {
     // END USUÁRIOS (usuarios.php)
 
 	// BEGIN MATA-MATA (mata_mata.php)
+
+	$('#btn-voltar-mata-mata').click(function(e) {
+		e.preventDefault();
+
+    	$('#headline-mata-mata').html('');
+
+    	$('#id').val('');
+    	$('#descricao').prop("readonly", null);
+    	$('#descricao').val('');
+    	$('#total_times').prop("readonly", null);
+    	$('#total_times').val('4');
+    	$('#passo-mata-mata').prop("disabled", null);
+
+    	$('#descricao').prop("readonly", null);
+		$('#total_times').prop("disabled", false);
+    	$('#sel-time-content').html('');
+    	$('#passo-mata-mata').prop("disabled", null);
+    	$('#box-times').hide();
+
+    	$(".sel-times").prop("disabled", null);
+    	$(".check-duplicated").remove();
+    	$("#voltar-mata-mata").prop("disabled", null);
+    	$("#passo-times").prop("disabled", null);
+    	$('#chaves-confronto').html('');
+    	$('#box-confrontos').hide();
+
+		$('.mainform').hide();
+		$('.maintable').show();
+    });	
+
+    $('#btn-add-mata-mata').click(function(e) {
+		e.preventDefault();
+
+		$('.maintable').hide();
+		$('.mainform').show();
+
+    	$('#headline-mata-mata').html('Cadastro de novo mata-mata');
+
+    	$('#id').val('');
+
+    	$('#passo-confrontos').data('act', 'add');
+    	$('#passo-confrontos').data('id', null);
+    });	
+
+    $('.btn-edit-matamata').click(function(e) {
+		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+		$('.maintable').hide();
+		$('.mainform').show();
+
+    	var id = $(this).data('id');
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.mata_mata.php?act=showupd&idmatamata=" + id,
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+			    	$('#passo-confrontos').data('act', 'edit');
+			    	$('#passo-confrontos').data('id', id);
+
+    				$('#headline-temporada').html('Editando a temporada ' + retorno.descricao);
+			    	
+			    	$('#id').val(retorno.id);
+					$('#descricao').val(retorno.descricao);
+					$('#descricao').prop("readonly", "readonly");
+			    	$('#passo-ano').prop("disabled", "disabled");
+
+    				$("#voltar-ano").prop("disabled", "disabled");
+			    	$('#passo-rodada').prop("disabled", null);
+					$('#box-rodada').show();
+
+					$('#sel-content').append('<div class="col-12"><div class="form-check" style="margin-bottom:20px;"><label class="form-check-label"><input type="checkbox" class="form-check-input sel-todos" />&nbsp;&nbsp;&nbsp;Selecionar todos</label></div></div>');
+
+					$.each(retorno.list, function(i, item) {
+						$('#sel-content').append('<div class="col-6"><label class="form-check-label"><input type="checkbox" id="rodada[' + item.id + ']" name="rodada[' + item.id + ']" class="form-check-input sel-rodadas" value="' + item.id + '" ' + (item.has_temporada ? 'checked' : '') + ' />&nbsp;&nbsp;&nbsp;Rodada #' + item.descricao + '</label></div>');
+					});
+				}
+				else {
+    				$('#headline-mata-mata').html('');
+
+			    	$('#id').val('');
+			    	$('#descricao').prop("readonly", null);
+			    	$('#descricao').val('');
+			    	$('#total_times').prop("readonly", null);
+			    	$('#total_times').val('4');
+			    	$('#passo-mata-mata').prop("disabled", null);
+
+			    	$('#descricao').prop("readonly", null);
+					$('#total_times').prop("disabled", false);
+			    	$('#sel-time-content').html('');
+			    	$('#passo-mata-mata').prop("disabled", null);
+			    	$('#box-times').hide();
+
+			    	$(".sel-times").prop("disabled", null);
+			    	$(".check-duplicated").remove();
+			    	$("#voltar-mata-mata").prop("disabled", null);
+			    	$("#passo-times").prop("disabled", null);
+			    	$('#chaves-confronto').html('');
+			    	$('#box-confrontos').hide();
+
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });	
+
+    $('.btn-del-matamata').click(function(e) {
+		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+    	var id = $(this).data('id');
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.mata_mata.php?act=del&idmatamata=" + id,
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('#alert-title').html("Registro removido com sucesso!");
+					$('#alert-content').html("A remoção do registro foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					$('#alert').modal('show');
+
+					$('#alert').on('hidden.bs.modal', function (e) {
+						window.location.reload();
+					});
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });	
+
+    $('#passo-mata-mata').click(function(e) {
+    	e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.mata_mata.php?act=seltimes",
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$.each(retorno.list, function(i, item) {
+						$('#sel-time-content').append('<div class="col-6"><label class="form-check-label" for="time[' + item.id + ']"><input type="checkbox" id="time[' + item.id + ']" name="time[' + item.id + ']" class="form-check-input sel-times" value="' + item.id + '" ' + (item.has_time ? 'checked' : '') + ' />&nbsp;&nbsp;&nbsp;' + item.descricao + '</label></div>');
+					});
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+
+    	$('#descricao').prop("readonly", "readonly");
+    	$('#total_times').prop("disabled", true);
+    	$(this).prop("disabled", "disabled");
+    	$('#box-times').show();
+    });
+
+    $('#voltar-mata-mata').click(function(e) {
+    	e.preventDefault();
+
+    	$('#descricao').prop("readonly", null);
+		$('#total_times').prop("disabled", false);
+    	$('#sel-time-content').html('');
+    	$('#passo-mata-mata').prop("disabled", null);
+    	$('#box-times').hide();
+    });	
+
+	$('body').on('click', '.sel-times', function() {
+		if(($('.sel-times:checked').length) > $('#total_times').val()) {
+    		e.preventDefault();
+
+			$('#alert-title').html("Quantidade de times selecionados diverge do total de times do mata-mata");
+			$('#alert-content').html("O mata-mata está configurado para " + $('#total_times').val() + " times. O total de times já foi selecionado.");
+			$('#alert').modal('show');
+		}
+	});
+
+    $('#passo-times').click(function(e) {
+    	e.preventDefault();
+
+    	if($('#total_times').val() != $('.sel-times:checked').length) {
+			$('#alert-title').html("Quantidade de times selecionados diverge do total de times do mata-mata");
+			$('#alert-content').html("O mata-mata está configurado para " + $('#total_times').val() + " times e foram selecionados " + $('.sel-times:checked').length + " times.");
+			$('#alert').modal('show');
+    	}
+    	else {
+			var cloned_check = $("#sel-time-content").clone();
+	    	$(".sel-times").prop("disabled", "disabled");
+	    	cloned_check.appendTo("#box-times").addClass('check-duplicated');
+
+	    	var chaves = $('#total_times').val() / 2;
+
+	    	var options = "<option value='' selected>Selecione...</option>";
+
+	    	$(".check-duplicated input[type='checkbox']:checked").each(function(){
+	    		options += "<option value='" + $(this).val() + "'>" + $("label[for='" + $(this).attr('id') + "']").text().split('   ')[1] + "</option>";
+			});
+
+	    	for(var i = 1; i <= chaves; i++) {
+	    		$('#chaves-confronto').append("<div class='row'><div class='col-12'><div class='card'><div class='card-header'>Chave " + i + "</div><div class='card-block'><div class='form-group'><select class='form-control form-control-lg' id='time1[" + i + "]' name='time1[" + i + "]' aria-describedby='time1[" + i + "]' required>" + options + "</select></div><div class='form-group'><label for='time2[" + i + "]' class='label-versus'>x</label><select class='form-control form-control-lg' id='time2[" + i + "]' name='time2[" + i + "]' aria-describedby='time2[" + i + "]' required>" + options + "</select></div></div></div></div></div>");
+	    	}
+
+	    	$("#voltar-mata-mata").prop("disabled", "disabled");
+	    	$(this).prop("disabled", "disabled");
+	    	$('#box-confrontos').show();
+    	}
+    });	
+
+    $('#voltar-times').click(function(e) {
+    	e.preventDefault();
+
+    	$(".sel-times").prop("disabled", null);
+    	$(".check-duplicated").remove();
+    	$("#voltar-mata-mata").prop("disabled", null);
+    	$("#passo-times").prop("disabled", null);
+    	$('#chaves-confronto').html('');
+    	$('#box-confrontos').hide();
+    });	
+
+    $('#passo-confrontos').click(function(e) {
+    	e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+    	var act = $(this).data('act');
+    	var id = $(this).data('id');
+    	
+    	$('#total_times').prop("disabled", false);
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.mata_mata.php?act=" + act + "&idmatamata=" + id,
+			data: $("#form-temporadas").serialize(),
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				console.log('data', data);
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('#alert-title').html("Registro " + (act == 'add' ? "adicionado" : "editado") + " com sucesso!");
+					$('#alert-content').html("A " + (act == 'add' ? "adição" : "edição") + " do registro foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					$('#alert').modal('show');
+
+    				$('#total_times').prop("disabled", true);
+
+					$('#alert').on('hidden.bs.modal', function (e) {
+						window.location.reload();
+					})
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+
+    				$('#total_times').prop("disabled", true);
+				}
+			}
+		});
+    });
 	
 	// END MATA-MATA (mata_mata.php)
 });
