@@ -3,7 +3,7 @@ require_once('header.php');
 ?>
 	<main>
 		<div class="container">
-			<h1 class="headline">Dashboard</h1>
+			<h1 class="headline">Seja bem vindo ao Cartolas sem cartola</h1>
 			<div class="row">
 				<div class="col-sm-5">
 					<article>

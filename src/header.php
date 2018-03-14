@@ -106,36 +106,42 @@ else {
 					</a>
 				</div><!-- offcanvas -->
 
-				<div class="liga">
+				<div class="liga">					
 					<p>
-						<span class="mark">Cartolas</span>
-						<span>sem</span>
-						<span class="mark">Cartola</span>
-					</p>
-					<p>
-						<span class="mark"><? echo date('d'); ?></span>
-						<span><?php echo date('M'); ?></span>
-						<span class="mark"><?php echo date('Y'); ?></span>
+						<span class="mark hidden-xs-down">Bom dia, hoje é</span>
+						<span class="mark hidden-xs-down"><?php echo date('d'); ?></span>
+						<span class="mark hidden-xs-down"><?php echo date('M'); ?></span>
+						<span class="mark hidden-xs-down"><?php echo date('Y'); ?></span>
 					</p>
 				</div><!-- liga -->
 
-				<div class="liga-logo">
-					<?php if ($_SESSION["temporada"] == 1) : ?>
-					<div class="calendario hidden-xs-down">
-						<i class="fa fa-calendar fa-2x"></i>
-					</div>					
+				<div class="liga-logo">										
 					<?php if ($_SESSION["mercado"] == 1) : ?>
-						<span class="mark-merc hidden-xs-down">Mercado aberto</span>
 						<span class="mark">
-							<i class="fa fa-hourglass-start fa-2x"></i>												
-						</span> 
+							<i class="fa fa-hourglass-start fa"></i>												
+						</span>
+						<span class="mark-merc hidden-xs-down">Mercado aberto</span>						 
 						<?php else: ?>
-							<span class="mark-merc hidden-xs-down">Mercado fechado</span>
 							<span class="mark">
-								<i class="fa fa-hourglass-start fa-2x"></i>												
-							</span> 
-						<?php endif; ?>
+								<i class="fa fa-hourglass-start fa"></i>												
+							</span>	
+							<span class="mark-merc hidden-xs-down">Mercado fechado</span>												
 					<?php endif; ?>
+				</div><!-- liga-logo -->
+
+				<div class="liga-logo">
+					<div class="dropdown">
+						<div class="dropdown-toggle" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<span class="mark hidden-xs-down">Pedro Pilz</span>
+							<span class="mark">
+								<img src="img/escudos/boleanosfc.png">
+							</span>
+						</div>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+    						<div class="dropdown-item"><a href="#">Meus dados</a></div>
+    						<div class="dropdown-item"><a href="#">Sair</a></div>
+    					</div>	
+					</div>
 				</div><!-- liga-logo -->
 			</div><!-- container -->	
 		</div><!-- header -->
