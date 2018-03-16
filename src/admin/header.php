@@ -92,7 +92,6 @@ if (!isset($_SESSION["usu_id"]) || empty($_SESSION["usu_id"]) ||
 			</ul>
 		</div><!-- sidebar -->
 	</nav>
-
 	<header>
 		<div class="header">
 			<div class="container">
@@ -102,26 +101,32 @@ if (!isset($_SESSION["usu_id"]) || empty($_SESSION["usu_id"]) ||
 					</a>
 				</div><!-- offcanvas -->
 
-				<div class="liga">
+				<div class="liga">					
 					<p>
-						<span class="mark">Cartolas</span>
-						<span>sem</span>
-						<span class="mark">cartola</span>
-					</p>
-					<p>
-						<span class="mark"><?php echo date("d"); ?></span>
-						<span><?php echo date("M"); ?></span>
-						<span class="mark"><?php echo date("Y"); ?></span>
+						<span class="mark hidden-xs-down">
+							Bom dia, hoje é <?php echo date('d'); ?> de <?php echo date('M'); ?> de <?php echo date('Y'); ?>
+						</span>
 					</p>
 				</div><!-- liga -->
 				<div class="liga-logo">
-					<span class="mark-merc hidden-xs-down">Olá, <?php echo $_SESSION["usu_login"]?>!</span>
-					<span class="mark">
-						<i class="fa fa-user fa-2x"></i>												
-					</span> 
-					<span class="mark">
-						<a href="logout.php">Sair</a>
-					</span> 
+					<div class="dropdown">
+						<div class="dropdown-toggle" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<span class="mark hidden-xs-down"><?php echo $_SESSION["usu_nome"] ?></span>
+							<span class="mark">
+								<?php
+								if(isset($_SESSION["usu_escudo"]) && !empty($_SESSION["usu_escudo"])) {
+									echo "<img src='../img/escudos/" . $_SESSION["usu_escudo"] . "'>";
+								}
+								else {
+									echo "<i class='fa fa-user fa-2x'></i>";
+								}
+								?>
+							</span>
+						</div>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+    						<div class="dropdown-item"><a href="logout.php">Sair</a></div>
+    					</div>	
+					</div>
 				</div><!-- liga-logo -->
 			</div><!-- container -->	
 		</div><!-- header -->

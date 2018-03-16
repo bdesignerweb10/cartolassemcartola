@@ -146,6 +146,11 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 				$qryabrirmercado = "UPDATE tbl_config SET status_mercado = 1, rodada_atual = $nextrod";
 
 				if ($conn->query($qryabrirmercado) === TRUE) {
+					// TODO: fazer logica do calculo de confrontos do mata-maata
+
+
+
+
 					$conn->commit();
 					$_SESSION["mercado"] = 1;
 					$_SESSION["rodada"] = $nextrod;

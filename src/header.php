@@ -120,10 +120,9 @@ else {
 
 				<div class="liga">					
 					<p>
-						<span class="mark hidden-xs-down">Bom dia, hoje é</span>
-						<span class="mark hidden-xs-down"><?php echo date('d'); ?></span>
-						<span class="mark hidden-xs-down"><?php echo date('M'); ?></span>
-						<span class="mark hidden-xs-down"><?php echo date('Y'); ?></span>
+						<span class="mark hidden-xs-down">
+							Bom dia, hoje é <?php echo date('d'); ?> de <?php echo date('M'); ?> de <?php echo date('Y'); ?>
+						</span>
 					</p>
 				</div><!-- liga -->
 
@@ -140,21 +139,29 @@ else {
 							<span class="mark-merc hidden-xs-down">Mercado fechado</span>												
 					<?php endif; ?>
 				</div><!-- liga-logo -->
-
-				<div class="liga-logo">
-					<div class="dropdown">
-						<div class="dropdown-toggle" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<span class="mark hidden-xs-down">Pedro Pilz</span>
-							<span class="mark">
-								<img src="img/escudos/boleanosfc.png">
-							</span>
+				<?php if(isset($_SESSION["usu_id"]) && !empty($_SESSION["usu_id"]) && $_SESSION["usu_id"] > 0) : ?>
+					<div class="liga-logo">
+						<div class="dropdown">
+							<div class="dropdown-toggle" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<span class="mark hidden-xs-down"><?php echo $_SESSION["usu_nome"] ?></span>
+								<span class="mark">
+									<?php
+									if(isset($_SESSION["usu_escudo"]) && !empty($_SESSION["usu_escudo"])) {
+										echo "<img src='img/escudos/" . $_SESSION["usu_escudo"] . "'>";
+									}
+									else {
+										echo "<i class='fa fa-user fa-2x'></i>";
+									}
+									?>
+								</span>
+							</div>
+							<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+	    						<div class="dropdown-item"><a href="#">Meus dados</a></div>
+	    						<div class="dropdown-item"><a href="logout.php">Sair</a></div>
+	    					</div>	
 						</div>
-						<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-    						<div class="dropdown-item"><a href="#">Meus dados</a></div>
-    						<div class="dropdown-item"><a href="#">Sair</a></div>
-    					</div>	
-					</div>
-				</div><!-- liga-logo -->
+					</div><!-- liga-logo -->
+				<?php endif; ?>
 			</div><!-- container -->	
 		</div><!-- header -->
 	</header>

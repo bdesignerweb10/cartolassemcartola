@@ -306,21 +306,34 @@ ul.escudos > li {
   border-top-width: 0px;
 }*/
 
-.table-responsive>.fixed-column {
-    position: absolute;
-    display: inline-block;
-    width: auto;
-    border-right: 1px solid #ddd;
+.fixed-column {
+	overflow-x: scroll;
+	margin-left: 233px;
+	overflow-y: visible;
+	padding: 0;
 }
 
 .time-rodada{
 	position: absolute;
 	width: 233px;
+	top: auto;
+	left:15px;
+	border-top-width: 1px;
+	margin-top: -1px;
 }
 
 .titulo{
 	font-weight: bold;
 	color: $brand-primary;
+}
+
+.rodada{
+	font-size: 1.5rem;
+	font-weight: bold;
+ 	&:first-child {
+ 		position:relative;
+ 		left:233px;
+ 	}
 }
 
 //Pontuação < 30
@@ -622,7 +635,7 @@ ul.escudos > li {
 
 .est-rodada{
 	justify-content: space-between;
-	background-color: $brand-warning;;
+	background-color: $brand-warning;
 }
 
 .n-rodada{
@@ -630,11 +643,6 @@ ul.escudos > li {
 	font-size: 1.6rem;
 	font-weight: bold;
 	color: #fff;
-}
-
-.rodada{
-	font-size: 1.5rem;
-	font-weight: bold;
 }
 
 .page-rodada{

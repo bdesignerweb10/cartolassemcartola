@@ -112,64 +112,6 @@ CREATE TABLE `tbl_inscricao` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `tbl_mata_mata`
---
-
-DROP TABLE IF EXISTS `tbl_mata_mata`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tbl_mata_mata` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `descricao` varchar(60) NOT NULL,
-  `total_times` int(2) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `tbl_mata_mata_confrontos`
---
-
-DROP TABLE IF EXISTS `tbl_mata_mata_confrontos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tbl_mata_mata_confrontos` (
-  `id_mata_mata` int(11) NOT NULL,
-  `id_time_1` int(11) NOT NULL,
-  `id_time_2` int(11) NOT NULL,
-  `id_anos` int(11) NOT NULL,
-  `id_rodadas` int(11) NOT NULL,
-  `nivel` int(1) NOT NULL,
-  `chave` int(2) NOT NULL,
-  PRIMARY KEY (`id_time_1`,`id_mata_mata`,`id_time_2`,`id_anos`,`id_rodadas`),
-  KEY `fkmmc_times_temporadas_1_idx` (`id_time_1`,`id_anos`,`id_rodadas`),
-  KEY `fkmmc_times_temporadas_2_idx` (`id_time_2`,`id_anos`,`id_rodadas`),
-  KEY `fkmmc_mata_mata_time_2_idx` (`id_time_2`,`id_mata_mata`),
-  CONSTRAINT `fkmmc_mata_mata_time_1` FOREIGN KEY (`id_time_1`, `id_mata_mata`) REFERENCES `tbl_mata_mata_times` (`id_time`, `id_mata_mata`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fkmmc_mata_mata_time_2` FOREIGN KEY (`id_time_2`, `id_mata_mata`) REFERENCES `tbl_mata_mata_times` (`id_time`, `id_mata_mata`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fkmmc_times_temporadas_1` FOREIGN KEY (`id_time_1`, `id_anos`, `id_rodadas`) REFERENCES `tbl_times_temporadas` (`id_times`, `id_anos`, `id_rodadas`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fkmmc_times_temporadas_2` FOREIGN KEY (`id_time_2`, `id_anos`, `id_rodadas`) REFERENCES `tbl_times_temporadas` (`id_times`, `id_anos`, `id_rodadas`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `tbl_mata_mata_times`
---
-
-DROP TABLE IF EXISTS `tbl_mata_mata_times`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tbl_mata_mata_times` (
-  `id_mata_mata` int(11) NOT NULL,
-  `id_time` int(11) NOT NULL,
-  PRIMARY KEY (`id_time`,`id_mata_mata`),
-  KEY `fkmm_mata_mata_idx` (`id_mata_mata`),
-  CONSTRAINT `fkmm_mata_mata` FOREIGN KEY (`id_mata_mata`) REFERENCES `tbl_mata_mata` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fkmm_times` FOREIGN KEY (`id_time`) REFERENCES `tbl_times` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table `tbl_rodadas`
 --
 
@@ -266,6 +208,66 @@ CREATE TABLE `tbl_usuarios` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `tbl_mata_mata`
+--
+
+DROP TABLE IF EXISTS `tbl_mata_mata`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tbl_mata_mata` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(60) NOT NULL,
+  `total_times` int(2) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tbl_mata_mata_times`
+--
+
+DROP TABLE IF EXISTS `tbl_mata_mata_times`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tbl_mata_mata_times` (
+  `id_mata_mata` int(11) NOT NULL,
+  `id_time` int(11) NOT NULL,
+  PRIMARY KEY (`id_time`,`id_mata_mata`),
+  KEY `fkmm_mata_mata_idx` (`id_mata_mata`),
+  CONSTRAINT `fkmm_mata_mata` FOREIGN KEY (`id_mata_mata`) REFERENCES `tbl_mata_mata` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fkmm_times` FOREIGN KEY (`id_time`) REFERENCES `tbl_times` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tbl_mata_mata_confrontos`
+--
+
+DROP TABLE IF EXISTS `tbl_mata_mata_confrontos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tbl_mata_mata_confrontos` (
+  `id_mata_mata` int(11) NOT NULL,
+  `id_time_1` int(11) NOT NULL,
+  `id_time_2` int(11) NOT NULL,
+  `id_anos` int(11) NOT NULL,
+  `id_rodadas` int(11) NOT NULL,
+  `chave` int(2) NOT NULL,
+  `nivel` int(1) NOT NULL,
+  PRIMARY KEY (`id_time_1`,`id_mata_mata`,`id_time_2`,`id_anos`,`id_rodadas`,`chave`),
+  KEY `fkmmc_times_temporadas_1_idx` (`id_time_1`,`id_anos`,`id_rodadas`),
+  KEY `fkmmc_times_temporadas_2_idx` (`id_time_2`,`id_anos`,`id_rodadas`),
+  KEY `fkmmc_mata_mata_time_1_idx` (`id_time_1`,`id_mata_mata`),
+  KEY `fkmmc_mata_mata_time_2_idx` (`id_time_2`,`id_mata_mata`),
+  CONSTRAINT `fkmmc_mata_mata_time_1` FOREIGN KEY (`id_time_1`, `id_mata_mata`) REFERENCES `tbl_mata_mata_times` (`id_time`, `id_mata_mata`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fkmmc_mata_mata_time_2` FOREIGN KEY (`id_time_2`, `id_mata_mata`) REFERENCES `tbl_mata_mata_times` (`id_time`, `id_mata_mata`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fkmmc_times_temporadas_1` FOREIGN KEY (`id_time_1`, `id_anos`, `id_rodadas`) REFERENCES `tbl_times_temporadas` (`id_times`, `id_anos`, `id_rodadas`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fkmmc_times_temporadas_2` FOREIGN KEY (`id_time_2`, `id_anos`, `id_rodadas`) REFERENCES `tbl_times_temporadas` (`id_times`, `id_anos`, `id_rodadas`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fkmmc_temporadas` FOREIGN KEY (`id_anos`, `id_rodadas`) REFERENCES `tbl_temporadas` (`id_anos`, `id_rodadas`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping events for database 'cartolassemcartola'
 --
 
@@ -281,5 +283,3 @@ CREATE TABLE `tbl_usuarios` (
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2018-03-05 22:00:24

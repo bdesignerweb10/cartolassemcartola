@@ -67,14 +67,6 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 								} else {
 									$tentativas = 0;
 
-									if($_SESSION["user_ativado"] && $senha_provisoria == 1) {
-										$_SESSION["prov_id"] = $usu_id;
-										$_SESSION["prov_login"] = $usu_login;
-
-										echo '{"succeed": false, "errno": 21010, "title": "Alteração de senha!", "erro": "Seu usuário está com uma senha provisória gerada pelo sistema, ao fechar a mensagem você será redirecionado para a tela de alteração de senha para escolher uma senha definitiva!"}';
-										exit();
-									}
-
 									if($usu_senha != md5($senha)) {
 										$tentativas = ($usu_tentativas + 1);
 
@@ -94,11 +86,35 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 						
 										$conn->commit();
 									}
+
+									if($_SESSION["user_ativado"] && $senha_provisoria == 1) {
+										$_SESSION["prov_id"] = $usu_id;
+										$_SESSION["prov_login"] = $usu_login;
+
+										echo '{"succeed": false, "errno": 21010, "title": "Alteração de senha!", "erro": "Seu usuário está com uma senha provisória gerada pelo sistema, ao fechar a mensagem você será redirecionado para a tela de alteração de senha para escolher uma senha definitiva!"}';
+										exit();
+									}
+								}
+
+								$usu_escudo = "";
+								$usu_nome = $usu_login;
+
+								if(isset($usu_time) && !empty($usu_time) && $usu_time > 0) {
+									$sqltime = $conn->query("SELECT nome_presidente, escudo_time FROM tbl_times WHERE id = $usu_time") or trigger_error("21019 - " . $conn->error);
+
+									if ($sqltime && $sqltime->num_rows > 0) {
+						    			while($time = $sqltime->fetch_object()) {
+						    				$usu_nome = $time->nome_presidente;
+						    				$usu_escudo = $time->escudo_time;
+						    			}
+						    		}
 								}
 
 								$_SESSION["usu_id"] = $usu_id;
 								$_SESSION["usu_login"] = $usu_login;
+								$_SESSION["usu_nome"] = $usu_nome;
 								$_SESSION["usu_nivel"] = $usu_nivel;
+								$_SESSION["usu_escudo"] = $usu_escudo;
 
 								if(isset($_SESSION["usu_id"]) && !empty($_SESSION["usu_id"]) && 
 								   isset($_SESSION["usu_login"]) && !empty($_SESSION["usu_login"]) && 

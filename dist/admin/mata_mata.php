@@ -64,7 +64,7 @@ $matamatalist = $conn->query("SELECT id, descricao, total_times
 				<h3 class="headline" id="headline-mata-mata"></h3>
 			</div><!-- col-sm-8-->
 		</div><!-- row -->	
-		<div class="row" style="margin-bottom: 10px;">
+		<div class="row">
 			<div class="col-sm-12 col-md-6 col-lg-2 col-xl-2">
 				<button type="button" id="btn-voltar-mata-mata" class="btn btn-link btn-lg form-control btn-voltar">
 					<i class='fa fa-arrow-left'></i>&nbsp;&nbsp;&nbsp;Voltar
@@ -73,8 +73,8 @@ $matamatalist = $conn->query("SELECT id, descricao, total_times
 		</div><!-- row -->	
 		<form id="form-mata-mata" data-toggle="validator" action="acts/acts.mata_mata.php" method="POST">
 			<div class="row justify-content-md-center">
-				<div id="box-mata-mata" class="col-sm-12 col-md-10 col-lg-3 col-xl-3 form-box">
-					<h3 class="headline headline-form">Informe os dados do mata-mata!</h3> 
+				<div id="box-mata-mata" class="col-sm-12 col-md-10 col-lg-3 col-xl-3 form-box" style="margin-top: 0px;">
+					<h3 class="headline headline-form">Informe os dados!</h3> 
 		  			<div class="form-group">		    			
 						<label for="id">ID</label>
 		    			<input type="number" class="form-control form-control-lg" id="id" name="id" aria-describedby="id" maxlength="11" disabled>
@@ -86,7 +86,6 @@ $matamatalist = $conn->query("SELECT id, descricao, total_times
 		    		</div>
 		  			<div class="form-group">
 						<label for="total_times">Total de Times</label>
-
 						<select class="form-control form-control-lg" id="total_times" name="total_times" aria-describedby="total_times" placeholder="Selecione o total de times..." data-error="Por favor, selecione o total de times." required>
 							<option value="4" selected>4 times</option>
 							<option value="8">8 times</option>
@@ -95,12 +94,41 @@ $matamatalist = $conn->query("SELECT id, descricao, total_times
 						</select>
 		    			<div class="help-block with-errors"></div>
 		    		</div>
+		  			<div class="form-group">
+						<label for="rodada_inicio">Rodada de Início</label>
+						<select class="form-control form-control-lg" id="rodada_inicio" name="rodada_inicio" aria-describedby="rodada_inicio" required>
+							<?php 
+								if(!isset($_SESSION["rodada"]) || empty($_SESSION["rodada"])) {
+									$rodatual = 0;
+								}
+								else {
+									$rodatual = $_SESSION["rodada"];
+								}
+								$rodadalist = $conn->query("SELECT r.id AS id, r.descricao AS rodada
+        				 	    							  FROM tbl_temporadas t
+        				 	    							 INNER JOIN tbl_rodadas r ON r.id = t.id_rodadas
+        				 	    							 WHERE t.id_anos = " . $_SESSION["temporada_atual"] . "
+        				 	    							   AND r.id >= " . $rodatual . "
+       					    							  ORDER BY r.id ASC") or trigger_error($conn->error);
+
+								if($rodadalist && $rodadalist->num_rows > 0) {
+						        	while($rodada = $rodadalist->fetch_object()) {
+						        		echo "<option value='$rodada->id'>$rodada->rodada</option>";
+									}
+					        	}
+					        	else {
+					        		echo "<option value='' selected></option>";
+					        	}
+							?>
+						</select>
+		    			<div class="help-block with-errors"></div>
+		    		</div>
   					<button type="submit" class="btn btn-primary btn-lg form-control" id="passo-mata-mata">
   						<i class='fa fa-arrow-right'></i> Próximo passo
   					</button>
 				</div><!-- col-sm-8--> 
 
-				<div id="box-times" class="col-sm-12 col-md-10 col-lg-4 col-xl-4 form-box" disabled>
+				<div id="box-times" class="col-sm-12 col-md-10 col-lg-4 col-xl-4 form-box" style="margin-top: 0px;" disabled>
 					<h3 class="headline headline-form">Selecione os times para gerar os confrontos!</h3>
 					<button type="button" class="btn btn-link form-control btn-voltar" id="voltar-mata-mata">
 						<i class='fa fa-arrow-left'></i> Voltar
@@ -111,7 +139,7 @@ $matamatalist = $conn->query("SELECT id, descricao, total_times
   					</button>
 				</div><!-- col-sm-8--> 
 
-				<div id="box-confrontos" class="col-sm-12 col-md-10 col-lg-4 col-xl-4 form-box" disabled>
+				<div id="box-confrontos" class="col-sm-12 col-md-10 col-lg-4 col-xl-4 form-box" style="margin-top: 0px;" disabled>
 					<h3 class="headline headline-form">Defina os confrontos</h3>
 					<button type="button" class="btn btn-link form-control btn-voltar" id="voltar-times">
 						<i class='fa fa-arrow-left'></i> Voltar

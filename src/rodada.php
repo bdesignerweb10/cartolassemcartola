@@ -26,7 +26,7 @@
 			</div>
 			<div class="tab-content col-sm-12">
 				<div class="tab-pane active" id="pontrodada" role="tabpanel">
-					<div class="table-responsive">
+					<div class="table-responsive fixed-column">
 						<table class="table table-striped table-bordered table-hover table-condensed">
 					        <thead>
 					            <tr>

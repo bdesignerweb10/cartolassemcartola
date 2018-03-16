@@ -156,6 +156,13 @@ $(function() {
 	
 	// BEGIN INSCRICAO (inscricao.php)
 
+	$('#btn-voltar-inscricao').click(function(e) {
+		e.preventDefault();
+
+		$('.premain').hide();
+		$('.inscmain').show();
+	})
+
 	$("#form-inscricao").submit(function(e) {
 		e.preventDefault();
 

@@ -89,7 +89,7 @@ if($_SESSION["temporada"] == "1")
 	<div class="container pre-inscricao">
 		<div class="row" style="margin-bottom: 20px;">
 			<div class="col-sm-12 col-md-6 col-lg-2 col-xl-2">
-				<button type="button" class="btn btn-link btn-lg form-control btn-voltar" data-div-hide="premain" data-div-show="inscmain">
+				<button type="button" class="btn btn-link btn-lg form-control" id="btn-voltar-inscricao">
 					<i class='fa fa-arrow-left'></i>&nbsp;&nbsp;&nbsp;Voltar
 				</button>
 			</div><!-- col-sm-8-->

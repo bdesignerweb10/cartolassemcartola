@@ -49,7 +49,9 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 				    			}
 			    			}
 
-		    				$querypos = $conn->query("SELECT COALESCE(posicao_liga, 0) AS posicao_liga FROM tbl_times_temporadas WHERE id_anos = $id AND id_times = $inscricoes->id AND id_rodadas = " . $_SESSION["rodada"]) or trigger_error("23006 - " . $conn->error);
+			    			$sqlpos = "SELECT COALESCE(posicao_liga, 0) AS posicao_liga FROM tbl_times_temporadas WHERE id_anos = $id AND id_times = $inscricoes->id AND id_rodadas = " . $_SESSION["rodada"];
+
+		    				$querypos = $conn->query($sqlpos) or trigger_error("23006 - " . $sqlpos . '<br />' . $conn->error);
 							if ($querypos && $querypos->num_rows > 0) {
 				    			while($pos = $querypos->fetch_object()) {
 				    				$posicao_liga = $pos->posicao_liga;

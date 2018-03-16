@@ -1614,24 +1614,21 @@ $(function() {
 			$('#alert').modal('show');
     	}
     	else {
-			var cloned_check = $("#sel-time-content").clone();
-	    	$(".sel-times").prop("disabled", "disabled");
-	    	cloned_check.appendTo("#box-times").addClass('check-duplicated');
-
 	    	var chaves = $('#total_times').val() / 2;
 
 	    	var options = "<option value='' selected>Selecione...</option>";
 
-	    	$(".check-duplicated input[type='checkbox']:checked").each(function(){
+	    	$("#sel-time-content input[type='checkbox']:checked").each(function(){
 	    		options += "<option value='" + $(this).val() + "'>" + $("label[for='" + $(this).attr('id') + "']").text().split('   ')[1] + "</option>";
 			});
 
 	    	for(var i = 1; i <= chaves; i++) {
-	    		$('#chaves-confronto').append("<div class='row'><div class='col-12'><div class='card'><div class='card-header'>Chave " + i + "</div><div class='card-block'><div class='form-group'><select class='form-control form-control-lg' id='time1[" + i + "]' name='time1[" + i + "]' aria-describedby='time1[" + i + "]' required>" + options + "</select></div><div class='form-group'><label for='time2[" + i + "]' class='label-versus'>x</label><select class='form-control form-control-lg' id='time2[" + i + "]' name='time2[" + i + "]' aria-describedby='time2[" + i + "]' required>" + options + "</select></div></div></div></div></div>");
+	    		$('#chaves-confronto').append("<div class='row'><div class='col-12'><div class='card'><div class='card-header'>Chave " + i + "</div><div class='card-block'><div class='form-group'><select class='form-control form-control-lg' id='chave[" + i + "][1]' name='chave[" + i + "][1]' aria-describedby='chave[" + i + "][1]' required>" + options + "</select></div><div class='form-group'><label for='chave[" + i + "][2]' class='label-versus'>x</label><select class='form-control form-control-lg' id='chave[" + i + "][2]' name='chave[" + i + "][2]' aria-describedby='chave[" + i + "][2]' required>" + options + "</select></div></div></div></div></div>");
 	    	}
 
-	    	$("#voltar-mata-mata").prop("disabled", "disabled");
-	    	$(this).prop("disabled", "disabled");
+    		$(".sel-times").prop("disabled", true);
+	    	$("#voltar-mata-mata").prop("disabled", true);
+	    	$(this).prop("disabled", true);
 	    	$('#box-confrontos').show();
     	}
     });	
@@ -1640,7 +1637,6 @@ $(function() {
     	e.preventDefault();
 
     	$(".sel-times").prop("disabled", null);
-    	$(".check-duplicated").remove();
     	$("#voltar-mata-mata").prop("disabled", null);
     	$("#passo-times").prop("disabled", null);
     	$('#chaves-confronto').html('');
@@ -1662,7 +1658,7 @@ $(function() {
 		$.ajax({
 			type: "POST",
 			url: "acts/acts.mata_mata.php?act=" + act + "&idmatamata=" + id,
-			data: $("#form-temporadas").serialize(),
+			data: $("#form-mata-mata").serialize(),
 			success: function(data)
 			{
 				$('#loading').modal('hide');

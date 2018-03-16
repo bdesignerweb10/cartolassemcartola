@@ -120,6 +120,7 @@ if ($result) {
 				$_SESSION["rod_atual"] = $res_rodada->descricao;
 			}
 		} else {
+			$_SESSION["rodada"] = 1;
 			$_SESSION["rod_atual"] = '1';
 		}
 	}
