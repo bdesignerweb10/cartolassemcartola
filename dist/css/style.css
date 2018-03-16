@@ -8748,7 +8748,8 @@ ul.escudos > li {
 
 .legenda {
   list-style: none;
-  padding-top: 10px; }
+  padding-top: 10px;
+  padding-left: 0; }
 
 @media screen and (min-width: 20em) {
   ul.escudos > li {
@@ -8880,3 +8881,77 @@ ul.escudos > li {
   text-align: center;
   line-height: 150%;
   font-size: 1.2em; }
+
+/* Tabela Brasileiro */
+.tbl-brasileiro {
+  text-align: center;
+  background-color: #fff; }
+  .tbl-brasileiro .tbl-head-brasileiro th {
+    text-align: center;
+    color: #fff; }
+  .tbl-brasileiro .tbl-pos-brasileiro th {
+    text-align: center; }
+
+.titulo-clube {
+  display: flex; }
+
+.nome-abrev-right {
+  padding-right: 6px;
+  text-transform: uppercase; }
+
+.nome-abrev-float {
+  padding-left: 6px;
+  text-transform: uppercase; }
+
+.time {
+  width: 30px;
+  height: 30px; }
+
+.confronto {
+  font-weight: bold;
+  color: #293541; }
+
+.estrutura {
+  margin-bottom: 2px; }
+
+.info-data {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #999; }
+
+.info-local {
+  text-align: center;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #999; }
+  .info-local > strong {
+    text-transform: lowercase;
+    font-weight: 100; }
+
+.est-rodada {
+  justify-content: space-between;
+  background-color: #fc8f3e; }
+
+.n-rodada {
+  padding-top: 7px;
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #fff; }
+
+.rodada {
+  font-size: 1.5rem;
+  font-weight: bold; }
+
+.page-rodada {
+  position: relative;
+  display: block;
+  padding: 0.5rem 0.75rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  color: #fff;
+  background-color: #fc8f3e; }
+  .page-rodada:hover {
+    color: #fff;
+    text-decoration: none; }

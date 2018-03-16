@@ -55,21 +55,33 @@ else {
 						</a>
 					</li>
 					<li class="nav-item">					
-						<a href="clube.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'clube.php' ? ' nav-active' : ''; ?>">
-						<i class="fa fa-id-card"></i>	
-						Historia do Clube
-						</a>
-					</li>
-					<li class="nav-item">					
 						<a href="mata-mata.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'mata-mata.php' ? ' nav-active' : ''; ?>">
 						<i class="fa fa-trophy"></i>	
 						Mata-Mata
 						</a>
 					</li>
 					<li class="nav-item">					
+						<a href="clube.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'clube.php' ? ' nav-active' : ''; ?>">
+						<i class="fa fa-id-card"></i>	
+						Historia do Clube
+						</a>
+					</li>
+					<li class="nav-item">					
+						<a href="brasileiro.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'brasileiro.php' ? ' nav-active' : ''; ?>">
+						<i class="fa fa-list-alt"></i>	
+						Tabela Brasileirão
+						</a>
+					</li>
+					<li class="nav-item">					
+						<a href="eventos.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'eventos.php' ? ' nav-active' : ''; ?>">
+						<i class="fa fa-calendar"></i>	
+						Eventos
+						</a>
+					</li>					
+					<li class="nav-item">					
 						<a href="pontuacao.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'pontuacao.php' ? ' nav-active' : ''; ?>">
 						<i class="fa fa-bar-chart"></i>	
-						Pontuação
+						Pontuação Cartola
 						</a>
 					</li>
 					<li class="nav-item">					
