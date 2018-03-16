@@ -300,11 +300,13 @@ ul.escudos > li {
 	font-weight: bold;
 }
 
-/*td, th {
-  margin: 0;
-  white-space: nowrap;
-  border-top-width: 0px;
-}*/
+.table-responsive{
+	background-color: #fff;
+}
+
+.table-rodada th, .table-rodada td{
+	background-color: #fff;
+}
 
 .fixed-column {
 	overflow-x: scroll;
@@ -328,7 +330,7 @@ ul.escudos > li {
 }
 
 .rodada{
-	font-size: 1.5rem;
+	font-size: 1rem;
 	font-weight: bold;
  	&:first-child {
  		position:relative;

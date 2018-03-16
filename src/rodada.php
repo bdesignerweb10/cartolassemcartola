@@ -26,11 +26,11 @@
 			</div>
 			<div class="tab-content col-sm-12">
 				<div class="tab-pane active" id="pontrodada" role="tabpanel">
-					<div class="table-responsive fixed-column">
-						<table class="table table-striped table-bordered table-hover table-condensed">
+					<div class="table-responsive">
+						<table class="table table-rodada table-hover fixed-column">
 					        <thead>
 					            <tr>
-					                <th class="time-rodada titulo">Time/Rodada</th>
+					                <td class="time-rodada titulo">Time/Rodada</td>
 					                <th class="rodada titulo">1º</th>
 					                <th class="rodada titulo">2º</th>
 					                <th class="rodada titulo">3º</th>
