@@ -353,7 +353,7 @@ require_once('header.php');
 							<p class="nome-abrev-float">Cha</p>															
 						</div>
 					</div>
-					<p class="info-local"><i class="fa fa-map-marker"></i> Arena da baixada - 16:00<strong>hrs</strong></p									
+					<p class="info-local"><i class="fa fa-map-marker"></i> Arena da baixada - 16:00<strong>hrs</strong></p>									
 				</div>
 				<div class="card estrutura">
 					<p class="info-data"><i class="fa fa-calendar"></i> DOM 15/04/2018</p>								
