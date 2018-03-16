@@ -312,13 +312,13 @@ require_once('header.php');
 
 			<div class="col-sm-4">
 				<h1 class="headline">Jogos</h1>
-				<ul class="pagination est-rodada">			        
+				<ul class="paginacao est-rodada">			        
 			        <li class="page-item">
-			            <a class="page-rodada rodada" href="#">&lt;</a>
+			            <a class="page-rodada pos-rodada" href="#">&lt;</a>
 			        </li>			        
 			        <h3 class="n-rodada">1º Rodada </h3>
 			        <li class="page-item">
-			            <a class="page-rodada rodada" href="#">&gt;</a>
+			            <a class="page-rodada pos-rodada" href="#">&gt;</a>
 			        </li>
 			    </ul>
 				<div class="card estrutura">

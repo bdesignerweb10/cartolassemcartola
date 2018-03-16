@@ -8956,10 +8956,18 @@ ul.escudos > li {
   position: relative;
   display: block;
   padding: 0.5rem 0.75rem;
-  margin-left: -1px;
   line-height: 1.25;
   color: #fff;
   background-color: #fc8f3e; }
   .page-rodada:hover {
     color: #fff;
     text-decoration: none; }
+
+.pos-rodada {
+  font-size: 1rem;
+  font-weight: bold; }
+
+.paginacao {
+  display: flex;
+  padding-left: 0;
+  list-style: none; }

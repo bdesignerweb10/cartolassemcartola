@@ -1,12 +1,12 @@
 <?php
-require_once('header.php');
+	require_once('header.php');
 ?>
 
 <main>
 	<div class="container">
 		<h1 class="headline">Confira todos os eventos</h1>
 		<div class="row">
-			<div class="col-sm-4">
+			<div class="col-sm-4 col-md-6">
 				<div class="card">
 				  <div class="card-block">
 				    <h4 class="card-title">Churrasco da Liga</h4>
@@ -19,7 +19,7 @@ require_once('header.php');
 				</div>
 			</div>
 
-			<div class="col-sm-4">
+			<div class="col-sm-4 col-md-6">
 				<div class="card">
 				  <div class="card-block">
 				    <h4 class="card-title">Churrasco da Liga</h4>
@@ -32,7 +32,7 @@ require_once('header.php');
 				</div>
 			</div>
 
-			<div class="col-sm-4">
+			<div class="col-sm-4 col-md-6">
 				<div class="card">
 				  <div class="card-block">
 				    <h4 class="card-title">Assistir libertadores</h4>
@@ -45,7 +45,7 @@ require_once('header.php');
 				</div>
 			</div>
 
-			<div class="col-sm-4">
+			<div class="col-sm-4 col-md-6">
 				<div class="card">
 				  <div class="card-block">
 				    <h4 class="card-title">Cervejada da rodada</h4>
