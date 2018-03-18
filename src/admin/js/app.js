@@ -784,6 +784,8 @@ $(function() {
 				{
 					$('#loading').modal('hide');
 
+					console.log('data', data);
+
 					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
 					if(retorno.succeed) {
@@ -1404,23 +1406,19 @@ $(function() {
     	$('#headline-mata-mata').html('');
 
     	$('#id').val('');
-    	$('#descricao').prop("readonly", null);
+    	$('#descricao').prop("readonly", false);
     	$('#descricao').val('');
-    	$('#total_times').prop("readonly", null);
+    	$('#total_times').prop("readonly", false);
     	$('#total_times').val('4');
-    	$('#passo-mata-mata').prop("disabled", null);
+    	$('#rodada_inicio').prop("readonly", false);
+    	$('#passo-mata-mata').prop("disabled", false);
 
-    	$('#descricao').prop("readonly", null);
-		$('#total_times').prop("disabled", false);
     	$('#sel-time-content').html('');
-    	$('#passo-mata-mata').prop("disabled", null);
+    	$('#voltar-mata-mata').prop("disabled", false);
+    	$('#passo-mata-mata').prop("disabled", false);
     	$('#box-times').hide();
 
-    	$(".sel-times").prop("disabled", null);
-    	$(".check-duplicated").remove();
-    	$("#voltar-mata-mata").prop("disabled", null);
-    	$("#passo-times").prop("disabled", null);
-    	$('#chaves-confronto').html('');
+		$('#chaves-confronto').html('');
     	$('#box-confrontos').hide();
 
 		$('.mainform').hide();
@@ -1470,41 +1468,64 @@ $(function() {
 			    	
 			    	$('#id').val(retorno.id);
 					$('#descricao').val(retorno.descricao);
-					$('#descricao').prop("readonly", "readonly");
-			    	$('#passo-ano').prop("disabled", "disabled");
+					$('#descricao').prop("readonly", true);
 
-    				$("#voltar-ano").prop("disabled", "disabled");
-			    	$('#passo-rodada').prop("disabled", null);
-					$('#box-rodada').show();
+			    	$('#total_times').val(retorno.total_times);
+			    	$('#total_times').prop("disabled", true);
 
-					$('#sel-content').append('<div class="col-12"><div class="form-check" style="margin-bottom:20px;"><label class="form-check-label"><input type="checkbox" class="form-check-input sel-todos" />&nbsp;&nbsp;&nbsp;Selecionar todos</label></div></div>');
+			    	$('#rodada_inicio').val(retorno.rodada_inicio);
+			    	$('#rodada_inicio').prop("disabled", true);
 
-					$.each(retorno.list, function(i, item) {
-						$('#sel-content').append('<div class="col-6"><label class="form-check-label"><input type="checkbox" id="rodada[' + item.id + ']" name="rodada[' + item.id + ']" class="form-check-input sel-rodadas" value="' + item.id + '" ' + (item.has_temporada ? 'checked' : '') + ' />&nbsp;&nbsp;&nbsp;Rodada #' + item.descricao + '</label></div>');
+			    	$('#passo-mata-mata').prop("disabled", true);
+
+			    	$.each(retorno.times, function(i, item) {
+						$('#sel-time-content').append('<div class="col-6"><label class="form-check-label" for="time[' + item.id + ']"><input type="checkbox" id="time[' + item.id + ']" name="time[' + item.id + ']" class="form-check-input sel-times" value="' + item.id + '" ' + (item.has_time ? 'checked' : '') + ' />&nbsp;&nbsp;&nbsp;' + item.descricao + '</label></div>');
 					});
+		    		$(".sel-times").prop("disabled", true);
+			    	$("#voltar-mata-mata").prop("disabled", true);
+			    	$("#passo-times").prop("disabled", true);
+			    	$('#box-times').show();
+					
+			    	var chaves = retorno.total_times / 2;
+
+			    	var options = "<option value='' selected>Selecione...</option>";
+
+			    	$("#sel-time-content input[type='checkbox']:checked").each(function(){
+			    		options += "<option value='" + $(this).val() + "'>" + $("label[for='" + $(this).attr('id') + "']").text().split('   ')[1] + "</option>";
+					});
+
+			    	for(var i = 1; i <= chaves; i++) {
+			    		$('#chaves-confronto').append("<div class='row'><div class='col-12'><div class='card'><div class='card-header'>Chave " + i + "</div><div class='card-block'><div class='form-group'><select class='form-control form-control-lg' id='chave[" + i + "][1]' name='chave[" + i + "][1]' aria-describedby='chave[" + i + "][1]' required>" + options + "</select></div><div class='form-group'><label for='chave[" + i + "][2]' class='label-versus'>x</label><select class='form-control form-control-lg' id='chave[" + i + "][2]' name='chave[" + i + "][2]' aria-describedby='chave[" + i + "][2]' required>" + options + "</select></div></div></div></div></div>");
+			    	}
+
+			    	$.each(retorno.chaves, function(i, item) {
+			    		$('#chave\\['+item.chave+'\\]\\[1\\]').val(item.confrontos[0].time1);
+			    		$('#chave\\['+item.chave+'\\]\\[2\\]').val(item.confrontos[1].time2);
+			    	});
+
+			    	$('#box-confrontos').show();
 				}
 				else {
-    				$('#headline-mata-mata').html('');
+			    	$('#headline-mata-mata').html('');
 
 			    	$('#id').val('');
 			    	$('#descricao').prop("readonly", null);
 			    	$('#descricao').val('');
 			    	$('#total_times').prop("readonly", null);
 			    	$('#total_times').val('4');
+			    	$('#rodada_inicio').prop("readonly", null);
 			    	$('#passo-mata-mata').prop("disabled", null);
 
-			    	$('#descricao').prop("readonly", null);
-					$('#total_times').prop("disabled", false);
 			    	$('#sel-time-content').html('');
+			    	$('#voltar-mata-mata').prop("disabled", null);
 			    	$('#passo-mata-mata').prop("disabled", null);
 			    	$('#box-times').hide();
 
-			    	$(".sel-times").prop("disabled", null);
-			    	$(".check-duplicated").remove();
-			    	$("#voltar-mata-mata").prop("disabled", null);
-			    	$("#passo-times").prop("disabled", null);
-			    	$('#chaves-confronto').html('');
+		    		$('#chaves-confronto').html('');
 			    	$('#box-confrontos').hide();
+
+					$('.mainform').hide();
+					$('.maintable').show();
 
 					$('#alert-title').html(retorno.title);
 					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
@@ -1533,8 +1554,8 @@ $(function() {
 				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
 				if(retorno.succeed) {
-					$('#alert-title').html("Registro removido com sucesso!");
-					$('#alert-content').html("A remoção do registro foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					$('#alert-title').html("Mata-mata removido com sucesso!");
+					$('#alert-content').html("A remoção do mata-mata foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
 					$('#alert').modal('show');
 
 					$('#alert').on('hidden.bs.modal', function (e) {
@@ -1579,19 +1600,21 @@ $(function() {
 			}
 		});
 
-    	$('#descricao').prop("readonly", "readonly");
+    	$('#descricao').prop("readonly", true);
     	$('#total_times').prop("disabled", true);
-    	$(this).prop("disabled", "disabled");
+    	$('#rodada_inicio').prop("disabled", true);
+    	$(this).prop("disabled", true);
     	$('#box-times').show();
     });
 
     $('#voltar-mata-mata').click(function(e) {
     	e.preventDefault();
 
-    	$('#descricao').prop("readonly", null);
+    	$('#descricao').prop("readonly", false);
 		$('#total_times').prop("disabled", false);
+    	$('#rodada_inicio').prop("disabled", false);
     	$('#sel-time-content').html('');
-    	$('#passo-mata-mata').prop("disabled", null);
+    	$('#passo-mata-mata').prop("disabled", false);
     	$('#box-times').hide();
     });	
 
@@ -1654,6 +1677,7 @@ $(function() {
     	var id = $(this).data('id');
     	
     	$('#total_times').prop("disabled", false);
+		$('#rodada_inicio').prop("disabled", false);
 
 		$.ajax({
 			type: "POST",
@@ -1673,6 +1697,7 @@ $(function() {
 					$('#alert').modal('show');
 
     				$('#total_times').prop("disabled", true);
+    				$('#rodada_inicio').prop("disabled", true);
 
 					$('#alert').on('hidden.bs.modal', function (e) {
 						window.location.reload();
@@ -1684,6 +1709,7 @@ $(function() {
 					$('#alert').modal('show');
 
     				$('#total_times').prop("disabled", true);
+    				$('#rodada_inicio').prop("disabled", true);
 				}
 			}
 		});

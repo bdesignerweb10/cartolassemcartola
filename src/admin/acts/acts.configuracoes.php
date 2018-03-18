@@ -30,7 +30,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 				$conn->autocommit(FALSE);
 				$maxrodada = 0;
 
-				$res_rod = $conn->query("SELECT MAX(id_rodadas) AS id FROM tbl_temporadas WHERE id_anos = " . $_SESSION["temporada_atual"] . " LIMIT 1") or trigger_error($conn->error);
+				$res_rod = $conn->query("SELECT MAX(id_rodadas) AS id FROM tbl_temporadas WHERE id_anos = " . $_SESSION["temporada_atual"] . " LIMIT 1") or trigger_error("26019 - " . $conn->error);
 
 				if ($res_rod && $res_rod->num_rows > 0) {
 			        while($rod = $res_rod->fetch_object()) {
@@ -97,7 +97,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 										   		  FROM tbl_times_temporadas 
 										   		 WHERE id_anos = " . $_SESSION["temporada_atual"] . " 
 										   		   AND id_rodadas = " . $_SESSION["rodada"] . "
-										   		   AND pontuacao = 0") or trigger_error($conn->error);
+										   		   AND pontuacao = 0") or trigger_error("26020 - " . $conn->error);
 		        
 		        while($timezerado = $qrytimeszerado->fetch_object()) {
 					$timeszerado = $timezerado->count;
@@ -109,7 +109,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 					exit();
 				}
 
-				$res_rod = $conn->query("SELECT MAX(id_rodadas) AS id FROM tbl_temporadas WHERE id_anos = " . $_SESSION["temporada_atual"] . " LIMIT 1") or trigger_error($conn->error);
+				$res_rod = $conn->query("SELECT MAX(id_rodadas) AS id FROM tbl_temporadas WHERE id_anos = " . $_SESSION["temporada_atual"] . " LIMIT 1") or trigger_error("26021 - " . $conn->error);
 
 				if ($res_rod && $res_rod->num_rows > 0) {
 			        while($rod = $res_rod->fetch_object()) {
@@ -130,7 +130,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 									    INNER JOIN tbl_rodadas r ON r.id = t.id_rodadas
 											 WHERE t.id_anos = " . $_SESSION["temporada_atual"] . " 
 											   AND t.id_rodadas > " . $_SESSION["rodada"] . "
-										  ORDER BY t.id_anos, t.id_rodadas ASC LIMIT 1") or trigger_error($conn->error);
+										  ORDER BY t.id_anos, t.id_rodadas ASC LIMIT 1") or trigger_error("26022 - " . $conn->error);
 
 				if ($qrynextrod && $qrynextrod->num_rows > 0) {
 			        while($nextrods = $qrynextrod->fetch_object()) {
@@ -143,14 +143,110 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 					exit();
 				}
 
+				$temporada_atual = $_SESSION["temporada_atual"];
+				$rodada_atual = $_SESSION["rodada"];
+				$chave = 1;
+				$vencedor_1 = "";
+				$vencedor_2 = "";
+				$perdedor_1 = "";
+				$perdedor_2 = "";
+
+				$qryselconfrontos = $conn->query("SELECT id_mata_mata, id_time_1, id_time_2, nivel
+				  				       				FROM tbl_mata_mata_confrontos 
+				  				      			   WHERE id_anos    =  $temporada_atual
+				  				        			 AND id_rodadas =  $rodada_atual
+				  				        			 AND nivel      > 1
+		  				           				ORDER BY chave") or trigger_error("26023 - " . $conn->error);
+				if ($qryselconfrontos && $qryselconfrontos->num_rows > 0) {
+			        while($confronto = $qryselconfrontos->fetch_object()) {
+
+			        	$pontuacao_time_1 = 0;
+			        	$pontuacao_time_2 = 0;
+
+			        	$qryselpontime1 = $conn->query("SELECT pontuacao
+						  				     			  FROM tbl_times_temporadas 
+						  				    			 WHERE id_times   =  $confronto->id_time_1
+						  				      			   AND id_rodadas =  $rodada_atual
+						  				      			   AND id_anos    =  $temporada_atual") or trigger_error("26024 - " . $conn->error);
+						if ($qryselpontime1 && $qryselpontime1->num_rows > 0) {
+					        while($pontime1 = $qryselpontime1->fetch_object()) {
+					        	$pontuacao_time_1 = doubleval($pontime1->pontuacao);
+					        }
+					    }
+
+			        	$qryselpontime2 = $conn->query("SELECT pontuacao
+						  				     			  FROM tbl_times_temporadas 
+						  				    			 WHERE id_times   =  $confronto->id_time_2
+						  				      			   AND id_rodadas =  $rodada_atual
+						  				      			   AND id_anos    =  $temporada_atual") or trigger_error("26025 - " . $conn->error);;
+						if ($qryselpontime2 && $qryselpontime2->num_rows > 0) {
+					        while($pontime2 = $qryselpontime2->fetch_object()) {
+					        	$pontuacao_time_2 = doubleval($pontime2->pontuacao);
+					        }
+					    }
+
+					    if(isset($vencedor_1) && !empty($vencedor_1) && $vencedor_1 > 0) {
+					    	if($pontuacao_time_1 > $pontuacao_time_2) {
+					    		$vencedor_2 = intval($confronto->id_time_1);
+					    		$perdedor_2 = intval($confronto->id_time_2);
+					    	}
+					    	else {
+					    		$vencedor_2 = intval($confronto->id_time_2);
+					    		$perdedor_2 = intval($confronto->id_time_1);
+					    	}
+					    	$qryselproxrodada = $conn->query("SELECT id_rodadas AS id 
+					    									    FROM tbl_temporadas 
+					    									   WHERE id_anos = $temporada_atual
+					    									     AND id_rodadas > $rodada_atual LIMIT 1") or trigger_error("26017 - " . $conn->error);
+
+							if ($qryselproxrodada && $qryselproxrodada->num_rows > 0) {
+						        while($proxrod = $qryselproxrodada->fetch_object()) {
+						        	$proxrodada = $proxrod->id;
+							    	$novo_nivel = $confronto->nivel / 2;
+
+							    	// Disputa de 3 lugar.
+							    	// Quando chegamos ao ultimo nivel de competicao (finais) pegamos os perdedores das semi-finais e fazemos um confronto entre eles.
+							    	// A definicao de 3 lugar está no fato do nivel do confronto ser 1 e a chave 2
+							    	if($novo_nivel == 1) {
+							    		$qryconfrontos = "INSERT INTO tbl_mata_mata_confrontos (id_mata_mata, id_time_1, id_time_2, id_anos, id_rodadas, chave, nivel) VALUES ($confronto->id_mata_mata, $perdedor_1, $perdedor_2, $temporada_atual, $proxrodada, 2, $novo_nivel)";
+
+										if ($conn->query($qryconfrontos) !== TRUE) {
+											throw new Exception("Erro ao inserir o confronto de terceiro lugar do mata-mata: " . $qryconfrontos . '<br />' . $conn->error);
+										}
+							    	}
+
+							    	$qryconfrontos = "INSERT INTO tbl_mata_mata_confrontos (id_mata_mata, id_time_1, id_time_2, id_anos, id_rodadas, chave, nivel) VALUES ($confronto->id_mata_mata, $vencedor_1, $vencedor_2, $temporada_atual, $proxrodada, $chave, $novo_nivel)";
+
+									if ($conn->query($qryconfrontos) === TRUE) {
+										$vencedor_1 = "";
+										$vencedor_2 = "";
+							    		$chave++;
+									}
+									else {
+										throw new Exception("Erro ao inserir o confronto do mata-mata: " . $qryconfrontos . '<br />' . $conn->error);
+									}
+								}
+							} else {
+								throw new Exception("Não foi possível inserir o confronto do mata-mata porque a rodada seguinte a atual ($rodada_atual) não existe");
+
+							}
+					    }
+					    else {
+					    	if($pontuacao_time_1 > $pontuacao_time_2) {
+					    		$vencedor_1 = intval($confronto->id_time_1);
+					    		$perdedor_1 = intval($confronto->id_time_2);
+					    	}
+					    	else {
+					    		$vencedor_1 = intval($confronto->id_time_2);
+					    		$perdedor_1 = intval($confronto->id_time_1);
+					    	}
+					    }
+			        }
+			    }
+
 				$qryabrirmercado = "UPDATE tbl_config SET status_mercado = 1, rodada_atual = $nextrod";
 
 				if ($conn->query($qryabrirmercado) === TRUE) {
-					// TODO: fazer logica do calculo de confrontos do mata-maata
-
-
-
-
 					$conn->commit();
 					$_SESSION["mercado"] = 1;
 					$_SESSION["rodada"] = $nextrod;
@@ -170,7 +266,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 				$rodada_atual = $_SESSION["rodada"];
 
 				if($rodada_atual == 'NULL' || empty($rodada_atual)) {
-					$res_rod = $conn->query("SELECT MIN(id_rodadas) AS id FROM tbl_temporadas WHERE id_anos = " . $_SESSION["temporada_atual"] . " LIMIT 1") or trigger_error($conn->error);
+					$res_rod = $conn->query("SELECT MIN(id_rodadas) AS id FROM tbl_temporadas WHERE id_anos = " . $_SESSION["temporada_atual"] . " LIMIT 1") or trigger_error("26018 - " . $conn->error);
 
 					if ($res_rod && $res_rod->num_rows > 0) {
 				        while($rod = $res_rod->fetch_object()) {

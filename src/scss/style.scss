@@ -309,9 +309,7 @@ ul.escudos > li {
 }
 
 .fixed-column {
-	overflow-x: scroll;
 	margin-left: 233px;
-	overflow-y: visible;
 	padding: 0;
 }
 
@@ -332,10 +330,6 @@ ul.escudos > li {
 .rodada{
 	font-size: 1rem;
 	font-weight: bold;
- 	&:first-child {
- 		position:relative;
- 		left:233px;
- 	}
 }
 
 //Pontuação < 30

@@ -8690,9 +8690,7 @@ ul.escudos > li {
   background-color: #fff; }
 
 .fixed-column {
-  overflow-x: scroll;
   margin-left: 233px;
-  overflow-y: visible;
   padding: 0; }
 
 .time-rodada {
@@ -8710,9 +8708,6 @@ ul.escudos > li {
 .rodada {
   font-size: 1rem;
   font-weight: bold; }
-  .rodada:first-child {
-    position: relative;
-    left: 233px; }
 
 .ruim {
   color: #f22436; }
