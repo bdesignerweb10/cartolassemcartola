@@ -1,2 +1,1759 @@
-$(function(){$("html, body").on("click",function(a){a.target==document.documentElement&&$("html").removeClass("open-sidebar")}),$(".js-open-sidebar").on("click",function(){$("html").addClass("open-sidebar")}),$("#form-login").submit(function(a){a.preventDefault(),$("#loading").modal({keyboard:!1}),$.ajax({type:"POST",url:"acts/acts.login.php?act=login",data:$("#form-login").serialize(),success:function(a){$("#loading").modal("hide");var e=JSON.parse(a.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));e.succeed?window.location.href="home.php":($("#alert-title").html(e.title),$("#alert-content").html(e.errno+" - "+e.erro),$("#alert").modal("show"),"21010"==e.errno&&$("#alert").on("hidden.bs.modal",function(a){window.location.href="../provisoria.php"}))}})}),$("#btn-esqueceu-senha").click(function(a){a.preventDefault(),$(".mainlogin").hide(),$(".mainform").show()}),$("#btn-recuperar-senha").click(function(a){a.preventDefault(),a.preventDefault(),$("#loading").modal({keyboard:!1}),$.ajax({type:"POST",url:"acts/acts.login.php?act=reset",data:$("#form-recuperar").serialize(),success:function(a){$("#loading").modal("hide");var e=JSON.parse(a.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));e.succeed?($("#alert-title").html("Solicitação enviada com sucesso!"),$("#alert-content").html("Sua requisição para resetar sua senha foi realizada com sucesso. Aguarde o e-mail com as informações! Ao fechar esta mensagem a página será recarregada."),$("#alert").modal("show"),$("#alert").on("hidden.bs.modal",function(a){window.location.reload()})):($("#alert-title").html(e.title),$("#alert-content").html(e.errno+" - "+e.erro),$("#alert").modal("show"))}})}),$("#btn-voltar-temporadas").click(function(a){a.preventDefault(),$("#headline-temporada").html(""),$("#id").val(""),$("#descricao").prop("readonly",null),$("#descricao").val(""),$("#passo-ano").prop("disabled",null),$("#box-rodada").hide(),$("#sel-content").html(""),$("#passo-rodada").prop("disabled",null),$("#voltar-ano").prop("disabled",null),$("#box-confirmacao").hide(),$("#resumo-temporada").html(""),$("#resumo-rodadas").html(""),$(".mainform").hide(),$(".maintable").show()}),$("#btn-add-temporadas").click(function(a){a.preventDefault(),$(".maintable").hide(),$(".mainform").show(),$("#headline-temporada").html("Cadastro de nova temporada"),$("#id").val(""),$("#passo-confirmacao").data("act","add"),$("#passo-confirmacao").data("temporada",null)}),$(".btn-edit-temporadas").click(function(a){a.preventDefault(),$("#loading").modal({keyboard:!1}),$(".maintable").hide(),$(".mainform").show();var e=$(this).data("temporada");$.ajax({type:"POST",url:"acts/acts.temporadas.php?act=showupd&idano="+e,success:function(a){$("#loading").modal("hide");var t=JSON.parse(a.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));t.succeed?($("#passo-confirmacao").data("act","edit"),$("#passo-confirmacao").data("temporada",e),$("#headline-temporada").html("Editando a temporada "+t.descricao),$("#id").val(t.id),$("#descricao").val(t.descricao),$("#descricao").prop("readonly","readonly"),$("#passo-ano").prop("disabled","disabled"),$("#voltar-ano").prop("disabled","disabled"),$("#passo-rodada").prop("disabled",null),$("#box-rodada").show(),$("#sel-content").append('<div class="col-12"><div class="form-check" style="margin-bottom:20px;"><label class="form-check-label"><input type="checkbox" class="form-check-input sel-todos" />&nbsp;&nbsp;&nbsp;Selecionar todos</label></div></div>'),$.each(t.list,function(a,e){$("#sel-content").append('<div class="col-6"><label class="form-check-label"><input type="checkbox" id="rodada['+e.id+']" name="rodada['+e.id+']" class="form-check-input sel-rodadas" value="'+e.id+'" '+(e.has_temporada?"checked":"")+" />&nbsp;&nbsp;&nbsp;Rodada #"+e.descricao+"</label></div>")})):($("#headline-temporada").html(""),$("#id").val(""),$("#descricao").prop("readonly",null),$("#descricao").val(""),$("#passo-ano").prop("disabled",null),$("#box-rodada").hide(),$("#sel-content").html(""),$("#passo-rodada").prop("disabled",null),$("#voltar-ano").prop("disabled",null),$("#box-confirmacao").hide(),$("#resumo-temporada").html(""),$("#resumo-rodadas").html(""),$("#alert-title").html(t.title),$("#alert-content").html(t.errno+" - "+t.erro),$("#alert").modal("show"))}})}),$(".btn-del-temporadas").click(function(a){a.preventDefault(),$("#loading").modal({keyboard:!1});var e=$(this).data("temporada");$.ajax({type:"POST",url:"acts/acts.temporadas.php?act=del&idano="+e,success:function(a){$("#loading").modal("hide");var e=JSON.parse(a.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));e.succeed?($("#alert-title").html("Registro removido com sucesso!"),$("#alert-content").html("A remoção do registro foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada."),$("#alert").modal("show"),$("#alert").on("hidden.bs.modal",function(a){window.location.reload()})):($("#alert-title").html(e.title),$("#alert-content").html(e.errno+" - "+e.erro),$("#alert").modal("show"))}})}),$("#passo-ano").click(function(a){a.preventDefault(),$("#loading").modal({keyboard:!1}),$.ajax({type:"POST",url:"acts/acts.temporadas.php?act=selrod",success:function(a){$("#loading").modal("hide");var e=JSON.parse(a.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));e.succeed?($("#sel-content").append('<div class="col-12"><div class="form-check" style="margin-bottom:20px;"><label class="form-check-label"><input type="checkbox" class="form-check-input sel-todos" />&nbsp;&nbsp;&nbsp;Selecionar todos</label></div></div>'),$.each(e.list,function(a,e){$("#sel-content").append('<div class="col-6"><label class="form-check-label"><input type="checkbox" id="rodada['+e.id+']" name="rodada['+e.id+']" class="form-check-input sel-rodadas" value="'+e.id+'" '+(e.has_temporada?"checked":"")+" />&nbsp;&nbsp;&nbsp;Rodada #"+e.descricao+"</label></div>")})):($("#alert-title").html(e.title),$("#alert-content").html(e.errno+" - "+e.erro),$("#alert").modal("show"))}}),$("#descricao").prop("readonly","readonly"),$(this).prop("disabled","disabled"),$("#box-rodada").show()}),$("body").on("click",".sel-todos",function(){$(".sel-rodadas").prop("checked",$(".sel-todos").is(":checked"))}),$("#voltar-ano").click(function(a){a.preventDefault(),$("#sel-content").html(""),$("#descricao").prop("readonly",null),$("#passo-ano").prop("disabled",null),$("#box-rodada").hide()}),$("#passo-rodada").click(function(a){a.preventDefault(),$("#resumo-temporada").html("Temporada: "+$("#descricao").val()),$("#resumo-rodadas").html("Total rodadas: "+$(".sel-rodadas:checked").length),$(".sel-todos").prop("disabled","disabled");var e=$("#sel-content").clone();$(".sel-rodadas").prop("disabled","disabled"),e.appendTo("#box-rodada").addClass("check-duplicated"),$("#voltar-ano").prop("disabled","disabled"),$(this).prop("disabled","disabled"),$("#box-confirmacao").show()}),$("#voltar-rodada").click(function(a){a.preventDefault(),$(".sel-todos").prop("disabled",null),$(".sel-rodadas").prop("disabled",null),$(".check-duplicated").remove(),$("#voltar-ano").prop("disabled",null),$("#passo-rodada").prop("disabled",null),$("#box-confirmacao").hide()}),$("#passo-confirmacao").click(function(a){a.preventDefault(),$("#loading").modal({keyboard:!1});var e=$("#passo-confirmacao").data("act"),t=$("#passo-confirmacao").data("temporada");$.ajax({type:"POST",url:"acts/acts.temporadas.php?act="+e+"&idano="+t,data:$("#form-temporadas").serialize(),success:function(a){$("#loading").modal("hide");var t=JSON.parse(a.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));t.succeed?($("#alert-title").html("Registro "+("add"==e?"adicionado":"editado")+" com sucesso!"),$("#alert-content").html("A "+("add"==e?"adição":"edição")+" do registro foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada."),$("#alert").modal("show"),$("#alert").on("hidden.bs.modal",function(a){window.location.reload()})):($("#alert-title").html(t.title),$("#alert-content").html(t.errno+" - "+t.erro),$("#alert").modal("show"))}})}),$(".btn-times-temporada").click(function(a){a.preventDefault(),$("#loading").modal({keyboard:!1});var e=$(this).data("temporada");$.ajax({type:"POST",url:"acts/acts.times_temporadas.php?act=getanotemp&idano="+e,success:function(a){$("#loading").modal("hide");var t=JSON.parse(a.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));t.succeed?($(".maintable").hide(),$(".maintemporada").show(),$("#headline-time-temporada").html("Gerenciando times inscritos na temporada "+t.descricao),t.list.length>0?$.each(t.list,function(a,t){var o=1==t.pode_ativar?"<a href='#' class='btn-ativar-inscricao' data-time='"+t.id_time+"' data-temporada='"+e+"' alt='Inscrever "+t.time+" na temporada' title='Inscrever "+t.time+" na temporada'><i class='fa fa-rocket fa-2x edit'></i></a>":"<i class='fa fa-rocket fa-2x edit-disabled' alt='Não é possível inscrever "+t.time+" na temporada' title='Não é possível inscrever "+t.time+" na temporada'></i>",r=1==t.pode_desativar?"<a href='#' class='btn-desativar-inscricao' data-time='"+t.id_time+"' data-temporada='"+e+"' alt='Remover "+t.time+" da temporada' title='Remover "+t.time+" da temporada'><i class='fa fa-trash fa-2x del'></i></a>":"<i class='fa fa-trash fa-2x del-disabled' alt='Não é possível remover "+t.time+" da temporada' title='Não é possível remover "+t.time+" da temporada'></i>";$("#lista-times-temporada").append("<tr><th scope='row' class='center'>"+t.id+"</th><td>"+t.time+"</td><td>"+t.presidente+"</td><td class='center'>"+t.posicao_liga+" º</td><td class='center'>"+t.pontuacao+" pts.</td><td class='center'>"+(1==t.ativo?"<i class='fa fa-check fa-2x add' alt='Time ativo' title='Time está ativo'></i>":"<i class='fa fa-times fa-2x del' alt='Time inativo' title='Time ainda não está ativo'></i>")+"</td><td class='center'>"+(1==t.ativo?r:o)+"</td></tr>")}):$("#lista-times-temporada").append("<tr><td colspan='7' class='center'>Não há dados a serem exibidos para a listagem.</td></tr>")):($("#alert-title").html(t.title),$("#alert-content").html(t.errno+" - "+t.erro),$("#alert").modal("show"),$("#headline-time-temporada").html(""))}})}),$("body").on("click",".btn-ativar-inscricao",function(a){a.preventDefault(),$("#loading").modal({keyboard:!1});var e=$(this).data("time"),t=$(this).data("temporada");$.ajax({type:"POST",url:"acts/acts.times_temporadas.php?act=ativar&idtime="+e+"&idano="+t,success:function(a){$("#loading").modal("hide");var e=JSON.parse(a.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));e.succeed?($("#alert-title").html("Você finalizou a inscrição do time!"),$("#alert-content").html("O time foi inscrito com sucesso na temporada! Ao fechar esta mensagem a página será recarregada."),$("#alert").modal("show"),$("#alert").on("hidden.bs.modal",function(a){window.location.reload()})):($("#alert-title").html(e.title),$("#alert-content").html(e.errno+" - "+e.erro),$("#alert").modal("show"))}})}),$("body").on("click",".btn-desativar-inscricao",function(a){a.preventDefault(),$("#loading").modal({keyboard:!1});var e=$(this).data("time"),t=$(this).data("temporada");$.ajax({type:"POST",url:"acts/acts.times_temporadas.php?act=desativar&idtime="+e+"&idano="+t,success:function(a){$("#loading").modal("hide");var e=JSON.parse(a.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));e.succeed?($("#alert-title").html("Você removeu o time da temporada!"),$("#alert-content").html("O time selecionado foi removido da temporada com sucesso! Ao fechar esta mensagem a página será recarregada."),$("#alert").modal("show"),$("#alert").on("hidden.bs.modal",function(a){window.location.reload()})):($("#alert-title").html(e.title),$("#alert-content").html(e.errno+" - "+e.erro),$("#alert").modal("show"))}})}),$("#btn-voltar-lista-temporadas").click(function(a){a.preventDefault(),$(".maintable").show(),$(".maintemporada").hide(),$("#headline-time-temporada").html(""),$("#lista-times-temporada").html("")}),$("#btn-voltar-times").click(function(a){a.preventDefault(),$(".mainform").hide(),$(".maintable").show(),$("#btn-salvar-time").data("id",null),$("#headline-ger-times").html(""),$(".headline-form").html("")}),$(".btn-edit-time").click(function(a){a.preventDefault(),$("#loading").modal({keyboard:!1});var e=$(this).data("id");$.ajax({type:"POST",url:"acts/acts.gerenciar_times.php?act=showupd&idtime="+e,success:function(a){$("#loading").modal("hide");var t=JSON.parse(a.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));t.succeed?($(".maintable").hide(),$(".mainform").show(),$("#btn-salvar-time").data("id",e),$("#headline-ger-times").html("Editar o time "+t.dados.nome_time),$(".headline-form").html("Edite as informações do time!"),$("#id").val(t.dados.id),$("#nome_time").val(t.dados.nome_time),$("#nome_presidente").val(t.dados.nome_presidente),$("#email").val(t.dados.email),$("#telefone").val(t.dados.telefone),$("#historia").val(t.dados.historia)):($(".maintable").show(),$(".mainform").hide(),$("#btn-salvar-time").data("id",null),$("#headline-ger-times").html(""),$(".headline-form").html(""),$("#id").val(""),$("#nome_time").val(""),$("#nome_presidente").val(""),$("#email").val(""),$("#telefone").val(""),$("#historia").val(""),$("#alert-title").html(t.title),$("#alert-content").html(t.errno+" - "+t.erro),$("#alert").modal("show"))}})}),$(".btn-desativar-time").click(function(a){a.preventDefault(),$("#loading").modal({keyboard:!1});var e=$(this).data("id");$.ajax({type:"POST",url:"acts/acts.gerenciar_times.php?act=desativar&idtime="+e,success:function(a){$("#loading").modal("hide");var e=JSON.parse(a.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));e.succeed?($("#alert-title").html("Você desativou o time!"),$("#alert-content").html("O time selecionado foi desativado com sucesso! Ao fechar esta mensagem a página será recarregada."),$("#alert").modal("show"),$("#alert").on("hidden.bs.modal",function(a){window.location.reload()})):($("#alert-title").html(e.title),$("#alert-content").html(e.errno+" - "+e.erro),$("#alert").modal("show"))}})}),$("#btn-salvar-time").click(function(a){a.preventDefault(),$("#loading").modal({keyboard:!1});var e=$(this).data("id");$.ajax({type:"POST",url:"acts/acts.gerenciar_times.php?act=edit&idtime="+e,data:$("#form-temporadas").serialize(),success:function(a){$("#loading").modal("hide");var e=JSON.parse(a.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));e.succeed?($("#alert-title").html($("#nome_time").val()+" alterado com sucesso!"),$("#alert-content").html("A alteração de "+$("#nome_time").val()+" foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada."),$("#alert").modal("show"),$("#alert").on("hidden.bs.modal",function(a){window.location.reload()})):($("#alert-title").html(e.title),$("#alert-content").html(e.errno+" - "+e.erro),$("#alert").modal("show"))}})}),$(".btn-salvar-pontuacoes").click(function(a){a.preventDefault(),$("#loading").modal({keyboard:!1}),$.ajax({type:"POST",url:"acts/acts.pontuacoes.php?act=updpont",data:$("#form-pontuacoes").serialize(),success:function(a){$("#loading").modal("hide");var e=JSON.parse(a.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));e.succeed?($("#alert-title").html("Pontuações lançadas com sucesso!"),$("#alert-content").html("As pontuações dos times na rodada foram atualizadas com sucesso! Ao fechar esta mensagem a página será recarregada."),$("#alert").modal("show"),$("#alert").on("hidden.bs.modal",function(a){window.location.reload()})):($("#alert-title").html(e.title),$("#alert-content").html(e.errno+" - "+e.erro),$("#alert").modal("show"))}})}),$("#btn-abrir-temporada").click(function(a){a.preventDefault(),$("#confirm-title").html("ATENÇÃO!!"),$("#confirm-content").html("Você irá ABRIR a temporada e o sistema estará pronto para ser usado!<br /><br />Esse processo é IRREVERSÍVEL!"),$("#confirm").modal("show"),$("#btn-confirm-modal").click(function(a){$("#confirm").modal("hide"),$("#loading").modal({keyboard:!1}),$.ajax({type:"POST",url:"acts/acts.configuracoes.php?act=abrirtemporada",success:function(a){$("#loading").modal("hide");var e=JSON.parse(a.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));e.succeed?($("#alert-title").html("Temporada aberta com sucesso!"),$("#alert-content").html("A temporada foi aberta com sucesso! Que começem os jogos!<br /><br />Ao fechar esta mensagem a página será recarregada."),$("#alert").modal("show"),$("#alert").on("hidden.bs.modal",function(a){window.location.reload()})):($("#alert-title").html(e.title),$("#alert-content").html(e.errno+" - "+e.erro),$("#alert").modal("show"))}})})}),$("#btn-fechar-temporada").click(function(a){a.preventDefault(),$("#confirm-title").html("ATENÇÃO!!"),$("#confirm-content").html("Você irá ENCERRAR a temporada e a temporada será alterada para do próximo ano!<br /><br />Esse processo é IRREVERSÍVEL!"),$("#confirm").modal("show"),$("#btn-confirm-modal").click(function(a){$("#confirm").modal("hide"),$("#loading").modal({keyboard:!1}),$.ajax({type:"POST",url:"acts/acts.configuracoes.php?act=fechartemporada",success:function(a){$("#loading").modal("hide");var e=JSON.parse(a.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));e.succeed?($("#alert-title").html("Temporada encerrada com sucesso!"),$("#alert-content").html("A temporada foi encerrada com sucesso! Seja bem vindo a temporada "+e.rodada+" e até ano que vem!<br /><br />Ao fechar esta mensagem a página será recarregada."),$("#alert").modal("show"),$("#alert").on("hidden.bs.modal",function(a){window.location.reload()})):($("#alert-title").html(e.title),$("#alert-content").html(e.errno+" - "+e.erro),$("#alert").modal("show"))}})})}),$("#btn-abrir-mercado").click(function(a){a.preventDefault(),$("#confirm-title").html("ATENÇÃO!!"),$("#confirm-content").html("Você irá ABRIR o mercado e a rodada atual será alterada!<br /><br />Esse processo é IRREVERSÍVEL!"),$("#confirm").modal("show"),$("#btn-confirm-modal").click(function(a){$("#confirm").modal("hide"),$("#loading").modal({keyboard:!1}),$.ajax({type:"POST",url:"acts/acts.configuracoes.php?act=abrirmercado",success:function(a){$("#loading").modal("hide"),console.log("data",a);var e=JSON.parse(a.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));e.succeed?($("#alert-title").html("Mercado aberto com sucesso!"),$("#alert-content").html("O mercado foi aberto com sucesso! Você está na rodada "+e.rodada+"!<br /><br />Ao fechar esta mensagem a página será recarregada."),$("#alert").modal("show"),$("#alert").on("hidden.bs.modal",function(a){window.location.reload()})):($("#alert-title").html(e.title),$("#alert-content").html(e.errno+" - "+e.erro),$("#alert").modal("show"))}})})}),$("#btn-fechar-mercado").click(function(a){a.preventDefault(),$("#confirm-title").html("ATENÇÃO!!"),$("#confirm-content").html("Você irá FECHAR o mercado! Aproveite para lançar e conferir as pontuações!<br /><br />Esse processo é IRREVERSÍVEL!"),$("#confirm").modal("show"),$("#btn-confirm-modal").click(function(a){$("#confirm").modal("hide"),$("#loading").modal({keyboard:!1}),$.ajax({type:"POST",url:"acts/acts.configuracoes.php?act=fecharmercado",success:function(a){$("#loading").modal("hide");var e=JSON.parse(a.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));e.succeed?($("#alert-title").html("Mercado fechado com sucesso!"),$("#alert-content").html("O mercado foi fechado com sucesso! Não se esqueça de lançar e conferir a pontuação de todos os times!<br /><br />Ao fechar esta mensagem a página será recarregada."),$("#alert").modal("show"),$("#alert").on("hidden.bs.modal",function(a){window.location.reload()})):($("#alert-title").html(e.title),$("#alert-content").html(e.errno+" - "+e.erro),$("#alert").modal("show"))}})})}),$("#btn-dados-config").click(function(a){a.preventDefault(),$("#loading").modal({keyboard:!1}),$.ajax({type:"POST",url:"acts/acts.configuracoes.php?act=upddados",data:$("#form-config").serialize(),success:function(a){$("#loading").modal("hide");var e=JSON.parse(a.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));e.succeed?($("#alert-title").html("Dados alterados com sucesso!"),$("#alert-content").html("As configurações foram alteradas com sucesso! Ao fechar esta mensagem a página será recarregada."),$("#alert").modal("show"),$("#alert").on("hidden.bs.modal",function(a){window.location.reload()})):($("#alert-title").html(e.title),$("#alert-content").html(e.errno+" - "+e.erro),$("#alert").modal("show"))}})}),$("#btn-voltar-eventos").click(function(a){a.preventDefault(),$(".mainform").hide(),$(".maintable").show(),$("#btn-salvar-evento").data("id",null),$("#btn-salvar-evento").data("act",null),$("#headline-ger-eventos").html(""),$(".headline-form").html(""),$("#id").val(""),$("#titulo").val(""),$("#data").val(""),$("#local").val(""),$("#descricao").val(""),$("#ativo").bootstrapToggle("off"),$("#lista-participantes-evento").html("")}),$("#btn-add-eventos").click(function(a){a.preventDefault(),$(".maintable").hide(),$(".mainform").show(),$("#btn-salvar-evento").data("id",null),$("#btn-salvar-evento").data("act","add"),$("#headline-ger-times").html("Cadastrar novo evento"),$(".headline-form").html("Insira as informações do novo evento!"),$("#id").val(""),$("#titulo").val(""),$("#data").val(""),$("#local").val(""),$("#descricao").val(""),$("#ativo").bootstrapToggle("off"),$("#lista-participantes-evento").html("")}),$(".btn-edit-eventos").click(function(a){a.preventDefault(),$("#loading").modal({keyboard:!1});var e=$(this).data("id");$.ajax({type:"POST",url:"acts/acts.eventos.php?act=showupd&idevento="+e,success:function(a){$("#loading").modal("hide");var t=JSON.parse(a.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));if(t.succeed){$(".maintable").hide(),$(".mainform").show(),$("#btn-salvar-evento").data("act","edit"),$("#btn-salvar-evento").data("id",e),$("#headline-temporada").html("Editando o evento "+t.dados.titulo),$(".headline-form").html("Edite as informações do evento!");var o=new Date(1e3*t.dados.data);$("#id").val(t.dados.id),$("#titulo").val(t.dados.titulo),$("#data").val(o.toDatetimeLocal()),$("#local").val(t.dados.local),$("#descricao").val(t.dados.descricao),$("#ativo").bootstrapToggle(1==t.dados.ativo?"on":"off"),t.list.length>0?$.each(t.list,function(a,t){$("#lista-participantes-evento").append("<tr><td>"+t.time+"</td><td>"+t.presidente+"</td><td class='center'><a href='#' class='btn-del-presenca-evento' data-id='"+t.id_time+"' data-evento='"+e+"' alt='Remover "+t.time+" do evento' title='Remover "+t.time+" do evento'><i class='fa fa-trash fa-2x del'></i></a></td></tr>")}):$("#lista-participantes-evento").append("<tr><td colspan='3' class='center'>Não há dados a serem exibidos para a listagem.</td></tr>")}else $(".mainform").hide(),$(".maintable").show(),$("#btn-salvar-evento").data("id",null),$("#btn-salvar-evento").data("act",null),$("#headline-ger-eventos").html(""),$(".headline-form").html(""),$("#id").val(""),$("#titulo").val(""),$("#data").val(""),$("#local").val(""),$("#descricao").val(""),$("#ativo").bootstrapToggle("off"),$("#lista-participantes-evento").html(""),$("#alert-title").html(t.title),$("#alert-content").html(t.errno+" - "+t.erro),$("#alert").modal("show")}})}),$(".btn-del-eventos").click(function(a){a.preventDefault(),$("#loading").modal({keyboard:!1});var e=$(this).data("id");$.ajax({type:"POST",url:"acts/acts.eventos.php?act=del&idevento="+e,success:function(a){$("#loading").modal("hide");var e=JSON.parse(a.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));e.succeed?($("#alert-title").html("Evento removido com sucesso!"),$("#alert-content").html("A remoção do evento foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada."),$("#alert").modal("show"),$("#alert").on("hidden.bs.modal",function(a){window.location.reload()})):($("#alert-title").html(e.title),$("#alert-content").html(e.errno+" - "+e.erro),$("#alert").modal("show"))}})}),$("#btn-salvar-evento").click(function(a){a.preventDefault(),$("#loading").modal({keyboard:!1});var e=$(this).data("id"),t=$(this).data("act");if("edit"==t)var o="acts/acts.eventos.php?act="+t+"&idevento="+e;else var o="acts/acts.eventos.php?act="+t;$.ajax({type:"POST",url:o,data:$("#form-eventos").serialize(),success:function(a){$("#loading").modal("hide");var e=JSON.parse(a.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));e.succeed?($("#alert-title").html($("#titulo").val()+("add"==t?" adicionado ":" editado ")+"com sucesso!"),$("#alert-content").html("A "+("add"==t?" adição ":" edição ")+" de "+$("#titulo").val()+" foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada."),$("#alert").modal("show"),$("#alert").on("hidden.bs.modal",function(a){window.location.reload()})):($("#alert-title").html(e.title),$("#alert-content").html(e.errno+" - "+e.erro),$("#alert").modal("show"))}})}),$("body").on("click",".btn-del-presenca-evento",function(a){a.preventDefault(),$("#loading").modal({keyboard:!1});var e=$(this).data("id"),t=$(this).data("evento");$.ajax({type:"POST",url:"acts/acts.eventos.php?act=delp&idtime="+e+"&idevento="+t,success:function(a){$("#loading").modal("hide");var e=JSON.parse(a.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));e.succeed?($("#alert-title").html("Você removeu o time do evento!"),$("#alert-content").html("O time selecionado foi removido do evento com sucesso! Ao fechar esta mensagem a página será recarregada."),$("#alert").modal("show"),$("#alert").on("hidden.bs.modal",function(a){window.location.reload()})):($("#alert-title").html(e.title),$("#alert-content").html(e.errno+" - "+e.erro),$("#alert").modal("show"))}})}),$(".btn-voltar-usuarios").click(function(a){a.preventDefault(),$(".mainform").hide(),$(".mainadd").hide(),$(".maintable").show(),$("#headline-add-usuarios").html(""),$(".headline-form").html(""),$("#headline-edit-usuarios").html(""),$(".headline-form-edit").html(""),$("#id").val(""),$("#time-usuario").html(""),$("#user").val(""),$("#password").val(""),$("#nivel").val(""),$("#usuario").val(""),$("#senha").val("")}),$("#btn-add-usuarios").click(function(a){a.preventDefault(),$(".mainform").hide(),$(".maintable").hide(),$(".mainadd").show(),$("#headline-add-usuarios").html("Cadastrar novo usuário administrador"),$(".headline-form-add").html("Insira as informações do novo admin!"),$("#headline-edit-usuarios").html(""),$(".headline-form-edit").html(""),$("#usuario").val(""),$("#senha").val("")}),$("#btn-incluir-usuario").click(function(a){a.preventDefault(),$("#loading").modal({keyboard:!1}),$.ajax({type:"POST",url:"acts/acts.usuarios.php?act=add",data:$("#form-usuarios-add").serialize(),success:function(a){$("#loading").modal("hide");var e=JSON.parse(a.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));e.succeed?($("#alert-title").html($("#usuario").val()+" adicionado com sucesso!"),$("#alert-content").html("A inclusão de <b>"+$("#usuario").val()+"</b> foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada."),$("#alert").modal("show"),$("#alert").on("hidden.bs.modal",function(a){window.location.reload()})):($("#alert-title").html(e.title),$("#alert-content").html(e.errno+" - "+e.erro),$("#alert").modal("show"))}})}),$(".btn-edit-usuarios").click(function(a){a.preventDefault(),$("#loading").modal({keyboard:!1});var e=$(this).data("id");$.ajax({type:"POST",url:"acts/acts.usuarios.php?act=showupd&idusuario="+e,success:function(a){$("#loading").modal("hide");var t=JSON.parse(a.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));t.succeed?($(".maintable").hide(),$(".mainadd").hide(),$(".mainform").show(),$("#btn-editar-usuario").data("id",e),$("#btn-desativar-usuario").data("id",e),$("#headline-edit-usuarios").html("Editando o usuário "+t.dados.usuario),$(".headline-form-edit").html("Edite as informações do usuário!"),$("#id").val(t.dados.id),$("#time-usuario").html(t.dados.time),$("#user").val(t.dados.usuario),$("#password").val(t.dados.senha),$("#nivel").val(t.dados.nivel)):($(".mainadd").hide(),$(".mainform").hide(),$(".maintable").show(),$("#btn-editar-usuario").data("id",null),$("#btn-desativar-usuario").data("id",null),$("#headline-edit-usuarios").html(""),$(".headline-form-edit").html(""),$("#id").val(""),$("#time-usuario").html(""),$("#user").val(""),$("#password").val(""),$("#nivel").val(""),$("#alert-title").html(t.title),$("#alert-content").html(t.errno+" - "+t.erro),$("#alert").modal("show"))}})}),$(".btn-del-usuarios").click(function(a){a.preventDefault(),$("#loading").modal({keyboard:!1});var e=$(this).data("id");$.ajax({type:"POST",url:"acts/acts.usuarios.php?act=del&idusuario="+e,success:function(a){$("#loading").modal("hide");var e=JSON.parse(a.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));e.succeed?($("#alert-title").html("Usuário removido com sucesso!"),$("#alert-content").html("A remoção do usuário foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada."),$("#alert").modal("show"),$("#alert").on("hidden.bs.modal",function(a){window.location.reload()})):($("#alert-title").html(e.title),$("#alert-content").html(e.errno+" - "+e.erro),$("#alert").modal("show"))}})}),$("#btn-editar-usuario").click(function(a){a.preventDefault(),$("#loading").modal({keyboard:!1});var e=$(this).data("id");$.ajax({type:"POST",url:"acts/acts.usuarios.php?act=edit&idusuario="+e,data:$("#form-usuarios-edit").serialize(),success:function(a){$("#loading").modal("hide");var e=JSON.parse(a.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));e.succeed?($("#alert-title").html($("#user").val()+" alterado com sucesso!"),$("#alert-content").html("A alteração de <b>"+$("#user").val()+"</b> foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada."),$("#alert").modal("show"),$("#alert").on("hidden.bs.modal",function(a){window.location.reload()})):($("#alert-title").html(e.title),$("#alert-content").html(e.errno+" - "+e.erro),$("#alert").modal("show"))}})}),$(".btn-resetar-senha").click(function(a){a.preventDefault(),$("#loading").modal({keyboard:!1});var e=$(this).data("id");$.ajax({type:"POST",url:"acts/acts.usuarios.php?act=reset&idusuario="+e,success:function(a){$("#loading").modal("hide");var e=JSON.parse(a.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));e.succeed?($("#alert-title").html("Senha do usuário resetada com sucesso!"),$("#alert-content").html("A senha do usuário foi resetada com sucesso!"),$("#alert").modal("show")):($("#alert-title").html(e.title),$("#alert-content").html(e.errno+" - "+e.erro),$("#alert").modal("show"))}})}),$("#btn-desativar-usuario").click(function(a){a.preventDefault(),$("#loading").modal({keyboard:!1});var e=$(this).data("id");$.ajax({type:"POST",url:"acts/acts.usuarios.php?act=deactivate&idusuario="+e,success:function(a){$("#loading").modal("hide");var e=JSON.parse(a.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));e.succeed?($("#alert-title").html("Usuário desativado com sucesso!"),$("#alert-content").html("O usuário foi desativado com sucesso! Ao fechar esta mensagem a página será recarregada."),$("#alert").modal("show"),$("#alert").on("hidden.bs.modal",function(a){window.location.reload()})):($("#alert-title").html(e.title),$("#alert-content").html(e.errno+" - "+e.erro),$("#alert").modal("show"))}})}),$("#btn-voltar-mata-mata").click(function(a){a.preventDefault(),$("#headline-mata-mata").html(""),$("#id").val(""),$("#descricao").prop("readonly",!1),$("#descricao").val(""),$("#total_times").prop("readonly",!1),$("#total_times").val("4"),$("#rodada_inicio").prop("readonly",!1),$("#passo-mata-mata").prop("disabled",!1),$("#sel-time-content").html(""),$("#voltar-mata-mata").prop("disabled",!1),$("#passo-mata-mata").prop("disabled",!1),$("#box-times").hide(),$("#chaves-confronto").html(""),$("#box-confrontos").hide(),$(".mainform").hide(),$(".maintable").show()}),$("#btn-add-mata-mata").click(function(a){a.preventDefault(),$(".maintable").hide(),$(".mainform").show(),$("#headline-mata-mata").html("Cadastro de novo mata-mata"),$("#id").val(""),$("#passo-confrontos").data("act","add"),$("#passo-confrontos").data("id",null)}),$(".btn-edit-matamata").click(function(a){a.preventDefault(),$("#loading").modal({keyboard:!1}),$(".maintable").hide(),$(".mainform").show();var e=$(this).data("id");$.ajax({
-type:"POST",url:"acts/acts.mata_mata.php?act=showupd&idmatamata="+e,success:function(a){$("#loading").modal("hide");var t=JSON.parse(a.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));if(t.succeed){$("#passo-confrontos").data("act","edit"),$("#passo-confrontos").data("id",e),$("#headline-temporada").html("Editando a temporada "+t.descricao),$("#id").val(t.id),$("#descricao").val(t.descricao),$("#descricao").prop("readonly",!0),$("#total_times").val(t.total_times),$("#total_times").prop("disabled",!0),$("#rodada_inicio").val(t.rodada_inicio),$("#rodada_inicio").prop("disabled",!0),$("#passo-mata-mata").prop("disabled",!0),$.each(t.times,function(a,e){$("#sel-time-content").append('<div class="col-6"><label class="form-check-label" for="time['+e.id+']"><input type="checkbox" id="time['+e.id+']" name="time['+e.id+']" class="form-check-input sel-times" value="'+e.id+'" '+(e.has_time?"checked":"")+" />&nbsp;&nbsp;&nbsp;"+e.descricao+"</label></div>")}),$(".sel-times").prop("disabled",!0),$("#voltar-mata-mata").prop("disabled",!0),$("#passo-times").prop("disabled",!0),$("#box-times").show();var o=t.total_times/2,r="<option value='' selected>Selecione...</option>";$("#sel-time-content input[type='checkbox']:checked").each(function(){r+="<option value='"+$(this).val()+"'>"+$("label[for='"+$(this).attr("id")+"']").text().split("   ")[1]+"</option>"});for(var l=1;l<=o;l++)$("#chaves-confronto").append("<div class='row'><div class='col-12'><div class='card'><div class='card-header'>Chave "+l+"</div><div class='card-block'><div class='form-group'><select class='form-control form-control-lg' id='chave["+l+"][1]' name='chave["+l+"][1]' aria-describedby='chave["+l+"][1]' required>"+r+"</select></div><div class='form-group'><label for='chave["+l+"][2]' class='label-versus'>x</label><select class='form-control form-control-lg' id='chave["+l+"][2]' name='chave["+l+"][2]' aria-describedby='chave["+l+"][2]' required>"+r+"</select></div></div></div></div></div>");$.each(t.chaves,function(a,e){$("#chave\\["+e.chave+"\\]\\[1\\]").val(e.confrontos[0].time1),$("#chave\\["+e.chave+"\\]\\[2\\]").val(e.confrontos[1].time2)}),$("#box-confrontos").show()}else $("#headline-mata-mata").html(""),$("#id").val(""),$("#descricao").prop("readonly",null),$("#descricao").val(""),$("#total_times").prop("readonly",null),$("#total_times").val("4"),$("#rodada_inicio").prop("readonly",null),$("#passo-mata-mata").prop("disabled",null),$("#sel-time-content").html(""),$("#voltar-mata-mata").prop("disabled",null),$("#passo-mata-mata").prop("disabled",null),$("#box-times").hide(),$("#chaves-confronto").html(""),$("#box-confrontos").hide(),$(".mainform").hide(),$(".maintable").show(),$("#alert-title").html(t.title),$("#alert-content").html(t.errno+" - "+t.erro),$("#alert").modal("show")}})}),$(".btn-del-matamata").click(function(a){a.preventDefault(),$("#loading").modal({keyboard:!1});var e=$(this).data("id");$.ajax({type:"POST",url:"acts/acts.mata_mata.php?act=del&idmatamata="+e,success:function(a){$("#loading").modal("hide");var e=JSON.parse(a.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));e.succeed?($("#alert-title").html("Mata-mata removido com sucesso!"),$("#alert-content").html("A remoção do mata-mata foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada."),$("#alert").modal("show"),$("#alert").on("hidden.bs.modal",function(a){window.location.reload()})):($("#alert-title").html(e.title),$("#alert-content").html(e.errno+" - "+e.erro),$("#alert").modal("show"))}})}),$("#passo-mata-mata").click(function(a){a.preventDefault(),$("#loading").modal({keyboard:!1}),$.ajax({type:"POST",url:"acts/acts.mata_mata.php?act=seltimes",success:function(a){$("#loading").modal("hide");var e=JSON.parse(a.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));e.succeed?$.each(e.list,function(a,e){$("#sel-time-content").append('<div class="col-6"><label class="form-check-label" for="time['+e.id+']"><input type="checkbox" id="time['+e.id+']" name="time['+e.id+']" class="form-check-input sel-times" value="'+e.id+'" '+(e.has_time?"checked":"")+" />&nbsp;&nbsp;&nbsp;"+e.descricao+"</label></div>")}):($("#alert-title").html(e.title),$("#alert-content").html(e.errno+" - "+e.erro),$("#alert").modal("show"))}}),$("#descricao").prop("readonly",!0),$("#total_times").prop("disabled",!0),$("#rodada_inicio").prop("disabled",!0),$(this).prop("disabled",!0),$("#box-times").show()}),$("#voltar-mata-mata").click(function(a){a.preventDefault(),$("#descricao").prop("readonly",!1),$("#total_times").prop("disabled",!1),$("#rodada_inicio").prop("disabled",!1),$("#sel-time-content").html(""),$("#passo-mata-mata").prop("disabled",!1),$("#box-times").hide()}),$("body").on("click",".sel-times",function(a){$(".sel-times:checked").length>$("#total_times").val()&&(a.preventDefault(),$("#alert-title").html("Quantidade de times selecionados diverge do total de times do mata-mata"),$("#alert-content").html("O mata-mata está configurado para "+$("#total_times").val()+" times. O total de times já foi selecionado."),$("#alert").modal("show"))}),$("#passo-times").click(function(a){if(a.preventDefault(),$("#total_times").val()!=$(".sel-times:checked").length)$("#alert-title").html("Quantidade de times selecionados diverge do total de times do mata-mata"),$("#alert-content").html("O mata-mata está configurado para "+$("#total_times").val()+" times e foram selecionados "+$(".sel-times:checked").length+" times."),$("#alert").modal("show");else{var e=$("#total_times").val()/2,t="<option value='' selected>Selecione...</option>";$("#sel-time-content input[type='checkbox']:checked").each(function(){t+="<option value='"+$(this).val()+"'>"+$("label[for='"+$(this).attr("id")+"']").text().split("   ")[1]+"</option>"});for(var o=1;o<=e;o++)$("#chaves-confronto").append("<div class='row'><div class='col-12'><div class='card'><div class='card-header'>Chave "+o+"</div><div class='card-block'><div class='form-group'><select class='form-control form-control-lg' id='chave["+o+"][1]' name='chave["+o+"][1]' aria-describedby='chave["+o+"][1]' required>"+t+"</select></div><div class='form-group'><label for='chave["+o+"][2]' class='label-versus'>x</label><select class='form-control form-control-lg' id='chave["+o+"][2]' name='chave["+o+"][2]' aria-describedby='chave["+o+"][2]' required>"+t+"</select></div></div></div></div></div>");$(".sel-times").prop("disabled",!0),$("#voltar-mata-mata").prop("disabled",!0),$(this).prop("disabled",!0),$("#box-confrontos").show()}}),$("#voltar-times").click(function(a){a.preventDefault(),$(".sel-times").prop("disabled",null),$("#voltar-mata-mata").prop("disabled",null),$("#passo-times").prop("disabled",null),$("#chaves-confronto").html(""),$("#box-confrontos").hide()}),$("#passo-confrontos").click(function(a){a.preventDefault(),$("#loading").modal({keyboard:!1});var e=$(this).data("act"),t=$(this).data("id");$("#total_times").prop("disabled",!1),$("#rodada_inicio").prop("disabled",!1),$.ajax({type:"POST",url:"acts/acts.mata_mata.php?act="+e+"&idmatamata="+t,data:$("#form-mata-mata").serialize(),success:function(a){$("#loading").modal("hide"),console.log("data",a);var t=JSON.parse(a.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));t.succeed?($("#alert-title").html("Registro "+("add"==e?"adicionado":"editado")+" com sucesso!"),$("#alert-content").html("A "+("add"==e?"adição":"edição")+" do registro foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada."),$("#alert").modal("show"),$("#total_times").prop("disabled",!0),$("#rodada_inicio").prop("disabled",!0),$("#alert").on("hidden.bs.modal",function(a){window.location.reload()})):($("#alert-title").html(t.title),$("#alert-content").html(t.errno+" - "+t.erro),$("#alert").modal("show"),$("#total_times").prop("disabled",!0),$("#rodada_inicio").prop("disabled",!0))}})})}),Date.prototype.toDatetimeLocal=function(){var a=this,e=function(a){return(a<10?"0":"")+a};return a.getFullYear()+"-"+e(a.getMonth()+1)+"-"+e(a.getDate())+"T"+e(a.getHours())+":"+e(a.getMinutes())+":"+e(a.getSeconds())},Date.prototype.fromDatetimeLocal=function(a){return new Date(a).toISOString().slice(0,16)===a?function(){return new Date(this.getTime()+6e4*this.getTimezoneOffset()).toISOString()}:Date.prototype.toISOString}("2006-06-06T06:06"),function(a){"use strict";function e(e){return e.is('[type="checkbox"]')?e.prop("checked"):e.is('[type="radio"]')?!!a('[name="'+e.attr("name")+'"]:checked').length:e.is("select[multiple]")?(e.val()||[]).length:e.val()}function t(e){return this.each(function(){var t=a(this),r=a.extend({},o.DEFAULTS,t.data(),"object"==typeof e&&e),l=t.data("bs.validator");(l||"destroy"!=e)&&(l||t.data("bs.validator",l=new o(this,r)),"string"==typeof e&&l[e]())})}var o=function(t,r){this.options=r,this.validators=a.extend({},o.VALIDATORS,r.custom),this.$element=a(t),this.$btn=a('button[type="submit"], input[type="submit"]').filter('[form="'+this.$element.attr("id")+'"]').add(this.$element.find('input[type="submit"], button[type="submit"]')),this.update(),this.$element.on("input.bs.validator change.bs.validator focusout.bs.validator",a.proxy(this.onInput,this)),this.$element.on("submit.bs.validator",a.proxy(this.onSubmit,this)),this.$element.on("reset.bs.validator",a.proxy(this.reset,this)),this.$element.find("[data-match]").each(function(){var t=a(this),o=t.attr("data-match");a(o).on("input.bs.validator",function(){e(t)&&t.trigger("input.bs.validator")})}),this.$inputs.filter(function(){return e(a(this))&&!a(this).closest(".has-error").length}).trigger("focusout"),this.$element.attr("novalidate",!0)};o.VERSION="0.11.9",o.INPUT_SELECTOR=':input:not([type="hidden"], [type="submit"], [type="reset"], button)',o.FOCUS_OFFSET=20,o.DEFAULTS={delay:500,html:!1,disable:!0,focus:!0,custom:{},errors:{match:"Does not match",minlength:"Not long enough"},feedback:{success:"glyphicon-ok",error:"glyphicon-remove"}},o.VALIDATORS={native:function(a){var e=a[0];return e.checkValidity?!e.checkValidity()&&!e.validity.valid&&(e.validationMessage||"error!"):void 0},match:function(e){var t=e.attr("data-match");return e.val()!==a(t).val()&&o.DEFAULTS.errors.match},minlength:function(a){var e=a.attr("data-minlength");return a.val().length<e&&o.DEFAULTS.errors.minlength}},o.prototype.update=function(){var e=this;return this.$inputs=this.$element.find(o.INPUT_SELECTOR).add(this.$element.find('[data-validate="true"]')).not(this.$element.find('[data-validate="false"]').each(function(){e.clearErrors(a(this))})),this.toggleSubmit(),this},o.prototype.onInput=function(e){var t=this,o=a(e.target),r="focusout"!==e.type;this.$inputs.is(o)&&this.validateInput(o,r).done(function(){t.toggleSubmit()})},o.prototype.validateInput=function(t,o){var r=(e(t),t.data("bs.validator.errors"));t.is('[type="radio"]')&&(t=this.$element.find('input[name="'+t.attr("name")+'"]'));var l=a.Event("validate.bs.validator",{relatedTarget:t[0]});if(this.$element.trigger(l),!l.isDefaultPrevented()){var i=this;return this.runValidators(t).done(function(e){t.data("bs.validator.errors",e),e.length?o?i.defer(t,i.showErrors):i.showErrors(t):i.clearErrors(t),r&&e.toString()===r.toString()||(l=e.length?a.Event("invalid.bs.validator",{relatedTarget:t[0],detail:e}):a.Event("valid.bs.validator",{relatedTarget:t[0],detail:r}),i.$element.trigger(l)),i.toggleSubmit(),i.$element.trigger(a.Event("validated.bs.validator",{relatedTarget:t[0]}))})}},o.prototype.runValidators=function(t){function o(a){return t.attr("data-"+a+"-error")}function r(){var a=t[0].validity;return a.typeMismatch?t.attr("data-type-error"):a.patternMismatch?t.attr("data-pattern-error"):a.stepMismatch?t.attr("data-step-error"):a.rangeOverflow?t.attr("data-max-error"):a.rangeUnderflow?t.attr("data-min-error"):a.valueMissing?t.attr("data-required-error"):null}function l(){return t.attr("data-error")}function i(a){return o(a)||r()||l()}var s=[],d=a.Deferred();return t.data("bs.validator.deferred")&&t.data("bs.validator.deferred").reject(),t.data("bs.validator.deferred",d),a.each(this.validators,a.proxy(function(a,o){var r=null;!e(t)&&!t.attr("required")||void 0===t.attr("data-"+a)&&"native"!=a||!(r=o.call(this,t))||(r=i(a)||r,!~s.indexOf(r)&&s.push(r))},this)),!s.length&&e(t)&&t.attr("data-remote")?this.defer(t,function(){var o={};o[t.attr("name")]=e(t),a.get(t.attr("data-remote"),o).fail(function(a,e,t){s.push(i("remote")||t)}).always(function(){d.resolve(s)})}):d.resolve(s),d.promise()},o.prototype.validate=function(){var e=this;return a.when(this.$inputs.map(function(){return e.validateInput(a(this),!1)})).then(function(){e.toggleSubmit(),e.focusError()}),this},o.prototype.focusError=function(){if(this.options.focus){var e=this.$element.find(".has-error :input:first");0!==e.length&&(a("html, body").animate({scrollTop:e.offset().top-o.FOCUS_OFFSET},250),e.focus())}},o.prototype.showErrors=function(e){var t=this.options.html?"html":"text",o=e.data("bs.validator.errors"),r=e.closest(".form-group"),l=r.find(".help-block.with-errors"),i=r.find(".form-control-feedback");o.length&&(o=a("<ul/>").addClass("list-unstyled").append(a.map(o,function(e){return a("<li/>")[t](e)})),void 0===l.data("bs.validator.originalContent")&&l.data("bs.validator.originalContent",l.html()),l.empty().append(o),r.addClass("has-error has-danger"),r.hasClass("has-feedback")&&i.removeClass(this.options.feedback.success)&&i.addClass(this.options.feedback.error)&&r.removeClass("has-success"))},o.prototype.clearErrors=function(a){var t=a.closest(".form-group"),o=t.find(".help-block.with-errors"),r=t.find(".form-control-feedback");o.html(o.data("bs.validator.originalContent")),t.removeClass("has-error has-danger has-success"),t.hasClass("has-feedback")&&r.removeClass(this.options.feedback.error)&&r.removeClass(this.options.feedback.success)&&e(a)&&r.addClass(this.options.feedback.success)&&t.addClass("has-success")},o.prototype.hasErrors=function(){function e(){return!!(a(this).data("bs.validator.errors")||[]).length}return!!this.$inputs.filter(e).length},o.prototype.isIncomplete=function(){function t(){var t=e(a(this));return!("string"==typeof t?a.trim(t):t)}return!!this.$inputs.filter("[required]").filter(t).length},o.prototype.onSubmit=function(a){this.validate(),(this.isIncomplete()||this.hasErrors())&&a.preventDefault()},o.prototype.toggleSubmit=function(){this.options.disable&&this.$btn.toggleClass("disabled",this.isIncomplete()||this.hasErrors())},o.prototype.defer=function(e,t){return t=a.proxy(t,this,e),this.options.delay?(window.clearTimeout(e.data("bs.validator.timeout")),void e.data("bs.validator.timeout",window.setTimeout(t,this.options.delay))):t()},o.prototype.reset=function(){return this.$element.find(".form-control-feedback").removeClass(this.options.feedback.error).removeClass(this.options.feedback.success),this.$inputs.removeData(["bs.validator.errors","bs.validator.deferred"]).each(function(){var e=a(this),t=e.data("bs.validator.timeout");window.clearTimeout(t)&&e.removeData("bs.validator.timeout")}),this.$element.find(".help-block.with-errors").each(function(){var e=a(this),t=e.data("bs.validator.originalContent");e.removeData("bs.validator.originalContent").html(t)}),this.$btn.removeClass("disabled"),this.$element.find(".has-error, .has-danger, .has-success").removeClass("has-error has-danger has-success"),this},o.prototype.destroy=function(){return this.reset(),this.$element.removeAttr("novalidate").removeData("bs.validator").off(".bs.validator"),this.$inputs.off(".bs.validator"),this.options=null,this.validators=null,this.$element=null,this.$btn=null,this.$inputs=null,this};var r=a.fn.validator;a.fn.validator=t,a.fn.validator.Constructor=o,a.fn.validator.noConflict=function(){return a.fn.validator=r,this},a(window).on("load",function(){a('form[data-toggle="validator"]').each(function(){var e=a(this);t.call(e,e.data())})})}(jQuery);
+$(function() {
+
+	$('html, body').on('click', function(e) {
+		if (e.target == document.documentElement) {
+			$("html").removeClass("open-sidebar");
+		}
+	});
+
+	$(".js-open-sidebar").on("click", function(){
+		$("html").addClass("open-sidebar");
+	});
+
+	// BEGIN LOGIN (login.php)
+
+	$("#form-login").submit(function(e) {
+		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.login.php?act=login",
+			data: $("#form-login").serialize(),
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					window.location.href = 'home.php';
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+
+					if(retorno.errno == "21010") {
+						$('#alert').on('hidden.bs.modal', function (e) {
+							window.location.href = '../provisoria.php';
+						});
+					}
+				}
+			}
+		});
+	});
+
+	$('#btn-esqueceu-senha').click(function(e) {
+		e.preventDefault();
+
+		$('.mainlogin').hide();
+		$('.mainform').show();
+	});
+
+	$('#btn-recuperar-senha').click(function(e) {
+		e.preventDefault();
+		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.login.php?act=reset",
+			data: $("#form-recuperar").serialize(),
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('#alert-title').html("Solicitação enviada com sucesso!");
+					$('#alert-content').html("Sua requisição para resetar sua senha foi realizada com sucesso. Aguarde o e-mail com as informações! Ao fechar esta mensagem a página será recarregada.");
+					$('#alert').modal('show');
+
+					$('#alert').on('hidden.bs.modal', function (e) {
+						window.location.reload();
+					});
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+	});
+
+	// END LOGIN (login.php)
+
+	// BEGIN TEMPORADAS (temporadas.php)
+
+    $('#btn-voltar-temporadas').click(function(e) {
+		e.preventDefault();
+
+    	$('#headline-temporada').html('');
+
+    	$('#id').val('');
+    	$('#descricao').prop("readonly", null);
+    	$('#descricao').val('');
+    	$('#passo-ano').prop("disabled", null);
+    	$('#box-rodada').hide();
+
+    	$('#sel-content').html('');
+    	$('#passo-rodada').prop("disabled", null);
+    	$("#voltar-ano").prop("disabled", null);
+    	$('#box-confirmacao').hide();
+
+    	$('#resumo-temporada').html('');
+    	$('#resumo-rodadas').html('');
+
+		$('.mainform').hide();
+		$('.maintable').show();
+    });	
+
+    $('#btn-add-temporadas').click(function(e) {
+		e.preventDefault();
+
+		$('.maintable').hide();
+		$('.mainform').show();
+
+    	$('#headline-temporada').html('Cadastro de nova temporada');
+
+    	$('#id').val('');
+
+    	$('#passo-confirmacao').data('act', 'add');
+    	$('#passo-confirmacao').data('temporada', null);
+    });	
+
+    $('.btn-edit-temporadas').click(function(e) {
+		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+		$('.maintable').hide();
+		$('.mainform').show();
+
+    	var temporada = $(this).data('temporada');
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.temporadas.php?act=showupd&idano=" + temporada,
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+			    	$('#passo-confirmacao').data('act', 'edit');
+			    	$('#passo-confirmacao').data('temporada', temporada);
+
+    				$('#headline-temporada').html('Editando a temporada ' + retorno.descricao);
+			    	
+			    	$('#id').val(retorno.id);
+					$('#descricao').val(retorno.descricao);
+					$('#descricao').prop("readonly", "readonly");
+			    	$('#passo-ano').prop("disabled", "disabled");
+
+    				$("#voltar-ano").prop("disabled", "disabled");
+			    	$('#passo-rodada').prop("disabled", null);
+					$('#box-rodada').show();
+
+					$('#sel-content').append('<div class="col-12"><div class="form-check" style="margin-bottom:20px;"><label class="form-check-label"><input type="checkbox" class="form-check-input sel-todos" />&nbsp;&nbsp;&nbsp;Selecionar todos</label></div></div>');
+
+					$.each(retorno.list, function(i, item) {
+						$('#sel-content').append('<div class="col-6"><label class="form-check-label"><input type="checkbox" id="rodada[' + item.id + ']" name="rodada[' + item.id + ']" class="form-check-input sel-rodadas" value="' + item.id + '" ' + (item.has_temporada ? 'checked' : '') + ' />&nbsp;&nbsp;&nbsp;Rodada #' + item.descricao + '</label></div>');
+					});
+				}
+				else {
+    				$('#headline-temporada').html('');
+
+    				$('#id').val('');
+			    	$('#descricao').prop("readonly", null);
+			    	$('#descricao').val('');
+			    	$('#passo-ano').prop("disabled", null);
+			    	$('#box-rodada').hide();
+
+			    	$('#sel-content').html('');
+			    	$('#passo-rodada').prop("disabled", null);
+			    	$("#voltar-ano").prop("disabled", null);
+			    	$('#box-confirmacao').hide();
+			    	
+			    	$('#resumo-temporada').html('');
+			    	$('#resumo-rodadas').html('');
+
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });	
+
+    $('.btn-del-temporadas').click(function(e) {
+		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+    	var temporada = $(this).data('temporada');
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.temporadas.php?act=del&idano=" + temporada,
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('#alert-title').html("Registro removido com sucesso!");
+					$('#alert-content').html("A remoção do registro foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					$('#alert').modal('show');
+
+					$('#alert').on('hidden.bs.modal', function (e) {
+						window.location.reload();
+					});
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });	
+
+    $('#passo-ano').click(function(e) {
+    	e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.temporadas.php?act=selrod",
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('#sel-content').append('<div class="col-12"><div class="form-check" style="margin-bottom:20px;"><label class="form-check-label"><input type="checkbox" class="form-check-input sel-todos" />&nbsp;&nbsp;&nbsp;Selecionar todos</label></div></div>');
+
+					$.each(retorno.list, function(i, item) {
+						$('#sel-content').append('<div class="col-6"><label class="form-check-label"><input type="checkbox" id="rodada[' + item.id + ']" name="rodada[' + item.id + ']" class="form-check-input sel-rodadas" value="' + item.id + '" ' + (item.has_temporada ? 'checked' : '') + ' />&nbsp;&nbsp;&nbsp;Rodada #' + item.descricao + '</label></div>');
+					});
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+
+    	$('#descricao').prop("readonly", "readonly");
+    	$(this).prop("disabled", "disabled");
+    	$('#box-rodada').show();
+    });	
+
+	$('body').on('click', '.sel-todos', function() {
+		$(".sel-rodadas").prop('checked', $(".sel-todos").is(':checked'));
+	});
+
+    $('#voltar-ano').click(function(e) {
+    	e.preventDefault();
+
+    	$('#sel-content').html('');
+    	$('#descricao').prop("readonly", null);
+    	$('#passo-ano').prop("disabled", null);
+    	$('#box-rodada').hide();
+    });	
+
+    $('#passo-rodada').click(function(e) {
+    	e.preventDefault();
+
+    	$('#resumo-temporada').html("Temporada: " + $('#descricao').val());
+    	$('#resumo-rodadas').html("Total rodadas: " + $('.sel-rodadas:checked').length);
+
+    	$(".sel-todos").prop("disabled", "disabled");
+		var cloned_check = $("#sel-content").clone();
+    	$(".sel-rodadas").prop("disabled", "disabled");
+    	cloned_check.appendTo("#box-rodada").addClass('check-duplicated');
+
+    	$("#voltar-ano").prop("disabled", "disabled");
+    	$(this).prop("disabled", "disabled");
+    	$('#box-confirmacao').show();
+    });	
+
+    $('#voltar-rodada').click(function(e) {
+    	e.preventDefault();
+
+    	$(".sel-todos").prop("disabled", null);
+    	$(".sel-rodadas").prop("disabled", null);
+    	$(".check-duplicated").remove();
+    	$("#voltar-ano").prop("disabled", null);
+    	$("#passo-rodada").prop("disabled", null);
+    	$('#box-confirmacao').hide();
+    });	
+
+    $('#passo-confirmacao').click(function(e) {
+    	e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+    	var act = $('#passo-confirmacao').data('act');
+    	var temporada = $('#passo-confirmacao').data('temporada');
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.temporadas.php?act=" + act + "&idano=" + temporada,
+			data: $("#form-temporadas").serialize(),
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('#alert-title').html("Registro " + (act == 'add' ? "adicionado" : "editado") + " com sucesso!");
+					$('#alert-content').html("A " + (act == 'add' ? "adição" : "edição") + " do registro foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					$('#alert').modal('show');
+
+					$('#alert').on('hidden.bs.modal', function (e) {
+						window.location.reload();
+					})
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });
+
+    // END TEMPORADAS (temporadas.php)
+
+	// BEGIN TIMES TEMPORADAS (times_temporadas.php)
+
+	$('.btn-times-temporada').click(function(e) {
+		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+    	var temporada = $(this).data('temporada');
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.times_temporadas.php?act=getanotemp&idano=" + temporada,
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('.maintable').hide();
+					$('.maintemporada').show();
+
+					$('#headline-time-temporada').html('Gerenciando times inscritos na temporada ' + retorno.descricao);
+
+					if(retorno.list.length > 0) {
+						$.each(retorno.list, function(i, item) {
+
+							var botao_ativar = (item.pode_ativar == 1 ? "<a href='#' class='btn-ativar-inscricao' data-time='" + item.id_time +  "' data-temporada='" + temporada + "' alt='Inscrever " + item.time +  " na temporada' title='Inscrever " + item.time +  " na temporada'><i class='fa fa-rocket fa-2x edit'></i></a>" : "<i class='fa fa-rocket fa-2x edit-disabled' alt='Não é possível inscrever " + item.time +  " na temporada' title='Não é possível inscrever " + item.time +  " na temporada'></i>");
+							var botao_inativar = (item.pode_desativar == 1 ? "<a href='#' class='btn-desativar-inscricao' data-time='" + item.id_time +  "' data-temporada='" + temporada + "' alt='Remover " + item.time +  " da temporada' title='Remover " + item.time +  " da temporada'><i class='fa fa-trash fa-2x del'></i></a>" : "<i class='fa fa-trash fa-2x del-disabled' alt='Não é possível remover " + item.time +  " da temporada' title='Não é possível remover " + item.time +  " da temporada'></i>");
+
+							$('#lista-times-temporada').append("<tr>" +
+						                							"<th scope='row' class='center'>" + item.id +  "</th>" +
+						                							"<td>" + item.time + "</td>" +
+						                							"<td>" + item.presidente + "</td>" +
+						                							"<td class='center'>" + item.posicao_liga + " º</td>" +
+						                							"<td class='center'>" + item.pontuacao + " pts.</td>" +
+						                							"<td class='center'>" + (item.ativo == 1 ? "<i class='fa fa-check fa-2x add' alt='Time ativo' title='Time está ativo'></i>" : "<i class='fa fa-times fa-2x del' alt='Time inativo' title='Time ainda não está ativo'></i>") + "</td>" +
+						                							"<td class='center'>" + (item.ativo == 1 ? botao_inativar : botao_ativar) + "</td>" +
+					                							"</tr>");
+						});
+					}
+					else {
+						$('#lista-times-temporada').append("<tr><td colspan='7' class='center'>Não há dados a serem exibidos para a listagem.</td></tr>");
+					}
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+
+					$('#headline-time-temporada').html('');
+				}
+			}
+		});
+	});
+
+	$('body').on('click', '.btn-ativar-inscricao', function(e) {
+		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+    	var time = $(this).data('time');
+    	var temporada = $(this).data('temporada');
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.times_temporadas.php?act=ativar&idtime=" + time + "&idano=" + temporada,
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('#alert-title').html("Você finalizou a inscrição do time!");
+					$('#alert-content').html("O time foi inscrito com sucesso na temporada! Ao fechar esta mensagem a página será recarregada.");
+					$('#alert').modal('show');
+
+					$('#alert').on('hidden.bs.modal', function (e) {
+						window.location.reload();
+					});
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });	
+
+	$('body').on('click', '.btn-desativar-inscricao', function(e) {
+		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+    	var time = $(this).data('time');
+    	var temporada = $(this).data('temporada');
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.times_temporadas.php?act=desativar&idtime=" + time + "&idano=" + temporada,
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('#alert-title').html("Você removeu o time da temporada!");
+					$('#alert-content').html("O time selecionado foi removido da temporada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					$('#alert').modal('show');
+
+					$('#alert').on('hidden.bs.modal', function (e) {
+						window.location.reload();
+					});
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });	
+
+    $('#btn-voltar-lista-temporadas').click(function(e) {
+		e.preventDefault();
+    	
+		$('.maintable').show();
+		$('.maintemporada').hide();
+
+		$('#headline-time-temporada').html('');
+		$('#lista-times-temporada').html('');
+    });	
+
+    // END TIMES TEMPORADAS (times_temporadas.php)
+
+	// BEGIN GERENCIAR TIMES (gerenciar_times.php)
+	
+    $('#btn-voltar-times').click(function(e) {
+		e.preventDefault();
+
+		$('.mainform').hide();
+		$('.maintable').show();
+
+    	$('#btn-salvar-time').data('id', null);
+    	$('#headline-ger-times').html('');
+		$('.headline-form').html('');
+    });	
+
+    $('.btn-edit-time').click(function(e) {
+		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+    	var id = $(this).data('id');
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.gerenciar_times.php?act=showupd&idtime=" + id,
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('.maintable').hide();
+					$('.mainform').show();
+
+    				$('#btn-salvar-time').data('id', id);
+			    	$('#headline-ger-times').html('Editar o time ' + retorno.dados.nome_time);
+					$('.headline-form').html('Edite as informações do time!');
+			    	
+			    	$('#id').val(retorno.dados.id);
+			    	$('#nome_time').val(retorno.dados.nome_time);
+			    	$('#nome_presidente').val(retorno.dados.nome_presidente);
+			    	$('#email').val(retorno.dados.email);
+			    	$('#telefone').val(retorno.dados.telefone);
+			    	$('#historia').val(retorno.dados.historia);
+				}
+				else {
+					$('.maintable').show();
+					$('.mainform').hide();
+    				
+    				$('#btn-salvar-time').data('id', null);
+			    	$('#headline-ger-times').html('');
+					$('.headline-form').html('');
+			    	
+			    	$('#id').val('');
+			    	$('#nome_time').val('');
+			    	$('#nome_presidente').val('');
+			    	$('#email').val('');
+			    	$('#telefone').val('');
+			    	$('#historia').val('');
+
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });	
+
+    $('.btn-desativar-time').click(function(e) {
+		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+    	var id = $(this).data('id');
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.gerenciar_times.php?act=desativar&idtime=" + id,
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('#alert-title').html("Você desativou o time!");
+					$('#alert-content').html("O time selecionado foi desativado com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					$('#alert').modal('show');
+
+					$('#alert').on('hidden.bs.modal', function (e) {
+						window.location.reload();
+					});
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });	
+
+    $('#btn-salvar-time').click(function(e) {
+    	e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+    	var id = $(this).data('id');
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.gerenciar_times.php?act=edit&idtime=" + id,
+			data: $("#form-temporadas").serialize(),
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('#alert-title').html($('#nome_time').val() + " alterado com sucesso!");
+					$('#alert-content').html("A alteração de " + $('#nome_time').val() + " foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					$('#alert').modal('show');
+
+					$('#alert').on('hidden.bs.modal', function (e) {
+						window.location.reload();
+					})
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });
+
+    // END GERENCIAR TIMES (gerenciar_times.php)
+
+	// BEGIN PONTUACAO (pontuacoes.php)
+
+    $('.btn-salvar-pontuacoes').click(function(e) {
+    	e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.pontuacoes.php?act=updpont",
+			data: $("#form-pontuacoes").serialize(),
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('#alert-title').html("Pontuações lançadas com sucesso!");
+					$('#alert-content').html("As pontuações dos times na rodada foram atualizadas com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					$('#alert').modal('show');
+
+					$('#alert').on('hidden.bs.modal', function (e) {
+						window.location.reload();
+					})
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });	
+
+    // END PONTUACAO (pontuacoes.php)
+
+	// BEGIN CONFIGURAÇÕES (configuracoes.php)
+
+    $('#btn-abrir-temporada').click(function(e) {
+    	e.preventDefault();
+
+		$('#confirm-title').html("ATENÇÃO!!");
+		$('#confirm-content').html("Você irá ABRIR a temporada e o sistema estará pronto para ser usado!<br /><br />Esse processo é IRREVERSÍVEL!");
+		$('#confirm').modal('show');
+
+    	$('#btn-confirm-modal').click(function(e) {
+			$('#confirm').modal('hide');
+			
+			$('#loading').modal({
+				keyboard: false
+			});
+
+			$.ajax({
+				type: "POST",
+				url: "acts/acts.configuracoes.php?act=abrirtemporada",
+				success: function(data)
+				{
+					$('#loading').modal('hide');
+
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+					if(retorno.succeed) {
+						$('#alert-title').html("Temporada aberta com sucesso!");
+						$('#alert-content').html("A temporada foi aberta com sucesso! Que começem os jogos!<br /><br />Ao fechar esta mensagem a página será recarregada.");
+						$('#alert').modal('show');
+
+						$('#alert').on('hidden.bs.modal', function (e) {
+							window.location.reload();
+						})
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+					}
+				}
+	    	});
+	    });	
+    });	
+
+    $('#btn-fechar-temporada').click(function(e) {
+    	e.preventDefault();
+
+		$('#confirm-title').html("ATENÇÃO!!");
+		$('#confirm-content').html("Você irá ENCERRAR a temporada e a temporada será alterada para do próximo ano!<br /><br />Esse processo é IRREVERSÍVEL!");
+		$('#confirm').modal('show');
+
+    	$('#btn-confirm-modal').click(function(e) {
+			$('#confirm').modal('hide');
+
+			$('#loading').modal({
+				keyboard: false
+			});
+
+			$.ajax({
+				type: "POST",
+				url: "acts/acts.configuracoes.php?act=fechartemporada",
+				success: function(data)
+				{
+					$('#loading').modal('hide');
+
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+					if(retorno.succeed) {
+						$('#alert-title').html("Temporada encerrada com sucesso!");
+						$('#alert-content').html("A temporada foi encerrada com sucesso! Seja bem vindo a temporada " + retorno.rodada + " e até ano que vem!<br /><br />Ao fechar esta mensagem a página será recarregada.");
+						$('#alert').modal('show');
+
+						$('#alert').on('hidden.bs.modal', function (e) {
+							window.location.reload();
+						});
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+					}
+				}
+			});
+    	});
+    });	
+
+    $('#btn-abrir-mercado').click(function(e) {
+    	e.preventDefault();
+
+		$('#confirm-title').html("ATENÇÃO!!");
+		$('#confirm-content').html("Você irá ABRIR o mercado e a rodada atual será alterada!<br /><br />Esse processo é IRREVERSÍVEL!");
+		$('#confirm').modal('show');
+
+    	$('#btn-confirm-modal').click(function(e) {
+			$('#confirm').modal('hide');
+
+			$('#loading').modal({
+				keyboard: false
+			});
+
+			$.ajax({
+				type: "POST",
+				url: "acts/acts.configuracoes.php?act=abrirmercado",
+				success: function(data)
+				{
+					$('#loading').modal('hide');
+
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+					if(retorno.succeed) {
+						$('#alert-title').html("Mercado aberto com sucesso!");
+						$('#alert-content').html("O mercado foi aberto com sucesso! Você está na rodada " + retorno.rodada + "!<br /><br />Ao fechar esta mensagem a página será recarregada.");
+						$('#alert').modal('show');
+
+						$('#alert').on('hidden.bs.modal', function (e) {
+							window.location.reload();
+						})
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+					}
+				}
+			});
+    	});
+    });	
+
+    $('#btn-fechar-mercado').click(function(e) {
+    	e.preventDefault();
+
+		$('#confirm-title').html("ATENÇÃO!!");
+		$('#confirm-content').html("Você irá FECHAR o mercado! Aproveite para lançar e conferir as pontuações!<br /><br />Esse processo é IRREVERSÍVEL!");
+		$('#confirm').modal('show');
+
+    	$('#btn-confirm-modal').click(function(e) {
+			$('#confirm').modal('hide');
+
+			$('#loading').modal({
+				keyboard: false
+			});
+
+			$.ajax({
+				type: "POST",
+				url: "acts/acts.configuracoes.php?act=fecharmercado",
+				success: function(data)
+				{
+					$('#loading').modal('hide');
+
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+					if(retorno.succeed) {
+						$('#alert-title').html("Mercado fechado com sucesso!");
+						$('#alert-content').html("O mercado foi fechado com sucesso! Não se esqueça de lançar e conferir a pontuação de todos os times!<br /><br />Ao fechar esta mensagem a página será recarregada.");
+						$('#alert').modal('show');
+
+						$('#alert').on('hidden.bs.modal', function (e) {
+							window.location.reload();
+						})
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+					}
+				}
+			});
+		});
+    });	
+
+    $('#btn-dados-config').click(function(e) {
+    	e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.configuracoes.php?act=upddados",
+			data: $("#form-config").serialize(),
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('#alert-title').html("Dados alterados com sucesso!");
+					$('#alert-content').html("As configurações foram alteradas com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					$('#alert').modal('show');
+
+					$('#alert').on('hidden.bs.modal', function (e) {
+						window.location.reload();
+					})
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });	
+
+    // END CONFIGURAÇÕES (configuracoes.php)
+
+	// BEGIN EVENTOS (eventos.php)
+
+    $('#btn-voltar-eventos').click(function(e) {
+		e.preventDefault();
+
+		$('.mainform').hide();
+		$('.maintable').show();
+
+    	$('#btn-salvar-evento').data('id', null);
+    	$('#btn-salvar-evento').data('act', null);
+    	$('#headline-ger-eventos').html('');
+		$('.headline-form').html('');
+
+    	$('#id').val('');
+    	$('#titulo').val('');
+    	$('#data').val('');
+    	$('#local').val('');
+    	$('#descricao').val('');
+    	$('#ativo').bootstrapToggle('off');
+    	$('#lista-participantes-evento').html('');
+    });	
+
+    $('#btn-add-eventos').click(function(e) {
+		e.preventDefault();
+
+		$('.maintable').hide();
+		$('.mainform').show();
+
+		$('#btn-salvar-evento').data('id', null);
+    	$('#btn-salvar-evento').data('act', 'add');
+    	$('#headline-ger-times').html('Cadastrar novo evento');
+		$('.headline-form').html('Insira as informações do novo evento!');
+
+    	$('#id').val('');
+    	$('#titulo').val('');
+    	$('#data').val('');
+    	$('#local').val('');
+    	$('#descricao').val('');
+    	$('#ativo').bootstrapToggle('off');
+		$('#lista-participantes-evento').html('');
+    });	
+
+    $('.btn-edit-eventos').click(function(e) {
+		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+    	var id = $(this).data('id');
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.eventos.php?act=showupd&idevento=" + id,
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('.maintable').hide();
+					$('.mainform').show();
+
+			    	$('#btn-salvar-evento').data('act', 'edit');
+			    	$('#btn-salvar-evento').data('id', id);
+    				$('#headline-temporada').html('Editando o evento ' + retorno.dados.titulo);
+					$('.headline-form').html('Edite as informações do evento!');
+
+					var d = new Date(retorno.dados.data * 1000);
+
+			    	$('#id').val(retorno.dados.id);
+			    	$('#titulo').val(retorno.dados.titulo);
+			    	$('#data').val(d.toDatetimeLocal());
+			    	$('#local').val(retorno.dados.local);
+			    	$('#descricao').val(retorno.dados.descricao);
+			    	$('#ativo').bootstrapToggle(retorno.dados.ativo == 1 ? 'on' : 'off');
+
+			    	if(retorno.list.length > 0) {
+						$.each(retorno.list, function(i, item) {
+							$('#lista-participantes-evento').append("<tr>" +
+						                							"<td>" + item.time + "</td>" +
+						                							"<td>" + item.presidente + "</td>" +
+						                							"<td class='center'><a href='#' class='btn-del-presenca-evento' data-id='" + item.id_time + "' data-evento='" + id + "' alt='Remover " + item.time + " do evento' title='Remover " + item.time + " do evento'><i class='fa fa-trash fa-2x del'></i></a></td>" +
+					                							"</tr>");
+						});
+					}
+					else {
+						$('#lista-participantes-evento').append("<tr><td colspan='3' class='center'>Não há dados a serem exibidos para a listagem.</td></tr>");
+					}
+				}
+				else {
+					$('.mainform').hide();
+					$('.maintable').show();
+
+			    	$('#btn-salvar-evento').data('id', null);
+			    	$('#btn-salvar-evento').data('act', null);
+			    	$('#headline-ger-eventos').html('');
+					$('.headline-form').html('');
+
+			    	$('#id').val('');
+			    	$('#titulo').val('');
+			    	$('#data').val('');
+			    	$('#local').val('');
+			    	$('#descricao').val('');
+			    	$('#ativo').bootstrapToggle('off');
+			    	$('#lista-participantes-evento').html('');
+
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });	
+
+    $('.btn-del-eventos').click(function(e) {
+		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+    	var id = $(this).data('id');
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.eventos.php?act=del&idevento=" + id,
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('#alert-title').html("Evento removido com sucesso!");
+					$('#alert-content').html("A remoção do evento foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					$('#alert').modal('show');
+
+					$('#alert').on('hidden.bs.modal', function (e) {
+						window.location.reload();
+					});
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });	
+
+    $('#btn-salvar-evento').click(function(e) {
+    	e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+    	var id = $(this).data('id');
+    	var act = $(this).data('act');
+
+    	if(act == "edit") {
+    		var url = "acts/acts.eventos.php?act=" + act + "&idevento=" + id;
+    	}
+    	else {
+    		var url = "acts/acts.eventos.php?act=" + act;
+    	}
+
+		$.ajax({
+			type: "POST",
+			url: url,
+			data: $("#form-eventos").serialize(),
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('#alert-title').html($('#titulo').val() + (act == 'add' ? " adicionado " : " editado ") + "com sucesso!");
+					$('#alert-content').html("A " + (act == 'add' ? " adição " : " edição ") + " de " + $('#titulo').val() + " foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					$('#alert').modal('show');
+
+					$('#alert').on('hidden.bs.modal', function (e) {
+						window.location.reload();
+					})
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });
+
+	$('body').on('click', '.btn-del-presenca-evento', function(e) {
+		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+    	var id = $(this).data('id');
+    	var evento = $(this).data('evento');
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.eventos.php?act=delp&idtime=" + id + "&idevento=" + evento,
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('#alert-title').html("Você removeu o time do evento!");
+					$('#alert-content').html("O time selecionado foi removido do evento com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					$('#alert').modal('show');
+
+					$('#alert').on('hidden.bs.modal', function (e) {
+						window.location.reload();
+					});
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });	
+
+    // END EVENTOS (eventos.php)
+
+	// BEGIN USUÁRIOS (usuarios.php)
+
+    $('.btn-voltar-usuarios').click(function(e) {
+		e.preventDefault();
+
+		$('.mainform').hide();
+		$('.mainadd').hide();
+		$('.maintable').show();
+
+    	$('#headline-add-usuarios').html('');
+		$('.headline-form').html('');
+    	$('#headline-edit-usuarios').html('');
+		$('.headline-form-edit').html('');
+
+    	$('#id').val('');
+    	$('#time-usuario').html('');
+    	$('#user').val('');
+    	$('#password').val('');
+    	$('#nivel').val('');
+
+    	$('#usuario').val('');
+    	$('#senha').val('');
+    });	
+
+    $('#btn-add-usuarios').click(function(e) {
+		e.preventDefault();
+
+		$('.mainform').hide();
+		$('.maintable').hide();
+		$('.mainadd').show();
+
+    	$('#headline-add-usuarios').html('Cadastrar novo usuário administrador');
+		$('.headline-form-add').html('Insira as informações do novo admin!');
+    	$('#headline-edit-usuarios').html('');
+		$('.headline-form-edit').html('');
+
+    	$('#usuario').val('');
+    	$('#senha').val('');
+    });	
+
+    $('#btn-incluir-usuario').click(function(e) {
+		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.usuarios.php?act=add",
+			data: $("#form-usuarios-add").serialize(),
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('#alert-title').html($('#usuario').val() + " adicionado com sucesso!");
+					$('#alert-content').html("A inclusão de <b>" + $('#usuario').val() + "</b> foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					$('#alert').modal('show');
+
+					$('#alert').on('hidden.bs.modal', function (e) {
+						window.location.reload();
+					})
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });
+
+    $('.btn-edit-usuarios').click(function(e) {
+		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+    	var id = $(this).data('id');
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.usuarios.php?act=showupd&idusuario=" + id,
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('.maintable').hide();
+					$('.mainadd').hide();
+					$('.mainform').show();
+
+			    	$('#btn-editar-usuario').data('id', id);
+			    	$('#btn-desativar-usuario').data('id', id);
+    				$('#headline-edit-usuarios').html('Editando o usuário ' + retorno.dados.usuario);
+					$('.headline-form-edit').html('Edite as informações do usuário!');
+
+			    	$('#id').val(retorno.dados.id);
+			    	$('#time-usuario').html(retorno.dados.time);
+			    	$('#user').val(retorno.dados.usuario);
+			    	$('#password').val(retorno.dados.senha);
+			    	$('#nivel').val(retorno.dados.nivel);
+				}
+				else {
+					$('.mainadd').hide();
+					$('.mainform').hide();
+					$('.maintable').show();
+
+			    	$('#btn-editar-usuario').data('id', null);
+			    	$('#btn-desativar-usuario').data('id', null);
+    				$('#headline-edit-usuarios').html('');
+					$('.headline-form-edit').html('');
+
+			    	$('#id').val('');
+			    	$('#time-usuario').html('');
+			    	$('#user').val('');
+			    	$('#password').val('');
+			    	$('#nivel').val('');
+
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });	
+
+    $('.btn-del-usuarios').click(function(e) {
+		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+    	var id = $(this).data('id');
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.usuarios.php?act=del&idusuario=" + id,
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('#alert-title').html("Usuário removido com sucesso!");
+					$('#alert-content').html("A remoção do usuário foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					$('#alert').modal('show');
+
+					$('#alert').on('hidden.bs.modal', function (e) {
+						window.location.reload();
+					});
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });	
+
+    $('#btn-editar-usuario').click(function(e) {
+		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+		
+    	var id = $(this).data('id');
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.usuarios.php?act=edit&idusuario=" + id,
+			data: $("#form-usuarios-edit").serialize(),
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('#alert-title').html($('#user').val() + " alterado com sucesso!");
+					$('#alert-content').html("A alteração de <b>" + $('#user').val() + "</b> foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					$('#alert').modal('show');
+
+					$('#alert').on('hidden.bs.modal', function (e) {
+						window.location.reload();
+					})
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });
+
+	$('.btn-resetar-senha').click(function(e) {
+		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+		
+    	var id = $(this).data('id');
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.usuarios.php?act=reset&idusuario=" + id,
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('#alert-title').html("Senha do usuário resetada com sucesso!");
+					$('#alert-content').html("A senha do usuário foi resetada com sucesso!");
+					$('#alert').modal('show');
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });
+
+	$('#btn-desativar-usuario').click(function(e) {
+		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+		
+    	var id = $(this).data('id');
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.usuarios.php?act=deactivate&idusuario=" + id,
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('#alert-title').html("Usuário desativado com sucesso!");
+					$('#alert-content').html("O usuário foi desativado com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					$('#alert').modal('show');
+
+					$('#alert').on('hidden.bs.modal', function (e) {
+						window.location.reload();
+					});
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });
+
+    // END USUÁRIOS (usuarios.php)
+
+	// BEGIN MATA-MATA (mata_mata.php)
+
+	$('#btn-voltar-mata-mata').click(function(e) {
+		e.preventDefault();
+
+    	$('#headline-mata-mata').html('');
+
+    	$('#id').val('');
+    	$('#descricao').prop("readonly", false);
+    	$('#descricao').val('');
+    	$('#total_times').prop("readonly", false);
+    	$('#total_times').val('4');
+    	$('#rodada_inicio').prop("readonly", false);
+    	$('#passo-mata-mata').prop("disabled", false);
+
+    	$('#sel-time-content').html('');
+    	$('#voltar-mata-mata').prop("disabled", false);
+    	$('#passo-mata-mata').prop("disabled", false);
+    	$('#box-times').hide();
+
+		$('#chaves-confronto').html('');
+    	$('#box-confrontos').hide();
+
+		$('.mainform').hide();
+		$('.maintable').show();
+    });	
+
+    $('#btn-add-mata-mata').click(function(e) {
+		e.preventDefault();
+
+		$('.maintable').hide();
+		$('.mainform').show();
+
+    	$('#headline-mata-mata').html('Cadastro de novo mata-mata');
+
+    	$('#id').val('');
+
+    	$('#passo-confrontos').data('act', 'add');
+    	$('#passo-confrontos').data('id', null);
+    });	
+
+    $('.btn-edit-matamata').click(function(e) {
+		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+		$('.maintable').hide();
+		$('.mainform').show();
+
+    	var id = $(this).data('id');
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.mata_mata.php?act=showupd&idmatamata=" + id,
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+			    	$('#passo-confrontos').data('act', 'edit');
+			    	$('#passo-confrontos').data('id', id);
+
+    				$('#headline-temporada').html('Editando a temporada ' + retorno.descricao);
+			    	
+			    	$('#id').val(retorno.id);
+					$('#descricao').val(retorno.descricao);
+					$('#descricao').prop("readonly", true);
+
+			    	$('#total_times').val(retorno.total_times);
+			    	$('#total_times').prop("disabled", true);
+
+			    	$('#rodada_inicio').val(retorno.rodada_inicio);
+			    	$('#rodada_inicio').prop("disabled", true);
+
+			    	$('#passo-mata-mata').prop("disabled", true);
+
+			    	$.each(retorno.times, function(i, item) {
+						$('#sel-time-content').append('<div class="col-6"><label class="form-check-label" for="time[' + item.id + ']"><input type="checkbox" id="time[' + item.id + ']" name="time[' + item.id + ']" class="form-check-input sel-times" value="' + item.id + '" ' + (item.has_time ? 'checked' : '') + ' />&nbsp;&nbsp;&nbsp;' + item.descricao + '</label></div>');
+					});
+		    		$(".sel-times").prop("disabled", true);
+			    	$("#voltar-mata-mata").prop("disabled", true);
+			    	$("#passo-times").prop("disabled", true);
+			    	$('#box-times').show();
+					
+			    	var chaves = retorno.total_times / 2;
+
+			    	var options = "<option value='' selected>Selecione...</option>";
+
+			    	$("#sel-time-content input[type='checkbox']:checked").each(function(){
+			    		options += "<option value='" + $(this).val() + "'>" + $("label[for='" + $(this).attr('id') + "']").text().split('   ')[1] + "</option>";
+					});
+
+			    	for(var i = 1; i <= chaves; i++) {
+			    		$('#chaves-confronto').append("<div class='row'><div class='col-12'><div class='card'><div class='card-header'>Chave " + i + "</div><div class='card-block'><div class='form-group'><select class='form-control form-control-lg' id='chave[" + i + "][1]' name='chave[" + i + "][1]' aria-describedby='chave[" + i + "][1]' required>" + options + "</select></div><div class='form-group'><label for='chave[" + i + "][2]' class='label-versus'>x</label><select class='form-control form-control-lg' id='chave[" + i + "][2]' name='chave[" + i + "][2]' aria-describedby='chave[" + i + "][2]' required>" + options + "</select></div></div></div></div></div>");
+			    	}
+
+			    	$.each(retorno.chaves, function(i, item) {
+			    		$('#chave\\['+item.chave+'\\]\\[1\\]').val(item.confrontos[0].time1);
+			    		$('#chave\\['+item.chave+'\\]\\[2\\]').val(item.confrontos[1].time2);
+			    	});
+
+			    	$('#box-confrontos').show();
+				}
+				else {
+			    	$('#headline-mata-mata').html('');
+
+			    	$('#id').val('');
+			    	$('#descricao').prop("readonly", null);
+			    	$('#descricao').val('');
+			    	$('#total_times').prop("readonly", null);
+			    	$('#total_times').val('4');
+			    	$('#rodada_inicio').prop("readonly", null);
+			    	$('#passo-mata-mata').prop("disabled", null);
+
+			    	$('#sel-time-content').html('');
+			    	$('#voltar-mata-mata').prop("disabled", null);
+			    	$('#passo-mata-mata').prop("disabled", null);
+			    	$('#box-times').hide();
+
+		    		$('#chaves-confronto').html('');
+			    	$('#box-confrontos').hide();
+
+					$('.mainform').hide();
+					$('.maintable').show();
+
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });	
+
+    $('.btn-del-matamata').click(function(e) {
+		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+    	var id = $(this).data('id');
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.mata_mata.php?act=del&idmatamata=" + id,
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('#alert-title').html("Mata-mata removido com sucesso!");
+					$('#alert-content').html("A remoção do mata-mata foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					$('#alert').modal('show');
+
+					$('#alert').on('hidden.bs.modal', function (e) {
+						window.location.reload();
+					});
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+    });	
+
+    $('#passo-mata-mata').click(function(e) {
+    	e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.mata_mata.php?act=seltimes",
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$.each(retorno.list, function(i, item) {
+						$('#sel-time-content').append('<div class="col-6"><label class="form-check-label" for="time[' + item.id + ']"><input type="checkbox" id="time[' + item.id + ']" name="time[' + item.id + ']" class="form-check-input sel-times" value="' + item.id + '" ' + (item.has_time ? 'checked' : '') + ' />&nbsp;&nbsp;&nbsp;' + item.descricao + '</label></div>');
+					});
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+				}
+			}
+		});
+
+    	$('#descricao').prop("readonly", true);
+    	$('#total_times').prop("disabled", true);
+    	$('#rodada_inicio').prop("disabled", true);
+    	$(this).prop("disabled", true);
+    	$('#box-times').show();
+    });
+
+    $('#voltar-mata-mata').click(function(e) {
+    	e.preventDefault();
+
+    	$('#descricao').prop("readonly", false);
+		$('#total_times').prop("disabled", false);
+    	$('#rodada_inicio').prop("disabled", false);
+    	$('#sel-time-content').html('');
+    	$('#passo-mata-mata').prop("disabled", false);
+    	$('#box-times').hide();
+    });	
+
+	$('body').on('click', '.sel-times', function(e) {
+		if(($('.sel-times:checked').length) > $('#total_times').val()) {
+    		e.preventDefault();
+
+			$('#alert-title').html("Quantidade de times selecionados diverge do total de times do mata-mata");
+			$('#alert-content').html("O mata-mata está configurado para " + $('#total_times').val() + " times. O total de times já foi selecionado.");
+			$('#alert').modal('show');
+		}
+	});
+
+    $('#passo-times').click(function(e) {
+    	e.preventDefault();
+
+    	if($('#total_times').val() != $('.sel-times:checked').length) {
+			$('#alert-title').html("Quantidade de times selecionados diverge do total de times do mata-mata");
+			$('#alert-content').html("O mata-mata está configurado para " + $('#total_times').val() + " times e foram selecionados " + $('.sel-times:checked').length + " times.");
+			$('#alert').modal('show');
+    	}
+    	else {
+	    	var chaves = $('#total_times').val() / 2;
+
+	    	var options = "<option value='' selected>Selecione...</option>";
+
+	    	$("#sel-time-content input[type='checkbox']:checked").each(function(){
+	    		options += "<option value='" + $(this).val() + "'>" + $("label[for='" + $(this).attr('id') + "']").text().split('   ')[1] + "</option>";
+			});
+
+	    	for(var i = 1; i <= chaves; i++) {
+	    		$('#chaves-confronto').append("<div class='row'><div class='col-12'><div class='card'><div class='card-header'>Chave " + i + "</div><div class='card-block'><div class='form-group'><select class='form-control form-control-lg' id='chave[" + i + "][1]' name='chave[" + i + "][1]' aria-describedby='chave[" + i + "][1]' required>" + options + "</select></div><div class='form-group'><label for='chave[" + i + "][2]' class='label-versus'>x</label><select class='form-control form-control-lg' id='chave[" + i + "][2]' name='chave[" + i + "][2]' aria-describedby='chave[" + i + "][2]' required>" + options + "</select></div></div></div></div></div>");
+	    	}
+
+    		$(".sel-times").prop("disabled", true);
+	    	$("#voltar-mata-mata").prop("disabled", true);
+	    	$(this).prop("disabled", true);
+	    	$('#box-confrontos').show();
+    	}
+    });	
+
+    $('#voltar-times').click(function(e) {
+    	e.preventDefault();
+
+    	$(".sel-times").prop("disabled", null);
+    	$("#voltar-mata-mata").prop("disabled", null);
+    	$("#passo-times").prop("disabled", null);
+    	$('#chaves-confronto').html('');
+    	$('#box-confrontos').hide();
+    });	
+
+    $('#passo-confrontos').click(function(e) {
+    	e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+    	var act = $(this).data('act');
+    	var id = $(this).data('id');
+    	
+    	$('#total_times').prop("disabled", false);
+		$('#rodada_inicio').prop("disabled", false);
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.mata_mata.php?act=" + act + "&idmatamata=" + id,
+			data: $("#form-mata-mata").serialize(),
+			success: function(data)
+			{
+				$('#loading').modal('hide');
+
+				console.log('data', data);
+
+				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+				if(retorno.succeed) {
+					$('#alert-title').html("Registro " + (act == 'add' ? "adicionado" : "editado") + " com sucesso!");
+					$('#alert-content').html("A " + (act == 'add' ? "adição" : "edição") + " do registro foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					$('#alert').modal('show');
+
+    				$('#total_times').prop("disabled", true);
+    				$('#rodada_inicio').prop("disabled", true);
+
+					$('#alert').on('hidden.bs.modal', function (e) {
+						window.location.reload();
+					})
+				}
+				else {
+					$('#alert-title').html(retorno.title);
+					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					$('#alert').modal('show');
+
+    				$('#total_times').prop("disabled", true);
+    				$('#rodada_inicio').prop("disabled", true);
+				}
+			}
+		});
+    });
+	
+	// END MATA-MATA (mata_mata.php)
+});
+
+Date.prototype.toDatetimeLocal =
+  function toDatetimeLocal() {
+    var
+      date = this,
+      ten = function (i) {
+        return (i < 10 ? '0' : '') + i;
+      },
+      YYYY = date.getFullYear(),
+      MM = ten(date.getMonth() + 1),
+      DD = ten(date.getDate()),
+      HH = ten(date.getHours()),
+      II = ten(date.getMinutes()),
+      SS = ten(date.getSeconds())
+    ;
+    return YYYY + '-' + MM + '-' + DD + 'T' +
+             HH + ':' + II + ':' + SS;
+  };
+
+Date.prototype.fromDatetimeLocal = (function (BST) {
+  // BST should not be present as UTC time
+  return new Date(BST).toISOString().slice(0, 16) === BST ?
+    // if it is, it needs to be removed
+    function () {
+      return new Date(
+        this.getTime() +
+        (this.getTimezoneOffset() * 60000)
+      ).toISOString();
+    } :
+    // otherwise can just be equivalent of toISOString
+    Date.prototype.toISOString;
+}('2006-06-06T06:06'));
+
+/*!
+ * Validator v0.11.9 for Bootstrap 3, by @1000hz
+ * Copyright 2017 Cina Saffary
+ * Licensed under http://opensource.org/licenses/MIT
+ *
+ * https://github.com/1000hz/bootstrap-validator
+ */
+
++function(a){"use strict";function b(b){return b.is('[type="checkbox"]')?b.prop("checked"):b.is('[type="radio"]')?!!a('[name="'+b.attr("name")+'"]:checked').length:b.is("select[multiple]")?(b.val()||[]).length:b.val()}function c(b){return this.each(function(){var c=a(this),e=a.extend({},d.DEFAULTS,c.data(),"object"==typeof b&&b),f=c.data("bs.validator");(f||"destroy"!=b)&&(f||c.data("bs.validator",f=new d(this,e)),"string"==typeof b&&f[b]())})}var d=function(c,e){this.options=e,this.validators=a.extend({},d.VALIDATORS,e.custom),this.$element=a(c),this.$btn=a('button[type="submit"], input[type="submit"]').filter('[form="'+this.$element.attr("id")+'"]').add(this.$element.find('input[type="submit"], button[type="submit"]')),this.update(),this.$element.on("input.bs.validator change.bs.validator focusout.bs.validator",a.proxy(this.onInput,this)),this.$element.on("submit.bs.validator",a.proxy(this.onSubmit,this)),this.$element.on("reset.bs.validator",a.proxy(this.reset,this)),this.$element.find("[data-match]").each(function(){var c=a(this),d=c.attr("data-match");a(d).on("input.bs.validator",function(){b(c)&&c.trigger("input.bs.validator")})}),this.$inputs.filter(function(){return b(a(this))&&!a(this).closest(".has-error").length}).trigger("focusout"),this.$element.attr("novalidate",!0)};d.VERSION="0.11.9",d.INPUT_SELECTOR=':input:not([type="hidden"], [type="submit"], [type="reset"], button)',d.FOCUS_OFFSET=20,d.DEFAULTS={delay:500,html:!1,disable:!0,focus:!0,custom:{},errors:{match:"Does not match",minlength:"Not long enough"},feedback:{success:"glyphicon-ok",error:"glyphicon-remove"}},d.VALIDATORS={"native":function(a){var b=a[0];return b.checkValidity?!b.checkValidity()&&!b.validity.valid&&(b.validationMessage||"error!"):void 0},match:function(b){var c=b.attr("data-match");return b.val()!==a(c).val()&&d.DEFAULTS.errors.match},minlength:function(a){var b=a.attr("data-minlength");return a.val().length<b&&d.DEFAULTS.errors.minlength}},d.prototype.update=function(){var b=this;return this.$inputs=this.$element.find(d.INPUT_SELECTOR).add(this.$element.find('[data-validate="true"]')).not(this.$element.find('[data-validate="false"]').each(function(){b.clearErrors(a(this))})),this.toggleSubmit(),this},d.prototype.onInput=function(b){var c=this,d=a(b.target),e="focusout"!==b.type;this.$inputs.is(d)&&this.validateInput(d,e).done(function(){c.toggleSubmit()})},d.prototype.validateInput=function(c,d){var e=(b(c),c.data("bs.validator.errors"));c.is('[type="radio"]')&&(c=this.$element.find('input[name="'+c.attr("name")+'"]'));var f=a.Event("validate.bs.validator",{relatedTarget:c[0]});if(this.$element.trigger(f),!f.isDefaultPrevented()){var g=this;return this.runValidators(c).done(function(b){c.data("bs.validator.errors",b),b.length?d?g.defer(c,g.showErrors):g.showErrors(c):g.clearErrors(c),e&&b.toString()===e.toString()||(f=b.length?a.Event("invalid.bs.validator",{relatedTarget:c[0],detail:b}):a.Event("valid.bs.validator",{relatedTarget:c[0],detail:e}),g.$element.trigger(f)),g.toggleSubmit(),g.$element.trigger(a.Event("validated.bs.validator",{relatedTarget:c[0]}))})}},d.prototype.runValidators=function(c){function d(a){return c.attr("data-"+a+"-error")}function e(){var a=c[0].validity;return a.typeMismatch?c.attr("data-type-error"):a.patternMismatch?c.attr("data-pattern-error"):a.stepMismatch?c.attr("data-step-error"):a.rangeOverflow?c.attr("data-max-error"):a.rangeUnderflow?c.attr("data-min-error"):a.valueMissing?c.attr("data-required-error"):null}function f(){return c.attr("data-error")}function g(a){return d(a)||e()||f()}var h=[],i=a.Deferred();return c.data("bs.validator.deferred")&&c.data("bs.validator.deferred").reject(),c.data("bs.validator.deferred",i),a.each(this.validators,a.proxy(function(a,d){var e=null;!b(c)&&!c.attr("required")||void 0===c.attr("data-"+a)&&"native"!=a||!(e=d.call(this,c))||(e=g(a)||e,!~h.indexOf(e)&&h.push(e))},this)),!h.length&&b(c)&&c.attr("data-remote")?this.defer(c,function(){var d={};d[c.attr("name")]=b(c),a.get(c.attr("data-remote"),d).fail(function(a,b,c){h.push(g("remote")||c)}).always(function(){i.resolve(h)})}):i.resolve(h),i.promise()},d.prototype.validate=function(){var b=this;return a.when(this.$inputs.map(function(){return b.validateInput(a(this),!1)})).then(function(){b.toggleSubmit(),b.focusError()}),this},d.prototype.focusError=function(){if(this.options.focus){var b=this.$element.find(".has-error :input:first");0!==b.length&&(a("html, body").animate({scrollTop:b.offset().top-d.FOCUS_OFFSET},250),b.focus())}},d.prototype.showErrors=function(b){var c=this.options.html?"html":"text",d=b.data("bs.validator.errors"),e=b.closest(".form-group"),f=e.find(".help-block.with-errors"),g=e.find(".form-control-feedback");d.length&&(d=a("<ul/>").addClass("list-unstyled").append(a.map(d,function(b){return a("<li/>")[c](b)})),void 0===f.data("bs.validator.originalContent")&&f.data("bs.validator.originalContent",f.html()),f.empty().append(d),e.addClass("has-error has-danger"),e.hasClass("has-feedback")&&g.removeClass(this.options.feedback.success)&&g.addClass(this.options.feedback.error)&&e.removeClass("has-success"))},d.prototype.clearErrors=function(a){var c=a.closest(".form-group"),d=c.find(".help-block.with-errors"),e=c.find(".form-control-feedback");d.html(d.data("bs.validator.originalContent")),c.removeClass("has-error has-danger has-success"),c.hasClass("has-feedback")&&e.removeClass(this.options.feedback.error)&&e.removeClass(this.options.feedback.success)&&b(a)&&e.addClass(this.options.feedback.success)&&c.addClass("has-success")},d.prototype.hasErrors=function(){function b(){return!!(a(this).data("bs.validator.errors")||[]).length}return!!this.$inputs.filter(b).length},d.prototype.isIncomplete=function(){function c(){var c=b(a(this));return!("string"==typeof c?a.trim(c):c)}return!!this.$inputs.filter("[required]").filter(c).length},d.prototype.onSubmit=function(a){this.validate(),(this.isIncomplete()||this.hasErrors())&&a.preventDefault()},d.prototype.toggleSubmit=function(){this.options.disable&&this.$btn.toggleClass("disabled",this.isIncomplete()||this.hasErrors())},d.prototype.defer=function(b,c){return c=a.proxy(c,this,b),this.options.delay?(window.clearTimeout(b.data("bs.validator.timeout")),void b.data("bs.validator.timeout",window.setTimeout(c,this.options.delay))):c()},d.prototype.reset=function(){return this.$element.find(".form-control-feedback").removeClass(this.options.feedback.error).removeClass(this.options.feedback.success),this.$inputs.removeData(["bs.validator.errors","bs.validator.deferred"]).each(function(){var b=a(this),c=b.data("bs.validator.timeout");window.clearTimeout(c)&&b.removeData("bs.validator.timeout")}),this.$element.find(".help-block.with-errors").each(function(){var b=a(this),c=b.data("bs.validator.originalContent");b.removeData("bs.validator.originalContent").html(c)}),this.$btn.removeClass("disabled"),this.$element.find(".has-error, .has-danger, .has-success").removeClass("has-error has-danger has-success"),this},d.prototype.destroy=function(){return this.reset(),this.$element.removeAttr("novalidate").removeData("bs.validator").off(".bs.validator"),this.$inputs.off(".bs.validator"),this.options=null,this.validators=null,this.$element=null,this.$btn=null,this.$inputs=null,this};var e=a.fn.validator;a.fn.validator=c,a.fn.validator.Constructor=d,a.fn.validator.noConflict=function(){return a.fn.validator=e,this},a(window).on("load",function(){a('form[data-toggle="validator"]').each(function(){var b=a(this);c.call(b,b.data())})})}(jQuery);
