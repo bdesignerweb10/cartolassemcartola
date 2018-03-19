@@ -157,6 +157,7 @@ else {
 							</div>
 							<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
 	    						<div class="dropdown-item"><a href="#">Meus dados</a></div>
+	    						<div class="dropdown-item"><a href="#">Informações do clube</a></div>
 	    						<div class="dropdown-item"><a href="logout.php">Sair</a></div>
 	    					</div>	
 						</div>
