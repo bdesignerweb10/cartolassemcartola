@@ -8747,6 +8747,13 @@ ul.escudos > li {
 .badge.mitou {
   background-color: #ed7d31; }
 
+.total-pontos {
+  font-weight: bold;
+  color: #0f073f; }
+
+.pontos-total {
+  background-color: #0f073f; }
+
 .media-parcial {
   color: #1e3e84;
   font-weight: bold; }

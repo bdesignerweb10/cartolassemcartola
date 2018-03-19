@@ -32,7 +32,7 @@
 	padding: 15px 20px;
 	float: right;
 	> strong{
-		color: $brand-warning
+		color: $brand-warning;
 	}
 }
 
@@ -385,6 +385,17 @@ ul.escudos > li {
 
 .badge.mitou{
 	background-color: #ed7d31;
+}
+
+//Total
+
+.total-pontos{
+	font-weight: bold;
+	color: #0f073f;
+}
+
+.pontos-total{
+	background-color: #0f073f;
 }
 
 // Média Parcial

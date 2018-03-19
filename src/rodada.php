@@ -69,6 +69,7 @@
 					                <th class="rodada titulo">36º</th>
 					                <th class="rodada titulo">37º</th>
 					                <th class="rodada titulo">38º</th>
+					                <th class="rodada titulo">Total</th>
 					                <th class="rodada titulo">MP</th>
 					                <th class="rodada titulo">MC</th>
 					            </tr>
@@ -113,7 +114,8 @@
 					                <td class="rodada mitou">113.12</td>
 					                <td class="rodada regular">46.62</td>
 					                <td class="rodada bom">56.62</td>
-					                <td class="rodada bom">72.36</td>					                
+					                <td class="rodada bom">72.36</td>	
+					                <td class="rodada total-pontos">2090,63</td>					                
 					                <td class="rodada media-parcial">44.63</td>
 					                <td class="rodada media-camp">93.12</td>
 					            </tr>
@@ -156,7 +158,8 @@
 					                <td class="rodada mitou">113.12</td>
 					                <td class="rodada regular">46.62</td>
 					                <td class="rodada bom">56.62</td>
-					                <td class="rodada bom">72.36</td>					                
+					                <td class="rodada bom">72.36</td>	
+					                <td class="rodada total-pontos">2090,63</td>					                
 					                <td class="rodada media-parcial">44.63</td>
 					                <td class="rodada media-camp">93.12</td>
 					            </tr>
@@ -199,7 +202,8 @@
 					                <td class="rodada mitou">113.12</td>
 					                <td class="rodada regular">46.62</td>
 					                <td class="rodada bom">56.62</td>
-					                <td class="rodada bom">72.36</td>					                
+					                <td class="rodada bom">72.36</td>	
+					                <td class="rodada total-pontos">2090,63</td>					                
 					                <td class="rodada media-parcial">44.63</td>
 					                <td class="rodada media-camp">93.12</td>
 					            </tr>
@@ -228,6 +232,10 @@
 								<li class="nav-item">
 									<span class="badge mitou"></span>
 									Pontuação &gt; 100 pontos 
+								</li>
+								<li class="nav-item">
+									<span class="badge pontos-total"></span>
+									Total de pontos 
 								</li>
 								<li class="nav-item">
 									<span class="badge media-parcial"></span>
