@@ -16,7 +16,7 @@
 				</div>
 			</div>
 		</div>		
-		<div id="loading" class="modal" data-backdrop="static">
+		<div id="loading-modal" class="modal" data-backdrop="static">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">

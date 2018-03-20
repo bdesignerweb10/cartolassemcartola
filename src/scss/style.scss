@@ -542,6 +542,10 @@ ul.escudos > li {
 	margin-right: 5px;
 }
 
+.infor {
+	color: #6c757d!important;
+}
+
 .center {
 	text-align: center;
 	horizontal-align: center;
@@ -697,6 +701,8 @@ ul.escudos > li {
 #desempenho-geral .card-block, #desempenho-geral footer,
 #desempenho-rodada .card-block, #desempenho-rodada footer, 
 #mata-mata-andamento .card-block, #mata-mata-andamento footer,
-#desempenho-liga .card-block, #desempenho-liga footer, #destaques .col-sm-4 {
+#desempenho-liga .card-block, #desempenho-liga footer, #destaques .col-sm-4,
+#mata-mata .bg-info, #mata-mata .bg-success, #mata-mata .bg-danger, #mata-mata .mata-and, #mainconfrontos, #nao-ha-dados
+ {
 	display:none;
 }

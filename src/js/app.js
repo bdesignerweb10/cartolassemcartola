@@ -37,7 +37,7 @@ $(function() {
 	$("#form-login").submit(function(e) {
 		e.preventDefault();
 
-		$('#loading').modal({
+		$('#loading-modal').modal({
 			keyboard: false
 		});
 
@@ -48,7 +48,7 @@ $(function() {
 			success: function(data)
 			{
 			    try {
-					$('#loading').modal('hide');
+					$('#loading-modal').modal('hide');
 
 					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
@@ -73,6 +73,7 @@ $(function() {
 					}
 			    }
 			    catch (e) {
+					$('#loading-modal').modal('hide');
 					$('#alert-title').html("Erro ao fazer parse do JSON!");
 					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
@@ -92,7 +93,7 @@ $(function() {
 		e.preventDefault();
 		e.preventDefault();
 
-		$('#loading').modal({
+		$('#loading-modal').modal({
 			keyboard: false
 		});
 
@@ -103,7 +104,7 @@ $(function() {
 			success: function(data)
 			{
 			    try {
-					$('#loading').modal('hide');
+					$('#loading-modal').modal('hide');
 
 					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
@@ -123,6 +124,7 @@ $(function() {
 					}
 			    }
 			    catch (e) {
+					$('#loading-modal').modal('hide');
 					$('#alert-title').html("Erro ao fazer parse do JSON!");
 					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
@@ -138,7 +140,7 @@ $(function() {
 	$("#form-provisoria").submit(function(e) {
 		e.preventDefault();
 
-		$('#loading').modal({
+		$('#loading-modal').modal({
 			keyboard: false
 		});
 
@@ -149,7 +151,7 @@ $(function() {
 			success: function(data)
 			{
 			    try {
-					$('#loading').modal('hide');
+					$('#loading-modal').modal('hide');
 
 					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
@@ -170,6 +172,7 @@ $(function() {
 					}
 			    }
 			    catch (e) {
+					$('#loading-modal').modal('hide');
 					$('#alert-title').html("Erro ao fazer parse do JSON!");
 					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
@@ -192,7 +195,7 @@ $(function() {
 	$("#form-inscricao").submit(function(e) {
 		e.preventDefault();
 
-		$('#loading').modal({
+		$('#loading-modal').modal({
 			keyboard: false
 		});
 
@@ -203,7 +206,7 @@ $(function() {
 			success: function(data)
 			{
 			    try {
-					$('#loading').modal('hide');
+					$('#loading-modal').modal('hide');
 
 					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
@@ -226,6 +229,7 @@ $(function() {
 					}
 			    }
 			    catch (e) {
+					$('#loading-modal').modal('hide');
 					$('#alert-title').html("Erro ao fazer parse do JSON!");
 					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
@@ -259,7 +263,7 @@ $(function() {
 							});
 						}
 						else {
-							$('#destaques-rodada .card-block tbody').append('<tr class="bg-table"><td colspan="4" class="center"><i class="fa fa-info fa-2x"></i> Não há dados a serem exibidos para a listagem.</td></tr>');
+							$('#destaques-rodada .card-block tbody').append('<tr class="bg-table"><td colspan="4" class="center infor"><i class="fa fa-thumbs-down fa-2x"></i><br /><br />Não há dados a serem exibidos aqui.</td></tr>');
 						}
 
 						$('#destaques-rodada .card-block').fadeIn("slow", function() {
@@ -300,9 +304,8 @@ $(function() {
 					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 					$('#desempenho-rodada .card-block tbody').html('');
 					if(retorno.succeed) {
-						if(retorno.series.length > 0) {
+						if(retorno.series.length > 0 && retorno.series[0].data && retorno.series[0].data.length > 0) {
 							$('#desempenho-rodada .card-block').append('<canvas id="chart-desempenho-rodada"></canvas>');
-
 							$.each(retorno.series, function(i, item) {
 								var color = getRandomColor();
 								item["backgroundColor"] = color;
@@ -364,7 +367,7 @@ $(function() {
 						});
 						}
 						else {
-							$('#desempenho-rodada .card-block').append('<div class="bg-default"><i class="fa fa-info fa-2x"></i> Não há dados a serem exibidos.</div>');
+							$('#desempenho-rodada .card-block').append('<div class="bg-default center infor"><i class="fa fa-thumbs-down fa-2x"></i><br /><br />Não há dados a serem exibidos aqui.</div>');
 						}
 
 						$('#desempenho-rodada .card-block').fadeIn("slow", function() {
@@ -416,7 +419,7 @@ $(function() {
 							});
 						}
 						else {
-							$('#desempenho-geral .card-block tbody').append('<tr class="bg-table"><td colspan="5" class="center"><i class="fa fa-info fa-2x"></i> Não há dados a serem exibidos para a listagem.</td></tr>');
+							$('#desempenho-geral .card-block tbody').append('<tr class="bg-table"><td colspan="5" class="center infor"><i class="fa fa-thumbs-down fa-2x"></i><br /><br />Não há dados a serem exibidos aqui.</td></tr>');
 						}
 
 						$('#desempenho-geral .card-block').fadeIn("slow", function() {
@@ -465,7 +468,7 @@ $(function() {
 							});
 						}
 						else {
-							$('#mata-mata-andamento .card-block').append('<div class="bg-default"><i class="fa fa-info fa-2x"></i> Não há dados a serem exibidos para a listagem.</div>');
+							$('#mata-mata-andamento .card-block').append('<div class="bg-secondary center infor"><i class="fa fa-thumbs-down fa-2x"></i><br /><br />Não há dados a serem exibidos aqui.</div>');
 						}
 
 						$('#mata-mata-andamento .card-block').fadeIn("slow", function() {
@@ -529,7 +532,7 @@ $(function() {
 							});
 						}
 						else {
-							$('#destaques').append('<div class="col-12" id="loading"><p style="text-align: center;"><i class="fa fa-info fa-2x"></i> Não há dados a serem exibidos para a listagem.</p></div>');
+							$('#destaques').append('<div class="col-12 center infor"><i class="fa fa-thumbs-down fa-2x"></i><br /><br />Não há dados a serem exibidos aqui.</div>');
 						}
 						
 						$('#loading').fadeOut("fast", function() {
@@ -549,8 +552,7 @@ $(function() {
 					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
 
-					$('#destaques-rodada .card-block').hide();
-					$('#destaques-rodada footer').hide();
+					$('#destaques .col-sm-4').hide();
 					$('#loading').remove();
 			    };
 			}
@@ -588,7 +590,7 @@ $(function() {
 							});
 						}
 						else {
-							$('#desempenho-liga .card-block tbody').append('<tr class="bg-table"><td colspan="6" class="center"><i class="fa fa-info fa-2x"></i> Não há dados a serem exibidos para a listagem.</td></tr>');
+							$('#desempenho-liga .card-block tbody').append('<tr class="bg-table"><td colspan="6" class="center infor"><i class="fa fa-thumbs-down fa-2x"></i><br /><br />Não há dados a serem exibidos aqui.</td></tr>');
 						}
 
 						$('#loading').fadeOut("fast", function() {
@@ -619,6 +621,168 @@ $(function() {
 	}
 
 	// END LIGA (liga.php)
+
+	// BEGIN MATA-MATA (mata-mata.php)
+
+	if(window.location.pathname.indexOf('mata-mata.php') !== -1) {
+
+		// MATA-MATA
+		$('#mata-mata').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.mata_mata.php?act=mata-mata",
+			success: function(data)
+			{
+				try {
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+					if(retorno.succeed) {
+						if(retorno.list.length > 0) {
+							var fase = "";
+							$.each(retorno.list, function(i, item) {
+								if(fase != item.fase) {
+									$('#mata-mata').append('<div class="' + item.cor_fase + ' text-white"><i class="fa fa-trophy"></i> Mata Mata - ' + item.fase + '</div><div class="row" id="body_' + item.cor_fase + '">');
+									fase = item.fase;
+								}
+
+								$('#body_' + item.cor_fase).append('<div class="col-sm-4 mata-and"><a href="#" class="open-confrontos" data-id="' + item.id + '"><img src="img/' + item.imagem + '" class="rounded img-fluid" alt="Mata Mata ' + item.fase + '"><h2 class="headline">' + item.nome + '</h2></a></div>');
+							});
+						}
+						else {
+							$('#mata-mata').append('<div class="col-12 center infor"><i class="fa fa-thumbs-down fa-2x"></i><br /><br />Não há dados a serem exibidos aqui.</div>');
+						}
+						
+						$('#loading').fadeOut("fast", function() {
+							$('#mata-mata .bg-info').fadeIn("slow");
+							$('#mata-mata .bg-success').fadeIn("slow");
+							$('#mata-mata .bg-danger').fadeIn("slow");
+							$('#mata-mata .mata-and').fadeIn("slow");
+						});
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+
+						$('#mata-mata .bg-info').hide();
+						$('#mata-mata .bg-success').hide();
+						$('#mata-mata .bg-danger').hide();
+						$('#mata-mata .mata-and').hide();
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
+					$('#alert').modal('show');
+
+					$('#mata-mata .bg-info').hide();
+					$('#mata-mata .bg-success').hide();
+					$('#mata-mata .bg-danger').hide();
+					$('#mata-mata .mata-and').hide();
+					$('#loading').remove();
+			    }
+			}
+		});
+
+		$('body').on('click', '.open-confrontos', function(e) {
+    		e.preventDefault();
+
+			$('#loading-modal').modal({
+				keyboard: false
+			});
+
+    		var id = $(this).data('id');
+
+    		$.ajax({
+				type: "POST",
+				url: "acts/acts.mata_mata.php?act=confrontos&idmatamata=" + id,
+				success: function(data)
+				{
+					try {
+						var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+					
+						$('#loading-modal').modal('hide');
+
+						if(retorno.succeed) {
+							$('#nome-mata-mata').html(retorno.mata_mata);
+							
+							if(retorno.list.length > 0) {
+								$.each(retorno.list, function(n, nivel) {
+									$('#nav-niveis').append('<li class="nav-item"><a class="nav-link' + nivel.active + '" data-toggle="tab" href="#nivel' + nivel.nivel + '">' + nivel.fase + '</a></li>');
+									$('#nav-confrontos').append('<div id="nivel' + nivel.nivel + '" class="tab-pane' + nivel.active + '"><h4 class="confrontos">Confrontos</h4><div class="row" id="cards' + nivel.nivel + '" >');
+
+									$.each(nivel.confrontos, function(c, confronto) {
+										var desc_chave = 'Chave ' + confronto.chave;
+										if(nivel.nivel == 1) {
+											if(confronto.chave == 1)
+												desc_chave = '<b>Final</b>';
+											else
+												desc_chave = '3º lugar';
+										}
+										$('#cards' + nivel.nivel).append('<div class="col-sm-12 col-md-12 col-lg-6 col-xl-6"><div class="card"><p class="chaveamento">' + desc_chave + '</p><div class="card-block confronto"><div class="col-sm-3"><img src="img/escudos/' + confronto.escudo_time_1 + '" class="img-fluid center-block"><p class="clube">' + confronto.time_1 + '</p><p class="pontuacao">' + confronto.pontuacao_time_1 + '</p></div><p class="vs">X</p><div class="col-sm-3"><img src="img/escudos/' + confronto.escudo_time_2 + '" class="img-fluid center-block"><p class="clube">' + confronto.time_2 + '</p><p class="pontuacao">' + confronto.pontuacao_time_2 + '</p></div></div></div>');
+									});
+								});
+
+								if($("#nav-niveis a.active").length == 0) {
+									$("#nav-niveis a.nav-link").first().click();
+								}
+							}
+							else {
+								$('#nao-ha-dados').show();
+							}
+			
+							$('#mainmata').fadeOut("fast", function() {
+								$('#mainconfrontos').fadeIn("slow");
+							});
+						}
+						else {
+							$('#nome-mata-mata').html('');
+							$('#nav-niveis').html('');
+							$('#nav-confrontos').html('');
+							$('#nao-ha-dados').hide();
+
+							$('#alert-title').html(retorno.title);
+							$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+							$('#alert').modal('show');
+						}
+				    }
+				    catch (e) {
+						$('#nome-mata-mata').html('');
+						$('#nav-niveis').html('');
+						$('#nav-confrontos').html('');
+						$('#nao-ha-dados').hide();
+
+						$('#loading-modal').modal('hide');
+						$('#alert-title').html("Erro ao fazer parse do JSON!");
+						$('#alert-content').html(String(e.stack));
+						$('#alert').modal('show');
+				    }
+				}
+			});
+		});
+
+		$('#voltar-mata-mata').click(function(e) {
+    		e.preventDefault();
+
+			$('#nome-mata-mata').html('');
+			$('#nav-niveis').html('');
+			$('#nav-confrontos').html('');
+			$('#nao-ha-dados').hide();
+
+			$('#mainconfrontos').fadeOut("fast", function() {
+				$('#mainmata').fadeIn("slow");
+			});
+		});
+	}
+
+	// END MATA-MATA (liga.php)
+
+	// BEGIN RODADA (rodada.php)
+
+	if(window.location.pathname.indexOf('rodada.php') !== -1) {
+	}
+	
+	// END RODADA (rodada.php)
 });
 
 function getRandomColor() {

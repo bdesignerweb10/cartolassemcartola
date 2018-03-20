@@ -1,7 +1,6 @@
 <?php
 	require_once('header.php');
 ?>
-
 <main>
 	<div class="container">
 		<div class="row img-estatistica img-fluid">

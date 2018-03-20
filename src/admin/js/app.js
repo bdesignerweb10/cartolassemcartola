@@ -46,6 +46,7 @@ $(function() {
 					}
 			    }
 			    catch (e) {
+					$('#loading').modal('hide');
 					$('#alert-title').html("Erro ao fazer parse do JSON!");
 					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
@@ -96,6 +97,7 @@ $(function() {
 					}
 			    }
 			    catch (e) {
+					$('#loading').modal('hide');
 					$('#alert-title').html("Erro ao fazer parse do JSON!");
 					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
@@ -211,6 +213,7 @@ $(function() {
 					}
 			    }
 			    catch (e) {
+					$('#loading').modal('hide');
 					$('#alert-title').html("Erro ao fazer parse do JSON!");
 					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
@@ -254,6 +257,7 @@ $(function() {
 					}
 			    }
 			    catch (e) {
+					$('#loading').modal('hide');
 					$('#alert-title').html("Erro ao fazer parse do JSON!");
 					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
@@ -293,6 +297,7 @@ $(function() {
 					}
 			    }
 			    catch (e) {
+					$('#loading').modal('hide');
 					$('#alert-title').html("Erro ao fazer parse do JSON!");
 					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
@@ -382,6 +387,7 @@ $(function() {
 					}
 			    }
 			    catch (e) {
+					$('#loading').modal('hide');
 					$('#alert-title').html("Erro ao fazer parse do JSON!");
 					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
@@ -449,6 +455,7 @@ $(function() {
 					}
 			    }
 			    catch (e) {
+					$('#loading').modal('hide');
 					$('#alert-title').html("Erro ao fazer parse do JSON!");
 					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
@@ -493,6 +500,7 @@ $(function() {
 					}
 			    }
 			    catch (e) {
+					$('#loading').modal('hide');
 					$('#alert-title').html("Erro ao fazer parse do JSON!");
 					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
@@ -537,6 +545,7 @@ $(function() {
 					}
 			    }
 			    catch (e) {
+					$('#loading').modal('hide');
 					$('#alert-title').html("Erro ao fazer parse do JSON!");
 					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
@@ -625,6 +634,7 @@ $(function() {
 					}
 			    }
 			    catch (e) {
+					$('#loading').modal('hide');
 					$('#alert-title').html("Erro ao fazer parse do JSON!");
 					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
@@ -668,6 +678,7 @@ $(function() {
 					}
 			    }
 			    catch (e) {
+					$('#loading').modal('hide');
 					$('#alert-title').html("Erro ao fazer parse do JSON!");
 					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
@@ -712,6 +723,7 @@ $(function() {
 					}
 			    }
 			    catch (e) {
+					$('#loading').modal('hide');
 					$('#alert-title').html("Erro ao fazer parse do JSON!");
 					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
@@ -758,6 +770,7 @@ $(function() {
 					}
 			    }
 			    catch (e) {
+					$('#loading').modal('hide');
 					$('#alert-title').html("Erro ao fazer parse do JSON!");
 					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
@@ -810,6 +823,7 @@ $(function() {
 						}
 				    }
 				    catch (e) {
+						$('#loading').modal('hide');
 						$('#alert-title').html("Erro ao fazer parse do JSON!");
 						$('#alert-content').html(String(e.stack));
 						$('#alert').modal('show');
@@ -859,6 +873,7 @@ $(function() {
 						}
 				    }
 				    catch (e) {
+						$('#loading').modal('hide');
 						$('#alert-title').html("Erro ao fazer parse do JSON!");
 						$('#alert-content').html(String(e.stack));
 						$('#alert').modal('show');
@@ -908,6 +923,7 @@ $(function() {
 						}
 				    }
 				    catch (e) {
+						$('#loading').modal('hide');
 						$('#alert-title').html("Erro ao fazer parse do JSON!");
 						$('#alert-content').html(String(e.stack));
 						$('#alert').modal('show');
@@ -957,6 +973,7 @@ $(function() {
 						}
 				    }
 				    catch (e) {
+						$('#loading').modal('hide');
 						$('#alert-title').html("Erro ao fazer parse do JSON!");
 						$('#alert-content').html(String(e.stack));
 						$('#alert').modal('show');
@@ -1000,6 +1017,7 @@ $(function() {
 					}
 			    }
 			    catch (e) {
+					$('#loading').modal('hide');
 					$('#alert-title').html("Erro ao fazer parse do JSON!");
 					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
@@ -1125,6 +1143,7 @@ $(function() {
 					}
 			    }
 			    catch (e) {
+					$('#loading').modal('hide');
 					$('#alert-title').html("Erro ao fazer parse do JSON!");
 					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
@@ -1168,6 +1187,7 @@ $(function() {
 					}
 			    }
 			    catch (e) {
+					$('#loading').modal('hide');
 					$('#alert-title').html("Erro ao fazer parse do JSON!");
 					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
@@ -1220,6 +1240,7 @@ $(function() {
 					}
 			    }
 			    catch (e) {
+					$('#loading').modal('hide');
 					$('#alert-title').html("Erro ao fazer parse do JSON!");
 					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
@@ -1264,6 +1285,7 @@ $(function() {
 					}
 			    }
 			    catch (e) {
+					$('#loading').modal('hide');
 					$('#alert-title').html("Erro ao fazer parse do JSON!");
 					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
@@ -1348,6 +1370,7 @@ $(function() {
 					}
 			    }
 			    catch (e) {
+					$('#loading').modal('hide');
 					$('#alert-title').html("Erro ao fazer parse do JSON!");
 					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
@@ -1413,6 +1436,7 @@ $(function() {
 					}
 			    }
 			    catch (e) {
+					$('#loading').modal('hide');
 					$('#alert-title').html("Erro ao fazer parse do JSON!");
 					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
@@ -1456,6 +1480,7 @@ $(function() {
 					}
 			    }
 			    catch (e) {
+					$('#loading').modal('hide');
 					$('#alert-title').html("Erro ao fazer parse do JSON!");
 					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
@@ -1500,6 +1525,7 @@ $(function() {
 					}
 			    }
 			    catch (e) {
+					$('#loading').modal('hide');
 					$('#alert-title').html("Erro ao fazer parse do JSON!");
 					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
@@ -1539,6 +1565,7 @@ $(function() {
 					}
 			    }
 			    catch (e) {
+					$('#loading').modal('hide');
 					$('#alert-title').html("Erro ao fazer parse do JSON!");
 					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
@@ -1582,6 +1609,7 @@ $(function() {
 					}
 			    }
 			    catch (e) {
+					$('#loading').modal('hide');
 					$('#alert-title').html("Erro ao fazer parse do JSON!");
 					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
@@ -1728,6 +1756,7 @@ $(function() {
 					}
 			    }
 			    catch (e) {
+					$('#loading').modal('hide');
 					$('#alert-title').html("Erro ao fazer parse do JSON!");
 					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
@@ -1771,6 +1800,7 @@ $(function() {
 					}
 			    }
 			    catch (e) {
+					$('#loading').modal('hide');
 					$('#alert-title').html("Erro ao fazer parse do JSON!");
 					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
@@ -1808,6 +1838,7 @@ $(function() {
 					}
 			    }
 			    catch (e) {
+					$('#loading').modal('hide');
 					$('#alert-title').html("Erro ao fazer parse do JSON!");
 					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
@@ -1927,6 +1958,7 @@ $(function() {
 					}
 			    }
 			    catch (e) {
+					$('#loading').modal('hide');
 					$('#alert-title').html("Erro ao fazer parse do JSON!");
 					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
