@@ -8531,6 +8531,11 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   margin-bottom: 5px;
   align-items: center; }
 
+.vol-mata {
+  float: right; }
+  .vol-mata > a {
+    color: #fff; }
+
 /* Pontuação */
 .tbl-scouts {
   color: #fff; }

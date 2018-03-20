@@ -4,7 +4,14 @@
 
 <main>
 	<div class="container">
-		<h2 class="headline">Copa Kempes</h2>
+		<div class="row">
+			<div class="col-sm-6">
+				<h2 class="headline">Copa Kempes</h2>
+			</div>	
+			<div class="col-sm-6">
+				<div class="btn btn-info vol-mata"><a href="mata-mata.php">Voltar para os mata mata</div>
+			</div>	
+		</div>	
 		<div class="row">
 			<div class="col-sm-12">
 				<ul class="nav nav-pills nav-fill nav-tabs">
