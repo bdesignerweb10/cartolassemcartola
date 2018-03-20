@@ -111,6 +111,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 								}
 
 								$_SESSION["usu_id"] = $usu_id;
+								$_SESSION["usu_time"] = $usu_time;
 								$_SESSION["usu_login"] = $usu_login;
 								$_SESSION["usu_nome"] = $usu_nome;
 								$_SESSION["usu_nivel"] = $usu_nivel;

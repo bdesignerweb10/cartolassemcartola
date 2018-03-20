@@ -37,6 +37,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 
 						$login = $_POST["login"];
 						$senha = $_POST["senha"];
+						$href = (isset($_POST["href"]) && !empty($_POST["href"])) ? $_POST["href"] : "";
 
 						$usu_qry = $conn->query("SELECT id, times_id, usuario, senha, nivel, tentativas, senha_provisoria FROM tbl_usuarios WHERE usuario = '" . $login . "'") 
 										or trigger_error("12002 - " . $conn->error);
@@ -106,6 +107,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 								}
 
 								$_SESSION["usu_id"] = $usu_id;
+								$_SESSION["usu_time"] = $usu_time;
 								$_SESSION["usu_login"] = $usu_login;
 								$_SESSION["usu_nome"] = $usu_nome;
 								$_SESSION["usu_nivel"] = $usu_nivel;
@@ -114,7 +116,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 								if(isset($_SESSION["usu_id"]) && !empty($_SESSION["usu_id"]) && 
 								   isset($_SESSION["usu_login"]) && !empty($_SESSION["usu_login"]) && 
 								   isset($_SESSION["usu_nivel"]) && !empty($_SESSION["usu_nivel"])) {
-									echo '{"succeed": true}';
+									echo '{"succeed": true, "href": "' . $href . '"}';
 									exit();
 								}
 								else {

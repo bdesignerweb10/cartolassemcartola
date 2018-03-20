@@ -25,24 +25,31 @@ $(function() {
 			data: $("#form-login").serialize(),
 			success: function(data)
 			{
-				$('#loading').modal('hide');
+			    try {
+			        var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+					$('#loading').modal('hide');
 
-				if(retorno.succeed) {
-					window.location.href = 'home.php';
-				}
-				else {
-					$('#alert-title').html(retorno.title);
-					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
-					$('#alert').modal('show');
-
-					if(retorno.errno == "21010") {
-						$('#alert').on('hidden.bs.modal', function (e) {
-							window.location.href = '../provisoria.php';
-						});
+					if(retorno.succeed) {
+						window.location.href = 'home.php';
 					}
-				}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+
+						if(retorno.errno == "21010") {
+							$('#alert').on('hidden.bs.modal', function (e) {
+								window.location.href = '../provisoria.php';
+							});
+						}
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
+					$('#alert').modal('show');
+			    };
 			}
 		});
 	});
@@ -68,24 +75,31 @@ $(function() {
 			data: $("#form-recuperar").serialize(),
 			success: function(data)
 			{
-				$('#loading').modal('hide');
+			    try {
+			        var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+			        
+					$('#loading').modal('hide');
 
-				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+					if(retorno.succeed) {
+						$('#alert-title').html("Solicitação enviada com sucesso!");
+						$('#alert-content').html("Sua requisição para resetar sua senha foi realizada com sucesso. Aguarde o e-mail com as informações! Ao fechar esta mensagem a página será recarregada.");
+						$('#alert').modal('show');
 
-				if(retorno.succeed) {
-					$('#alert-title').html("Solicitação enviada com sucesso!");
-					$('#alert-content').html("Sua requisição para resetar sua senha foi realizada com sucesso. Aguarde o e-mail com as informações! Ao fechar esta mensagem a página será recarregada.");
+						$('#alert').on('hidden.bs.modal', function (e) {
+							window.location.reload();
+						});
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
-
-					$('#alert').on('hidden.bs.modal', function (e) {
-						window.location.reload();
-					});
-				}
-				else {
-					$('#alert-title').html(retorno.title);
-					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
-					$('#alert').modal('show');
-				}
+			    };
 			}
 		});
 	});
@@ -148,52 +162,59 @@ $(function() {
 			url: "acts/acts.temporadas.php?act=showupd&idano=" + temporada,
 			success: function(data)
 			{
-				$('#loading').modal('hide');
+			    try {
+					$('#loading').modal('hide');
 
-				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-				if(retorno.succeed) {
-			    	$('#passo-confirmacao').data('act', 'edit');
-			    	$('#passo-confirmacao').data('temporada', temporada);
+					if(retorno.succeed) {
+				    	$('#passo-confirmacao').data('act', 'edit');
+				    	$('#passo-confirmacao').data('temporada', temporada);
 
-    				$('#headline-temporada').html('Editando a temporada ' + retorno.descricao);
-			    	
-			    	$('#id').val(retorno.id);
-					$('#descricao').val(retorno.descricao);
-					$('#descricao').prop("readonly", "readonly");
-			    	$('#passo-ano').prop("disabled", "disabled");
+	    				$('#headline-temporada').html('Editando a temporada ' + retorno.descricao);
+				    	
+				    	$('#id').val(retorno.id);
+						$('#descricao').val(retorno.descricao);
+						$('#descricao').prop("readonly", "readonly");
+				    	$('#passo-ano').prop("disabled", "disabled");
 
-    				$("#voltar-ano").prop("disabled", "disabled");
-			    	$('#passo-rodada').prop("disabled", null);
-					$('#box-rodada').show();
+	    				$("#voltar-ano").prop("disabled", "disabled");
+				    	$('#passo-rodada').prop("disabled", null);
+						$('#box-rodada').show();
 
-					$('#sel-content').append('<div class="col-12"><div class="form-check" style="margin-bottom:20px;"><label class="form-check-label"><input type="checkbox" class="form-check-input sel-todos" />&nbsp;&nbsp;&nbsp;Selecionar todos</label></div></div>');
+						$('#sel-content').append('<div class="col-12"><div class="form-check" style="margin-bottom:20px;"><label class="form-check-label"><input type="checkbox" class="form-check-input sel-todos" />&nbsp;&nbsp;&nbsp;Selecionar todos</label></div></div>');
 
-					$.each(retorno.list, function(i, item) {
-						$('#sel-content').append('<div class="col-6"><label class="form-check-label"><input type="checkbox" id="rodada[' + item.id + ']" name="rodada[' + item.id + ']" class="form-check-input sel-rodadas" value="' + item.id + '" ' + (item.has_temporada ? 'checked' : '') + ' />&nbsp;&nbsp;&nbsp;Rodada #' + item.descricao + '</label></div>');
-					});
-				}
-				else {
-    				$('#headline-temporada').html('');
+						$.each(retorno.list, function(i, item) {
+							$('#sel-content').append('<div class="col-6"><label class="form-check-label"><input type="checkbox" id="rodada[' + item.id + ']" name="rodada[' + item.id + ']" class="form-check-input sel-rodadas" value="' + item.id + '" ' + (item.has_temporada ? 'checked' : '') + ' />&nbsp;&nbsp;&nbsp;Rodada #' + item.descricao + '</label></div>');
+						});
+					}
+					else {
+	    				$('#headline-temporada').html('');
 
-    				$('#id').val('');
-			    	$('#descricao').prop("readonly", null);
-			    	$('#descricao').val('');
-			    	$('#passo-ano').prop("disabled", null);
-			    	$('#box-rodada').hide();
+	    				$('#id').val('');
+				    	$('#descricao').prop("readonly", null);
+				    	$('#descricao').val('');
+				    	$('#passo-ano').prop("disabled", null);
+				    	$('#box-rodada').hide();
 
-			    	$('#sel-content').html('');
-			    	$('#passo-rodada').prop("disabled", null);
-			    	$("#voltar-ano").prop("disabled", null);
-			    	$('#box-confirmacao').hide();
-			    	
-			    	$('#resumo-temporada').html('');
-			    	$('#resumo-rodadas').html('');
+				    	$('#sel-content').html('');
+				    	$('#passo-rodada').prop("disabled", null);
+				    	$("#voltar-ano").prop("disabled", null);
+				    	$('#box-confirmacao').hide();
+				    	
+				    	$('#resumo-temporada').html('');
+				    	$('#resumo-rodadas').html('');
 
-					$('#alert-title').html(retorno.title);
-					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
-				}
+			    };
 			}
 		});
     });	
@@ -212,24 +233,31 @@ $(function() {
 			url: "acts/acts.temporadas.php?act=del&idano=" + temporada,
 			success: function(data)
 			{
-				$('#loading').modal('hide');
+			    try {
+					$('#loading').modal('hide');
 
-				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-				if(retorno.succeed) {
-					$('#alert-title').html("Registro removido com sucesso!");
-					$('#alert-content').html("A remoção do registro foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					if(retorno.succeed) {
+						$('#alert-title').html("Registro removido com sucesso!");
+						$('#alert-content').html("A remoção do registro foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+						$('#alert').modal('show');
+
+						$('#alert').on('hidden.bs.modal', function (e) {
+							window.location.reload();
+						});
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
-
-					$('#alert').on('hidden.bs.modal', function (e) {
-						window.location.reload();
-					});
-				}
-				else {
-					$('#alert-title').html(retorno.title);
-					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
-					$('#alert').modal('show');
-				}
+			    };
 			}
 		});
     });	
@@ -246,22 +274,29 @@ $(function() {
 			url: "acts/acts.temporadas.php?act=selrod",
 			success: function(data)
 			{
-				$('#loading').modal('hide');
+			    try {
+					$('#loading').modal('hide');
 
-				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-				if(retorno.succeed) {
-					$('#sel-content').append('<div class="col-12"><div class="form-check" style="margin-bottom:20px;"><label class="form-check-label"><input type="checkbox" class="form-check-input sel-todos" />&nbsp;&nbsp;&nbsp;Selecionar todos</label></div></div>');
+					if(retorno.succeed) {
+						$('#sel-content').append('<div class="col-12"><div class="form-check" style="margin-bottom:20px;"><label class="form-check-label"><input type="checkbox" class="form-check-input sel-todos" />&nbsp;&nbsp;&nbsp;Selecionar todos</label></div></div>');
 
-					$.each(retorno.list, function(i, item) {
-						$('#sel-content').append('<div class="col-6"><label class="form-check-label"><input type="checkbox" id="rodada[' + item.id + ']" name="rodada[' + item.id + ']" class="form-check-input sel-rodadas" value="' + item.id + '" ' + (item.has_temporada ? 'checked' : '') + ' />&nbsp;&nbsp;&nbsp;Rodada #' + item.descricao + '</label></div>');
-					});
-				}
-				else {
-					$('#alert-title').html(retorno.title);
-					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$.each(retorno.list, function(i, item) {
+							$('#sel-content').append('<div class="col-6"><label class="form-check-label"><input type="checkbox" id="rodada[' + item.id + ']" name="rodada[' + item.id + ']" class="form-check-input sel-rodadas" value="' + item.id + '" ' + (item.has_temporada ? 'checked' : '') + ' />&nbsp;&nbsp;&nbsp;Rodada #' + item.descricao + '</label></div>');
+						});
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
-				}
+			    };
 			}
 		});
 
@@ -326,24 +361,31 @@ $(function() {
 			data: $("#form-temporadas").serialize(),
 			success: function(data)
 			{
-				$('#loading').modal('hide');
+			    try {
+					$('#loading').modal('hide');
 
-				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-				if(retorno.succeed) {
-					$('#alert-title').html("Registro " + (act == 'add' ? "adicionado" : "editado") + " com sucesso!");
-					$('#alert-content').html("A " + (act == 'add' ? "adição" : "edição") + " do registro foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					if(retorno.succeed) {
+						$('#alert-title').html("Registro " + (act == 'add' ? "adicionado" : "editado") + " com sucesso!");
+						$('#alert-content').html("A " + (act == 'add' ? "adição" : "edição") + " do registro foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+						$('#alert').modal('show');
+
+						$('#alert').on('hidden.bs.modal', function (e) {
+							window.location.reload();
+						})
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
-
-					$('#alert').on('hidden.bs.modal', function (e) {
-						window.location.reload();
-					})
-				}
-				else {
-					$('#alert-title').html(retorno.title);
-					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
-					$('#alert').modal('show');
-				}
+			    };
 			}
 		});
     });
@@ -366,44 +408,51 @@ $(function() {
 			url: "acts/acts.times_temporadas.php?act=getanotemp&idano=" + temporada,
 			success: function(data)
 			{
-				$('#loading').modal('hide');
+			    try {
+					$('#loading').modal('hide');
 
-				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-				if(retorno.succeed) {
-					$('.maintable').hide();
-					$('.maintemporada').show();
+					if(retorno.succeed) {
+						$('.maintable').hide();
+						$('.maintemporada').show();
 
-					$('#headline-time-temporada').html('Gerenciando times inscritos na temporada ' + retorno.descricao);
+						$('#headline-time-temporada').html('Gerenciando times inscritos na temporada ' + retorno.descricao);
 
-					if(retorno.list.length > 0) {
-						$.each(retorno.list, function(i, item) {
+						if(retorno.list.length > 0) {
+							$.each(retorno.list, function(i, item) {
 
-							var botao_ativar = (item.pode_ativar == 1 ? "<a href='#' class='btn-ativar-inscricao' data-time='" + item.id_time +  "' data-temporada='" + temporada + "' alt='Inscrever " + item.time +  " na temporada' title='Inscrever " + item.time +  " na temporada'><i class='fa fa-rocket fa-2x edit'></i></a>" : "<i class='fa fa-rocket fa-2x edit-disabled' alt='Não é possível inscrever " + item.time +  " na temporada' title='Não é possível inscrever " + item.time +  " na temporada'></i>");
-							var botao_inativar = (item.pode_desativar == 1 ? "<a href='#' class='btn-desativar-inscricao' data-time='" + item.id_time +  "' data-temporada='" + temporada + "' alt='Remover " + item.time +  " da temporada' title='Remover " + item.time +  " da temporada'><i class='fa fa-trash fa-2x del'></i></a>" : "<i class='fa fa-trash fa-2x del-disabled' alt='Não é possível remover " + item.time +  " da temporada' title='Não é possível remover " + item.time +  " da temporada'></i>");
+								var botao_ativar = (item.pode_ativar == 1 ? "<a href='#' class='btn-ativar-inscricao' data-time='" + item.id_time +  "' data-temporada='" + temporada + "' alt='Inscrever " + item.time +  " na temporada' title='Inscrever " + item.time +  " na temporada'><i class='fa fa-rocket fa-2x edit'></i></a>" : "<i class='fa fa-rocket fa-2x edit-disabled' alt='Não é possível inscrever " + item.time +  " na temporada' title='Não é possível inscrever " + item.time +  " na temporada'></i>");
+								var botao_inativar = (item.pode_desativar == 1 ? "<a href='#' class='btn-desativar-inscricao' data-time='" + item.id_time +  "' data-temporada='" + temporada + "' alt='Remover " + item.time +  " da temporada' title='Remover " + item.time +  " da temporada'><i class='fa fa-trash fa-2x del'></i></a>" : "<i class='fa fa-trash fa-2x del-disabled' alt='Não é possível remover " + item.time +  " da temporada' title='Não é possível remover " + item.time +  " da temporada'></i>");
 
-							$('#lista-times-temporada').append("<tr>" +
-						                							"<th scope='row' class='center'>" + item.id +  "</th>" +
-						                							"<td>" + item.time + "</td>" +
-						                							"<td>" + item.presidente + "</td>" +
-						                							"<td class='center'>" + item.posicao_liga + " º</td>" +
-						                							"<td class='center'>" + item.pontuacao + " pts.</td>" +
-						                							"<td class='center'>" + (item.ativo == 1 ? "<i class='fa fa-check fa-2x add' alt='Time ativo' title='Time está ativo'></i>" : "<i class='fa fa-times fa-2x del' alt='Time inativo' title='Time ainda não está ativo'></i>") + "</td>" +
-						                							"<td class='center'>" + (item.ativo == 1 ? botao_inativar : botao_ativar) + "</td>" +
-					                							"</tr>");
-						});
+								$('#lista-times-temporada').append("<tr>" +
+							                							"<th scope='row' class='center'>" + item.id +  "</th>" +
+							                							"<td>" + item.time + "</td>" +
+							                							"<td>" + item.presidente + "</td>" +
+							                							"<td class='center'>" + item.posicao_liga + " º</td>" +
+							                							"<td class='center'>" + item.pontuacao + " pts.</td>" +
+							                							"<td class='center'>" + (item.ativo == 1 ? "<i class='fa fa-check fa-2x add' alt='Time ativo' title='Time está ativo'></i>" : "<i class='fa fa-times fa-2x del' alt='Time inativo' title='Time ainda não está ativo'></i>") + "</td>" +
+							                							"<td class='center'>" + (item.ativo == 1 ? botao_inativar : botao_ativar) + "</td>" +
+						                							"</tr>");
+							});
+						}
+						else {
+							$('#lista-times-temporada').append("<tr><td colspan='7' class='center'>Não há dados a serem exibidos para a listagem.</td></tr>");
+						}
 					}
 					else {
-						$('#lista-times-temporada').append("<tr><td colspan='7' class='center'>Não há dados a serem exibidos para a listagem.</td></tr>");
-					}
-				}
-				else {
-					$('#alert-title').html(retorno.title);
-					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
-					$('#alert').modal('show');
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
 
-					$('#headline-time-temporada').html('');
-				}
+						$('#headline-time-temporada').html('');
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
+					$('#alert').modal('show');
+			    };
 			}
 		});
 	});
@@ -423,24 +472,31 @@ $(function() {
 			url: "acts/acts.times_temporadas.php?act=ativar&idtime=" + time + "&idano=" + temporada,
 			success: function(data)
 			{
-				$('#loading').modal('hide');
+			    try {
+					$('#loading').modal('hide');
 
-				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-				if(retorno.succeed) {
-					$('#alert-title').html("Você finalizou a inscrição do time!");
-					$('#alert-content').html("O time foi inscrito com sucesso na temporada! Ao fechar esta mensagem a página será recarregada.");
+					if(retorno.succeed) {
+						$('#alert-title').html("Você finalizou a inscrição do time!");
+						$('#alert-content').html("O time foi inscrito com sucesso na temporada! Ao fechar esta mensagem a página será recarregada.");
+						$('#alert').modal('show');
+
+						$('#alert').on('hidden.bs.modal', function (e) {
+							window.location.reload();
+						});
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
-
-					$('#alert').on('hidden.bs.modal', function (e) {
-						window.location.reload();
-					});
-				}
-				else {
-					$('#alert-title').html(retorno.title);
-					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
-					$('#alert').modal('show');
-				}
+			    };
 			}
 		});
     });	
@@ -460,24 +516,31 @@ $(function() {
 			url: "acts/acts.times_temporadas.php?act=desativar&idtime=" + time + "&idano=" + temporada,
 			success: function(data)
 			{
-				$('#loading').modal('hide');
+			    try {
+					$('#loading').modal('hide');
 
-				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-				if(retorno.succeed) {
-					$('#alert-title').html("Você removeu o time da temporada!");
-					$('#alert-content').html("O time selecionado foi removido da temporada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					if(retorno.succeed) {
+						$('#alert-title').html("Você removeu o time da temporada!");
+						$('#alert-content').html("O time selecionado foi removido da temporada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+						$('#alert').modal('show');
+
+						$('#alert').on('hidden.bs.modal', function (e) {
+							window.location.reload();
+						});
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
-
-					$('#alert').on('hidden.bs.modal', function (e) {
-						window.location.reload();
-					});
-				}
-				else {
-					$('#alert-title').html(retorno.title);
-					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
-					$('#alert').modal('show');
-				}
+			    };
 			}
 		});
     });	
@@ -521,44 +584,51 @@ $(function() {
 			url: "acts/acts.gerenciar_times.php?act=showupd&idtime=" + id,
 			success: function(data)
 			{
-				$('#loading').modal('hide');
+			    try {
+					$('#loading').modal('hide');
 
-				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-				if(retorno.succeed) {
-					$('.maintable').hide();
-					$('.mainform').show();
+					if(retorno.succeed) {
+						$('.maintable').hide();
+						$('.mainform').show();
 
-    				$('#btn-salvar-time').data('id', id);
-			    	$('#headline-ger-times').html('Editar o time ' + retorno.dados.nome_time);
-					$('.headline-form').html('Edite as informações do time!');
-			    	
-			    	$('#id').val(retorno.dados.id);
-			    	$('#nome_time').val(retorno.dados.nome_time);
-			    	$('#nome_presidente').val(retorno.dados.nome_presidente);
-			    	$('#email').val(retorno.dados.email);
-			    	$('#telefone').val(retorno.dados.telefone);
-			    	$('#historia').val(retorno.dados.historia);
-				}
-				else {
-					$('.maintable').show();
-					$('.mainform').hide();
-    				
-    				$('#btn-salvar-time').data('id', null);
-			    	$('#headline-ger-times').html('');
-					$('.headline-form').html('');
-			    	
-			    	$('#id').val('');
-			    	$('#nome_time').val('');
-			    	$('#nome_presidente').val('');
-			    	$('#email').val('');
-			    	$('#telefone').val('');
-			    	$('#historia').val('');
+	    				$('#btn-salvar-time').data('id', id);
+				    	$('#headline-ger-times').html('Editar o time ' + retorno.dados.nome_time);
+						$('.headline-form').html('Edite as informações do time!');
+				    	
+				    	$('#id').val(retorno.dados.id);
+				    	$('#nome_time').val(retorno.dados.nome_time);
+				    	$('#nome_presidente').val(retorno.dados.nome_presidente);
+				    	$('#email').val(retorno.dados.email);
+				    	$('#telefone').val(retorno.dados.telefone);
+				    	$('#historia').val(retorno.dados.historia);
+					}
+					else {
+						$('.maintable').show();
+						$('.mainform').hide();
+	    				
+	    				$('#btn-salvar-time').data('id', null);
+				    	$('#headline-ger-times').html('');
+						$('.headline-form').html('');
+				    	
+				    	$('#id').val('');
+				    	$('#nome_time').val('');
+				    	$('#nome_presidente').val('');
+				    	$('#email').val('');
+				    	$('#telefone').val('');
+				    	$('#historia').val('');
 
-					$('#alert-title').html(retorno.title);
-					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
-				}
+			    };
 			}
 		});
     });	
@@ -577,24 +647,31 @@ $(function() {
 			url: "acts/acts.gerenciar_times.php?act=desativar&idtime=" + id,
 			success: function(data)
 			{
-				$('#loading').modal('hide');
+			    try {
+					$('#loading').modal('hide');
 
-				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-				if(retorno.succeed) {
-					$('#alert-title').html("Você desativou o time!");
-					$('#alert-content').html("O time selecionado foi desativado com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					if(retorno.succeed) {
+						$('#alert-title').html("Você desativou o time!");
+						$('#alert-content').html("O time selecionado foi desativado com sucesso! Ao fechar esta mensagem a página será recarregada.");
+						$('#alert').modal('show');
+
+						$('#alert').on('hidden.bs.modal', function (e) {
+							window.location.reload();
+						});
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
-
-					$('#alert').on('hidden.bs.modal', function (e) {
-						window.location.reload();
-					});
-				}
-				else {
-					$('#alert-title').html(retorno.title);
-					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
-					$('#alert').modal('show');
-				}
+			    };
 			}
 		});
     });	
@@ -614,24 +691,31 @@ $(function() {
 			data: $("#form-temporadas").serialize(),
 			success: function(data)
 			{
-				$('#loading').modal('hide');
+			    try {
+					$('#loading').modal('hide');
 
-				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-				if(retorno.succeed) {
-					$('#alert-title').html($('#nome_time').val() + " alterado com sucesso!");
-					$('#alert-content').html("A alteração de " + $('#nome_time').val() + " foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					if(retorno.succeed) {
+						$('#alert-title').html($('#nome_time').val() + " alterado com sucesso!");
+						$('#alert-content').html("A alteração de " + $('#nome_time').val() + " foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+						$('#alert').modal('show');
+
+						$('#alert').on('hidden.bs.modal', function (e) {
+							window.location.reload();
+						})
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
-
-					$('#alert').on('hidden.bs.modal', function (e) {
-						window.location.reload();
-					})
-				}
-				else {
-					$('#alert-title').html(retorno.title);
-					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
-					$('#alert').modal('show');
-				}
+			    };
 			}
 		});
     });
@@ -653,24 +737,31 @@ $(function() {
 			data: $("#form-pontuacoes").serialize(),
 			success: function(data)
 			{
-				$('#loading').modal('hide');
+			    try {
+					$('#loading').modal('hide');
 
-				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-				if(retorno.succeed) {
-					$('#alert-title').html("Pontuações lançadas com sucesso!");
-					$('#alert-content').html("As pontuações dos times na rodada foram atualizadas com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					if(retorno.succeed) {
+						$('#alert-title').html("Pontuações lançadas com sucesso!");
+						$('#alert-content').html("As pontuações dos times na rodada foram atualizadas com sucesso! Ao fechar esta mensagem a página será recarregada.");
+						$('#alert').modal('show');
+
+						$('#alert').on('hidden.bs.modal', function (e) {
+							window.location.reload();
+						})
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
-
-					$('#alert').on('hidden.bs.modal', function (e) {
-						window.location.reload();
-					})
-				}
-				else {
-					$('#alert-title').html(retorno.title);
-					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
-					$('#alert').modal('show');
-				}
+			    };
 			}
 		});
     });	
@@ -698,24 +789,31 @@ $(function() {
 				url: "acts/acts.configuracoes.php?act=abrirtemporada",
 				success: function(data)
 				{
-					$('#loading').modal('hide');
+				    try {
+						$('#loading').modal('hide');
 
-					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+						var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-					if(retorno.succeed) {
-						$('#alert-title').html("Temporada aberta com sucesso!");
-						$('#alert-content').html("A temporada foi aberta com sucesso! Que começem os jogos!<br /><br />Ao fechar esta mensagem a página será recarregada.");
+						if(retorno.succeed) {
+							$('#alert-title').html("Temporada aberta com sucesso!");
+							$('#alert-content').html("A temporada foi aberta com sucesso! Que começem os jogos!<br /><br />Ao fechar esta mensagem a página será recarregada.");
+							$('#alert').modal('show');
+
+							$('#alert').on('hidden.bs.modal', function (e) {
+								window.location.reload();
+							})
+						}
+						else {
+							$('#alert-title').html(retorno.title);
+							$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+							$('#alert').modal('show');
+						}
+				    }
+				    catch (e) {
+						$('#alert-title').html("Erro ao fazer parse do JSON!");
+						$('#alert-content').html(String(e.stack));
 						$('#alert').modal('show');
-
-						$('#alert').on('hidden.bs.modal', function (e) {
-							window.location.reload();
-						})
-					}
-					else {
-						$('#alert-title').html(retorno.title);
-						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
-						$('#alert').modal('show');
-					}
+				    };
 				}
 	    	});
 	    });	
@@ -740,24 +838,31 @@ $(function() {
 				url: "acts/acts.configuracoes.php?act=fechartemporada",
 				success: function(data)
 				{
-					$('#loading').modal('hide');
+				    try {
+						$('#loading').modal('hide');
 
-					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+						var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-					if(retorno.succeed) {
-						$('#alert-title').html("Temporada encerrada com sucesso!");
-						$('#alert-content').html("A temporada foi encerrada com sucesso! Seja bem vindo a temporada " + retorno.rodada + " e até ano que vem!<br /><br />Ao fechar esta mensagem a página será recarregada.");
+						if(retorno.succeed) {
+							$('#alert-title').html("Temporada encerrada com sucesso!");
+							$('#alert-content').html("A temporada foi encerrada com sucesso! Seja bem vindo a temporada " + retorno.rodada + " e até ano que vem!<br /><br />Ao fechar esta mensagem a página será recarregada.");
+							$('#alert').modal('show');
+
+							$('#alert').on('hidden.bs.modal', function (e) {
+								window.location.reload();
+							});
+						}
+						else {
+							$('#alert-title').html(retorno.title);
+							$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+							$('#alert').modal('show');
+						}
+				    }
+				    catch (e) {
+						$('#alert-title').html("Erro ao fazer parse do JSON!");
+						$('#alert-content').html(String(e.stack));
 						$('#alert').modal('show');
-
-						$('#alert').on('hidden.bs.modal', function (e) {
-							window.location.reload();
-						});
-					}
-					else {
-						$('#alert-title').html(retorno.title);
-						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
-						$('#alert').modal('show');
-					}
+				    };
 				}
 			});
     	});
@@ -782,24 +887,31 @@ $(function() {
 				url: "acts/acts.configuracoes.php?act=abrirmercado",
 				success: function(data)
 				{
-					$('#loading').modal('hide');
+				    try {
+						$('#loading').modal('hide');
 
-					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+						var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-					if(retorno.succeed) {
-						$('#alert-title').html("Mercado aberto com sucesso!");
-						$('#alert-content').html("O mercado foi aberto com sucesso! Você está na rodada " + retorno.rodada + "!<br /><br />Ao fechar esta mensagem a página será recarregada.");
+						if(retorno.succeed) {
+							$('#alert-title').html("Mercado aberto com sucesso!");
+							$('#alert-content').html("O mercado foi aberto com sucesso! Você está na rodada " + retorno.rodada + "!<br /><br />Ao fechar esta mensagem a página será recarregada.");
+							$('#alert').modal('show');
+
+							$('#alert').on('hidden.bs.modal', function (e) {
+								window.location.reload();
+							})
+						}
+						else {
+							$('#alert-title').html(retorno.title);
+							$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+							$('#alert').modal('show');
+						}
+				    }
+				    catch (e) {
+						$('#alert-title').html("Erro ao fazer parse do JSON!");
+						$('#alert-content').html(String(e.stack));
 						$('#alert').modal('show');
-
-						$('#alert').on('hidden.bs.modal', function (e) {
-							window.location.reload();
-						})
-					}
-					else {
-						$('#alert-title').html(retorno.title);
-						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
-						$('#alert').modal('show');
-					}
+				    };
 				}
 			});
     	});
@@ -824,24 +936,31 @@ $(function() {
 				url: "acts/acts.configuracoes.php?act=fecharmercado",
 				success: function(data)
 				{
-					$('#loading').modal('hide');
+				    try {
+						$('#loading').modal('hide');
 
-					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+						var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-					if(retorno.succeed) {
-						$('#alert-title').html("Mercado fechado com sucesso!");
-						$('#alert-content').html("O mercado foi fechado com sucesso! Não se esqueça de lançar e conferir a pontuação de todos os times!<br /><br />Ao fechar esta mensagem a página será recarregada.");
+						if(retorno.succeed) {
+							$('#alert-title').html("Mercado fechado com sucesso!");
+							$('#alert-content').html("O mercado foi fechado com sucesso! Não se esqueça de lançar e conferir a pontuação de todos os times!<br /><br />Ao fechar esta mensagem a página será recarregada.");
+							$('#alert').modal('show');
+
+							$('#alert').on('hidden.bs.modal', function (e) {
+								window.location.reload();
+							})
+						}
+						else {
+							$('#alert-title').html(retorno.title);
+							$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+							$('#alert').modal('show');
+						}
+				    }
+				    catch (e) {
+						$('#alert-title').html("Erro ao fazer parse do JSON!");
+						$('#alert-content').html(String(e.stack));
 						$('#alert').modal('show');
-
-						$('#alert').on('hidden.bs.modal', function (e) {
-							window.location.reload();
-						})
-					}
-					else {
-						$('#alert-title').html(retorno.title);
-						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
-						$('#alert').modal('show');
-					}
+				    };
 				}
 			});
 		});
@@ -860,24 +979,31 @@ $(function() {
 			data: $("#form-config").serialize(),
 			success: function(data)
 			{
-				$('#loading').modal('hide');
+				try {
+					$('#loading').modal('hide');
 
-				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-				if(retorno.succeed) {
-					$('#alert-title').html("Dados alterados com sucesso!");
-					$('#alert-content').html("As configurações foram alteradas com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					if(retorno.succeed) {
+						$('#alert-title').html("Dados alterados com sucesso!");
+						$('#alert-content').html("As configurações foram alteradas com sucesso! Ao fechar esta mensagem a página será recarregada.");
+						$('#alert').modal('show');
+
+						$('#alert').on('hidden.bs.modal', function (e) {
+							window.location.reload();
+						})
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
-
-					$('#alert').on('hidden.bs.modal', function (e) {
-						window.location.reload();
-					})
-				}
-				else {
-					$('#alert-title').html(retorno.title);
-					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
-					$('#alert').modal('show');
-				}
+			    };
 			}
 		});
     });	
@@ -940,62 +1066,69 @@ $(function() {
 			url: "acts/acts.eventos.php?act=showupd&idevento=" + id,
 			success: function(data)
 			{
-				$('#loading').modal('hide');
+				try {
+					$('#loading').modal('hide');
 
-				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-				if(retorno.succeed) {
-					$('.maintable').hide();
-					$('.mainform').show();
+					if(retorno.succeed) {
+						$('.maintable').hide();
+						$('.mainform').show();
 
-			    	$('#btn-salvar-evento').data('act', 'edit');
-			    	$('#btn-salvar-evento').data('id', id);
-    				$('#headline-temporada').html('Editando o evento ' + retorno.dados.titulo);
-					$('.headline-form').html('Edite as informações do evento!');
+				    	$('#btn-salvar-evento').data('act', 'edit');
+				    	$('#btn-salvar-evento').data('id', id);
+	    				$('#headline-temporada').html('Editando o evento ' + retorno.dados.titulo);
+						$('.headline-form').html('Edite as informações do evento!');
 
-					var d = new Date(retorno.dados.data * 1000);
+						var d = new Date(retorno.dados.data * 1000);
 
-			    	$('#id').val(retorno.dados.id);
-			    	$('#titulo').val(retorno.dados.titulo);
-			    	$('#data').val(d.toDatetimeLocal());
-			    	$('#local').val(retorno.dados.local);
-			    	$('#descricao').val(retorno.dados.descricao);
-			    	$('#ativo').bootstrapToggle(retorno.dados.ativo == 1 ? 'on' : 'off');
+				    	$('#id').val(retorno.dados.id);
+				    	$('#titulo').val(retorno.dados.titulo);
+				    	$('#data').val(d.toDatetimeLocal());
+				    	$('#local').val(retorno.dados.local);
+				    	$('#descricao').val(retorno.dados.descricao);
+				    	$('#ativo').bootstrapToggle(retorno.dados.ativo == 1 ? 'on' : 'off');
 
-			    	if(retorno.list.length > 0) {
-						$.each(retorno.list, function(i, item) {
-							$('#lista-participantes-evento').append("<tr>" +
-						                							"<td>" + item.time + "</td>" +
-						                							"<td>" + item.presidente + "</td>" +
-						                							"<td class='center'><a href='#' class='btn-del-presenca-evento' data-id='" + item.id_time + "' data-evento='" + id + "' alt='Remover " + item.time + " do evento' title='Remover " + item.time + " do evento'><i class='fa fa-trash fa-2x del'></i></a></td>" +
-					                							"</tr>");
-						});
+				    	if(retorno.list.length > 0) {
+							$.each(retorno.list, function(i, item) {
+								$('#lista-participantes-evento').append("<tr>" +
+							                							"<td>" + item.time + "</td>" +
+							                							"<td>" + item.presidente + "</td>" +
+							                							"<td class='center'><a href='#' class='btn-del-presenca-evento' data-id='" + item.id_time + "' data-evento='" + id + "' alt='Remover " + item.time + " do evento' title='Remover " + item.time + " do evento'><i class='fa fa-trash fa-2x del'></i></a></td>" +
+						                							"</tr>");
+							});
+						}
+						else {
+							$('#lista-participantes-evento').append("<tr><td colspan='3' class='center'>Não há dados a serem exibidos para a listagem.</td></tr>");
+						}
 					}
 					else {
-						$('#lista-participantes-evento').append("<tr><td colspan='3' class='center'>Não há dados a serem exibidos para a listagem.</td></tr>");
+						$('.mainform').hide();
+						$('.maintable').show();
+
+				    	$('#btn-salvar-evento').data('id', null);
+				    	$('#btn-salvar-evento').data('act', null);
+				    	$('#headline-ger-eventos').html('');
+						$('.headline-form').html('');
+
+				    	$('#id').val('');
+				    	$('#titulo').val('');
+				    	$('#data').val('');
+				    	$('#local').val('');
+				    	$('#descricao').val('');
+				    	$('#ativo').bootstrapToggle('off');
+				    	$('#lista-participantes-evento').html('');
+
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
 					}
-				}
-				else {
-					$('.mainform').hide();
-					$('.maintable').show();
-
-			    	$('#btn-salvar-evento').data('id', null);
-			    	$('#btn-salvar-evento').data('act', null);
-			    	$('#headline-ger-eventos').html('');
-					$('.headline-form').html('');
-
-			    	$('#id').val('');
-			    	$('#titulo').val('');
-			    	$('#data').val('');
-			    	$('#local').val('');
-			    	$('#descricao').val('');
-			    	$('#ativo').bootstrapToggle('off');
-			    	$('#lista-participantes-evento').html('');
-
-					$('#alert-title').html(retorno.title);
-					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
-				}
+			    };
 			}
 		});
     });	
@@ -1014,24 +1147,31 @@ $(function() {
 			url: "acts/acts.eventos.php?act=del&idevento=" + id,
 			success: function(data)
 			{
-				$('#loading').modal('hide');
+				try {
+					$('#loading').modal('hide');
 
-				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-				if(retorno.succeed) {
-					$('#alert-title').html("Evento removido com sucesso!");
-					$('#alert-content').html("A remoção do evento foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					if(retorno.succeed) {
+						$('#alert-title').html("Evento removido com sucesso!");
+						$('#alert-content').html("A remoção do evento foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+						$('#alert').modal('show');
+
+						$('#alert').on('hidden.bs.modal', function (e) {
+							window.location.reload();
+						});
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
-
-					$('#alert').on('hidden.bs.modal', function (e) {
-						window.location.reload();
-					});
-				}
-				else {
-					$('#alert-title').html(retorno.title);
-					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
-					$('#alert').modal('show');
-				}
+			    };
 			}
 		});
     });	
@@ -1059,24 +1199,31 @@ $(function() {
 			data: $("#form-eventos").serialize(),
 			success: function(data)
 			{
-				$('#loading').modal('hide');
+				try {
+					$('#loading').modal('hide');
 
-				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-				if(retorno.succeed) {
-					$('#alert-title').html($('#titulo').val() + (act == 'add' ? " adicionado " : " editado ") + "com sucesso!");
-					$('#alert-content').html("A " + (act == 'add' ? " adição " : " edição ") + " de " + $('#titulo').val() + " foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					if(retorno.succeed) {
+						$('#alert-title').html($('#titulo').val() + (act == 'add' ? " adicionado " : " editado ") + "com sucesso!");
+						$('#alert-content').html("A " + (act == 'add' ? " adição " : " edição ") + " de " + $('#titulo').val() + " foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+						$('#alert').modal('show');
+
+						$('#alert').on('hidden.bs.modal', function (e) {
+							window.location.reload();
+						})
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
-
-					$('#alert').on('hidden.bs.modal', function (e) {
-						window.location.reload();
-					})
-				}
-				else {
-					$('#alert-title').html(retorno.title);
-					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
-					$('#alert').modal('show');
-				}
+			    };
 			}
 		});
     });
@@ -1096,24 +1243,31 @@ $(function() {
 			url: "acts/acts.eventos.php?act=delp&idtime=" + id + "&idevento=" + evento,
 			success: function(data)
 			{
-				$('#loading').modal('hide');
+				try {
+					$('#loading').modal('hide');
 
-				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-				if(retorno.succeed) {
-					$('#alert-title').html("Você removeu o time do evento!");
-					$('#alert-content').html("O time selecionado foi removido do evento com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					if(retorno.succeed) {
+						$('#alert-title').html("Você removeu o time do evento!");
+						$('#alert-content').html("O time selecionado foi removido do evento com sucesso! Ao fechar esta mensagem a página será recarregada.");
+						$('#alert').modal('show');
+
+						$('#alert').on('hidden.bs.modal', function (e) {
+							window.location.reload();
+						});
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
-
-					$('#alert').on('hidden.bs.modal', function (e) {
-						window.location.reload();
-					});
-				}
-				else {
-					$('#alert-title').html(retorno.title);
-					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
-					$('#alert').modal('show');
-				}
+			    };
 			}
 		});
     });	
@@ -1173,24 +1327,31 @@ $(function() {
 			data: $("#form-usuarios-add").serialize(),
 			success: function(data)
 			{
-				$('#loading').modal('hide');
+				try {
+					$('#loading').modal('hide');
 
-				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-				if(retorno.succeed) {
-					$('#alert-title').html($('#usuario').val() + " adicionado com sucesso!");
-					$('#alert-content').html("A inclusão de <b>" + $('#usuario').val() + "</b> foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					if(retorno.succeed) {
+						$('#alert-title').html($('#usuario').val() + " adicionado com sucesso!");
+						$('#alert-content').html("A inclusão de <b>" + $('#usuario').val() + "</b> foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+						$('#alert').modal('show');
+
+						$('#alert').on('hidden.bs.modal', function (e) {
+							window.location.reload();
+						})
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
-
-					$('#alert').on('hidden.bs.modal', function (e) {
-						window.location.reload();
-					})
-				}
-				else {
-					$('#alert-title').html(retorno.title);
-					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
-					$('#alert').modal('show');
-				}
+			    };
 			}
 		});
     });
@@ -1209,46 +1370,53 @@ $(function() {
 			url: "acts/acts.usuarios.php?act=showupd&idusuario=" + id,
 			success: function(data)
 			{
-				$('#loading').modal('hide');
+				try {
+					$('#loading').modal('hide');
 
-				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-				if(retorno.succeed) {
-					$('.maintable').hide();
-					$('.mainadd').hide();
-					$('.mainform').show();
+					if(retorno.succeed) {
+						$('.maintable').hide();
+						$('.mainadd').hide();
+						$('.mainform').show();
 
-			    	$('#btn-editar-usuario').data('id', id);
-			    	$('#btn-desativar-usuario').data('id', id);
-    				$('#headline-edit-usuarios').html('Editando o usuário ' + retorno.dados.usuario);
-					$('.headline-form-edit').html('Edite as informações do usuário!');
+				    	$('#btn-editar-usuario').data('id', id);
+				    	$('#btn-desativar-usuario').data('id', id);
+	    				$('#headline-edit-usuarios').html('Editando o usuário ' + retorno.dados.usuario);
+						$('.headline-form-edit').html('Edite as informações do usuário!');
 
-			    	$('#id').val(retorno.dados.id);
-			    	$('#time-usuario').html(retorno.dados.time);
-			    	$('#user').val(retorno.dados.usuario);
-			    	$('#password').val(retorno.dados.senha);
-			    	$('#nivel').val(retorno.dados.nivel);
-				}
-				else {
-					$('.mainadd').hide();
-					$('.mainform').hide();
-					$('.maintable').show();
+				    	$('#id').val(retorno.dados.id);
+				    	$('#time-usuario').html(retorno.dados.time);
+				    	$('#user').val(retorno.dados.usuario);
+				    	$('#password').val(retorno.dados.senha);
+				    	$('#nivel').val(retorno.dados.nivel);
+					}
+					else {
+						$('.mainadd').hide();
+						$('.mainform').hide();
+						$('.maintable').show();
 
-			    	$('#btn-editar-usuario').data('id', null);
-			    	$('#btn-desativar-usuario').data('id', null);
-    				$('#headline-edit-usuarios').html('');
-					$('.headline-form-edit').html('');
+				    	$('#btn-editar-usuario').data('id', null);
+				    	$('#btn-desativar-usuario').data('id', null);
+	    				$('#headline-edit-usuarios').html('');
+						$('.headline-form-edit').html('');
 
-			    	$('#id').val('');
-			    	$('#time-usuario').html('');
-			    	$('#user').val('');
-			    	$('#password').val('');
-			    	$('#nivel').val('');
+				    	$('#id').val('');
+				    	$('#time-usuario').html('');
+				    	$('#user').val('');
+				    	$('#password').val('');
+				    	$('#nivel').val('');
 
-					$('#alert-title').html(retorno.title);
-					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
-				}
+			    };
 			}
 		});
     });	
@@ -1267,24 +1435,31 @@ $(function() {
 			url: "acts/acts.usuarios.php?act=del&idusuario=" + id,
 			success: function(data)
 			{
-				$('#loading').modal('hide');
+				try {
+					$('#loading').modal('hide');
 
-				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-				if(retorno.succeed) {
-					$('#alert-title').html("Usuário removido com sucesso!");
-					$('#alert-content').html("A remoção do usuário foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					if(retorno.succeed) {
+						$('#alert-title').html("Usuário removido com sucesso!");
+						$('#alert-content').html("A remoção do usuário foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+						$('#alert').modal('show');
+
+						$('#alert').on('hidden.bs.modal', function (e) {
+							window.location.reload();
+						});
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
-
-					$('#alert').on('hidden.bs.modal', function (e) {
-						window.location.reload();
-					});
-				}
-				else {
-					$('#alert-title').html(retorno.title);
-					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
-					$('#alert').modal('show');
-				}
+			    };
 			}
 		});
     });	
@@ -1304,24 +1479,31 @@ $(function() {
 			data: $("#form-usuarios-edit").serialize(),
 			success: function(data)
 			{
-				$('#loading').modal('hide');
+				try {
+					$('#loading').modal('hide');
 
-				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-				if(retorno.succeed) {
-					$('#alert-title').html($('#user').val() + " alterado com sucesso!");
-					$('#alert-content').html("A alteração de <b>" + $('#user').val() + "</b> foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					if(retorno.succeed) {
+						$('#alert-title').html($('#user').val() + " alterado com sucesso!");
+						$('#alert-content').html("A alteração de <b>" + $('#user').val() + "</b> foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+						$('#alert').modal('show');
+
+						$('#alert').on('hidden.bs.modal', function (e) {
+							window.location.reload();
+						})
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
-
-					$('#alert').on('hidden.bs.modal', function (e) {
-						window.location.reload();
-					})
-				}
-				else {
-					$('#alert-title').html(retorno.title);
-					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
-					$('#alert').modal('show');
-				}
+			    };
 			}
 		});
     });
@@ -1340,20 +1522,27 @@ $(function() {
 			url: "acts/acts.usuarios.php?act=reset&idusuario=" + id,
 			success: function(data)
 			{
-				$('#loading').modal('hide');
+				try {
+					$('#loading').modal('hide');
 
-				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-				if(retorno.succeed) {
-					$('#alert-title').html("Senha do usuário resetada com sucesso!");
-					$('#alert-content').html("A senha do usuário foi resetada com sucesso!");
+					if(retorno.succeed) {
+						$('#alert-title').html("Senha do usuário resetada com sucesso!");
+						$('#alert-content').html("A senha do usuário foi resetada com sucesso!");
+						$('#alert').modal('show');
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
-				}
-				else {
-					$('#alert-title').html(retorno.title);
-					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
-					$('#alert').modal('show');
-				}
+			    };
 			}
 		});
     });
@@ -1372,24 +1561,31 @@ $(function() {
 			url: "acts/acts.usuarios.php?act=deactivate&idusuario=" + id,
 			success: function(data)
 			{
-				$('#loading').modal('hide');
+				try {
+					$('#loading').modal('hide');
 
-				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-				if(retorno.succeed) {
-					$('#alert-title').html("Usuário desativado com sucesso!");
-					$('#alert-content').html("O usuário foi desativado com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					if(retorno.succeed) {
+						$('#alert-title').html("Usuário desativado com sucesso!");
+						$('#alert-content').html("O usuário foi desativado com sucesso! Ao fechar esta mensagem a página será recarregada.");
+						$('#alert').modal('show');
+
+						$('#alert').on('hidden.bs.modal', function (e) {
+							window.location.reload();
+						});
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
-
-					$('#alert').on('hidden.bs.modal', function (e) {
-						window.location.reload();
-					});
-				}
-				else {
-					$('#alert-title').html(retorno.title);
-					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
-					$('#alert').modal('show');
-				}
+			    };
 			}
 		});
     });
@@ -1454,81 +1650,88 @@ $(function() {
 			url: "acts/acts.mata_mata.php?act=showupd&idmatamata=" + id,
 			success: function(data)
 			{
-				$('#loading').modal('hide');
+				try {
+					$('#loading').modal('hide');
 
-				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-				if(retorno.succeed) {
-			    	$('#passo-confrontos').data('act', 'edit');
-			    	$('#passo-confrontos').data('id', id);
+					if(retorno.succeed) {
+				    	$('#passo-confrontos').data('act', 'edit');
+				    	$('#passo-confrontos').data('id', id);
 
-    				$('#headline-temporada').html('Editando a temporada ' + retorno.descricao);
-			    	
-			    	$('#id').val(retorno.id);
-					$('#descricao').val(retorno.descricao);
-					$('#descricao').prop("readonly", true);
+	    				$('#headline-temporada').html('Editando a temporada ' + retorno.descricao);
+				    	
+				    	$('#id').val(retorno.id);
+						$('#descricao').val(retorno.descricao);
+						$('#descricao').prop("readonly", true);
 
-			    	$('#total_times').val(retorno.total_times);
-			    	$('#total_times').prop("disabled", true);
+				    	$('#total_times').val(retorno.total_times);
+				    	$('#total_times').prop("disabled", true);
 
-			    	$('#rodada_inicio').val(retorno.rodada_inicio);
-			    	$('#rodada_inicio').prop("disabled", true);
+				    	$('#rodada_inicio').val(retorno.rodada_inicio);
+				    	$('#rodada_inicio').prop("disabled", true);
 
-			    	$('#passo-mata-mata').prop("disabled", true);
+				    	$('#passo-mata-mata').prop("disabled", true);
 
-			    	$.each(retorno.times, function(i, item) {
-						$('#sel-time-content').append('<div class="col-6"><label class="form-check-label" for="time[' + item.id + ']"><input type="checkbox" id="time[' + item.id + ']" name="time[' + item.id + ']" class="form-check-input sel-times" value="' + item.id + '" ' + (item.has_time ? 'checked' : '') + ' />&nbsp;&nbsp;&nbsp;' + item.descricao + '</label></div>');
-					});
-		    		$(".sel-times").prop("disabled", true);
-			    	$("#voltar-mata-mata").prop("disabled", true);
-			    	$("#passo-times").prop("disabled", true);
-			    	$('#box-times').show();
-					
-			    	var chaves = retorno.total_times / 2;
+				    	$.each(retorno.times, function(i, item) {
+							$('#sel-time-content').append('<div class="col-6"><label class="form-check-label" for="time[' + item.id + ']"><input type="checkbox" id="time[' + item.id + ']" name="time[' + item.id + ']" class="form-check-input sel-times" value="' + item.id + '" ' + (item.has_time ? 'checked' : '') + ' />&nbsp;&nbsp;&nbsp;' + item.descricao + '</label></div>');
+						});
+			    		$(".sel-times").prop("disabled", true);
+				    	$("#voltar-mata-mata").prop("disabled", true);
+				    	$("#passo-times").prop("disabled", true);
+				    	$('#box-times').show();
+						
+				    	var chaves = retorno.total_times / 2;
 
-			    	var options = "<option value='' selected>Selecione...</option>";
+				    	var options = "<option value='' selected>Selecione...</option>";
 
-			    	$("#sel-time-content input[type='checkbox']:checked").each(function(){
-			    		options += "<option value='" + $(this).val() + "'>" + $("label[for='" + $(this).attr('id') + "']").text().split('   ')[1] + "</option>";
-					});
+				    	$("#sel-time-content input[type='checkbox']:checked").each(function(){
+				    		options += "<option value='" + $(this).val() + "'>" + $("label[for='" + $(this).attr('id') + "']").text().split('   ')[1] + "</option>";
+						});
 
-			    	for(var i = 1; i <= chaves; i++) {
-			    		$('#chaves-confronto').append("<div class='row'><div class='col-12'><div class='card'><div class='card-header'>Chave " + i + "</div><div class='card-block'><div class='form-group'><select class='form-control form-control-lg' id='chave[" + i + "][1]' name='chave[" + i + "][1]' aria-describedby='chave[" + i + "][1]' required>" + options + "</select></div><div class='form-group'><label for='chave[" + i + "][2]' class='label-versus'>x</label><select class='form-control form-control-lg' id='chave[" + i + "][2]' name='chave[" + i + "][2]' aria-describedby='chave[" + i + "][2]' required>" + options + "</select></div></div></div></div></div>");
-			    	}
+				    	for(var i = 1; i <= chaves; i++) {
+				    		$('#chaves-confronto').append("<div class='row'><div class='col-12'><div class='card'><div class='card-header'>Chave " + i + "</div><div class='card-block'><div class='form-group'><select class='form-control form-control-lg' id='chave[" + i + "][1]' name='chave[" + i + "][1]' aria-describedby='chave[" + i + "][1]' required>" + options + "</select></div><div class='form-group'><label for='chave[" + i + "][2]' class='label-versus'>x</label><select class='form-control form-control-lg' id='chave[" + i + "][2]' name='chave[" + i + "][2]' aria-describedby='chave[" + i + "][2]' required>" + options + "</select></div></div></div></div></div>");
+				    	}
 
-			    	$.each(retorno.chaves, function(i, item) {
-			    		$('#chave\\['+item.chave+'\\]\\[1\\]').val(item.confrontos[0].time1);
-			    		$('#chave\\['+item.chave+'\\]\\[2\\]').val(item.confrontos[1].time2);
-			    	});
+				    	$.each(retorno.chaves, function(i, item) {
+				    		$('#chave\\['+item.chave+'\\]\\[1\\]').val(item.confrontos[0].time1);
+				    		$('#chave\\['+item.chave+'\\]\\[2\\]').val(item.confrontos[1].time2);
+				    	});
 
-			    	$('#box-confrontos').show();
-				}
-				else {
-			    	$('#headline-mata-mata').html('');
+				    	$('#box-confrontos').show();
+					}
+					else {
+				    	$('#headline-mata-mata').html('');
 
-			    	$('#id').val('');
-			    	$('#descricao').prop("readonly", null);
-			    	$('#descricao').val('');
-			    	$('#total_times').prop("readonly", null);
-			    	$('#total_times').val('4');
-			    	$('#rodada_inicio').prop("readonly", null);
-			    	$('#passo-mata-mata').prop("disabled", null);
+				    	$('#id').val('');
+				    	$('#descricao').prop("readonly", null);
+				    	$('#descricao').val('');
+				    	$('#total_times').prop("readonly", null);
+				    	$('#total_times').val('4');
+				    	$('#rodada_inicio').prop("readonly", null);
+				    	$('#passo-mata-mata').prop("disabled", null);
 
-			    	$('#sel-time-content').html('');
-			    	$('#voltar-mata-mata').prop("disabled", null);
-			    	$('#passo-mata-mata').prop("disabled", null);
-			    	$('#box-times').hide();
+				    	$('#sel-time-content').html('');
+				    	$('#voltar-mata-mata').prop("disabled", null);
+				    	$('#passo-mata-mata').prop("disabled", null);
+				    	$('#box-times').hide();
 
-		    		$('#chaves-confronto').html('');
-			    	$('#box-confrontos').hide();
+			    		$('#chaves-confronto').html('');
+				    	$('#box-confrontos').hide();
 
-					$('.mainform').hide();
-					$('.maintable').show();
+						$('.mainform').hide();
+						$('.maintable').show();
 
-					$('#alert-title').html(retorno.title);
-					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
-				}
+			    };
 			}
 		});
     });	
@@ -1547,24 +1750,31 @@ $(function() {
 			url: "acts/acts.mata_mata.php?act=del&idmatamata=" + id,
 			success: function(data)
 			{
-				$('#loading').modal('hide');
+				try {
+					$('#loading').modal('hide');
 
-				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-				if(retorno.succeed) {
-					$('#alert-title').html("Mata-mata removido com sucesso!");
-					$('#alert-content').html("A remoção do mata-mata foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+					if(retorno.succeed) {
+						$('#alert-title').html("Mata-mata removido com sucesso!");
+						$('#alert-content').html("A remoção do mata-mata foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+						$('#alert').modal('show');
+
+						$('#alert').on('hidden.bs.modal', function (e) {
+							window.location.reload();
+						});
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
-
-					$('#alert').on('hidden.bs.modal', function (e) {
-						window.location.reload();
-					});
-				}
-				else {
-					$('#alert-title').html(retorno.title);
-					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
-					$('#alert').modal('show');
-				}
+			    };
 			}
 		});
     });	
@@ -1581,20 +1791,27 @@ $(function() {
 			url: "acts/acts.mata_mata.php?act=seltimes",
 			success: function(data)
 			{
-				$('#loading').modal('hide');
+				try {
+					$('#loading').modal('hide');
 
-				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-				if(retorno.succeed) {
-					$.each(retorno.list, function(i, item) {
-						$('#sel-time-content').append('<div class="col-6"><label class="form-check-label" for="time[' + item.id + ']"><input type="checkbox" id="time[' + item.id + ']" name="time[' + item.id + ']" class="form-check-input sel-times" value="' + item.id + '" ' + (item.has_time ? 'checked' : '') + ' />&nbsp;&nbsp;&nbsp;' + item.descricao + '</label></div>');
-					});
-				}
-				else {
-					$('#alert-title').html(retorno.title);
-					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+					if(retorno.succeed) {
+						$.each(retorno.list, function(i, item) {
+							$('#sel-time-content').append('<div class="col-6"><label class="form-check-label" for="time[' + item.id + ']"><input type="checkbox" id="time[' + item.id + ']" name="time[' + item.id + ']" class="form-check-input sel-times" value="' + item.id + '" ' + (item.has_time ? 'checked' : '') + ' />&nbsp;&nbsp;&nbsp;' + item.descricao + '</label></div>');
+						});
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
-				}
+			    };
 			}
 		});
 
@@ -1683,32 +1900,37 @@ $(function() {
 			data: $("#form-mata-mata").serialize(),
 			success: function(data)
 			{
-				$('#loading').modal('hide');
+				try {
+					$('#loading').modal('hide');
 
-				console.log('data', data);
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+					if(retorno.succeed) {
+						$('#alert-title').html("Registro " + (act == 'add' ? "adicionado" : "editado") + " com sucesso!");
+						$('#alert-content').html("A " + (act == 'add' ? "adição" : "edição") + " do registro foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+						$('#alert').modal('show');
 
-				if(retorno.succeed) {
-					$('#alert-title').html("Registro " + (act == 'add' ? "adicionado" : "editado") + " com sucesso!");
-					$('#alert-content').html("A " + (act == 'add' ? "adição" : "edição") + " do registro foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+	    				$('#total_times').prop("disabled", true);
+	    				$('#rodada_inicio').prop("disabled", true);
+
+						$('#alert').on('hidden.bs.modal', function (e) {
+							window.location.reload();
+						})
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+
+	    				$('#total_times').prop("disabled", true);
+	    				$('#rodada_inicio').prop("disabled", true);
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
-
-    				$('#total_times').prop("disabled", true);
-    				$('#rodada_inicio').prop("disabled", true);
-
-					$('#alert').on('hidden.bs.modal', function (e) {
-						window.location.reload();
-					})
-				}
-				else {
-					$('#alert-title').html(retorno.title);
-					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
-					$('#alert').modal('show');
-
-    				$('#total_times').prop("disabled", true);
-    				$('#rodada_inicio').prop("disabled", true);
-				}
+			    };
 			}
 		});
     });

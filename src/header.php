@@ -10,7 +10,7 @@ else {
 		(!isset($_SESSION["usu_id"]) || empty($_SESSION["usu_id"]) || 
 		!isset($_SESSION['usu_nivel']) || empty($_SESSION["usu_nivel"]) || 
 		$_SESSION["usu_id"] == "0")) 
-		header('Location: login.php');
+		header('Location: login.php?href=' . basename($_SERVER['PHP_SELF']));
 }
 ?>
 <!DOCTYPE html>

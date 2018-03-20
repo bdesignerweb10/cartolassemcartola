@@ -47,24 +47,36 @@ $(function() {
 			data: $("#form-login").serialize(),
 			success: function(data)
 			{
-				$('#loading').modal('hide');
+			    try {
+					$('#loading').modal('hide');
 
-				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-				if(retorno.succeed) {
-					window.location.href = 'index.php';
-				}
-				else {
-					$('#alert-title').html(retorno.title);
-					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
-					$('#alert').modal('show');
-
-					if(retorno.errno == "12010") {
-						$('#alert').on('hidden.bs.modal', function (e) {
-							window.location.href = 'provisoria.php';
-						});
+					if(retorno.succeed) {
+						if(retorno.href.length > 0) {
+							window.location.href = retorno.href;
+						}
+						else {
+							window.location.href = 'index.php';
+						}
 					}
-				}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+
+						if(retorno.errno == "12010") {
+							$('#alert').on('hidden.bs.modal', function (e) {
+								window.location.href = 'provisoria.php';
+							});
+						}
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
+					$('#alert').modal('show');
+			    };
 			}
 		});
 	});
@@ -90,24 +102,31 @@ $(function() {
 			data: $("#form-recuperar").serialize(),
 			success: function(data)
 			{
-				$('#loading').modal('hide');
+			    try {
+					$('#loading').modal('hide');
 
-				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-				if(retorno.succeed) {
-					$('#alert-title').html("Solicitação enviada com sucesso!");
-					$('#alert-content').html("Sua requisição para resetar sua senha foi realizada com sucesso. Aguarde o e-mail com as informações! Ao fechar esta mensagem a página será recarregada.");
+					if(retorno.succeed) {
+						$('#alert-title').html("Solicitação enviada com sucesso!");
+						$('#alert-content').html("Sua requisição para resetar sua senha foi realizada com sucesso. Aguarde o e-mail com as informações! Ao fechar esta mensagem a página será recarregada.");
+						$('#alert').modal('show');
+
+						$('#alert').on('hidden.bs.modal', function (e) {
+							window.location.reload();
+						});
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
-
-					$('#alert').on('hidden.bs.modal', function (e) {
-						window.location.reload();
-					});
-				}
-				else {
-					$('#alert-title').html(retorno.title);
-					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
-					$('#alert').modal('show');
-				}
+			    };
 			}
 		});
 	});
@@ -129,25 +148,32 @@ $(function() {
 			data: $("#form-provisoria").serialize(),
 			success: function(data)
 			{
-				$('#loading').modal('hide');
+			    try {
+					$('#loading').modal('hide');
 
-				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-				if(retorno.succeed) {
-					$('#alert-title').html("Senha alterada com sucesso!");
-					$('#alert-content').html('Sua senha foi alterada definitivamente com sucesso! Ao fechar a mensagem você será redirecionado para o site!');
+					if(retorno.succeed) {
+						$('#alert-title').html("Senha alterada com sucesso!");
+						$('#alert-content').html('Sua senha foi alterada definitivamente com sucesso! Ao fechar a mensagem você será redirecionado para o site!');
+						$('#alert').modal('show');
+
+						$('#alert').on('hidden.bs.modal', function (e) {
+							window.location.href = 'index.php';
+						});
+
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
-
-					$('#alert').on('hidden.bs.modal', function (e) {
-						window.location.href = 'index.php';
-					});
-
-				}
-				else {
-					$('#alert-title').html(retorno.title);
-					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
-					$('#alert').modal('show');
-				}
+			    };
 			}
 		});
 	});
@@ -176,35 +202,433 @@ $(function() {
 			data: $("#form-inscricao").serialize(),
 			success: function(data)
 			{
-				$('#loading').modal('hide');
+			    try {
+					$('#loading').modal('hide');
 
-				var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-				if(retorno.succeed) {
-					$('.premain').show(function() {
-						$('.inscmain').hide();
+					if(retorno.succeed) {
+						$('.premain').show(function() {
+							$('.inscmain').hide();
 
-						$('#nome').val('');
-						$('#email').val('');
-						$('#telefone').val('');
-						$('#time').val('');
-						$('input[name="forma-pagto"]').prop('checked', false);
-						$('#regulamento').prop('checked', false);
-					});
-				}
-				else {
-					$('#alert-title').html(retorno.title);
-					$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+							$('#nome').val('');
+							$('#email').val('');
+							$('#telefone').val('');
+							$('#time').val('');
+							$('input[name="forma-pagto"]').prop('checked', false);
+							$('#regulamento').prop('checked', false);
+						});
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
-				}
+			    };
 			}
 		});
 	});
 
 	// END INSCRICAO (inscricao.php)
 
+	// BEGIN INDEX (index.php)
+
+	if(window.location.pathname.indexOf('index.php') !== -1) {
+				
+		// DESTAQUES RODADA
+		$('#destaques-rodada').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.index.php?act=destaques-rodada",
+			success: function(data)
+			{
+			    try {
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+					$('#destaques-rodada .card-block tbody').html('');
+
+					if(retorno.succeed) {
+						if(retorno.list.length > 0) {
+							$.each(retorno.list, function(i, item) {
+								$('#destaques-rodada .card-block tbody').append('<tr class="bg-success"><th scope="row" class="table-title">' + item.posicao + 'º</th><td><img src="img/escudos/' + item.escudo + '" class="img-fluid"></td><td>' + item.time + '</td><td>' + item.pontuacao.toFixed(2) + '</td></tr>');
+							});
+						}
+						else {
+							$('#destaques-rodada .card-block tbody').append('<tr class="bg-table"><td colspan="4" class="center"><i class="fa fa-info fa-2x"></i> Não há dados a serem exibidos para a listagem.</td></tr>');
+						}
+
+						$('#destaques-rodada .card-block').fadeIn("slow", function() {
+							$('#loading').fadeOut();
+							$('#loading').remove();
+						});
+						$('#destaques-rodada footer').fadeIn("slow");
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+
+						$('#destaques-rodada .card-block').hide();
+						$('#destaques-rodada footer').hide();
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
+					$('#alert').modal('show');
+
+					$('#destaques-rodada .card-block').hide();
+					$('#destaques-rodada footer').hide();
+					$('#loading').remove();
+			    };
+			}
+		});
+
+		// DESEMPENHO POR RODADA (GRAFICO)
+		$('#desempenho-rodada').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.index.php?act=desempenho-rodada",
+			success: function(data)
+			{
+			    try {
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+					$('#desempenho-rodada .card-block tbody').html('');
+					if(retorno.succeed) {
+						if(retorno.series.length > 0) {
+							$('#desempenho-rodada .card-block').append('<canvas id="chart-desempenho-rodada"></canvas>');
+
+							$.each(retorno.series, function(i, item) {
+								var color = getRandomColor();
+								item["backgroundColor"] = color;
+								item["borderColor"] = color;
+							});
+							var myChart = new Chart($("#chart-desempenho-rodada"), {
+						    type: 'line',
+						    data: {
+						        labels: retorno.labels,
+						        datasets: retorno.series
+						    },
+							options: {
+								responsive: true,
+								hoverMode: 'label',
+								stacked: false,
+								scales: {
+									xAxes: [
+										{
+											display: false,
+											gridLines: {
+												offsetGridLines: false
+											},
+											ticks: {
+												callback: function(value, index, values) {
+							                        return "Rodada " + value;
+							                    }
+											}
+										}
+									],
+									yAxes: [
+										{
+											labelString: 'Posição na Liga',
+											ticks: {
+												reverse: true,
+												callback: function(value, index, values) {
+							                        return value + "º";
+							                    }
+											}
+										}
+									]
+								},
+								legend: {
+									position: 'bottom'
+								},
+								tooltips: {
+								    callbacks: {
+								        label: function(tooltipItem, data) {
+								            var label = data.datasets[tooltipItem.datasetIndex].label || '';
+
+								            if (label) {
+								                label += ' - ';
+								            }
+								            label += tooltipItem.yLabel + 'º lugar';
+								            return label;
+								        }
+								    }
+								}
+							}
+						});
+						}
+						else {
+							$('#desempenho-rodada .card-block').append('<div class="bg-default"><i class="fa fa-info fa-2x"></i> Não há dados a serem exibidos.</div>');
+						}
+
+						$('#desempenho-rodada .card-block').fadeIn("slow", function() {
+							$('#loading').fadeOut();
+							$('#loading').remove();
+						});
+						$('#desempenho-rodada footer').fadeIn("slow");
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+
+						$('#desempenho-rodada .card-block').hide();
+						$('#desempenho-rodada footer').hide();
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
+					$('#alert').modal('show');
+
+					$('#desempenho-rodada .card-block').hide();
+					$('#desempenho-rodada footer').hide();
+					$('#loading').remove();
+			    }
+			}
+		});
+				
+		// DESEMPENHO GERAL
+		$('#desempenho-geral').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.index.php?act=desempenho-geral&limit=8",
+			success: function(data)
+			{
+			    try {
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+					$('#desempenho-geral .card-block tbody').html('');
+
+					if(retorno.succeed) {
+						if(retorno.list.length > 0) {
+							$.each(retorno.list, function(i, item) {
+								var bg = "bg-table";
+								if(i <= 6) 
+									bg = "bg-success";
+								$('#desempenho-geral .card-block tbody').append('<tr class="' + bg + '"><th scope="row" class="table-title">' + item.posicao + 'º</th><td><img src="img/escudos/' + item.escudo + '" class="img-fluid"></td><td>' + item.time + '</td><td>' + item.pontuacao.toFixed(2) + '</td><td>' + item.variacao + '</td></tr>');
+							});
+						}
+						else {
+							$('#desempenho-geral .card-block tbody').append('<tr class="bg-table"><td colspan="5" class="center"><i class="fa fa-info fa-2x"></i> Não há dados a serem exibidos para a listagem.</td></tr>');
+						}
+
+						$('#desempenho-geral .card-block').fadeIn("slow", function() {
+							$('#loading').fadeOut();
+							$('#loading').remove();
+						});
+						$('#desempenho-geral footer').fadeIn("slow");
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+
+						$('#desempenho-geral .card-block').hide();
+						$('#desempenho-geral footer').hide();
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
+					$('#alert').modal('show');
+
+					$('#desempenho-geral .card-block').hide();
+					$('#desempenho-geral footer').hide();
+					$('#loading').remove();
+			    };
+			}
+		});
+
+		// MATA-MATA EM ANDAMENTO
+		$('#mata-mata-andamento').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.index.php?act=mata-mata-andamento",
+			success: function(data)
+			{
+			    try {
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+					$('#mata-mata-andamento .card-block tbody').html('');
+
+					if(retorno.succeed) {
+						if(retorno.list.length > 0) {
+							$.each(retorno.list, function(i, item) {
+								$('#mata-mata-andamento .card-block').append('<div class="' + item.cor_fase + ' text-white"><i class="fa fa-trophy"></i> ' + item.nome + ' - ' + item.fase + '</div>');
+							});
+						}
+						else {
+							$('#mata-mata-andamento .card-block').append('<div class="bg-default"><i class="fa fa-info fa-2x"></i> Não há dados a serem exibidos para a listagem.</div>');
+						}
+
+						$('#mata-mata-andamento .card-block').fadeIn("slow", function() {
+							$('#loading').fadeOut();
+							$('#loading').remove();
+						});
+						$('#mata-mata-andamento footer').fadeIn("slow");
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+
+						$('#mata-mata-andamento .card-block').hide();
+						$('#mata-mata-andamento footer').hide();
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
+					$('#alert').modal('show');
+
+					$('#mata-mata-andamento .card-block').hide();
+					$('#mata-mata-andamento footer').hide();
+					$('#loading').remove();
+			    }
+			}
+		});
+	}
+
+	// END INDEX (index.php)
+
+	// BEGIN DESTAQUES (destaques.php)
+
+	if(window.location.pathname.indexOf('destaques.php') !== -1) {
+
+		// DESTAQUES RODADA
+		$('#destaques').append('<div class="col-12" id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.destaques.php",
+			success: function(data)
+			{
+			    try {
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+					if(retorno.succeed) {
+						if(retorno.list.length > 0) {
+							var rodada = "";
+							var c_times = 0;
+							$.each(retorno.list, function(i, item) {
+								if(rodada != item.rodada) {
+									$('#destaques').append('<div class="col-sm-4"><div class="card"><div class="card-header"><header><h2 class="card-title card-destaque">Destaques da ' + item.rodada + 'º rodada</h2></header></div><div class="card-block"><table class="table table-responsive liga-csc"><thead><tr class="bg-warning"><th class="table-title">#</th><th class="table-title"></th><th class="table-title">Time</th><th class="table-title">Pontos</th></tr></thead><tbody id="body_' + item.rodada + '">');
+									rodada = item.rodada;
+									c_times = 0;
+								}
+								if(c_times < 4){
+									$('#body_' + item.rodada).append('<tr class="bg-success"><th scope="row" class="table-title">' + item.posicao + 'º</th><td><img src="img/escudos/' + item.escudo + '" class="img-fluid"></td><td>' + item.time + '</td><td>' + item.pontuacao + '</td></tr>');
+								}
+								c_times++;
+							});
+						}
+						else {
+							$('#destaques').append('<div class="col-12" id="loading"><p style="text-align: center;"><i class="fa fa-info fa-2x"></i> Não há dados a serem exibidos para a listagem.</p></div>');
+						}
+						
+						$('#loading').fadeOut("fast", function() {
+							$('#destaques .col-sm-4').fadeIn("slow");
+						});
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+
+						$('#destaques .col-sm-4').hide();
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
+					$('#alert').modal('show');
+
+					$('#destaques-rodada .card-block').hide();
+					$('#destaques-rodada footer').hide();
+					$('#loading').remove();
+			    };
+			}
+		});
+	}
+
+	// END DESTAQUES (destaques.php)
+
+	// BEGIN LIGA (liga.php)
+
+	if(window.location.pathname.indexOf('liga.php') !== -1) {
+				
+		// DESEMPENHO GERAL
+		$('#desempenho-liga').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.index.php?act=desempenho-geral&limit=8",
+			success: function(data)
+			{
+			    try {
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+					$('#desempenho-liga .card-block tbody').html('');
+
+					if(retorno.succeed) {
+						var rebaixamento = retorno.list.length - 4;
+						if(retorno.list.length > 0) {
+							$.each(retorno.list, function(i, item) {
+								var bg = "bg-table";
+								if(i <= 6) 
+									bg = "bg-success";
+								if(i > 6 && i >= rebaixamento) 
+									bg = "bg-danger";
+								$('#desempenho-liga .card-block tbody').append('<tr class="' + bg + '"><th scope="row" class="table-title">' + item.posicao + 'º</th><td><img src="img/escudos/' + item.escudo + '" class="img-fluid"></td><td>' + item.time + '</td><td>' + item.pontuacao.toFixed(2) + '</td><td>' + item.pont_ult_rodada.toFixed(2) + '</td><td>' + item.variacao + '</td></tr>');
+							});
+						}
+						else {
+							$('#desempenho-liga .card-block tbody').append('<tr class="bg-table"><td colspan="6" class="center"><i class="fa fa-info fa-2x"></i> Não há dados a serem exibidos para a listagem.</td></tr>');
+						}
+
+						$('#loading').fadeOut("fast", function() {
+							$('#desempenho-liga .card-block').fadeIn("slow");
+							$('#desempenho-liga footer').fadeIn("slow");
+						});
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+
+						$('#desempenho-liga .card-block').hide();
+						$('#desempenho-liga footer').hide();
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
+					$('#alert').modal('show');
+
+					$('#desempenho-liga .card-block').hide();
+					$('#desempenho-liga footer').hide();
+					$('#loading').remove();
+			    };
+			}
+		});
+	}
+
+	// END LIGA (liga.php)
 });
 
+function getRandomColor() {
+    var letters = '0123456789ABCDEF'.split('');
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
 
 /*!
  * Validator v0.11.9 for Bootstrap 3, by @1000hz

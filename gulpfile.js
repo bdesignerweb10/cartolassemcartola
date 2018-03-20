@@ -25,7 +25,7 @@ gulp.task("sass", ['cache:css'], function() {
 				.pipe(browserSync.stream());
 });
 
-/* Task para mover a pasta fonts para pasta dist */
+/* Task para mover a pasta img para pasta dist */
  gulp.task("move-img", function() { 
  	return gulp.src('./src/img/**') 
  	.pipe(gulp.dest('./dist/img'))
@@ -118,12 +118,23 @@ gulp.task("concat-js", function() {
 					'./src/components/jquery/dist/jquery.js',
 					'./src/components/tether/dist/js/tether.js',
 					'./src/components/bootstrap/dist/js/bootstrap.js',
-					'./src/components/jquery-masks/jquery.mask.min.js'
+					'./src/components/jquery-masks/jquery.mask.min.js',
+					'./src/components/bootstrap/bootstrap-toggle.min.js',
+					'./src/components/chartjs/Chart.bundle.min.js'
 				])
 				.pipe(concat("main.js"))
 				.pipe(gulp.dest("./dist/js"))
 
 });
+
+/* Task para mover a pasta css para pasta dist */
+ gulp.task("css", function() { 
+	return gulp.src("./src/css/*.css")
+				.pipe(htmlmin({collapseWhitespace: true}))
+				.on('error', notify.onError({title: "erro js", message: "<%= error.message %>"}))
+				.pipe(gulp.dest("./dist/css/"))
+				.pipe(browserSync.stream());
+ });
 
 /* Task server local */
 gulp.task("server", function() {
@@ -138,10 +149,11 @@ gulp.task("server", function() {
 	gulp.watch("./src/components/bootstrap/scss/**/*.scss", ['sass']);
 	gulp.watch("./src/js/**/*.js", ['js']);
 	gulp.watch("./src/admin/js/*.js", ['admin-js']);
+	gulp.watch("./src/css/*.css", ['css']);
 	gulp.watch("./src/*.php", ['php']);
 	gulp.watch("./src/acts/*.php", ['php-acts']);
 	gulp.watch("./src/admin/*.php", ['php-admin']);		
 	gulp.watch("./src/admin/acts/*.php", ['php-admin-acts']);
 	gulp.watch("./src/admin/js/**/*.js", ['js']);
 });
-gulp.task("default", ["sass", "php", "php-acts" , "php-admin" , "php-admin-acts" ,"js", "admin-js", "concat-js", "move-img", "move-fonts", "move-admin", "move-acts", "move-libs", "server"]);
+gulp.task("default", ["sass", "css", "php", "php-acts" , "php-admin" , "php-admin-acts" ,"js", "admin-js", "concat-js", "move-img", "move-fonts", "move-admin", "move-acts", "move-libs", "server"]);

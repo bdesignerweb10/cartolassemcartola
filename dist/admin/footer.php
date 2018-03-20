@@ -53,7 +53,6 @@
 		
 		<script src="../js/main.js"></script>
 		<script src="js/app.js"></script>
-		<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 		<?php if($conn) $conn->close(); ?>
 	</body>
 </html>

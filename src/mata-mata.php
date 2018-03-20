@@ -1,7 +1,6 @@
 <?php
-	require_once('header.php');
+require_once('header.php');
 ?>
-
 <main>
 	<div class="container">
 		<div class="bg-success text-white"><i class="fa fa-trophy"></i> Mata Mata - Em Andamento</div>
@@ -51,7 +50,6 @@
 		</div><!-- row -->
 	</div><!-- container -->
 </main>
-
 <?php
-	require_once('footer.php');
+require_once('footer.php');
 ?>

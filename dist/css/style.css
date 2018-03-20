@@ -8981,3 +8981,10 @@ ul.escudos > li {
   display: flex;
   padding-left: 0;
   list-style: none; }
+
+#destaques-rodada .card-block, #destaques-rodada footer,
+#desempenho-geral .card-block, #desempenho-geral footer,
+#desempenho-rodada .card-block, #desempenho-rodada footer,
+#mata-mata-andamento .card-block, #mata-mata-andamento footer,
+#desempenho-liga .card-block, #desempenho-liga footer, #destaques .col-sm-4 {
+  display: none; }

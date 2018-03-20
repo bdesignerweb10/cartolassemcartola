@@ -2,7 +2,7 @@
 ob_start();
 if (!isset($_SESSION)) session_start(); 
 
-require_once("acts/errorhandling.php");
+//require_once("acts/errorhandling.php");
 
 // ########################################
 // ############ CONN DATABASE #############
@@ -12,7 +12,7 @@ require_once("acts/errorhandling.php");
 $conn = new mysqli("localhost", "root", "root", "cartolassemcartola");
 
 // PRD
-//$conn = new mysqli("cartolassemcar.mysql.dbaas.com.br", "cartolassemcar", "cart@12345", "cartolassemcar");
+// $conn = new mysqli("cartolassemcar.mysql.dbaas.com.br", "cartolassemcar", "cart@12345", "cartolassemcar");
 
 if ($conn->connect_errno) {
     die("00000 - Failed to connect to MySQL: [$conn->connect_errno] $conn->connect_error");
@@ -131,6 +131,30 @@ if ($result) {
 
 	$_SESSION["fake_id"] = 98478521;
 	$_SESSION["user_ativado"] = true;
+	$_SESSION["rodada_site"] = 1;
+
+	if($_SESSION["rodada"] > 1) {
+		$qryselrodadaant = $conn->query("SELECT id_rodadas AS id 
+										   FROM tbl_temporadas 
+										  WHERE id_anos = " . $_SESSION["temporada_atual"] . "
+										    AND id_rodadas < " . $_SESSION["rodada"] . "
+									   ORDER BY id_rodadas DESC LIMIT 1") or trigger_error($conn->error);
+
+		if ($qryselrodadaant && $qryselrodadaant->num_rows > 0) {
+	        while($rodadaant = $qryselrodadaant->fetch_object()) {
+	        	$_SESSION["rodada_site"] = $rodadaant->id;
+	        }
+	    }
+
+		$rodadasite = $conn->query("SELECT descricao FROM tbl_rodadas WHERE id = " . $_SESSION["rodada_site"]) or trigger_error($conn->error);
+
+		if ($rodadasite && $rodadasite->num_rows > 0) {
+			while($resrodadasite = $rodadasite->fetch_object()) {
+				$_SESSION["desc_rodada_site"] = $resrodadasite->descricao;
+			}
+	    }
+	}
+
 
 	date_default_timezone_set('America/Sao_Paulo');
 
