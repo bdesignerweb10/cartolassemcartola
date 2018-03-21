@@ -4,9 +4,8 @@
 
 <main>
 	<div class="container">
-		<div class="row">
-			<div class="col-sm-12">
-				<h3 class="headline">Confira os scouts de seu time e de seus adversários</h3>				
+		<div class="row capa-scouts">
+			<div class="col-sm-12">								
 			</div><!-- col-sm-12 -->
 		</div><!-- row -->
 		<div class="row scouts">

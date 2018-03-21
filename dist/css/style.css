@@ -8668,6 +8668,51 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   background: url(../img/torcida.png) no-repeat;
   margin-left: 3px; }
 
+.capa-matamata {
+  background: url(../img/mata-mata.png) no-repeat;
+  margin-left: 3px; }
+
+.capa-scouts {
+  background: url(../img/scouts.png) no-repeat;
+  height: 250px;
+  margin-left: 3px; }
+
+.capa-liga {
+  background: url(../img/tbl-csc.png) no-repeat;
+  height: 250px;
+  margin-left: 3px;
+  margin-bottom: 15px; }
+
+.capa-brasileirao {
+  background: url(../img/brasileirao.png) no-repeat;
+  height: 250px;
+  margin-left: 3px;
+  margin-bottom: 15px; }
+
+.capa-eventos {
+  background: url(../img/eventos.png) no-repeat;
+  height: 250px;
+  margin-left: 3px;
+  margin-bottom: 15px; }
+
+.capa-regulamento {
+  background: url(../img/regulamento.png) no-repeat;
+  height: 250px;
+  margin-left: 3px;
+  margin-bottom: 15px; }
+
+.capa-pontuacao {
+  background: url(../img/pontuacao.png) no-repeat;
+  height: 250px;
+  margin-left: 3px;
+  margin-bottom: 15px; }
+
+.capa-rodada {
+  background: url(../img/rodada.png) no-repeat;
+  height: 250px;
+  margin-left: 3px;
+  margin-bottom: 15px; }
+
 .brasao {
   padding-top: 15px; }
 
@@ -8713,11 +8758,6 @@ ul.escudos > li {
   background-color: #efefef; }
 
 /* Estatistica Rodada a rodada */
-.img-estatistica {
-  background: url(../img/estatistica.png) no-repeat;
-  height: 200px;
-  margin-left: 3px; }
-
 .headline-est {
   margin-left: 50px;
   color: #fff;

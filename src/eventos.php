@@ -4,7 +4,9 @@
 
 <main>
 	<div class="container">
-		<h1 class="headline">Confira todos os eventos</h1>
+		<div class="row capa-eventos">
+			<div class="col-sm-12"></div>
+		</div>		
 		<div class="row">
 			<div class="col-sm-4 col-md-6">
 				<div class="card">

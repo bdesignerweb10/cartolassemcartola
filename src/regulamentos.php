@@ -4,6 +4,9 @@
 
 <main>
 	<div class="container">
+		<div class="row capa-regulamento">
+			<div class="col-sm-12"></div>
+		</div>
 		<div class="row">
 			<div class="col-sm-12">
 				<h3 class="headline">Regulamento liga Cartolas sem cartola - Temporada 2018</h3>

@@ -4,7 +4,10 @@ require_once('header.php');
 
 <main>
 	<div class="container">
-		<div class="row">
+		<div class="row capa-brasileirao">
+			<div class="col-sm-12"></div>
+		</div>
+		<div class="row">	
 			<div class="col-sm-8">
 				<h1 class="headline">Tabela</h1>
 				<div class="table-responsive">

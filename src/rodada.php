@@ -3,14 +3,8 @@
 ?>
 <main>
 	<div class="container">
-		<div class="row img-estatistica img-fluid">
-			<div class="col-sm-12 historia">
-				<div class="row">					
-					<div class="col-sm-9 apresentacao">
-						<h3 class="headline-est">Acompanhe seu desepenho, rodada a rodada</h3>						
-					</div>					
-				</div><!-- row -->
-			</div>
+		<div class="row capa-rodada">
+			<div class="col-sm-12"></div>
 		</div><!-- row -->
 		<div class="row cont-clube">
 			<div class="col-sm-12">				

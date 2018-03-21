@@ -7,7 +7,7 @@ require_once('header.php');
 </main>
 <main id="mainconfrontos">	
 	<div class="container">
-		<div class="row">
+		<div class="row capa-matamata">
 			<div class="col-sm-6">
 				<h2 class="headline" id="nome-mata-mata"></h2>
 			</div>	

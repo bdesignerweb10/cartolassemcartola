@@ -8,7 +8,7 @@
 			<div class="col-sm-12 historia">
 				<div class="row">
 					<div class="col-sm-3">
-						<img src="img/escudos/clube/Hasdrubal-FC.png" class="img-fluid center-block brasao">
+						<img src="img/escudos/clube/hasdrubalfc.png" class="img-fluid center-block brasao">
 					</div>
 					<div class="col-sm-9 apresentacao">
 						<p class="info-clube">Clube: <strong class="nome">Hasdrubal FC</strong><br />
@@ -21,32 +21,32 @@
 		<div class="row">
 			<div class="col-sm-12">
 				<ul class="escudos">
-					<li><a href="#"><img src="img/escudos/Hasdrubal-FC.png" class="img-fluid"></a></li>
-					<li><a href="#"><img src="img/escudos/BierFortes.png" class="img-fluid"></a></li>
-					<li><a href="#"><img src="img/escudos/Boleanos-FC.png" class="img-fluid"></a></li>
-					<li><a href="#"><img src="img/escudos/Palestrino.png" class="img-fluid"></a></li>
-					<li><a href="#"><img src="img/escudos/Hasdrubal-FC.png" class="img-fluid"></a></li>
-					<li><a href="#"><img src="img/escudos/BierFortes.png" class="img-fluid"></a></li>
-					<li><a href="#"><img src="img/escudos/Boleanos-FC.png" class="img-fluid"></a></li>
-					<li><a href="#"><img src="img/escudos/Palestrino.png" class="img-fluid"></a></li>
-					<li><a href="#"><img src="img/escudos/Hasdrubal-FC.png" class="img-fluid"></a></li>
-					<li><a href="#"><img src="img/escudos/BierFortes.png" class="img-fluid"></a></li>
-					<li><a href="#"><img src="img/escudos/Boleanos-FC.png" class="img-fluid"></a></li>
-					<li><a href="#"><img src="img/escudos/Palestrino.png" class="img-fluid"></a></li>
-					<li><a href="#"><img src="img/escudos/Hasdrubal-FC.png" class="img-fluid"></a></li>
-					<li><a href="#"><img src="img/escudos/BierFortes.png" class="img-fluid"></a></li>
-					<li><a href="#"><img src="img/escudos/Boleanos-FC.png" class="img-fluid"></a></li>
-					<li><a href="#"><img src="img/escudos/Palestrino.png" class="img-fluid"></a></li>
-					<li><a href="#"><img src="img/escudos/Hasdrubal-FC.png" class="img-fluid"></a></li>
-					<li><a href="#"><img src="img/escudos/BierFortes.png" class="img-fluid"></a></li>
-					<li><a href="#"><img src="img/escudos/Boleanos-FC.png" class="img-fluid"></a></li>
-					<li><a href="#"><img src="img/escudos/Palestrino.png" class="img-fluid"></a></li>
-					<li><a href="#"><img src="img/escudos/Hasdrubal-FC.png" class="img-fluid"></a></li>
-					<li><a href="#"><img src="img/escudos/BierFortes.png" class="img-fluid"></a></li>
-					<li><a href="#"><img src="img/escudos/Boleanos-FC.png" class="img-fluid"></a></li>
-					<li><a href="#"><img src="img/escudos/Palestrino.png" class="img-fluid"></a></li>
-					<li><a href="#"><img src="img/escudos/Hasdrubal-FC.png" class="img-fluid"></a></li>
-					<li><a href="#"><img src="img/escudos/BierFortes.png" class="img-fluid"></a></li>			
+					<li><a href="#"><img src="img/escudos/hasdrubalfc.png" class="img-fluid"></a></li>
+					<li><a href="#"><img src="img/escudos/bierfortesec.png" class="img-fluid"></a></li>
+					<li><a href="#"><img src="img/escudos/boleanosfc.png" class="img-fluid"></a></li>
+					<li><a href="#"><img src="img/escudos/palestrino84fc.png" class="img-fluid"></a></li>
+					<li><a href="#"><img src="img/escudos/hasdrubalfc.png" class="img-fluid"></a></li>
+					<li><a href="#"><img src="img/escudos/bierfortesec.png" class="img-fluid"></a></li>
+					<li><a href="#"><img src="img/escudos/boleanosfc.png" class="img-fluid"></a></li>
+					<li><a href="#"><img src="img/escudos/palestrino84fc.png" class="img-fluid"></a></li>
+					<li><a href="#"><img src="img/escudos/hasdrubalfc.png" class="img-fluid"></a></li>
+					<li><a href="#"><img src="img/escudos/bierfortesec.png" class="img-fluid"></a></li>
+					<li><a href="#"><img src="img/escudos/boleanosfc.png" class="img-fluid"></a></li>
+					<li><a href="#"><img src="img/escudos/palestrino84fc.png" class="img-fluid"></a></li>
+					<li><a href="#"><img src="img/escudos/hasdrubalfc.png" class="img-fluid"></a></li>
+					<li><a href="#"><img src="img/escudos/bierfortesec.png" class="img-fluid"></a></li>
+					<li><a href="#"><img src="img/escudos/boleanosfc.png" class="img-fluid"></a></li>
+					<li><a href="#"><img src="img/escudos/palestrino84fc.png" class="img-fluid"></a></li>
+					<li><a href="#"><img src="img/escudos/hasdrubalfc.png" class="img-fluid"></a></li>
+					<li><a href="#"><img src="img/escudos/bierfortesec.png" class="img-fluid"></a></li>
+					<li><a href="#"><img src="img/escudos/boleanosfc.png" class="img-fluid"></a></li>
+					<li><a href="#"><img src="img/escudos/palestrino84fc.png" class="img-fluid"></a></li>
+					<li><a href="#"><img src="img/escudos/hasdrubalfc.png" class="img-fluid"></a></li>
+					<li><a href="#"><img src="img/escudos/bierfortesec.png" class="img-fluid"></a></li>
+					<li><a href="#"><img src="img/escudos/boleanosfc.png" class="img-fluid"></a></li>
+					<li><a href="#"><img src="img/escudos/palestrino84fc.png" class="img-fluid"></a></li>
+					<li><a href="#"><img src="img/escudos/hasdrubalfc.png" class="img-fluid"></a></li>
+					<li><a href="#"><img src="img/escudos/bierfortesec.png" class="img-fluid"></a></li>						
 				</ul>
 			</div>
 		</div><!-- row -->
