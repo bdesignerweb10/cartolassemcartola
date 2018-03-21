@@ -8467,6 +8467,11 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   font-weight: bold;
   padding: 15px 20px; }
 
+.headline-dados {
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 7px 20px; }
+
 .headline-rodada {
   font-size: 1.5rem;
   font-weight: bold;
@@ -8514,7 +8519,29 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
 
 /* Scouts */
 .busca-time {
-  padding: 1.5rem 0.75rem; }
+  padding: 1.5rem 0.75rem;
+  margin-bottom: 5px; }
+
+.img-scouts {
+  width: 150px;
+  height: 175px; }
+
+.scouts {
+  margin-top: 30px; }
+
+.pont-cart {
+  text-align: center; }
+  .pont-cart > strong {
+    font-size: 25px; }
+
+.logo-time {
+  height: 22px;
+  width: 22px; }
+
+.scouts-pont-cart {
+  text-transform: uppercase;
+  text-align: center;
+  padding-top: 15px; }
 
 /* Mata Mata */
 .torneio-mata {

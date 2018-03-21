@@ -26,6 +26,12 @@
 	padding: 15px 20px;
 }
 
+.headline-dados{
+	font-size: 1.5rem;
+	font-weight: bold;
+	padding: 7px 20px;
+}
+
 .headline-rodada{
 	font-size: 1.5rem;
 	font-weight: bold;
@@ -84,6 +90,34 @@
 /* Scouts */
 .busca-time{
 	padding: 1.5rem 0.75rem;
+	margin-bottom: 5px;
+}
+
+.img-scouts{
+	width: 150px;
+	height: 175px;
+}
+
+.scouts{
+	margin-top: 30px;
+}
+
+.pont-cart{
+	text-align: center;
+	>strong{
+		font-size: 25px;
+	}
+}
+
+.logo-time{
+	height: 22px;
+	width: 22px;
+}
+
+.scouts-pont-cart{
+	text-transform: uppercase;
+	text-align: center;
+	padding-top: 15px;
 }
 
 /* Mata Mata */
