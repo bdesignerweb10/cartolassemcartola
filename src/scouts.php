@@ -5,8 +5,7 @@
 <main>
 	<div class="container">
 		<div class="row capa-scouts">
-			<div class="col-sm-12">								
-			</div><!-- col-sm-12 -->
+			
 		</div><!-- row -->
 		<div class="row scouts">
 			<div class="col-sm-4">

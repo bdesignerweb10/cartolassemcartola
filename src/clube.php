@@ -4,7 +4,7 @@
 
 <main>
 	<div class="container">
-		<div class="row fundo">
+		<div class="row capa-clube">
 			<div class="col-sm-12 historia">
 				<div class="row">
 					<div class="col-sm-3">

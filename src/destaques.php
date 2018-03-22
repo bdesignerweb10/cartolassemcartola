@@ -3,6 +3,9 @@
 ?>
 <main>
 	<div class="container">
+		<div class="row capa-destaques">
+			
+		</div>
 		<div id="destaques" class="row">
 		</div><!-- row -->
 	</div><!-- container -->
