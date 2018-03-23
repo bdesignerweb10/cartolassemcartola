@@ -133,6 +133,10 @@
 	}
 }
 
+.nome-mata{
+	margin-top: 20px;
+}
+
 .text-white{
 	padding: 15px;
 	margin-bottom: 5px;
@@ -301,13 +305,14 @@
 
 .capa-matamata{
 	background-image: url(../img/mata-mata.jpeg);
-    background-repeat: no-repeat;  
-    margin-left: 3px;
+    background-repeat: no-repeat;
+    background-size:100%;
+    bottom: 0;   
     left: 0;
     overflow: auto;
-    right: 0;
+    padding: 8em;
+    right: 0;    
     top: 0;
-    background-size: cover;
 }
 
 .capa-scouts{
@@ -317,7 +322,7 @@
     bottom: 0;   
     left: 0;
     overflow: auto;
-    padding: 6em;
+    padding: 8em;
     right: 0;    
     top: 0;
 }
@@ -329,7 +334,7 @@
     bottom: 0;   
     left: 0;
     overflow: auto;
-    padding: 6em;
+    padding: 8em;
     right: 0;    
     top: 0;
 	margin-bottom: 15px;
@@ -342,7 +347,7 @@
     bottom: 0;   
     left: 0;
     overflow: auto;
-    padding: 6em;
+    padding: 8em;
     right: 0;    
     top: 0;
 	margin-bottom: 15px;
@@ -355,7 +360,7 @@
     bottom: 0;   
     left: 0;
     overflow: auto;
-    padding: 6em;
+    padding: 8em;
     right: 0;    
     top: 0;
 	margin-bottom: 15px;
@@ -368,7 +373,7 @@
     bottom: 0;   
     left: 0;
     overflow: auto;
-    padding: 6em;
+    padding: 8em;
     right: 0;    
     top: 0;
 	margin-bottom: 15px;
@@ -381,7 +386,7 @@
     bottom: 0;   
     left: 0;
     overflow: auto;
-    padding: 6em;
+    padding: 8em;
     right: 0;    
     top: 0;
 	margin-bottom: 15px;
@@ -394,7 +399,7 @@
     bottom: 0;   
     left: 0;
     overflow: auto;
-    padding: 6em;
+    padding: 8em;
     right: 0;    
     top: 0;
 	margin-bottom: 15px;
@@ -407,7 +412,7 @@
     bottom: 0;   
     left: 0;
     overflow: auto;
-    padding: 6em;
+    padding: 8em;
     right: 0;    
     top: 0;
 	margin-bottom: 15px;

@@ -8553,6 +8553,9 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   .mata-and:hover {
     background-color: #fff; }
 
+.nome-mata {
+  margin-top: 20px; }
+
 .text-white {
   padding: 15px;
   margin-bottom: 5px;
@@ -8689,12 +8692,13 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
 .capa-matamata {
   background-image: url(../img/mata-mata.jpeg);
   background-repeat: no-repeat;
-  margin-left: 3px;
+  background-size: 100%;
+  bottom: 0;
   left: 0;
   overflow: auto;
+  padding: 8em;
   right: 0;
-  top: 0;
-  background-size: cover; }
+  top: 0; }
 
 .capa-scouts {
   background-image: url(../img/scouts.jpeg);
@@ -8703,7 +8707,7 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   bottom: 0;
   left: 0;
   overflow: auto;
-  padding: 6em;
+  padding: 8em;
   right: 0;
   top: 0; }
 
@@ -8714,7 +8718,7 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   bottom: 0;
   left: 0;
   overflow: auto;
-  padding: 6em;
+  padding: 8em;
   right: 0;
   top: 0;
   margin-bottom: 15px; }
@@ -8726,7 +8730,7 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   bottom: 0;
   left: 0;
   overflow: auto;
-  padding: 6em;
+  padding: 8em;
   right: 0;
   top: 0;
   margin-bottom: 15px; }
@@ -8738,7 +8742,7 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   bottom: 0;
   left: 0;
   overflow: auto;
-  padding: 6em;
+  padding: 8em;
   right: 0;
   top: 0;
   margin-bottom: 15px; }
@@ -8750,7 +8754,7 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   bottom: 0;
   left: 0;
   overflow: auto;
-  padding: 6em;
+  padding: 8em;
   right: 0;
   top: 0;
   margin-bottom: 15px; }
@@ -8762,7 +8766,7 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   bottom: 0;
   left: 0;
   overflow: auto;
-  padding: 6em;
+  padding: 8em;
   right: 0;
   top: 0;
   margin-bottom: 15px; }
@@ -8774,7 +8778,7 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   bottom: 0;
   left: 0;
   overflow: auto;
-  padding: 6em;
+  padding: 8em;
   right: 0;
   top: 0;
   margin-bottom: 15px; }
@@ -8786,7 +8790,7 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   bottom: 0;
   left: 0;
   overflow: auto;
-  padding: 6em;
+  padding: 8em;
   right: 0;
   top: 0;
   margin-bottom: 15px; }
