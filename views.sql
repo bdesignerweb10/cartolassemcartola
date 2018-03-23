@@ -53,3 +53,11 @@ INNER JOIN tbl_times_temporadas pont2 ON pont2.id_times   = mmc.id_time_2
 									 AND pont2.id_anos 	  = mmc.id_anos
 									 AND pont2.id_rodadas = mmc.id_rodadas
   ORDER BY mmc.nivel DESC;
+
+CREATE OR REPLACE VIEW vw_eventos AS 
+   SELECT e.id AS id, e.titulo AS titulo, UNIX_TIMESTAMP(e.data) AS data, e.local AS local, e.descricao AS descricao, EXTRACT(YEAR FROM e.data) AS ano, COUNT(ep.id_times) AS participantes
+     FROM tbl_eventos e
+LEFT JOIN tbl_eventos_presenca ep ON ep.id_eventos = e.id
+    WHERE ativo = 1
+ GROUP BY e.id, e.titulo, e.data, EXTRACT(YEAR FROM e.data)
+ ORDER BY e.data DESC, e.id ASC;

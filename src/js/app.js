@@ -951,23 +951,50 @@ $(function() {
 					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
 					if(retorno.succeed) {
-						if(retorno.linhas.length > 0) {
-							var acoes = "";
-							if(retorno.confirmado) {
-								acoes = '<a href="#" onclick="return false;" class="btn btn-info" disabled><i class="fa fa-check"></i> Preseça Confirmada!</a>';
-							}
-							else {
-								acoes = '<a href="#" data-id="' + retorno.id + '" class="btn btn-success btn-confirmar-presença"><i class="fa fa-check"></i> Confirmar Presença</a>';
-							}
-							//$('#eventos-container').append('<div class="' + item.cor_fase + ' text-white"><i class="fa fa-trophy"></i> Mata Mata - ' + item.fase + '</div><div class="row" id="body_' + item.cor_fase + '">');
-							$('#eventos-container').append('<div class="col-sm-12 col-md-6 col-lg-4 col-xl-4 eventos-card"><div class="card"><div class="card-block"><h4 class="card-title">' + retorno.evento + '</h4><h6 class="card-subtitle mb-2 text-muted">' + retorno.data + '</h6><p>' + retorno.local + '</p><p class="card-text">' + retorno.descricao + '</p>' + acoes + '</div></div></div>');
+						if(retorno.eventos.length > 0) {
+							$.each(retorno.eventos, function(i, evento) {
+								var data = new Date(evento.data * 1000);
+								var acoes = "";
+								var selector = "";
+								if(new Date() <= data) {
+									selector = "#proximos-eventos";
+									if(evento.confirmado) {
+										acoes = '<a href="#" data-id="' + evento.id + '" class="btn btn-danger btn-remover-presenca"><i class="fa fa-ban"></i> Não vou poder ir mais</a>';
+									}
+									else {
+										acoes = '<a href="#" data-id="' + evento.id + '" class="btn btn-success btn-confirmar-presenca"><i class="fa fa-check"></i> Confirmar Presença</a>';
+									}
+									acoes += '<span style="margin-left: 30px;"><b>' + evento.participantes + '</b> cartoleiros vão no evento!</span>';
+								}
+								else {
+									selector = "#eventos-passados";
+									acoes = '<p style="margin-top: 35px; margin-bottom: 0px;"><b>' + evento.participantes + '</b> cartoleiros foram a esse evento!</p>';
+								}
+
+								$(selector).append('<div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 eventos-card"><div class="card"><div class="card-block"><h4 class="card-title">' + evento.titulo + '</h4><h6 class="card-subtitle mb-2 text-muted">Data: ' + formatDate(evento.data * 1000) + '</h6><p>Local: ' + evento.local + '</p><p class="card-text">' + evento.descricao + '</p>' + acoes + '</div></div></div>');
+							});
 						}
-						else {
+
+						if(retorno.eventos.length == 0) {
 							$('#eventos-container').append('<div class="col-12 center infor"><i class="fa fa-thumbs-down fa-2x"></i><br /><br />Não há dados a serem exibidos aqui.</div>');
 						}
 
+
 						$('#loading').fadeOut("fast", function() {
-							$('.eventos-card').fadeIn("slow");
+							if($('#proximos-eventos').children().length > 0) {
+								$('#proximos-eventos').fadeIn("slow");
+								$('#eventos-container .bg-success').fadeIn("slow");
+							}
+
+							if($('#eventos-passados').children().length > 0) {
+								$('#eventos-passados').fadeIn("slow");
+								$('#eventos-container .bg-info').fadeIn("slow");
+							} 
+
+							if($('#proximos-eventos').children().length == 0 && $('#eventos-passados').children().length == 0) {
+								$('#eventos-container .bg-success').fadeIn("slow");
+								$('#eventos-container .infor').fadeIn("slow");
+							}
 						});
 					}
 					else {
@@ -975,7 +1002,10 @@ $(function() {
 						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
 						$('#alert').modal('show');
 
-						$('#eventos-card').hide();
+						$('#proximos-eventos').hide();
+						$('#eventos-passados').hide();
+						$('#eventos-container .bg-success').hide();
+						$('#eventos-container .bg-info').hide();
 						$('#loading').remove();
 					}
 			    }
@@ -984,7 +1014,10 @@ $(function() {
 					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
 
-					$('#eventos-card').hide();
+					$('#proximos-eventos').hide();
+					$('#eventos-passados').hide();
+					$('#eventos-container .bg-success').hide();
+					$('#eventos-container .bg-info').hide();
 					$('#loading').remove();
 			    };
 			}
@@ -1001,6 +1034,26 @@ function getRandomColor() {
         color += letters[Math.floor(Math.random() * 16)];
     }
     return color;
+}
+
+function formatDate(milliseconds) {
+	var today = new Date(milliseconds);
+	var dd = today.getDate();
+	var mm = today.getMonth()+1; //January is 0!
+	var yyyy = today.getFullYear();
+
+	var h = today.getHours() < 10 ? "0" + today.getHours() : today.getHours();
+	var i = today.getMinutes() < 10 ? "0" + today.getMinutes() : today.getMinutes();
+	
+	if(dd<10) {
+	    dd = '0'+dd
+	} 
+
+	if(mm<10) {
+	    mm = '0'+mm
+	}
+
+	return dd + '/' + mm + '/' + yyyy + ' - ' + h + ':' + i + 'hrs';
 }
 
 /*!

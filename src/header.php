@@ -162,6 +162,12 @@ else {
 	    					</div>	
 						</div>
 					</div><!-- liga-logo -->
+				<?php else: ?>
+					<div class="liga-logo">
+						<span class="mark">
+							<a href="login.php"><i class="fa fa-home"></i>&nbsp;&nbsp;Entrar</a>
+						</span>	
+					</div><!-- liga-logo -->
 				<?php endif; ?>
 			</div><!-- container -->	
 		</div><!-- header -->
