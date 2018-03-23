@@ -329,6 +329,7 @@ $(function() {
 												offsetGridLines: false
 											},
 											ticks: {
+												stepSize: 1, 
 												callback: function(value, index, values) {
 							                        return "Rodada " + value;
 							                    }
@@ -340,6 +341,7 @@ $(function() {
 											labelString: 'Posição na Liga',
 											ticks: {
 												reverse: true,
+												stepSize: 1, 
 												callback: function(value, index, values) {
 							                        return value + "º";
 							                    }
@@ -622,9 +624,9 @@ $(function() {
 
 	// END LIGA (liga.php)
 
-	// BEGIN MATA-MATA (mata-mata.php)
+	// BEGIN MATA-MATA (mata_mata.php)
 
-	if(window.location.pathname.indexOf('mata-mata.php') !== -1) {
+	if(window.location.pathname.indexOf('mata_mata.php') !== -1) {
 
 		// MATA-MATA
 		$('#mata-mata').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
@@ -775,14 +777,221 @@ $(function() {
 		});
 	}
 
-	// END MATA-MATA (liga.php)
+	// END MATA-MATA (mata_mata.php)
 
 	// BEGIN RODADA (rodada.php)
 
 	if(window.location.pathname.indexOf('rodada.php') !== -1) {
+
+		// DESEMPENHO GERAL
+		$('#pontrodada').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.rodada.php?act=rodada-rodada",
+			success: function(data)
+			{
+			    try {
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+					$('#pontrodada .table-responsive tbody').html('');
+
+					if(retorno.succeed) {
+						if(retorno.linhas.length > 0) {
+							$('#pontrodada .table-responsive thead').append(retorno.cabecalho);
+							$.each(retorno.linhas, function(i, item) {
+								$('#pontrodada .table-responsive tbody').append(item.linha);
+							});
+						}
+						else {
+							$('#pontrodada .table-responsive tbody').append('<tr class="bg-table"><td colspan="42" class="center infor"><i class="fa fa-thumbs-down fa-2x"></i><br /><br />Não há dados a serem exibidos aqui.</td></tr>');
+						}
+
+						$('#loading').fadeOut("fast", function() {
+							$('#pontrodada .table-responsive').fadeIn("slow");
+						});
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+
+						$('#pontrodada .table-responsive').hide();
+						$('#loading').remove();
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
+					$('#alert').modal('show');
+
+					$('#pontrodada .table-responsive').hide();
+					$('#loading').remove();
+			    };
+			}
+		});
+
+		// DESEMPENHO POR RODADA (GRAFICO)
+		$('#grafico-rodada').append('<div id="loading-grafico"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.rodada.php?act=grafico-rodada",
+			success: function(data)
+			{
+			    try {
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+					$('#grafico-rodada .card-block tbody').html('');
+					if(retorno.succeed) {
+						if(retorno.series.length > 0 && retorno.series[0].data && retorno.series[0].data.length > 0) {
+							$('#grafico-rodada .card-block').append('<canvas id="chart-grafico-rodada"></canvas>');
+							$.each(retorno.series, function(i, item) {
+								var color = getRandomColor();
+								item["backgroundColor"] = color;
+								item["borderColor"] = color;
+							});
+							var myChart = new Chart($("#chart-grafico-rodada"), {
+						    type: 'line',
+						    data: {
+						        labels: retorno.labels,
+						        datasets: retorno.series
+						    },
+							options: {
+								responsive: true,
+								hoverMode: 'label',
+								stacked: false,
+								scales: {
+									xAxes: [
+										{
+											display: false,
+											gridLines: {
+												offsetGridLines: false
+											},
+											ticks: {
+												stepSize: 1, 
+												callback: function(value, index, values) {
+							                        return "Rodada " + value;
+							                    }
+											}
+										}
+									],
+									yAxes: [
+										{
+											labelString: 'Posição na Liga',
+											ticks: {
+												reverse: true,
+												stepSize: 1, 
+												callback: function(value, index, values) {
+							                        return value + "º";
+							                    }
+											}
+										}
+									]
+								},
+								legend: {
+									position: 'bottom'
+								},
+								tooltips: {
+								    callbacks: {
+								        label: function(tooltipItem, data) {
+								            var label = data.datasets[tooltipItem.datasetIndex].label || '';
+
+								            if (label) {
+								                label += ' - ';
+								            }
+								            label += tooltipItem.yLabel + 'º lugar';
+								            return label;
+								        }
+								    }
+								}
+							}
+						});
+						}
+						else {
+							$('#grafico-rodada .card-block').append('<div class="bg-default center infor"><i class="fa fa-thumbs-down fa-2x"></i><br /><br />Não há dados a serem exibidos aqui.</div>');
+						}
+
+						$('#grafico-rodada .card-block').fadeIn("slow", function() {
+							$('#loading-grafico').fadeOut();
+							$('#loading-grafico').remove();
+						});
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+
+						$('#grafico-rodada .card-block').hide();
+						$('#loading-grafico').remove();
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
+					$('#alert').modal('show');
+
+					$('#grafico-rodada .card-block').hide();
+					$('#loading-grafico').remove();
+			    }
+			}
+		});
 	}
 	
 	// END RODADA (rodada.php)
+
+	// BEGIN EVENTOS (eventos.php)
+
+	if(window.location.pathname.indexOf('eventos.php') !== -1) {
+
+		$('#eventos-container').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.eventos.php?act=listagem-eventos",
+			success: function(data)
+			{
+			    try {
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+					if(retorno.succeed) {
+						if(retorno.linhas.length > 0) {
+							var acoes = "";
+							if(retorno.confirmado) {
+								acoes = '<a href="#" onclick="return false;" class="btn btn-info" disabled><i class="fa fa-check"></i> Preseça Confirmada!</a>';
+							}
+							else {
+								acoes = '<a href="#" data-id="' + retorno.id + '" class="btn btn-success btn-confirmar-presença"><i class="fa fa-check"></i> Confirmar Presença</a>';
+							}
+							//$('#eventos-container').append('<div class="' + item.cor_fase + ' text-white"><i class="fa fa-trophy"></i> Mata Mata - ' + item.fase + '</div><div class="row" id="body_' + item.cor_fase + '">');
+							$('#eventos-container').append('<div class="col-sm-12 col-md-6 col-lg-4 col-xl-4 eventos-card"><div class="card"><div class="card-block"><h4 class="card-title">' + retorno.evento + '</h4><h6 class="card-subtitle mb-2 text-muted">' + retorno.data + '</h6><p>' + retorno.local + '</p><p class="card-text">' + retorno.descricao + '</p>' + acoes + '</div></div></div>');
+						}
+						else {
+							$('#eventos-container').append('<div class="col-12 center infor"><i class="fa fa-thumbs-down fa-2x"></i><br /><br />Não há dados a serem exibidos aqui.</div>');
+						}
+
+						$('#loading').fadeOut("fast", function() {
+							$('.eventos-card').fadeIn("slow");
+						});
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+
+						$('#eventos-card').hide();
+						$('#loading').remove();
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
+					$('#alert').modal('show');
+
+					$('#eventos-card').hide();
+					$('#loading').remove();
+			    };
+			}
+		});
+	}
+	
+	// END EVENTOS (eventos.php)
 });
 
 function getRandomColor() {

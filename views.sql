@@ -1,5 +1,5 @@
 CREATE OR REPLACE VIEW vw_destaques_rodada AS
-    SELECT r.id_anos AS temporada, r.id_rodadas AS rodada, ro.descricao AS desc_rodada, r.posicao_liga AS posicao, t.escudo_time AS escudo, t.nome_time AS time, r.pontuacao AS pontuacao
+    SELECT r.id_anos AS temporada, r.id_rodadas AS rodada, ro.descricao AS desc_rodada, r.posicao_liga AS posicao, t.id AS id_time, t.escudo_time AS escudo, t.nome_time AS time, r.pontuacao AS pontuacao
       FROM tbl_times_temporadas r 
 INNER JOIN tbl_times t    ON t.id  = r.id_times
 INNER JOIN tbl_rodadas ro ON ro.id = r.id_rodadas

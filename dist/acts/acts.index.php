@@ -16,7 +16,11 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 												  AND rodada = $rodada LIMIT 4") or trigger_error($conn->error);
 	        	if($destaqueslist && $destaqueslist->num_rows > 0) {
 		        	while($destaques = $destaqueslist->fetch_object()) {
-						$list_times .= '{"posicao": ' . $destaques->posicao . ', "escudo": "' . $destaques->escudo . '", "time": "' . $destaques->time . '", "pontuacao": ' . $destaques->pontuacao . '}, ';
+		                $escudo = "no-escudo.png";
+		                if(file_exists("../img/escudos/$destaques->escudo"))
+		                	$escudo = $destaques->escudo;
+
+						$list_times .= '{"posicao": ' . $destaques->posicao . ', "escudo": "' . $escudo . '", "time": "' . $destaques->time . '", "pontuacao": ' . $destaques->pontuacao . '}, ';
 		        	}
 
 					$list_times = substr($list_times, 0, -2);
@@ -82,8 +86,12 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 				        else {
 				        	$variacao = "-";
 				        }
+				        
+		                $escudo = "no-escudo.png";
+		                if(file_exists("../img/escudos/$destaques->escudo"))
+		                	$escudo = $destaques->escudo;
 
-						$list_times .= '{"posicao": ' . $posicao . ', "escudo": "' . $destaques->escudo . '", "time": "' . $destaques->time . '", "pontuacao": ' . $destaques->total_pontos . ', "pont_ult_rodada": ' . $pontuacao . ', "variacao": "' . $variacao . '"}, ';
+						$list_times .= '{"posicao": ' . $posicao . ', "escudo": "' . $escudo . '", "time": "' . $destaques->time . '", "pontuacao": ' . $destaques->total_pontos . ', "pont_ult_rodada": ' . $pontuacao . ', "variacao": "' . $variacao . '"}, ';
 		        	}
 
 					$list_times = substr($list_times, 0, -2);
@@ -127,6 +135,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 
         case 'desempenho-rodada':
 	        try {
+
 	    		$labelslist = "[";
 
 				$rodadaslist = $conn->query("SELECT descricao FROM tbl_rodadas WHERE id <= $rodada") or trigger_error($conn->error);
@@ -139,19 +148,22 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 				$labelslist .= "]";
 
 				$serieslist = "";
+				
+	        	$where_time = "";
+	        	if(isset($_SESSION["usu_time"]) && !empty($_SESSION["usu_time"]) && intval($_SESSION["usu_time"]) > 0) {
+	        		$where_time = "AND id = " . $_SESSION["usu_time"];
+	        	}
 
-	    		$timeslist = $conn->query("SELECT id, nome_time FROM tbl_times WHERE ativo = 1") or trigger_error($conn->error);
+	    		$timeslist = $conn->query("SELECT id, nome_time FROM tbl_times WHERE ativo = 1 $where_time") or trigger_error($conn->error);
 	        	if($timeslist && $timeslist->num_rows > 0) {
 		        	while($times = $timeslist->fetch_object()) {
-		        		if($times->id == $_SESSION["usu_time"]) {
-		        			$border = 3;
-		        			$border_dash = "";
+		        		if((!isset($_SESSION["usu_time"]) && empty($_SESSION["usu_time"])) || $times->id == $_SESSION["usu_time"]) {
+		        			$border = '"borderWidth": 3, ';
 		        		}
 		        		else {
-		        			$border = 1;
-		        			$border_dash = '"borderDash": [2,4], ';
+		        			$border_dash = '"borderWidth": 1, "borderDash": [2,4], ';
 		        		}
-						$posicoeslist = '{"label": "' . $times->nome_time . '", "fill": false, "borderWidth": ' . $border . ', ' . $border_dash . '"data": [';
+						$posicoeslist = '{"label": "' . $times->nome_time . '", "fill": false, ' . $border . '"data": [';
 
 			    		$posicoesqry = $conn->query("SELECT posicao_liga 
 			    									   FROM tbl_times_temporadas 

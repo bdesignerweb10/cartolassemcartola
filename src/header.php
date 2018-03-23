@@ -55,7 +55,7 @@ else {
 						</a>
 					</li>
 					<li class="nav-item">					
-						<a href="mata-mata.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'mata-mata.php' ? ' nav-active' : ''; ?>">
+						<a href="mata_mata.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'mata_mata.php' ? ' nav-active' : ''; ?>">
 						<i class="fa fa-trophy"></i>	
 						Mata-Mata
 						</a>
@@ -100,9 +100,9 @@ else {
 					</li>
 				<?php endif; ?>
 				<li class="nav-item">					
-					<a href="regulamentos.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'regulamentos.php' ? ' nav-active' : ''; ?>">
+					<a href="regulamento.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'regulamento.php' ? ' nav-active' : ''; ?>">
 					<i class="fa fa-file-text-o"></i>	
-					Regulamentos
+					Regulamento
 					</a>
 				</li>
 			</ul>
@@ -156,8 +156,8 @@ else {
 								</span>
 							</div>
 							<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-	    						<div class="dropdown-item"><a href="meus-dados.php">Meus dados</a></div>
-	    						<div class="dropdown-item"><a href="informacao-clube.php">Informações do clube</a></div>
+	    						<div class="dropdown-item"><a href="meus_dados.php">Meus dados</a></div>
+	    						<div class="dropdown-item"><a href="dados_clube.php">Informações do clube</a></div>
 	    						<div class="dropdown-item"><a href="logout.php">Sair</a></div>
 	    					</div>	
 						</div>

@@ -513,7 +513,8 @@ ul.escudos > li {
 
 //Pontuação < 30
 .ruim{
-	color:#f22436;
+	background-color:#f22436 !important;
+	color: white;
 }
 
 .badge.ruim{
@@ -522,7 +523,8 @@ ul.escudos > li {
 
 // Pontuação >=30 e <50
 .regular{
-	color:#9f7d15;
+	background-color:#9f7d15 !important;
+	color: white;
 }
 
 .badge.regular{
@@ -531,7 +533,8 @@ ul.escudos > li {
 
 // Pontuação >=50 e <80
 .bom{
-	color:#0070c0;
+	background-color:#0070c0 !important;
+	color: white;
 }
 
 .badge.bom{
@@ -540,7 +543,8 @@ ul.escudos > li {
 
 //Pontuação >=80 e <100
 .excelente{
-	color:#217346;
+	background-color:#217346 !important;
+	color: white;
 }
 
 .badge.excelente{
@@ -549,7 +553,8 @@ ul.escudos > li {
 
 //Pontuação > 100
 .mitou{
-	color:#ed7d31;
+	background-color:#ed7d31 !important;
+	color: white;
 }
 
 .badge.mitou{
@@ -864,7 +869,8 @@ ul.escudos > li {
 #desempenho-rodada .card-block, #desempenho-rodada footer, 
 #mata-mata-andamento .card-block, #mata-mata-andamento footer,
 #desempenho-liga .card-block, #desempenho-liga footer, #destaques .col-sm-4,
-#mata-mata .bg-info, #mata-mata .bg-success, #mata-mata .bg-danger, #mata-mata .mata-and, #mainconfrontos, #nao-ha-dados
+#mata-mata .bg-info, #mata-mata .bg-success, #mata-mata .bg-danger, #mata-mata .mata-and, #mainconfrontos, #nao-ha-dados,
+#pontrodada .table-responsive
  {
 	display:none;
 }

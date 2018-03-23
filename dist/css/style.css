@@ -8868,31 +8868,36 @@ ul.escudos > li {
   font-weight: bold; }
 
 .ruim {
-  color: #f22436; }
+  background-color: #f22436 !important;
+  color: white; }
 
 .badge.ruim {
   background-color: #f22436; }
 
 .regular {
-  color: #9f7d15; }
+  background-color: #9f7d15 !important;
+  color: white; }
 
 .badge.regular {
   background-color: #9f7d15; }
 
 .bom {
-  color: #0070c0; }
+  background-color: #0070c0 !important;
+  color: white; }
 
 .badge.bom {
   background-color: #0070c0; }
 
 .excelente {
-  color: #217346; }
+  background-color: #217346 !important;
+  color: white; }
 
 .badge.excelente {
   background-color: #217346; }
 
 .mitou {
-  color: #ed7d31; }
+  background-color: #ed7d31 !important;
+  color: white; }
 
 .badge.mitou {
   background-color: #ed7d31; }
@@ -9140,5 +9145,6 @@ ul.escudos > li {
 #desempenho-rodada .card-block, #desempenho-rodada footer,
 #mata-mata-andamento .card-block, #mata-mata-andamento footer,
 #desempenho-liga .card-block, #desempenho-liga footer, #destaques .col-sm-4,
-#mata-mata .bg-info, #mata-mata .bg-success, #mata-mata .bg-danger, #mata-mata .mata-and, #mainconfrontos, #nao-ha-dados {
+#mata-mata .bg-info, #mata-mata .bg-success, #mata-mata .bg-danger, #mata-mata .mata-and, #mainconfrontos, #nao-ha-dados,
+#pontrodada .table-responsive {
   display: none; }

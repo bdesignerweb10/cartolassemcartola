@@ -88,7 +88,16 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 		        			$list_confrontos .= '{ "nivel": ' . $confrontos->nivel . ', "fase": "' . $confrontos->fase . '", "active": "' . ($confrontos->rodada == $_SESSION["rodada"] ? " active" : "") . '", "confrontos": [';
 		        			$nivel = $confrontos->nivel;
 		        		}
-	        			$list_confrontos .= '{"chave": ' . $confrontos->chave . ', "time_1": "' . $confrontos->time_1 . '", "escudo_time_1": "' . $confrontos->escudo_time_1 . '", "pontuacao_time_1": "' . $confrontos->pontuacao_time_1 . '", "time_2": "' . $confrontos->time_2 . '", "escudo_time_2": "' . $confrontos->escudo_time_2 . '", "pontuacao_time_2": "' . $confrontos->pontuacao_time_2 . '"}, ';
+
+		                $escudo_time_1 = "no-escudo.png";
+		                if(file_exists("../img/escudos/$confrontos->escudo_time_1"))
+		                	$escudo_time_1 = $confrontos->escudo_time_1;
+
+		                $escudo_time_2 = "no-escudo.png";
+		                if(file_exists("../img/escudos/$confrontos->escudo_time_2"))
+		                	$escudo_time_2 = $confrontos->escudo_time_2;
+
+	        			$list_confrontos .= '{"chave": ' . $confrontos->chave . ', "time_1": "' . $confrontos->time_1 . '", "escudo_time_1": "' . $escudo_time_1 . '", "pontuacao_time_1": "' . $confrontos->pontuacao_time_1 . '", "time_2": "' . $confrontos->time_2 . '", "escudo_time_2": "' . $escudo_time_2 . '", "pontuacao_time_2": "' . $confrontos->pontuacao_time_2 . '"}, ';
 		        	}
 					$list_confrontos = substr($list_confrontos, 0, -2);
     				$list_confrontos .= "]}";

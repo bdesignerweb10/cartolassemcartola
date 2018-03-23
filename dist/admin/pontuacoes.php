@@ -78,8 +78,12 @@ $qrypontuacao = $conn->query("SELECT t.id AS id, t.nome_presidente AS presidente
 						        	while($time = $qrypontuacao->fetch_object()) {
 						                $fake_id = $time->id * $_SESSION["fake_id"];
 
+						                $escudo = "../img/escudos/no-escudo.png";
+						                if(file_exists("../img/escudos/$time->escudo"))
+						                	$escudo = "../img/escudos/$time->escudo";
+
 						        		echo "<tr>
-										        <td class='center'><img src='../img/escudos/$time->escudo' class='img-fluid'></td>
+										        <td class='center'><img src='$escudo' class='img-fluid'></td>
 								                <td>$time->time</td>
 								                <td>$time->presidente</td>
 								                <td class='center'>

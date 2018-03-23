@@ -105,7 +105,10 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 									if ($sqltime && $sqltime->num_rows > 0) {
 						    			while($time = $sqltime->fetch_object()) {
 						    				$usu_nome = $time->nome_presidente;
-						    				$usu_escudo = $time->escudo_time;
+						    				if(file_exists("img/escudos/" . $_SESSION["usu_escudo"]))
+						    					$usu_escudo = $time->escudo_time;
+						    				else 
+						    					$usu_escudo = "no-escudo.png";
 						    			}
 						    		}
 								}

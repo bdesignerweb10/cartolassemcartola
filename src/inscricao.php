@@ -11,7 +11,7 @@ if($_SESSION["temporada"] == "1")
 				<div class="inscricao">
 					<form id="form-inscricao" data-toggle="validator" action="acts/acts.inscricao.php" method="POST">
 			  			<div class="form-group">		    			
-			    			<input type="text" class="form-control" id="nome" name="nome" aria-describedby="nome" placeholder="Informe o nome do presidente" data-error="Por favor, informe o nome do presidente." maxlength="120" required>
+			    			<input type="text" class="form-control" id="nome" name="nome" aria-describedby="nome" placeholder="Informe o nome do Cartoleiro" data-error="Parça, insira o nome do presidente do seu clube, ou seja, o seu." maxlength="120" required>
 			    			<div class="help-block with-errors"></div>
 			    		</div>
 			  			<div class="form-group">
@@ -69,8 +69,8 @@ if($_SESSION["temporada"] == "1")
 					      	 - Transferência Bancária<br />
 					      	 - Pagseguro <b>(EM BREVE)</b></p>
 					      	
-					      	<p>Já leu nosso regulamento?</p>
-					      	<p><a href="regulamentos.php">Acesse Regulamentos e leia todas as regras para depois não ficar de mimimi!</a></p>
+					      	<p>Já leu o nosso regulamento?</p>
+					      	<p><a href="regulamento.php">Acesse Regulamentos e leia todas as regras para depois não ficar de mimimi!</a></p>
 
 					      	<p>Caso tenha alguma dúvida ou sugestão, entre em contato por:</p>
 					      	<p> - (19) 99897-0090<br />
