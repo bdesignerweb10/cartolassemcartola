@@ -38,7 +38,7 @@ require_once('header.php');
 							</div><!-- card-block -->
 							<footer>
 								<div class="card-footer">
-									<a href="destaques.php"><button class="btn btn-primary"><i class='fa fa-binoculars'></i>&nbsp;&nbsp;&nbsp;Visualizar destaques por rodada</button></a>
+									<a href="destaques"><button class="btn btn-primary"><i class='fa fa-binoculars'></i>&nbsp;&nbsp;&nbsp;Visualizar destaques por rodada</button></a>
 								</div><!-- card-footer -->
 							</footer>				
 						</div><!-- card -->
@@ -54,7 +54,7 @@ require_once('header.php');
 							</div><!-- card-block -->
 							<footer>
 								<div class="card-footer">
-									<a href="rodada.php"><button class="btn btn-primary"><i class='fa fa-binoculars'></i>&nbsp;&nbsp;&nbsp;Acompanhar meu desempenho</button></a>					
+									<a href="rodada"><button class="btn btn-primary"><i class='fa fa-binoculars'></i>&nbsp;&nbsp;&nbsp;Acompanhar meu desempenho</button></a>					
 								</div><!-- card-footer -->
 							</footer>				
 						</div><!-- card -->
@@ -87,7 +87,7 @@ require_once('header.php');
 							</div><!-- card-block -->
 							<footer>
 								<div class="card-footer">
-									<a href="liga.php"><button class="btn btn-primary"><i class='fa fa-binoculars'></i>&nbsp;&nbsp;&nbsp;Visualizar tabela completa</button></a>
+									<a href="liga"><button class="btn btn-primary"><i class='fa fa-binoculars'></i>&nbsp;&nbsp;&nbsp;Visualizar tabela completa</button></a>
 								</div><!-- card-footer -->
 							</footer>				
 						</div><!-- card -->
@@ -103,7 +103,7 @@ require_once('header.php');
 							</div><!-- card-block -->
 							<footer>
 								<div class="card-footer">
-									<a href="mata_mata.php"><button class="btn btn-primary"><i class='fa fa-binoculars'></i>&nbsp;&nbsp;&nbsp;Acompanhar todos os mata mata</button></a>
+									<a href="mata_mata"><button class="btn btn-primary"><i class='fa fa-binoculars'></i>&nbsp;&nbsp;&nbsp;Acompanhar todos os mata mata</button></a>
 								</div><!-- card-footer -->
 							</footer>				
 						</div><!-- card -->

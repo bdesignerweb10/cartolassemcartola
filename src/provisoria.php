@@ -3,7 +3,7 @@ ob_start();
 if (!isset($_SESSION)) session_start(); 
 if (!isset($_SESSION["prov_id"]) || empty($_SESSION["prov_id"]) || 
 	!isset($_SESSION['prov_login']) || empty($_SESSION["prov_login"]) || 
-	$_SESSION["prov_id"] == "0") header('Location: login.php');
+	$_SESSION["prov_id"] == "0") header('Location: login');
 ?>
 <!DOCTYPE html>
 <html lang="en">

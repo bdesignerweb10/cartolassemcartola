@@ -2,7 +2,7 @@
 require_once('header.php');
 if (!isset($_SESSION["usu_id"]) || empty($_SESSION["usu_id"]) || 
 	!isset($_SESSION['usu_nivel']) || empty($_SESSION["usu_nivel"]) ||
-	$_SESSION['usu_nivel'] != "1" || $_SESSION["usu_id"] == "0") header('Location: index.php');
+	$_SESSION['usu_nivel'] != "1" || $_SESSION["usu_id"] == "0") header('Location: ./');
 $usuarioslist = $conn->query("SELECT u.id AS id, u.usuario AS usuario, t.nome_time AS time, u.nivel as nivel, u.senha_provisoria AS ativado, 
 									 u.tentativas AS tentativas
         		 			    FROM tbl_usuarios u

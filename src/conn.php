@@ -186,7 +186,7 @@ if ($result) {
 		return $retorno;
 	}
 
-	function url_origin( $s, $use_forwarded_host = false )
+	function url_origin($s, $use_forwarded_host = false)
 	{
 	    $ssl      = ( ! empty( $s['HTTPS'] ) && $s['HTTPS'] == 'on' );
 	    $sp       = strtolower( $s['SERVER_PROTOCOL'] );
@@ -198,7 +198,7 @@ if ($result) {
 	    return $protocol . '://' . $host;
 	}
 
-	function full_url( $s, $use_forwarded_host = false )
+	function full_url($s, $use_forwarded_host = false)
 	{
 	    return htmlspecialchars(url_origin( $s, $use_forwarded_host) . $s['REQUEST_URI'], ENT_QUOTES, 'UTF-8' );
 	}

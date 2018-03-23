@@ -3,13 +3,12 @@ require_once('header.php');
 ?>
 <main id="mainmata">
 	<div id="mata-mata" class="container">
+		<div class="row capa-matamata"></div>
 	</div><!-- container -->
 </main>
 <main id="mainconfrontos">	
 	<div class="container">
-		<div class="row capa-matamata">
-				
-		</div>	
+		<div class="row capa-matamata"></div>	
 		<div class="row nome-mata">
 			<div class="col-sm-6">
 				<h2 class="headline" id="nome-mata-mata"></h2>

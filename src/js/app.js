@@ -32,7 +32,7 @@ $(function() {
 		$("#valor").val("R$ 35,00");
 	});
 
-	// BEGIN LOGIN (login.php)
+	// BEGIN LOGIN (login)
 
 	$("#form-login").submit(function(e) {
 		e.preventDefault();
@@ -57,7 +57,7 @@ $(function() {
 							window.location.href = retorno.href;
 						}
 						else {
-							window.location.href = 'index.php';
+							window.location.href = './';
 						}
 					}
 					else {
@@ -67,7 +67,7 @@ $(function() {
 
 						if(retorno.errno == "12010") {
 							$('#alert').on('hidden.bs.modal', function (e) {
-								window.location.href = 'provisoria.php';
+								window.location.href = 'provisoria';
 							});
 						}
 					}
@@ -133,9 +133,9 @@ $(function() {
 		});
 	});
 
-	// END LOGIN (login.php)
+	// END LOGIN (login)
 
-	// BEGIN PROVISORIA (provisoria.php)
+	// BEGIN PROVISORIA (provisoria)
 
 	$("#form-provisoria").submit(function(e) {
 		e.preventDefault();
@@ -161,7 +161,7 @@ $(function() {
 						$('#alert').modal('show');
 
 						$('#alert').on('hidden.bs.modal', function (e) {
-							window.location.href = 'index.php';
+							window.location.href = './';
 						});
 
 					}
@@ -181,9 +181,9 @@ $(function() {
 		});
 	});
 
-	// END PROVISORIA (provisoria.php)
+	// END PROVISORIA (provisoria)
 	
-	// BEGIN INSCRICAO (inscricao.php)
+	// BEGIN INSCRICAO (inscricao)
 
 	$('#btn-voltar-inscricao').click(function(e) {
 		e.preventDefault();
@@ -238,11 +238,15 @@ $(function() {
 		});
 	});
 
-	// END INSCRICAO (inscricao.php)
+	// END INSCRICAO (inscricao)
 
-	// BEGIN INDEX (index.php)
+	// BEGIN INDEX (index)
 
-	if(window.location.pathname.indexOf('index.php') !== -1) {
+	if(window.location.pathname.indexOf('destaques') === -1 && 
+	   window.location.pathname.indexOf('liga') === -1 &&
+	   window.location.pathname.indexOf('mata_mata') === -1 &&
+	   window.location.pathname.indexOf('rodada') === -1 &&
+	   window.location.pathname.indexOf('eventos') === -1) {
 				
 		// DESTAQUES RODADA
 		$('#destaques-rodada').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
@@ -501,11 +505,11 @@ $(function() {
 		});
 	}
 
-	// END INDEX (index.php)
+	// END INDEX (index)
 
-	// BEGIN DESTAQUES (destaques.php)
+	// BEGIN DESTAQUES (destaques)
 
-	if(window.location.pathname.indexOf('destaques.php') !== -1) {
+	if(window.location.pathname.indexOf('destaques') !== -1) {
 
 		// DESTAQUES RODADA
 		$('#destaques').append('<div class="col-12" id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
@@ -561,11 +565,11 @@ $(function() {
 		});
 	}
 
-	// END DESTAQUES (destaques.php)
+	// END DESTAQUES (destaques)
 
-	// BEGIN LIGA (liga.php)
+	// BEGIN LIGA (liga)
 
-	if(window.location.pathname.indexOf('liga.php') !== -1) {
+	if(window.location.pathname.indexOf('liga') !== -1) {
 				
 		// DESEMPENHO GERAL
 		$('#desempenho-liga').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
@@ -622,11 +626,11 @@ $(function() {
 		});
 	}
 
-	// END LIGA (liga.php)
+	// END LIGA (liga)
 
-	// BEGIN MATA-MATA (mata_mata.php)
+	// BEGIN MATA-MATA (mata_mata)
 
-	if(window.location.pathname.indexOf('mata_mata.php') !== -1) {
+	if(window.location.pathname.indexOf('mata_mata') !== -1) {
 
 		// MATA-MATA
 		$('#mata-mata').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
@@ -777,11 +781,11 @@ $(function() {
 		});
 	}
 
-	// END MATA-MATA (mata_mata.php)
+	// END MATA-MATA (mata_mata)
 
-	// BEGIN RODADA (rodada.php)
+	// BEGIN RODADA (rodada)
 
-	if(window.location.pathname.indexOf('rodada.php') !== -1) {
+	if(window.location.pathname.indexOf('rodada') !== -1) {
 
 		// DESEMPENHO GERAL
 		$('#pontrodada').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
@@ -935,11 +939,11 @@ $(function() {
 		});
 	}
 	
-	// END RODADA (rodada.php)
+	// END RODADA (rodada)
 
-	// BEGIN EVENTOS (eventos.php)
+	// BEGIN EVENTOS (eventos)
 
-	if(window.location.pathname.indexOf('eventos.php') !== -1) {
+	if(window.location.pathname.indexOf('eventos') !== -1) {
 
 		$('#eventos-container').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
 		$.ajax({
@@ -1024,7 +1028,7 @@ $(function() {
 		});
 	}
 	
-	// END EVENTOS (eventos.php)
+	// END EVENTOS (eventos)
 });
 
 function getRandomColor() {

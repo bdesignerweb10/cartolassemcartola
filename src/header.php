@@ -1,7 +1,8 @@
 <?php 
 require_once("conn.php");
+
 if($_SESSION["temporada"] == 0 && (basename($_SERVER['PHP_SELF']) != "inscricao.php" && basename($_SERVER['PHP_SELF']) != "regulamentos.php"))
-	header('Location: inscricao.php');
+	header('Location: inscricao');
 else {
 	if ($_SESSION["user_ativado"] &&
 		basename($_SERVER['PHP_SELF']) != "inscricao.php" && 
@@ -10,7 +11,7 @@ else {
 		(!isset($_SESSION["usu_id"]) || empty($_SESSION["usu_id"]) || 
 		!isset($_SESSION['usu_nivel']) || empty($_SESSION["usu_nivel"]) || 
 		$_SESSION["usu_id"] == "0")) 
-		header('Location: login.php?href=' . basename($_SERVER['PHP_SELF']));
+		header('Location: login?href=' . str_replace(".php", "", basename($_SERVER['PHP_SELF'])));
 }
 ?>
 <!DOCTYPE html>
@@ -43,49 +44,49 @@ else {
 
 				<?php if($_SESSION["temporada"] == "1") : ?>
 					<li class="nav-item">					
-						<a href="index.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? ' nav-active' : ''; ?>">
+						<a href="./" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? ' nav-active' : ''; ?>">
 						<i class="fa fa-home"></i>	
 						Dashboard 
 						</a>
 					</li>
 					<li class="nav-item">					
-						<a href="liga.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'liga.php' ? ' nav-active' : ''; ?>">
+						<a href="liga" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'liga.php' ? ' nav-active' : ''; ?>">
 						<i class="fa fa-line-chart"></i>	
 						Tabela Liga CSC
 						</a>
 					</li>
 					<li class="nav-item">					
-						<a href="mata_mata.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'mata_mata.php' ? ' nav-active' : ''; ?>">
+						<a href="mata_mata" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'mata_mata.php' ? ' nav-active' : ''; ?>">
 						<i class="fa fa-trophy"></i>	
 						Mata-Mata
 						</a>
 					</li>
 					<li class="nav-item">					
-						<a href="clube.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'clube.php' ? ' nav-active' : ''; ?>">
+						<a href="clube" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'clube.php' ? ' nav-active' : ''; ?>">
 						<i class="fa fa-id-card"></i>	
 						Historia do Clube
 						</a>
 					</li>
 					<li class="nav-item">					
-						<a href="brasileiro.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'brasileiro.php' ? ' nav-active' : ''; ?>">
+						<a href="brasileiro" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'brasileiro.php' ? ' nav-active' : ''; ?>">
 						<i class="fa fa-list-alt"></i>	
 						Tabela Brasileirão
 						</a>
 					</li>
 					<li class="nav-item">					
-						<a href="eventos.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'eventos.php' ? ' nav-active' : ''; ?>">
+						<a href="eventos" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'eventos.php' ? ' nav-active' : ''; ?>">
 						<i class="fa fa-calendar"></i>	
 						Eventos
 						</a>
 					</li>					
 					<li class="nav-item">					
-						<a href="pontuacao.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'pontuacao.php' ? ' nav-active' : ''; ?>">
+						<a href="pontuacao" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'pontuacao.php' ? ' nav-active' : ''; ?>">
 						<i class="fa fa-bar-chart"></i>	
 						Pontuação Cartola
 						</a>
 					</li>
 					<li class="nav-item">					
-						<a href="scouts.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'scouts.php' ? ' nav-active' : ''; ?>">
+						<a href="scouts" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'scouts.php' ? ' nav-active' : ''; ?>">
 						<i class="fa fa-area-chart"></i>	
 						Scouts
 						</a>
@@ -93,14 +94,14 @@ else {
 				<?php endif; ?>
 				<?php if($_SESSION["temporada"] == "0") : ?>
 					<li class="nav-item">					
-						<a href="inscricao.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'inscricao.php' ? ' nav-active' : ''; ?>">
+						<a href="inscricao" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'inscricao.php' ? ' nav-active' : ''; ?>">
 						<i class="fa fa-check-square-o"></i>	
 						Inscrições
 						</a>
 					</li>
 				<?php endif; ?>
 				<li class="nav-item">					
-					<a href="regulamento.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'regulamento.php' ? ' nav-active' : ''; ?>">
+					<a href="regulamento" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'regulamento.php' ? ' nav-active' : ''; ?>">
 					<i class="fa fa-file-text-o"></i>	
 					Regulamento
 					</a>
@@ -156,16 +157,16 @@ else {
 								</span>
 							</div>
 							<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-	    						<div class="dropdown-item"><a href="meus_dados.php">Meus dados</a></div>
-	    						<div class="dropdown-item"><a href="dados_clube.php">Informações do clube</a></div>
-	    						<div class="dropdown-item"><a href="logout.php">Sair</a></div>
+	    						<div class="dropdown-item"><a href="meus_dados">Meus dados</a></div>
+	    						<div class="dropdown-item"><a href="dados_clube">Informações do clube</a></div>
+	    						<div class="dropdown-item"><a href="logout">Sair</a></div>
 	    					</div>	
 						</div>
 					</div><!-- liga-logo -->
 				<?php else: ?>
 					<div class="liga-logo">
 						<span class="mark">
-							<a href="login.php"><i class="fa fa-home"></i>&nbsp;&nbsp;Entrar</a>
+							<a href="login"><i class="fa fa-home"></i>&nbsp;&nbsp;Entrar</a>
 						</span>	
 					</div><!-- liga-logo -->
 				<?php endif; ?>

@@ -2,7 +2,7 @@
 require_once('header.php');
 if (!isset($_SESSION["usu_id"]) || empty($_SESSION["usu_id"]) || 
 	!isset($_SESSION['usu_nivel']) || empty($_SESSION["usu_nivel"]) ||
-	$_SESSION['usu_nivel'] != "1" || $_SESSION["usu_id"] == "0") header('Location: index.php');
+	$_SESSION['usu_nivel'] != "1" || $_SESSION["usu_id"] == "0") header('Location: index');
 ?>
 <main class="maintable">
 	<div class="container">

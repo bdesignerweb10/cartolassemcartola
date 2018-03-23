@@ -16,6 +16,6 @@ if(isset($_SESSION)) {
 }
 
 /** Voila! Here we shall gently nudge them somewhere else. */
-header('Location: index.php');
+header('Location: ./');
 exit();
 ?>

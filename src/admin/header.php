@@ -2,7 +2,7 @@
 require_once("../conn.php");
 if (!isset($_SESSION["usu_id"]) || empty($_SESSION["usu_id"]) || 
 	!isset($_SESSION['usu_nivel']) || empty($_SESSION["usu_nivel"]) ||
-	$_SESSION['usu_nivel'] == "3" || $_SESSION["usu_id"] == "0") header('Location: index.php');
+	$_SESSION['usu_nivel'] == "3" || $_SESSION["usu_id"] == "0") header('Location: ./');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,58 +32,58 @@ if (!isset($_SESSION["usu_id"]) || empty($_SESSION["usu_id"]) ||
 
 			<ul class="nav">
 				<li class="nav-item">					
-					<a href="home.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'home.php' ? ' nav-active' : ''; ?>">
+					<a href="home" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'home.php' ? ' nav-active' : ''; ?>">
 					<i class="fa fa-home"></i>	
 					Home
 					</a>
 				</li>
 				<li class="nav-item">					
-					<a href="temporadas.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'temporadas.php' ? ' nav-active' : ''; ?>">
+					<a href="temporadas" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'temporadas.php' ? ' nav-active' : ''; ?>">
 					<i class="fa fa-calendar"></i>	
 					Temporadas
 					</a>
 				</li>
 				<?php if($_SESSION['usu_nivel'] == "1") : ?>
 					<li class="nav-item">					
-						<a href="times_temporadas.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'times_temporadas.php' ? ' nav-active' : ''; ?>">
+						<a href="times_temporadas" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'times_temporadas.php' ? ' nav-active' : ''; ?>">
 						<i class="fa fa-list-ol"></i>	
 						Ativar Inscrição
 						</a>
 					</li>
 					<li class="nav-item">					
-						<a href="gerenciar_times.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'gerenciar_times.php' ? ' nav-active' : ''; ?>">
+						<a href="gerenciar_times" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'gerenciar_times.php' ? ' nav-active' : ''; ?>">
 						<i class="fa fa-soccer-ball-o"></i>	
 						Gerenciar Times
 						</a>
 					</li>
 				<?php endif; ?>
 				<li class="nav-item">					
-					<a href="pontuacoes.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'pontuacoes.php' ? ' nav-active' : ''; ?>">
+					<a href="pontuacoes" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'pontuacoes.php' ? ' nav-active' : ''; ?>">
 					<i class="fa fa-calculator"></i>	
 					Pontuação
 					</a>
 				</li>
 				<li class="nav-item">					
-					<a href="mata_mata.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'mata_mata.php' ? ' nav-active' : ''; ?>">
+					<a href="mata_mata" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'mata_mata.php' ? ' nav-active' : ''; ?>">
 					<i class="fa fa-fire"></i>	
 					Mata-mata
 					</a>
 				</li>
 				<li class="nav-item">					
-					<a href="eventos.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'eventos.php' ? ' nav-active' : ''; ?>">
+					<a href="eventos" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'eventos.php' ? ' nav-active' : ''; ?>">
 					<i class="fa fa-beer"></i>	
 					Eventos
 					</a>
 				</li>
 				<?php if($_SESSION['usu_nivel'] == "1") : ?>
 					<li class="nav-item">					
-						<a href="usuarios.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'usuarios.php' ? ' nav-active' : ''; ?>">
+						<a href="usuarios" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'usuarios.php' ? ' nav-active' : ''; ?>">
 						<i class="fa fa-user"></i>	
 						Usuários
 						</a>
 					</li>
 					<li class="nav-item">					
-						<a href="configuracoes.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'configuracoes.php' ? ' nav-active' : ''; ?>">
+						<a href="configuracoes" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'configuracoes.php' ? ' nav-active' : ''; ?>">
 						<i class="fa fa-cogs"></i>	
 						Configurações
 						</a>
@@ -124,7 +124,7 @@ if (!isset($_SESSION["usu_id"]) || empty($_SESSION["usu_id"]) ||
 							</span>
 						</div>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-    						<div class="dropdown-item"><a href="logout.php">Sair</a></div>
+    						<div class="dropdown-item"><a href="logout">Sair</a></div>
     					</div>	
 					</div>
 				</div><!-- liga-logo -->

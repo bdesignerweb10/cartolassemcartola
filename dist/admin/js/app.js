@@ -31,7 +31,7 @@ $(function() {
 					$('#loading').modal('hide');
 
 					if(retorno.succeed) {
-						window.location.href = 'home.php';
+						window.location.href = 'home';
 					}
 					else {
 						$('#alert-title').html(retorno.title);
@@ -40,7 +40,7 @@ $(function() {
 
 						if(retorno.errno == "21010") {
 							$('#alert').on('hidden.bs.modal', function (e) {
-								window.location.href = '../provisoria.php';
+								window.location.href = '../provisoria';
 							});
 						}
 					}

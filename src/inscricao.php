@@ -1,7 +1,7 @@
 <?php 
 require_once('header.php');
 if($_SESSION["temporada"] == "1")
-	header('location:index.php');
+	header('location:./');
 ?>
 <main class="inscmain">
 	<div class="container">
@@ -70,7 +70,7 @@ if($_SESSION["temporada"] == "1")
 					      	 - Pagseguro <b>(EM BREVE)</b></p>
 					      	
 					      	<p>Já leu o nosso regulamento?</p>
-					      	<p><a href="regulamento.php">Acesse Regulamentos e leia todas as regras para depois não ficar de mimimi!</a></p>
+					      	<p><a href="regulamento">Acesse Regulamentos e leia todas as regras para depois não ficar de mimimi!</a></p>
 
 					      	<p>Caso tenha alguma dúvida ou sugestão, entre em contato por:</p>
 					      	<p> - (19) 99897-0090<br />
