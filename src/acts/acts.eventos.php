@@ -22,7 +22,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 						$confirmado = 'false';
 						$confirmpresenca = $conn->query("SELECT id_times 
 													       FROM tbl_eventos_presenca 
-													      WHERE id_evento = $eventos->id
+													      WHERE id_eventos = $eventos->id
 													      	AND id_times = $id_time") or trigger_error($conn->error);
 
 						if($confirmpresenca && $confirmpresenca->num_rows > 0)
@@ -39,6 +39,56 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 			} catch(Exception $e) {
 				echo '{"succeed": false, "errno": 18003, "title": "Erro ao carregar os dados!", "erro": "Ocorreu um erro ao carregar os dados: ' . $e->getMessage() . '"}';
 				exit();
+			}
+        	break;
+
+	    case 'confirmar-presenca':
+			try {
+				$conn->autocommit(FALSE);
+
+				if(!isset($_GET['idevento']) || empty($_GET['idevento'])) {
+					echo '{"succeed": false, "errno": `8006, "title": "Parâmetro não encontrado!", "erro": "Parâmetro do ID do evento não enviado! Favor contatar o administrador mostrando o erro!"}';
+					exit();
+				}
+
+				$id_evento = $_GET['idevento'] / $_SESSION["fake_id"];
+
+				$qryinspresencaevento = "INSERT INTO tbl_eventos_presenca (id_eventos, id_times) VALUES ($id_evento, $id_time)";
+				if ($conn->query($qryinspresencaevento) === TRUE) {
+					$conn->commit();
+					echo '{"succeed": true}';
+				} else {
+			        throw new Exception("Erro ao confirmar presença no evento: " . $qryinspresencaevento . "<br>" . $conn->error);
+				}
+			} catch(Exception $e) {
+				$conn->rollback();
+
+				echo '{"succeed": false, "errno": 18005, "title": "Erro ao salvar os dados!", "erro": "Ocorreu um erro ao salvar os dados: ' . $e->getMessage() . '"}';
+			}
+        	break;
+
+	    case 'remover-presenca':
+			try {
+				$conn->autocommit(FALSE);
+
+				if(!isset($_GET['idevento']) || empty($_GET['idevento'])) {
+					echo '{"succeed": false, "errno": 18004, "title": "Parâmetro não encontrado!", "erro": "Parâmetro do ID do evento não enviado! Favor contatar o administrador mostrando o erro!"}';
+					exit();
+				}
+
+				$id_evento = $_GET['idevento'] / $_SESSION["fake_id"];
+
+				$qrydelpresencaevento = "DELETE FROM tbl_eventos_presenca WHERE id_eventos = $id_evento AND id_times = " . $_SESSION["usu_time"];
+				if ($conn->query($qrydelpresencaevento) === TRUE) {
+					$conn->commit();
+					echo '{"succeed": true}';
+				} else {
+			        throw new Exception("Erro ao desconfirmar presença do evento: " . $qrydelpresencaevento . "<br>" . $conn->error);
+				}
+			} catch(Exception $e) {
+				$conn->rollback();
+
+				echo '{"succeed": false, "errno": 18005, "title": "Erro ao salvar os dados!", "erro": "Ocorreu um erro ao salvar os dados: ' . $e->getMessage() . '"}';
 			}
         	break;
 

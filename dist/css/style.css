@@ -9153,3 +9153,7 @@ ul.escudos > li {
 #pontrodada .table-responsive, #proximos-eventos, #eventos-passados, #eventos-container .bg-success, #eventos-container .bg-info,
 #eventos-container .infor {
   display: none; }
+
+.img-fit {
+  width: 100%;
+  height: auto; }

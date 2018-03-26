@@ -12,7 +12,7 @@ if (!isset($_SESSION)) session_start();
 $conn = new mysqli("localhost", "root", "root", "cartolassemcartola");
 
 // PRD
-// $conn = new mysqli("cartolassemcar.mysql.dbaas.com.br", "cartolassemcar", "cart@12345", "cartolassemcar");
+//$conn = new mysqli("cartolassemcar.mysql.dbaas.com.br", "cartolassemcar", "cart@12345", "cartolassemcar");
 
 if ($conn->connect_errno) {
     die("00000 - Failed to connect to MySQL: [$conn->connect_errno] $conn->connect_error");

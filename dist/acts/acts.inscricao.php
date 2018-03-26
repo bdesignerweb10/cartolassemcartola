@@ -8,8 +8,6 @@ require_once("../lib/PHPMailer/src/Exception.php");
 require_once("../lib/PHPMailer/src/PHPMailer.php");
 require_once("../lib/PHPMailer/src/SMTP.php");
 						
-// echo '{"succeed": true}';
-
 if(isset($_POST) && !empty($_POST) && $_POST["nome"]) {
 	$isValid = true;
 	$errMsg = "";

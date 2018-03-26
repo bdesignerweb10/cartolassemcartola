@@ -246,7 +246,16 @@ $(function() {
 	   window.location.pathname.indexOf('liga') === -1 &&
 	   window.location.pathname.indexOf('mata_mata') === -1 &&
 	   window.location.pathname.indexOf('rodada') === -1 &&
-	   window.location.pathname.indexOf('eventos') === -1) {
+	   window.location.pathname.indexOf('eventos') === -1 &&
+	   window.location.pathname.indexOf('inscricao') === -1 &&
+	   window.location.pathname.indexOf('regulamento') === -1 &&
+	   window.location.pathname.indexOf('login') === -1 &&
+	   window.location.pathname.indexOf('logout') === -1 &&
+	   window.location.pathname.indexOf('brasileiro') === -1 &&
+	   window.location.pathname.indexOf('clube') === -1 &&
+	   window.location.pathname.indexOf('dados_clube') === -1 &&
+	   window.location.pathname.indexOf('meus_dados') === -1 &&
+	   window.location.pathname.indexOf('provisoria') === -1) {
 				
 		// DESTAQUES RODADA
 		$('#destaques-rodada').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
@@ -1026,9 +1035,248 @@ $(function() {
 			    };
 			}
 		});
+
+		$('body').on('click', '.btn-confirmar-presenca', function(e) {
+			e.preventDefault();
+
+			$('#loading-modal').modal({
+				keyboard: false
+			});
+
+    		var id = $(this).data('id');
+
+			$.ajax({
+				type: "POST",
+				url: "acts/acts.eventos.php?act=confirmar-presenca&idevento=" + id,
+				success: function(data)
+				{
+				    try {
+						$('#loading-modal').modal('hide');
+
+						var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+						if(retorno.succeed) {
+							$('#alert-title').html("Presença confirmada com sucesso!");
+							$('#alert-content').html("Você confirmou sua presença no evento com sucesso! Ao fechar esta mensagem a página será recarregada.");
+							$('#alert').modal('show');
+
+							$('#alert').on('hidden.bs.modal', function (e) {
+								window.location.reload();
+							});
+						}
+						else {
+							$('#alert-title').html(retorno.title);
+							$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+							$('#alert').modal('show');
+
+							if(retorno.errno == "12010") {
+								$('#alert').on('hidden.bs.modal', function (e) {
+									window.location.href = 'provisoria';
+								});
+							}
+						}
+				    }
+				    catch (e) {
+						$('#loading-modal').modal('hide');
+						$('#alert-title').html("Erro ao fazer parse do JSON!");
+						$('#alert-content').html(String(e.stack));
+						$('#alert').modal('show');
+				    };
+				}
+			});
+		});
+
+		$('body').on('click', '.btn-remover-presenca', function(e) {
+			e.preventDefault();
+
+			$('#loading-modal').modal({
+				keyboard: false
+			});
+
+    		var id = $(this).data('id');
+
+			$.ajax({
+				type: "POST",
+				url: "acts/acts.eventos.php?act=remover-presenca&idevento=" + id,
+				success: function(data)
+				{
+				    try {
+						$('#loading-modal').modal('hide');
+
+						var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+						if(retorno.succeed) {
+							$('#alert-title').html("Presença removida com sucesso!");
+							$('#alert-content').html("Não vai mais, arregão? A patroa não deixou? Fazer o que! Ao fechar esta mensagem a página será recarregada.");
+							$('#alert').modal('show');
+
+							$('#alert').on('hidden.bs.modal', function (e) {
+								window.location.reload();
+							});
+						}
+						else {
+							$('#alert-title').html(retorno.title);
+							$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+							$('#alert').modal('show');
+
+							if(retorno.errno == "12010") {
+								$('#alert').on('hidden.bs.modal', function (e) {
+									window.location.href = 'provisoria';
+								});
+							}
+						}
+				    }
+				    catch (e) {
+						$('#loading-modal').modal('hide');
+						$('#alert-title').html("Erro ao fazer parse do JSON!");
+						$('#alert-content').html(String(e.stack));
+						$('#alert').modal('show');
+				    };
+				}
+			});
+		});
 	}
 	
 	// END EVENTOS (eventos)
+
+	// BEGIN MEUS DADOS (meus_dados)
+
+	$("#form-meus-dados").submit(function(e) {
+		e.preventDefault();
+
+		$('#loading-modal').modal({
+			keyboard: false
+		});
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.meus_dados.php",
+			data: $("#form-meus-dados").serialize(),
+			success: function(data)
+			{
+			    try {
+					$('#loading-modal').modal('hide');
+
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+					if(retorno.succeed) {
+						$('#nome').val('');
+						$('#email').val('');
+						$('#telefone').val('');
+						$('#senha').val('');
+						$('#senha2').val('');
+
+						$('#alert-title').html("Dados alterados com sucesso!");
+						$('#alert-content').html("Você alterou seus dados com sucesso! Ao fechar esta mensagem a página será recarregada.");
+						$('#alert').modal('show');
+
+						$('#alert').on('hidden.bs.modal', function (e) {
+							window.location.reload();
+						});
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+
+						$('#nome').val('');
+						$('#email').val('');
+						$('#telefone').val('');
+						$('#senha').val('');
+						$('#senha2').val('');
+					}
+			    }
+			    catch (e) {
+					$('#loading-modal').modal('hide');
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
+					$('#alert').modal('show');
+
+					$('#nome').val('');
+					$('#email').val('');
+					$('#telefone').val('');
+					$('#senha').val('');
+					$('#senha2').val('');
+			    };
+			}
+		});
+	});
+
+	// END MEUS DADOS (meus_dados)
+
+	// BEGIN DADOS CLUBE (dados_clube)
+
+	$("#form-dados-clube").submit(function(e) {
+		e.preventDefault();
+
+		$('#loading-modal').modal({
+			keyboard: false
+		});
+
+		var formData = new FormData();
+		formData.append('time', $('#time').val());
+		formData.append('historia', $('#historia').val());
+		formData.append('brasao', $('#brasao')[0].files[0]);
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.dados_clube.php",
+			type : 'POST',
+			data : formData,
+			processData: false,
+			contentType: false,
+			success: function(data)
+			{
+				console.log(data);
+			    try {
+					$('#loading-modal').modal('hide');
+
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+					if(retorno.succeed) {
+						$('#nome').val('');
+						$('#email').val('');
+						$('#telefone').val('');
+						$('#senha').val('');
+						$('#senha2').val('');
+
+						$('#alert-title').html("Dados alterados com sucesso!");
+						$('#alert-content').html("Você alterou os dados do seu clube com sucesso! Ao fechar esta mensagem a página será recarregada.");
+						$('#alert').modal('show');
+
+						$('#alert').on('hidden.bs.modal', function (e) {
+							window.location.reload();
+						});
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+
+						$('#nome').val('');
+						$('#email').val('');
+						$('#telefone').val('');
+						$('#senha').val('');
+						$('#senha2').val('');
+					}
+			    }
+			    catch (e) {
+					$('#loading-modal').modal('hide');
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
+					$('#alert').modal('show');
+
+					$('#nome').val('');
+					$('#email').val('');
+					$('#telefone').val('');
+					$('#senha').val('');
+					$('#senha2').val('');
+			    };
+			}
+		});
+	});
+
+	// END MEUS DADOS (meus_dados)
 });
 
 function getRandomColor() {

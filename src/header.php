@@ -1,12 +1,12 @@
 <?php 
 require_once("conn.php");
 
-if($_SESSION["temporada"] == 0 && (basename($_SERVER['PHP_SELF']) != "inscricao.php" && basename($_SERVER['PHP_SELF']) != "regulamentos.php"))
+if($_SESSION["temporada"] == 0 && (basename($_SERVER['PHP_SELF']) != "inscricao.php" && basename($_SERVER['PHP_SELF']) != "regulamento.php"))
 	header('Location: inscricao');
 else {
 	if ($_SESSION["user_ativado"] &&
 		basename($_SERVER['PHP_SELF']) != "inscricao.php" && 
-		basename($_SERVER['PHP_SELF']) != "regulamentos.php" &&
+		basename($_SERVER['PHP_SELF']) != "regulamento.php" &&
 		basename($_SERVER['PHP_SELF']) != "index.php" &&
 		(!isset($_SESSION["usu_id"]) || empty($_SESSION["usu_id"]) || 
 		!isset($_SESSION['usu_nivel']) || empty($_SESSION["usu_nivel"]) || 
@@ -140,7 +140,9 @@ else {
 							<span class="mark-merc hidden-xs-down">Mercado fechado</span>												
 					<?php endif; ?>
 				</div><!-- liga-logo -->
-				<?php if(isset($_SESSION["usu_id"]) && !empty($_SESSION["usu_id"]) && $_SESSION["usu_id"] > 0) : ?>
+				<?php 
+				if($_SESSION["temporada"] == "1") :
+					if(isset($_SESSION["usu_id"]) && !empty($_SESSION["usu_id"]) && $_SESSION["usu_id"] > 0) : ?>
 					<div class="liga-logo">
 						<div class="dropdown">
 							<div class="dropdown-toggle" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -157,8 +159,10 @@ else {
 								</span>
 							</div>
 							<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-	    						<div class="dropdown-item"><a href="meus_dados">Meus dados</a></div>
-	    						<div class="dropdown-item"><a href="dados_clube">Informações do clube</a></div>
+								<?php if(isset($_SESSION["usu_time"]) && !empty($_SESSION["usu_time"]) && $_SESSION["usu_time"] > 0) : ?>
+		    						<div class="dropdown-item"><a href="meus_dados">Meus dados</a></div>
+		    						<div class="dropdown-item"><a href="dados_clube">Informações do clube</a></div>
+								<?php endif; ?>
 	    						<div class="dropdown-item"><a href="logout">Sair</a></div>
 	    					</div>	
 						</div>
@@ -169,7 +173,8 @@ else {
 							<a href="login"><i class="fa fa-home"></i>&nbsp;&nbsp;Entrar</a>
 						</span>	
 					</div><!-- liga-logo -->
-				<?php endif; ?>
+				<?php endif;
+				endif; ?>
 			</div><!-- container -->	
 		</div><!-- header -->
 	</header>
