@@ -53,7 +53,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 		        		$posantiga = "";
 		        		$variacao = "";
 
-						$qryselposicao = $conn->query("SELECT posicao_liga, pontuacao
+						$qryselposicao = $conn->query("SELECT COALESCE(posicao_liga, 0) AS posicao_liga, pontuacao
 														 FROM tbl_times_temporadas 
 														WHERE id_times = $destaques->id_time
 														  AND id_anos = $temporada
@@ -65,7 +65,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 				        	}
 				        }
 
-						$qryposanterior = $conn->query("SELECT posicao_liga
+						$qryposanterior = $conn->query("SELECT COALESCE(posicao_liga, 0) AS posicao_liga
 														  FROM tbl_times_temporadas 
 														 WHERE id_times = $destaques->id_time
 														   AND id_anos = $temporada
