@@ -735,7 +735,7 @@ $(function() {
 											else
 												desc_chave = '3º lugar';
 										}
-										$('#cards' + nivel.nivel).append('<div class="col-sm-12 col-md-12 col-lg-6 col-xl-6"><div class="card"><p class="chaveamento">' + desc_chave + '</p><div class="card-block confronto"><div class="col-sm-3"><img src="img/escudos/' + confronto.escudo_time_1 + '" class="img-fluid center-block"><p class="clube">' + confronto.time_1 + '</p><p class="pontuacao">' + confronto.pontuacao_time_1 + '</p></div><p class="vs">X</p><div class="col-sm-3"><img src="img/escudos/' + confronto.escudo_time_2 + '" class="img-fluid center-block"><p class="clube">' + confronto.time_2 + '</p><p class="pontuacao">' + confronto.pontuacao_time_2 + '</p></div></div></div>');
+										$('#cards' + nivel.nivel).append('<div class="col-sm-12 col-md-12 col-lg-6 col-xl-6"><div class="card"><p class="chaveamento">' + desc_chave + '</p><div class="card-block confronto"><div class="col-sm-6"><img src="img/escudos/' + confronto.escudo_time_1 + '" class="img-fluid center-block"><p class="clube">' + confronto.time_1 + '</p><p class="pontuacao">' + confronto.pontuacao_time_1 + '</p></div><p class="vs">X</p><div class="col-sm-6"><img src="img/escudos/' + confronto.escudo_time_2 + '" class="img-fluid center-block"><p class="clube">' + confronto.time_2 + '</p><p class="pontuacao">' + confronto.pontuacao_time_2 + '</p></div></div></div>');
 									});
 								});
 
