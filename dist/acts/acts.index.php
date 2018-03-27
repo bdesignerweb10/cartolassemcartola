@@ -165,7 +165,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 		        		}
 						$posicoeslist = '{"label": "' . $times->nome_time . '", "fill": false, ' . $border . '"data": [';
 
-			    		$posicoesqry = $conn->query("SELECT posicao_liga 
+			    		$posicoesqry = $conn->query("SELECT COALESCE(posicao_liga, 0) AS posicao_liga 
 			    									   FROM tbl_times_temporadas 
 												  	  WHERE id_times = $times->id 
 													    AND id_anos = $temporada 

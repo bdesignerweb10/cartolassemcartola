@@ -131,6 +131,12 @@ gulp.task("concat-js", function() {
 
 });
 
+/* Task para mover arquivos js para pasta dist/js */
+ gulp.task("move-js-calendar", function() { 
+ 	return gulp.src('./src/js/*.js') 	 
+ 	.pipe(gulp.dest('./dist/js'))
+ });
+
 /* Task para mover a pasta css para pasta dist */
  gulp.task("css", function() { 
 	return gulp.src("./src/css/*.css")
@@ -159,5 +165,6 @@ gulp.task("server", function() {
 	gulp.watch("./src/admin/*.php", ['php-admin']);		
 	gulp.watch("./src/admin/acts/*.php", ['php-admin-acts']);
 	gulp.watch("./src/admin/js/**/*.js", ['js']);
+	gulp.watch("./src/js/**/*.js", ['move-js-calendar']);
 });
-gulp.task("default", ["sass", "css", "move-htaccess", "php", "php-acts" , "php-admin" , "php-admin-acts" ,"js", "admin-js", "concat-js", "move-img", "move-fonts", "move-admin", "move-acts", "move-libs", "server"]);
+gulp.task("default", ["sass", "css", "move-htaccess", "php", "php-acts" , "php-admin" , "php-admin-acts" ,"js", "admin-js", "concat-js", "move-img", "move-fonts", "move-admin", "move-acts", "move-libs", "move-js-calendar" ,"server"]);
