@@ -16,51 +16,46 @@ SELECT (SELECT MAX(id) FROM tbl_anos), id FROM tbl_rodadas;
 -- ######################
 -- Barcefortes FC 		-
 -- ######################
-INSERT INTO tbl_times (nome_time, escudo_time, nome_presidente, email, telefone, ativo) 
-     VALUES ('BierFortes EC', 'bierfortesec.png', 'Leonardo Fortes', 'lf_leofortes@hotmail.com', '(19) 99858-8123', 0); 
-INSERT INTO tbl_usuarios (times_id, usuario, senha, senha_provisoria, nivel, tentativas)
-	 VALUES ((SELECT MAX(id) FROM tbl_times), 'lf_leofortes@hotmail.com', MD5('123'), 1, 3, 0);
-
 INSERT INTO tbl_inscricao (id_times, id_anos, forma_pgto, ativo) 
-	 VALUES ((SELECT MAX(id) FROM tbl_times), (SELECT MAX(id) FROM tbl_anos), 1, 0);
-INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ((SELECT MAX(id) FROM tbl_times), (SELECT MAX(id) FROM tbl_anos), 1, 37.58 , NULL, 1, NOW());
-INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ((SELECT MAX(id) FROM tbl_times), (SELECT MAX(id) FROM tbl_anos), 2, 53.78 , NULL, 1, NOW());
-INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ((SELECT MAX(id) FROM tbl_times), (SELECT MAX(id) FROM tbl_anos), 3, 33.05 , NULL, 1, NOW());
-INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ((SELECT MAX(id) FROM tbl_times), (SELECT MAX(id) FROM tbl_anos), 4, 29.25 , NULL, 1, NOW());
-INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ((SELECT MAX(id) FROM tbl_times), (SELECT MAX(id) FROM tbl_anos), 5, 29.16 , NULL, 1, NOW());
-INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ((SELECT MAX(id) FROM tbl_times), (SELECT MAX(id) FROM tbl_anos), 6, 54.65 , NULL, 1, NOW());
-INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ((SELECT MAX(id) FROM tbl_times), (SELECT MAX(id) FROM tbl_anos), 7, 43.66 , NULL, 1, NOW());
-INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ((SELECT MAX(id) FROM tbl_times), (SELECT MAX(id) FROM tbl_anos), 8, 21.40 , NULL, 1, NOW());
-INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ((SELECT MAX(id) FROM tbl_times), (SELECT MAX(id) FROM tbl_anos), 9, 8.99 , NULL, 1, NOW());
-INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ((SELECT MAX(id) FROM tbl_times), (SELECT MAX(id) FROM tbl_anos), 10, 94.27 , NULL, 1, NOW());
-INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ((SELECT MAX(id) FROM tbl_times), (SELECT MAX(id) FROM tbl_anos), 11, 55.01 , NULL, 1, NOW());
-INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ((SELECT MAX(id) FROM tbl_times), (SELECT MAX(id) FROM tbl_anos), 12, 88.50 , NULL, 1, NOW());
-INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ((SELECT MAX(id) FROM tbl_times), (SELECT MAX(id) FROM tbl_anos), 13, 67.53 , NULL, 1, NOW());
-INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ((SELECT MAX(id) FROM tbl_times), (SELECT MAX(id) FROM tbl_anos), 14, 45.18 , NULL, 1, NOW());
-INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ((SELECT MAX(id) FROM tbl_times), (SELECT MAX(id) FROM tbl_anos), 15, 90.26 , NULL, 1, NOW());
-INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ((SELECT MAX(id) FROM tbl_times), (SELECT MAX(id) FROM tbl_anos), 16, 38.78 , NULL, 1, NOW());
-INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ((SELECT MAX(id) FROM tbl_times), (SELECT MAX(id) FROM tbl_anos), 17, 47.06 , NULL, 1, NOW());
-INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ((SELECT MAX(id) FROM tbl_times), (SELECT MAX(id) FROM tbl_anos), 18, 44.87 , NULL, 1, NOW());
-INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ((SELECT MAX(id) FROM tbl_times), (SELECT MAX(id) FROM tbl_anos), 19, 56.74 , NULL, 1, NOW());
-INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ((SELECT MAX(id) FROM tbl_times), (SELECT MAX(id) FROM tbl_anos), 20, 96.34 , NULL, 1, NOW());
-INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ((SELECT MAX(id) FROM tbl_times), (SELECT MAX(id) FROM tbl_anos), 21, 54.82 , NULL, 1, NOW());
-INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ((SELECT MAX(id) FROM tbl_times), (SELECT MAX(id) FROM tbl_anos), 22, 54.53 , NULL, 1, NOW());
-INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ((SELECT MAX(id) FROM tbl_times), (SELECT MAX(id) FROM tbl_anos), 23, 55.10 , NULL, 1, NOW());
-INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ((SELECT MAX(id) FROM tbl_times), (SELECT MAX(id) FROM tbl_anos), 24, 41.69 , NULL, 1, NOW());
-INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ((SELECT MAX(id) FROM tbl_times), (SELECT MAX(id) FROM tbl_anos), 25, 64.78 , NULL, 1, NOW());
-INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ((SELECT MAX(id) FROM tbl_times), (SELECT MAX(id) FROM tbl_anos), 26, 24.33 , NULL, 1, NOW());
-INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ((SELECT MAX(id) FROM tbl_times), (SELECT MAX(id) FROM tbl_anos), 27, 69.85 , NULL, 1, NOW());
-INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ((SELECT MAX(id) FROM tbl_times), (SELECT MAX(id) FROM tbl_anos), 28, 58.37 , NULL, 1, NOW());
-INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ((SELECT MAX(id) FROM tbl_times), (SELECT MAX(id) FROM tbl_anos), 29, 36.47 , NULL, 1, NOW());
-INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ((SELECT MAX(id) FROM tbl_times), (SELECT MAX(id) FROM tbl_anos), 30, 57.15 , NULL, 1, NOW());
-INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ((SELECT MAX(id) FROM tbl_times), (SELECT MAX(id) FROM tbl_anos), 31, 61.02 , NULL, 1, NOW());
-INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ((SELECT MAX(id) FROM tbl_times), (SELECT MAX(id) FROM tbl_anos), 32, 50.82 , NULL, 1, NOW());
-INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ((SELECT MAX(id) FROM tbl_times), (SELECT MAX(id) FROM tbl_anos), 33, 49.90 , NULL, 1, NOW());
-INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ((SELECT MAX(id) FROM tbl_times), (SELECT MAX(id) FROM tbl_anos), 34, 34.51 , NULL, 1, NOW());
-INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ((SELECT MAX(id) FROM tbl_times), (SELECT MAX(id) FROM tbl_anos), 35, 29.87 , NULL, 1, NOW());
-INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ((SELECT MAX(id) FROM tbl_times), (SELECT MAX(id) FROM tbl_anos), 36, 31.20 , NULL, 1, NOW());
-INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ((SELECT MAX(id) FROM tbl_times), (SELECT MAX(id) FROM tbl_anos), 37, 72.44 , NULL, 1, NOW());
-INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ((SELECT MAX(id) FROM tbl_times), (SELECT MAX(id) FROM tbl_anos), 38, 60.84 , NULL, 1, NOW());
+	 VALUES (10, (SELECT MAX(id) FROM tbl_anos), 1, 0);
+INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES (10, (SELECT MAX(id) FROM tbl_anos), 1, 37.58 , NULL, 1, NOW());
+INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES (10, (SELECT MAX(id) FROM tbl_anos), 2, 53.78 , NULL, 1, NOW());
+INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES (10, (SELECT MAX(id) FROM tbl_anos), 3, 33.05 , NULL, 1, NOW());
+INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES (10, (SELECT MAX(id) FROM tbl_anos), 4, 29.25 , NULL, 1, NOW());
+INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES (10, (SELECT MAX(id) FROM tbl_anos), 5, 29.16 , NULL, 1, NOW());
+INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES (10, (SELECT MAX(id) FROM tbl_anos), 6, 54.65 , NULL, 1, NOW());
+INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES (10, (SELECT MAX(id) FROM tbl_anos), 7, 43.66 , NULL, 1, NOW());
+INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES (10, (SELECT MAX(id) FROM tbl_anos), 8, 21.40 , NULL, 1, NOW());
+INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES (10, (SELECT MAX(id) FROM tbl_anos), 9, 8.99 , NULL, 1, NOW());
+INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES (10, (SELECT MAX(id) FROM tbl_anos), 10, 94.27 , NULL, 1, NOW());
+INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES (10, (SELECT MAX(id) FROM tbl_anos), 11, 55.01 , NULL, 1, NOW());
+INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES (10, (SELECT MAX(id) FROM tbl_anos), 12, 88.50 , NULL, 1, NOW());
+INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES (10, (SELECT MAX(id) FROM tbl_anos), 13, 67.53 , NULL, 1, NOW());
+INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES (10, (SELECT MAX(id) FROM tbl_anos), 14, 45.18 , NULL, 1, NOW());
+INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES (10, (SELECT MAX(id) FROM tbl_anos), 15, 90.26 , NULL, 1, NOW());
+INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES (10, (SELECT MAX(id) FROM tbl_anos), 16, 38.78 , NULL, 1, NOW());
+INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES (10, (SELECT MAX(id) FROM tbl_anos), 17, 47.06 , NULL, 1, NOW());
+INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES (10, (SELECT MAX(id) FROM tbl_anos), 18, 44.87 , NULL, 1, NOW());
+INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES (10, (SELECT MAX(id) FROM tbl_anos), 19, 56.74 , NULL, 1, NOW());
+INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES (10, (SELECT MAX(id) FROM tbl_anos), 20, 96.34 , NULL, 1, NOW());
+INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES (10, (SELECT MAX(id) FROM tbl_anos), 21, 54.82 , NULL, 1, NOW());
+INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES (10, (SELECT MAX(id) FROM tbl_anos), 22, 54.53 , NULL, 1, NOW());
+INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES (10, (SELECT MAX(id) FROM tbl_anos), 23, 55.10 , NULL, 1, NOW());
+INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES (10, (SELECT MAX(id) FROM tbl_anos), 24, 41.69 , NULL, 1, NOW());
+INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES (10, (SELECT MAX(id) FROM tbl_anos), 25, 64.78 , NULL, 1, NOW());
+INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES (10, (SELECT MAX(id) FROM tbl_anos), 26, 24.33 , NULL, 1, NOW());
+INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES (10, (SELECT MAX(id) FROM tbl_anos), 27, 69.85 , NULL, 1, NOW());
+INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES (10, (SELECT MAX(id) FROM tbl_anos), 28, 58.37 , NULL, 1, NOW());
+INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES (10, (SELECT MAX(id) FROM tbl_anos), 29, 36.47 , NULL, 1, NOW());
+INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES (10, (SELECT MAX(id) FROM tbl_anos), 30, 57.15 , NULL, 1, NOW());
+INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES (10, (SELECT MAX(id) FROM tbl_anos), 31, 61.02 , NULL, 1, NOW());
+INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES (10, (SELECT MAX(id) FROM tbl_anos), 32, 50.82 , NULL, 1, NOW());
+INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES (10, (SELECT MAX(id) FROM tbl_anos), 33, 49.90 , NULL, 1, NOW());
+INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES (10, (SELECT MAX(id) FROM tbl_anos), 34, 34.51 , NULL, 1, NOW());
+INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES (10, (SELECT MAX(id) FROM tbl_anos), 35, 29.87 , NULL, 1, NOW());
+INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES (10, (SELECT MAX(id) FROM tbl_anos), 36, 31.20 , NULL, 1, NOW());
+INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES (10, (SELECT MAX(id) FROM tbl_anos), 37, 72.44 , NULL, 1, NOW());
+INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES (10, (SELECT MAX(id) FROM tbl_anos), 38, 60.84 , NULL, 1, NOW());
 
 -- ######################
 -- Palestrino 84 FC 	-
@@ -3318,9 +3313,6 @@ INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posi
 INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ((SELECT MAX(id) FROM tbl_times), (SELECT MAX(id) FROM tbl_anos), 36, 66.45 , NULL, 1, NOW());
 INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ((SELECT MAX(id) FROM tbl_times), (SELECT MAX(id) FROM tbl_anos), 37, 37.55 , NULL, 1, NOW());
 INSERT INTO tbl_times_temporadas (id_times, id_anos, id_rodadas, pontuacao, posicao_liga, usuario_id, alterado_em) VALUES ((SELECT MAX(id) FROM tbl_times), (SELECT MAX(id) FROM tbl_anos), 38, 22.34 , NULL, 1, NOW());
-
-
-
 
 
 

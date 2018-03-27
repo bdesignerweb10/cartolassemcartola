@@ -54,7 +54,7 @@ require_once('header.php');
 								<div id='calendar'></div>
 							</div>
 						</div>
-					</article>		
+					</article>
 				</div><!-- col-sm-5 -->
 				<div class="col-sm-12 col-md-6 col-lg-7 col-xl-7">
 					<article>
@@ -103,11 +103,9 @@ require_once('header.php');
 								</div><!-- card-footer -->
 							</footer>				
 						</div><!-- card -->
-					</article>								
+					</article>
 				</div><!-- col-sm-7 -->
-			</div><!-- row -->	
-			<div class="row">
-				<div class="col-sm-12">
+				<div class="col-12">
 					<article>
 						<div id="desempenho-rodada" class="card">
 							<div class="card-header">
@@ -124,8 +122,8 @@ require_once('header.php');
 							</footer>				
 						</div><!-- card -->
 					</article>
-				</div><!-- col-sm-12 -->
-			</div><!-- row -->
+				</div><!-- col-sm-7 -->
+			</div><!-- row -->	
 			<div class="modal modal-default modal-success fade" id="1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			  <div class="modal-dialog" role="document">
 			    <div class="modal-content">
