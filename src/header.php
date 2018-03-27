@@ -31,6 +31,8 @@ else {
 
 	<link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
 	<link rel="stylesheet" href="css/style.css">
+	<link href='css/fullcalendar.min.css' rel='stylesheet' />
+	<link href='css/fullcalendar.print.min.css' rel='stylesheet' media='print' />
 </head>
 <body>
 

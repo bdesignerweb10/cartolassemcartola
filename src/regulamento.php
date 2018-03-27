@@ -23,7 +23,7 @@
 
 					    <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
 					      <div class="card-block">
-					        1.1. A Liga terá início na 1ª rodada (15/04/2018) e durará até a última rodada do Brasileirão 2018, a 38ª Rodada (09/12/2018). 
+					        1.1. A Liga terá início na 1ª rodada (14/04/2018) e durará até a última rodada do Brasileirão 2018, a 38ª Rodada (09/12/2018). 
 					      </div>
 					      <div class="card-block">
 							1.2. As rodadas e suas pontuações serão TODAS de acordo com a organização do CARTOLA F.C, no site do http://globoesporte.globo.com/cartola-fc/.
@@ -89,17 +89,36 @@
 				    	</div>
 					    <div id="collapseFour" class="collapse" role="tabpanel" aria-labelledby="headingFour">
 					    	<div class="card-block">
-					        	4.1. Em Breve
+					        	4.1. Ranking Geral: ao fim das 38 rodadas, os 6 maiores pontuadores da Liga serão premiados (Serão Pagos R$1050,00 em prêmios pela liga).
 					      	</div>
 					      	<div class="card-block">
-					        	4.2. 
+					        	4.2. 1º colocado ao término das 38 rodadas do Campeonato Brasileiro 2018 receberá uma camisa do Clube do qual torce oficial no valor de R$400,00 ou o valor em dinheiro.
 					      	</div>
 					      	<div class="card-block">
-					        	4.3. 
+					        	4.3. 2º colocado ao término das 38 rodadas do Campeonato Brasileiro 2018 receberá um produto do Clube do qual torce oficial no valor de R$230,00 ou o valor em dinheiro.
 					      	</div>
 					      	<div class="card-block">
-					        	4.4. 
-					      	</div>	      	
+					        	4.4. 3º colocado ao término das 38 rodadas do Campeonato Brasileiro 2018 receberá um produto do Clube do qual torce oficial no valor de R$150,00 ou o valor em dinheiro.
+					      	</div>	
+					      	<div class="card-block">
+								4.5. 4º colocado ao término das 38 rodadas do Campeonato Brasileiro 2018 receberá um produto do Clube do qual torce oficial no valor de R$110,00 ou o valor em dinheiro.
+					      	</div> 
+					      	<div class="card-block">
+					      		4.6. 5º colocado ao término das 38 rodadas do Campeonato Brasileiro 2018 receberá um produto do Clube do qual torce oficial no valor de R$90,00 ou o valor em dinheiro.
+					      	</div> 
+					      	<div class="card-block">
+					      		4.7. 6º colocado ao término das 38 rodadas do Campeonato Brasileiro 2018 receberá um produto do Clube do qual torce oficial no valor de R$70,00 ou o valor em dinheiro.
+					      	</div> 
+					      	<div class="card-block">
+					      		4.8. Todas as premiações serão pagas ao final do campeonato, o Cartoleiro poderá receber o prêmio em Dinheiro ou em produtos oficiais do clube que torça, caso o cartoleiro opte por receber o prêmio em produto oficial, o valor será o mesmo. O Cartoleiro fica livre se quiser complementar o valor do prêmio para comprar um produto com valor superior ao prêmio, para isso entre em contato com a direção da liga. 
+					      		<p>Por exemplo o 5º colocado tem direito a um prêmio de até 90,00 (Produto oficial do clube que torça), caso o item escolhido tenha valor de 150,00 o Cartoleiro pode inteirar o valor a mais para a compra do produto.</p>
+					      	</div> 
+					      	<div class="card-block">
+					      		4.9. Os Cartoleiros que receberem o prêmio deve postar no grupo do Facebook uma foto com o prêmio que ganhou.
+					      	</div> 
+					      	<div class="card-block">
+					      		5.0. As premiações poderão sofrer alterações dependendo dos números de inscritos, atualmente o cálculo das premiações apresentadas foram feitas para 35 inscritos na liga.
+					      	</div>     	
 					    </div>
 				  	</div><!-- Card regulamento -->
 				  	<div class="card regulamento">

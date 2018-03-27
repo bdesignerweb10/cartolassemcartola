@@ -1,11 +1,11 @@
 <?php
 require_once('header.php');
-?>
+?>	
 	<main>
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-6">
-					<h1 class="headline">Seja bem vindo ao Cartolas sem Cartola!</h1>
+					<h1 class="headline">Seja bem vindo ao Cartolas sem Cartola!</h1>			
 				</div>
 				<div class="col-sm-6">
 					<h1 class="headline-rodada">Rodada Atual: <strong><?php echo $_SESSION["rod_atual"]; ?>º rodada</strong></h1>
@@ -44,21 +44,22 @@ require_once('header.php');
 						</div><!-- card -->
 					</article>
 					<article>
-						<div id="desempenho-rodada" class="card">
+						<div id="mata-mata-andamento" class="card">
 							<div class="card-header">
 								<header>
-									<h2 class="card-title">Desempenho por rodada</h2>
+									<h2 class="card-title">Mata-Mata em andamento</h2>
 								</header>
 							</div><!-- card-header -->
 							<div class="card-block">
 							</div><!-- card-block -->
 							<footer>
 								<div class="card-footer">
-									<a href="rodada"><button class="btn btn-primary"><i class='fa fa-binoculars'></i>&nbsp;&nbsp;&nbsp;Acompanhar meu desempenho</button></a>					
+									<a href="mata_mata"><button class="btn btn-primary"><i class='fa fa-binoculars'></i>&nbsp;&nbsp;&nbsp;Acompanhar todos os mata mata</button></a>
 								</div><!-- card-footer -->
 							</footer>				
 						</div><!-- card -->
-					</article>
+					</article>		
+								
 				</div><!-- col-sm-5 -->
 				<div class="col-sm-7">
 					<article>
@@ -91,27 +92,108 @@ require_once('header.php');
 								</div><!-- card-footer -->
 							</footer>				
 						</div><!-- card -->
-					</article>	
+					</article>		
 					<article>
-						<div id="mata-mata-andamento" class="card">
+						<div class="card">
 							<div class="card-header">
 								<header>
-									<h2 class="card-title">Mata-Mata em andamento</h2>
+									<h2 class="card-title">Próximos eventos</h2>
+								</header>
+							</div><!-- card-header -->
+							<div class="card-block">
+								<div id='calendar'></div>
+							</div>
+						</div>
+					</article>									
+				</div><!-- col-sm-7 -->
+			</div><!-- row -->	
+			<div class="row">
+				<div class="col-sm-12">
+					<article>
+						<div id="desempenho-rodada" class="card">
+							<div class="card-header">
+								<header>
+									<h2 class="card-title">Desempenho por rodada</h2>
 								</header>
 							</div><!-- card-header -->
 							<div class="card-block">
 							</div><!-- card-block -->
 							<footer>
 								<div class="card-footer">
-									<a href="mata_mata"><button class="btn btn-primary"><i class='fa fa-binoculars'></i>&nbsp;&nbsp;&nbsp;Acompanhar todos os mata mata</button></a>
+									<a href="rodada"><button class="btn btn-primary"><i class='fa fa-binoculars'></i>&nbsp;&nbsp;&nbsp;Acompanhar meu desempenho</button></a>					
 								</div><!-- card-footer -->
 							</footer>				
 						</div><!-- card -->
 					</article>
-				</div><!-- col-sm-7 -->
-			</div><!-- row -->			
+				</div><!-- col-sm-12 -->
+			</div><!-- row -->
+			<div class="modal modal-default modal-success fade" id="1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="exampleModalLabel"><img src="images/succes.png"></h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			      	<h3 class="modal-title" id="exampleModalLabel">Great!</h3>
+			      	<p class="modal-message">Your data has been successfuly saved.</p>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Back to my work</button>
+			        <button type="button" class="btn btn-primary">Back to store hours</button>
+			      </div>
+			    </div>
+			  </div>
+			</div><!-- modal -->					
 		</div><!-- container -->	
 	</main>
 <?php
 	require_once('footer.php');
 ?>
+
+<script>
+
+  	$(function() {
+
+  $('#calendar').fullCalendar({
+    defaultView: 'month',
+    defaultDate: '2018-03-12',
+
+    eventRender: function(eventObj, $el) {
+      $el.popover({
+        title: eventObj.title,
+        content: eventObj.description,
+        trigger: 'hover',
+        placement: 'top',
+        container: 'body'
+      });
+    },
+
+      events: [
+        {
+          id: 1,
+          title: 'Churrasco',
+          description: 'Local: Chacará pompeu, levar 1kg de carne e 1 fardinho de cerveja, putas por conta da casa',
+          start: '2018-03-12'
+
+        },
+        {
+          id: 2,	
+          title: 'Inicio do Campeonato Brasileiro',
+          start: '2018-04-14',
+          end: '2018-12-12'
+        },
+        {
+          id: 3,
+          title: 'Assistir libertadores no bar',
+          description: 'Local: Clube do gole, cerveja gelada por R$2,99',
+          start: '2018-03-18T21:45:00'
+        }
+      ]
+    });
+
+  });
+
+</script>

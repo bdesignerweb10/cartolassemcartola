@@ -32,7 +32,10 @@
 			</div>
 		</div>
 		<script src="js/main.js"></script>
-		<script src="js/app.js"></script>
+		<script src="js/app.js"></script>		
+		<script src='js/moment.min.js'></script>
+		<script src='js/fullcalendar.min.js'></script>
+		<script src='js/pt-br.js'></script>
 		<?php if($conn) $conn->close(); ?>
 	</body>
 </html>
