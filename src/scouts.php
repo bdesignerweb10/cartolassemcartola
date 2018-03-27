@@ -301,10 +301,6 @@
 				 	</div><!-- card -->
 				</div>
 			</div>
-
-
-
-			
 		</div><!-- row -->
 	</div><!-- container -->
 </main>			

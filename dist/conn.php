@@ -132,19 +132,32 @@ if ($result) {
 	$_SESSION["fake_id"] = 98478521;
 	$_SESSION["user_ativado"] = true;
 	$_SESSION["rodada_site"] = 1;
+	$_SESSION["desc_rodada_site"] = "1";
 
 	if($_SESSION["rodada"] > 1) {
-		$qryselrodadaant = $conn->query("SELECT id_rodadas AS id 
-										   FROM tbl_temporadas 
-										  WHERE id_anos = " . $_SESSION["temporada_atual"] . "
-										    AND id_rodadas < " . $_SESSION["rodada"] . "
-									   ORDER BY id_rodadas DESC LIMIT 1") or trigger_error($conn->error);
+		$qrymaxrodada = $conn->query("SELECT MAX(id_rodadas) AS id FROM tbl_temporadas WHERE id_anos = " . $_SESSION["temporada_atual"] . " LIMIT 1") or trigger_error("26021 - " . $conn->error);
 
-		if ($qryselrodadaant && $qryselrodadaant->num_rows > 0) {
-	        while($rodadaant = $qryselrodadaant->fetch_object()) {
-	        	$_SESSION["rodada_site"] = $rodadaant->id;
-	        }
-	    }
+		if ($qrymaxrodada && $qrymaxrodada->num_rows > 0) {
+	        while($maxrod = $qrymaxrodada->fetch_object()) {
+				$maxrodada = $maxrod->id;
+			}
+		}
+
+		if($_SESSION["mercado"] == 1 && $_SESSION["rodada"] == $maxrodada) {
+			$_SESSION["rodada_site"] = $maxrodada;
+		} else {
+			$qryselrodadaant = $conn->query("SELECT id_rodadas AS id 
+											   FROM tbl_temporadas 
+											  WHERE id_anos = " . $_SESSION["temporada_atual"] . "
+											    AND id_rodadas < " . $_SESSION["rodada"] . "
+										   ORDER BY id_rodadas DESC LIMIT 1") or trigger_error($conn->error);
+
+			if ($qryselrodadaant && $qryselrodadaant->num_rows > 0) {
+		        while($rodadaant = $qryselrodadaant->fetch_object()) {
+		        	$_SESSION["rodada_site"] = $rodadaant->id;
+		        }
+		    }
+		}
 
 		$rodadasite = $conn->query("SELECT descricao FROM tbl_rodadas WHERE id = " . $_SESSION["rodada_site"]) or trigger_error($conn->error);
 
@@ -154,7 +167,6 @@ if ($result) {
 			}
 	    }
 	}
-
 
 	date_default_timezone_set('America/Sao_Paulo');
 

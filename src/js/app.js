@@ -427,8 +427,9 @@ $(function() {
 					if(retorno.succeed) {
 						if(retorno.list.length > 0) {
 							$.each(retorno.list, function(i, item) {
+								console.log(i);
 								var bg = "bg-table";
-								if(i <= 6) 
+								if(i < 6) 
 									bg = "bg-success";
 								$('#desempenho-geral .card-block tbody').append('<tr class="' + bg + '"><th scope="row" class="table-title">' + item.posicao + 'º</th><td><img src="img/escudos/' + item.escudo + '" class="img-fluid"></td><td>' + item.time + '</td><td>' + item.pontuacao.toFixed(2) + '</td><td>' + item.variacao + '</td></tr>');
 							});
@@ -584,7 +585,7 @@ $(function() {
 		$('#desempenho-liga').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
 		$.ajax({
 			type: "POST",
-			url: "acts/acts.index.php?act=desempenho-geral&limit=8",
+			url: "acts/acts.index.php?act=desempenho-geral",
 			success: function(data)
 			{
 			    try {
@@ -597,7 +598,7 @@ $(function() {
 						if(retorno.list.length > 0) {
 							$.each(retorno.list, function(i, item) {
 								var bg = "bg-table";
-								if(i <= 6) 
+								if(i < 6) 
 									bg = "bg-success";
 								if(i > 6 && i >= rebaixamento) 
 									bg = "bg-danger";
@@ -1277,6 +1278,67 @@ $(function() {
 	});
 
 	// END MEUS DADOS (meus_dados)
+
+	// BEGIN CLUBE (clube)
+
+	if(window.location.pathname.indexOf('clube') !== -1) {
+
+		// DESTAQUES RODADA
+		$('#escudos-container').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.clube.php?act=escudos",
+			success: function(data)
+			{
+			    try {
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+					$('.escudos').html('');
+
+					if(retorno.succeed) {
+						if(retorno.list.length > 0) {
+							$.each(retorno.list, function(i, item) {
+								$('.escudos').append('<li><a href="#" data-id="' + item.id + '"><img src="img/escudos/' + item.escudo + '" class="img-fluid" alt="' + item.time + '" title="Visualizar história de ' + item.time + '"></a></li>');
+							});
+
+							$('.escudos').fadeIn("slow", function() {
+								$('#loading').fadeOut();
+								$('#loading').remove();
+							});
+						}
+						else {
+							$('#escudos-container').append('<div class="col-12 center infor"><i class="fa fa-thumbs-down fa-2x"></i><br /><br />Não há dados a serem exibidos aqui.</div>');
+							
+							$('#escudos-container .infor').fadeIn("slow", function() {
+								$('#loading').fadeOut();
+								$('#loading').remove();
+							});
+						}
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+
+						$('.escudos').hide();
+						$('#escudos-container .infor').hide();
+						$('#loading').remove();
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
+					$('#alert').modal('show');
+
+					$('.escudos').hide();
+					$('#escudos-container .infor').hide();
+					$('#loading').remove();
+			    };
+			}
+		});
+	}
+
+	// END CLUBE (clube)
 });
 
 function getRandomColor() {

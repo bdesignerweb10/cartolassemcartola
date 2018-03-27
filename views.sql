@@ -1,5 +1,5 @@
 CREATE OR REPLACE VIEW vw_destaques_rodada AS
-    SELECT r.id_anos AS temporada, r.id_rodadas AS rodada, ro.descricao AS desc_rodada, r.posicao_liga AS posicao, t.id AS id_time, t.escudo_time AS escudo, t.nome_time AS time, r.pontuacao AS pontuacao
+    SELECT r.id_anos AS temporada, r.id_rodadas AS rodada, ro.descricao AS desc_rodada, COALESCE(r.posicao_liga, 0) AS posicao, t.id AS id_time, t.escudo_time AS escudo, t.nome_time AS time, r.pontuacao AS pontuacao
       FROM tbl_times_temporadas r 
 INNER JOIN tbl_times t    ON t.id  = r.id_times
 INNER JOIN tbl_rodadas ro ON ro.id = r.id_rodadas
@@ -61,3 +61,10 @@ LEFT JOIN tbl_eventos_presenca ep ON ep.id_eventos = e.id
     WHERE ativo = 1
  GROUP BY e.id, e.titulo, e.data, EXTRACT(YEAR FROM e.data)
  ORDER BY e.data DESC, e.id ASC;
+
+CREATE OR REPLACE VIEW vw_escudos_temporada AS 
+    SELECT i.id_anos AS temporada, t.id AS id, t.nome_time AS time, t.escudo_time AS escudo 
+      FROM tbl_times t
+INNER JOIN tbl_inscricao i ON i.id_times = t.id
+     WHERE t.ativo = 1
+       AND i.ativo = 1;

@@ -3,7 +3,8 @@ require_once('header.php');
 $timestemp = $conn->query("SELECT t.id_anos AS id, a.descricao AS ano, COUNT(t.id_rodadas) AS qtd_rodadas
    							 FROM tbl_temporadas t
    					   INNER JOIN tbl_anos AS a ON a.id = t.id_anos
-   						 GROUP BY t.id_anos") or trigger_error($conn->error);
+   						 GROUP BY t.id_anos
+   						 ORDER BY a.descricao DESC") or trigger_error($conn->error);
 ?>
 <main class="maintable">
 	<div class="container">

@@ -46,8 +46,11 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 							$var_erros = "";
 							$id_posicao = 1;
 							$qryposicao = $conn->query("SELECT id_times, SUM(`pontuacao`) 
-														  FROM tbl_times_temporadas 
-														 GROUP BY id_times ORDER BY SUM(`pontuacao`) DESC") or trigger_error($conn->error);
+														  FROM tbl_times_temporadas
+														 WHERE id_anos = " . $_SESSION["temporada_atual"] . "
+													       AND id_rodadas <= " . $_SESSION["rodada"] . " 
+													  GROUP BY id_times 
+													  ORDER BY SUM(`pontuacao`) DESC") or trigger_error($conn->error);
 				        	while($posicao = $qryposicao->fetch_object()) {
 				        		$qryupdposicao = "UPDATE tbl_times_temporadas 
 											  		 SET posicao_liga = $id_posicao,

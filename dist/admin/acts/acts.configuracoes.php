@@ -45,40 +45,45 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 				}
 
 				$upd_times = "UPDATE tbl_times SET ativo = 0";
-
 				if ($conn->query($upd_times) === TRUE) {
+					$upd_incricao = "UPDATE tbl_inscricao SET ativo = 0 WHERE id_anos = " . $_SESSION["temporada_atual"];
+					if ($conn->query($upd_incricao) === TRUE) {
 
-					$nexttemp = 0;
-					$descnexttemp = "";
-					$qrynexttemp = $conn->query("SELECT t.id_anos AS id, a.descricao AS ano 
-												   FROM tbl_temporadas t
-										     INNER JOIN tbl_anos a ON a.id = t.id_anos
-												  WHERE t.id_anos > " . $_SESSION["temporada_atual"] . " 
-											   ORDER BY t.id_anos ASC LIMIT 1") or trigger_error($conn->error);
+						$nexttemp = 0;
+						$descnexttemp = "";
+						$qrynexttemp = $conn->query("SELECT t.id_anos AS id, a.descricao AS ano 
+													   FROM tbl_temporadas t
+											     INNER JOIN tbl_anos a ON a.id = t.id_anos
+													  WHERE a.descricao > '" . $_SESSION["temp_atual"] . "'
+												   ORDER BY a.descricao ASC LIMIT 1") or trigger_error($conn->error);
 
-					if ($qrynexttemp && $qrynexttemp->num_rows > 0) {
-				        while($temp = $qrynexttemp->fetch_object()) {
-							$nexttemp = $temp->id;
-							$descnexttemp = $temp->ano;
+						if ($qrynexttemp && $qrynexttemp->num_rows > 0) {
+					        while($temp = $qrynexttemp->fetch_object()) {
+								$nexttemp = $temp->id;
+								$descnexttemp = $temp->ano;
+							}
+						} else {
+							echo '{"succeed": false, "errno": 26012, "title": "Próxima temporada não definida!", "erro": "Para encerrar a temporada, é preciso ter uma nova temporada cadastrada e configurada. Cadastre uma nova temporada e tente novamente!"}';
+							$conn->rollback();
+							exit();
+						}
+
+						$qryencerrartemp = "UPDATE tbl_config SET temporada_aberta = 0, status_mercado = 0, rodada_atual = NULL, temporada_atual = $nexttemp";
+
+						if ($conn->query($qryencerrartemp) === TRUE) {
+							$conn->commit();
+							$_SESSION["temporada"] = 0;
+							$_SESSION["temporada_atual"] = $nexttemp;
+							$_SESSION["mercado"] = 0;
+							$_SESSION["rodada"] = "";
+							$_SESSION["rodada_site"] = "";
+							echo '{"succeed": true, "temporada": "' . $descnexttemp . '"}';
+						} else {
+			    			throw new Exception("Erro ao encerrar a temporada: " . $qryencerrartemp . "<br>" . $conn->error);
 						}
 					} else {
-						echo '{"succeed": false, "errno": 26012, "title": "Próxima temporada não definida!", "erro": "Para encerrar a temporada, é preciso ter uma nova temporada cadastrada e configurada. Cadastre uma nova temporada e tente novamente!"}';
-						$conn->rollback();
-						exit();
-					}
-
-					$qryencerrartemp = "UPDATE tbl_config SET temporada_aberta = 0, status_mercado = 0, rodada_atual = NULL, temporada_atual = $nexttemp";
-
-					if ($conn->query($qryencerrartemp) === TRUE) {
-						$conn->commit();
-						$_SESSION["temporada"] = 0;
-						$_SESSION["temporada_atual"] = $nexttemp;
-						$_SESSION["mercado"] = 0;
-						$_SESSION["rodada"] = "";
-						echo '{"succeed": true, "temporada": "' . $descnexttemp . '"}';
-					} else {
-		    			throw new Exception("Erro ao encerrar a temporada: " . $qryencerrartemp . "<br>" . $conn->error);
-					}
+				        throw new Exception("Erro ao desativar as inscrições: " . $upd_incricao . "<br>" . $conn->error);
+				}
 				} else {
 			        throw new Exception("Erro ao desativar o time: " . $upd_times . "<br>" . $conn->error);
 				}
@@ -103,8 +108,8 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 					$timeszerado = $timezerado->count;
 				}
 
-				if($timeszerado >= 2) {
-					echo '{"succeed": false, "errno": 26014, "title": "Muitos times com pontuação zerada!", "erro": "Não é possível abrir o mercado. Há 2 ou mais times com a pontuação ZERADA para a rodada. Favor revisar e tentar novamente!"}';
+				if($timeszerado > 2) {
+					echo '{"succeed": false, "errno": 26014, "title": "Muitos times com pontuação zerada!", "erro": "Não é possível abrir o mercado. Há mais de 2 times com a pontuação ZERADA para a rodada. Favor revisar e tentar novamente!"}';
 					$conn->rollback();
 					exit();
 				}
@@ -117,30 +122,35 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 					}
 				}
 
-				if($_SESSION["rodada"] == $maxrodada) {
+				if($_SESSION["mercado"] == 1 && $_SESSION["rodada"] == $maxrodada) {
 					echo '{"succeed": false, "errno": 26016, "title": "Encerramento da temporada necessário!", "erro": "Você chegou ao fim da temporada! Você deve ENCERRAR a temporada! Caso o problema persista, favor contatar o administrador da página!"}';
 					$conn->rollback();
 					exit();
 				}
 
-				$nextrod = 0;
-				$descnextrod = "";
-				$qrynextrod = $conn->query("SELECT t.id_rodadas AS id, r.descricao AS rodada
-											  FROM tbl_temporadas t
-									    INNER JOIN tbl_rodadas r ON r.id = t.id_rodadas
-											 WHERE t.id_anos = " . $_SESSION["temporada_atual"] . " 
-											   AND t.id_rodadas > " . $_SESSION["rodada"] . "
-										  ORDER BY t.id_anos, t.id_rodadas ASC LIMIT 1") or trigger_error("26022 - " . $conn->error);
+				if($_SESSION["rodada"] < $maxrodada) {
+					$nextrod = 0;
+					$descnextrod = "";
+					$qrynextrod = $conn->query("SELECT t.id_rodadas AS id, r.descricao AS rodada
+												  FROM tbl_temporadas t
+										    INNER JOIN tbl_rodadas r ON r.id = t.id_rodadas
+												 WHERE t.id_anos = " . $_SESSION["temporada_atual"] . " 
+												   AND r.descricao > '" . $_SESSION["rod_atual"] . "'
+											  ORDER BY t.id_anos, r.descricao ASC LIMIT 1") or trigger_error("26022 - " . $conn->error);
 
-				if ($qrynextrod && $qrynextrod->num_rows > 0) {
-			        while($nextrods = $qrynextrod->fetch_object()) {
-						$nextrod = $nextrods->id;
-						$descnextrod = $nextrods->rodada;
+					if ($qrynextrod && $qrynextrod->num_rows > 0) {
+				        while($nextrods = $qrynextrod->fetch_object()) {
+							$nextrod = $nextrods->id;
+							$descnextrod = $nextrods->rodada;
+						}
+					} else {
+						echo '{"succeed": false, "errno": 26015, "title": "Próxima rodada não definida!", "erro": "A rodada seguinte da atual(' . $_SESSION["rod_atual"] . ' º) não existe. Favor verificar se há algum problema com os cadastros ou se o Cartola chegou ao fim da temporada. Caso tenha chegado ao fim da temporada, por favor ENCERRE a temporada!"}';
+						$conn->rollback();
+						exit();
 					}
 				} else {
-					echo '{"succeed": false, "errno": 26015, "title": "Próxima rodada não definida!", "erro": "A rodada seguinte da atual(' . $_SESSION["rod_atual"] . ' º) não existe. Favor verificar se há algum problema com os cadastros ou se o Cartola chegou ao fim da temporada. Caso tenha chegado ao fim da temporada, por favor ENCERRE a temporada!"}';
-					$conn->rollback();
-					exit();
+					$nextrod = $_SESSION["rodada"];
+					$descnextrod = $_SESSION["rod_atual"];
 				}
 
 				$temporada_atual = $_SESSION["temporada_atual"];
@@ -263,6 +273,21 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 	    case 'fecharmercado':
 			try {
 				$conn->autocommit(FALSE);
+
+				$res_rod = $conn->query("SELECT MAX(id_rodadas) AS id FROM tbl_temporadas WHERE id_anos = " . $_SESSION["temporada_atual"] . " LIMIT 1") or trigger_error("26021 - " . $conn->error);
+
+				if ($res_rod && $res_rod->num_rows > 0) {
+			        while($rod = $res_rod->fetch_object()) {
+						$maxrodada = $rod->id;
+					}
+				}
+
+				if($_SESSION["rodada"] == $maxrodada) {
+					echo '{"succeed": false, "errno": 26016, "title": "Encerramento da temporada necessário!", "erro": "Você chegou ao fim da temporada! Você deve ENCERRAR a temporada! Caso o problema persista, favor contatar o administrador da página!"}';
+					$conn->rollback();
+					exit();
+				}
+
 				$rodada_atual = $_SESSION["rodada"];
 
 				if($rodada_atual == 'NULL' || empty($rodada_atual)) {

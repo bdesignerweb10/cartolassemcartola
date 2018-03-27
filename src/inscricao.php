@@ -7,7 +7,7 @@ if($_SESSION["temporada"] == "1")
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-8">
-				<h3 class="headline">Inscrição liga Cartolas sem cartola - Temporada <?php echo $temp_atual; ?></h3>
+				<h3 class="headline">Inscrição liga Cartolas sem cartola - Temporada <?php echo $_SESSION["temp_atual"]; ?></h3>
 				<div class="inscricao">
 					<form id="form-inscricao" data-toggle="validator" action="acts/acts.inscricao.php" method="POST">
 			  			<div class="form-group">		    			

@@ -2,7 +2,8 @@
 require_once("../conn.php");
 if (!isset($_SESSION["prov_id"]) || empty($_SESSION["prov_id"]) || 
 	!isset($_SESSION['prov_login']) || empty($_SESSION["prov_login"]) || 
-	$_SESSION["prov_id"] == "0") die('12100 - Você não tem permissão para acessar essa página!');
+	$_SESSION["prov_id"] == "0")
+	header('Location: ../login');
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;

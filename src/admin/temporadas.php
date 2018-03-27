@@ -1,7 +1,7 @@
 <?php 
 require_once('header.php');
 
-$anos = $conn->query("SELECT id, descricao FROM tbl_anos ORDER BY descricao ASC") or trigger_error($conn->error);
+$anos = $conn->query("SELECT id, descricao FROM tbl_anos ORDER BY descricao DESC") or trigger_error($conn->error);
 ?>
 <main class="maintable">
 	<div class="container">
