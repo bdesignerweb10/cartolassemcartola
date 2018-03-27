@@ -45,6 +45,9 @@
 			</div>	
 			<div class="tab-content col-sm-12">
 				<div class="tab-pane active" id="geral" role="tabpanel">
+					<div class="row">
+						<h1 class="headline-rodada">Confira o seu desempenho em todas as temporadas</h1>
+					</div>
 					<div class="col-sm-12 historia">
 						<div class="row">					
 							<div class="col-sm-3">
@@ -87,6 +90,9 @@
 				</div><!-- tab-panel -->
 				
 				<div class="tab-pane" id="a2014" role="tabpanel">
+					<div class="row">
+						<h1 class="headline-rodada">Temporada selecionada: <strong>2014</strong></h1>
+					</div>					
 					<div class="col-sm-12 historia">
 						<div class="row">					
 							<div class="col-sm-3">
@@ -114,12 +120,28 @@
 								<h3 class="nome-torneio">Média de pontos</h3>
 								<p class="ano">2014</p>
 							</div>							
-						</div><!-- row -->		
+						</div><!-- row -->	
+						<div class="btn btn-lg btn-primary btn-temporada"><a href="#" class="link-temporada">Confira sua pontuação detalhada da temporada 2014</a></div>	
 					</div><!-- col-sm-12 -->
 				</div>
-				<div class="tab-pane" id="a2015" role="tabpanel">2015</div>
-				<div class="tab-pane" id="a2016" role="tabpanel">2016</div>
-				<div class="tab-pane" id="a2017" role="tabpanel">2017</div>
+				<div class="tab-pane" id="a2015" role="tabpanel">
+					<div class="row">
+						<h1 class="headline-rodada">Temporada selecionada: <strong>2015</strong></h1>
+					</div>
+					<div class="btn btn-lg btn-primary btn-temporada"><a href="#" class="link-temporada">Confira sua pontuação detalhada da temporada 2015</a></div>	
+				</div>
+				<div class="tab-pane" id="a2016" role="tabpanel">
+					<div class="row">
+						<h1 class="headline-rodada">Temporada selecionada: <strong>2016</strong></h1>
+					</div>
+					<div class="btn btn-lg btn-primary btn-temporada"><a href="#" class="link-temporada">Confira sua pontuação detalhada da temporada 2016</a></div>	
+				</div>
+				<div class="tab-pane" id="a2017" role="tabpanel">
+					<div class="row">
+						<h1 class="headline-rodada">Temporada selecionada: <strong>2017</strong></h1>
+					</div>
+					<div class="btn btn-lg btn-primary btn-temporada"><a href="#" class="link-temporada">Confira sua pontuação detalhada da temporada 2017</a></div>	
+				</div>
 
 				<div class="tab-pane" id="historia" role="tabpanel">
 					<div class="col-sm-12 historia">

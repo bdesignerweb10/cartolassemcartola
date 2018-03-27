@@ -8648,6 +8648,15 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
     text-shadow: 1px 0px 0px white, -1px 0px 0px white, 0px 1px 0px white, 0px -1px 0px white;
     text-align: justify; }
 
+.btn-temporada {
+  float: right;
+  margin-bottom: 30px; }
+  .btn-temporada .link-temporada {
+    color: #ccc;
+    text-decoration: none; }
+    .btn-temporada .link-temporada:hover {
+      color: #fc8f3e; }
+
 .times {
   display: flex;
   justify-content: space-around;
