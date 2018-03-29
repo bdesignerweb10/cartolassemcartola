@@ -5,7 +5,9 @@ if($_SESSION["temporada"] == "1")
 ?>
 <main class="inscmain">
 	<div class="container">
-		<div class="row">
+		<div class="row capa-inscricao">		
+		</div>
+		<div class="row ">
 			<div class="col-sm-8">
 				<h3 class="headline">Inscrição liga Cartolas sem cartola - Temporada <?php echo $_SESSION["temp_atual"]; ?></h3>
 				<div class="inscricao">

@@ -8698,6 +8698,17 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
     background-position: center;
     background-size: cover; } }
 
+.capa-inscricao {
+  background-image: url(../img/inscricao.jpeg);
+  background-repeat: no-repeat;
+  background-size: 100%;
+  bottom: 0;
+  left: 0;
+  overflow: auto;
+  padding: 7em;
+  right: 0;
+  top: 0; }
+
 .capa-matamata {
   background-image: url(../img/mata-mata.jpeg);
   background-repeat: no-repeat;
