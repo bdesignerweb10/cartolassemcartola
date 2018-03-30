@@ -62,7 +62,9 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 			    		}
 						$tipo_pont = "";
 
-					 	if($destaques->pontuacao < 30) {
+					 	if($destaques->pontuacao == 0) {
+					 		$tipo_pont = "";
+					 	} else if($destaques->pontuacao < 30) {
 					 		$tipo_pont = "ruim";
 					 	} else if($destaques->pontuacao > 30 && $destaques->pontuacao <= 50) {
 					 		$tipo_pont = "regular";
@@ -74,7 +76,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 					 		$tipo_pont = "mitou";
 					 	}
 
-						$linha .= '<td class=\'rodada ' . $tipo_pont . '\'>' . $destaques->pontuacao . '</td>';
+						$linha .= '<td class=\'rodada ' . $tipo_pont . '\'>' . ($destaques->pontuacao == 0 ? "&nbsp;" : $destaques->pontuacao) . '</td>';
 					}
 
     				$totalpontosqry = $conn->query("SELECT ROUND(SUM(pontuacao), 2) AS total_pontos
@@ -134,7 +136,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 		        		}
 						$posicoeslist = '{"label": "' . $times->nome_time . '", "fill": false, ' . $border . '"data": [';
 
-			    		$posicoesqry = $conn->query("SELECT posicao_liga 
+			    		$posicoesqry = $conn->query("SELECT posicao_liga
 			    									   FROM tbl_times_temporadas 
 												  	  WHERE id_times = $times->id 
 													    AND id_anos = $temporada 
@@ -154,6 +156,31 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 				exit();
 			} catch(Exception $e) {
 				echo '{"succeed": false, "errno": 17004, "title": "Erro ao carregar os dados!", "erro": "Ocorreu um erro ao carregar os dados: ' . $e->getMessage() . '"}';
+				exit();
+			}
+        	break;
+
+        case 'pontuacao':
+	        try {
+				$rodgrafico = $_GET['rodada'];
+				$time = $_GET['time'];
+        		$pontos = 0;
+
+				$pontuacaoqry = $conn->query("SELECT tt.pontuacao AS pontuacao
+		    									FROM tbl_times_temporadas tt
+		    									INNER JOIN tbl_times t ON t.id = tt.id_times
+											   WHERE t.nome_time = '$time'
+												 AND tt.id_anos = $temporada 
+											     AND tt.id_rodadas = $rodgrafico") or trigger_error($conn->error);
+	        	if($pontuacaoqry && $pontuacaoqry->num_rows > 0) {
+		        	while($pont = $pontuacaoqry->fetch_object()) {
+						$pontos = floatval($pont->pontuacao);
+		        	}
+		        }
+				echo '{"succeed": true, "pontuacao": ' . $pontos . '}';
+				exit();
+			} catch(Exception $e) {
+				echo '{"succeed": false, "errno": 17005, "title": "Erro ao carregar os dados!", "erro": "Ocorreu um erro ao carregar os dados: ' . $e->getMessage() . '"}';
 				exit();
 			}
         	break;

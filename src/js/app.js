@@ -422,6 +422,25 @@ $(function() {
 								                label += ' - ';
 								            }
 								            label += tooltipItem.yLabel + 'º lugar';
+
+										    try {
+									            var rodada = tooltipItem.index + 1;
+									            var time = data.datasets[tooltipItem.datasetIndex].label;
+
+												var data = $.ajax({
+													type: "POST",
+													url: "acts/acts.rodada.php?act=pontuacao&rodada=" + rodada + "&time=" + time,
+	        										async: false
+												}).responseText;
+
+												var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+												if(retorno && retorno.succeed)
+				            						label += ' - ' + retorno.pontuacao + ' pts.';
+										    }
+										    catch (e) {
+										    	console.log(e);
+										    };
+										    
 								            return label;
 								        }
 								    }
@@ -964,7 +983,26 @@ $(function() {
 								            if (label) {
 								                label += ' - ';
 								            }
-								            label += tooltipItem.yLabel + 'º lugar';
+							            	label += tooltipItem.yLabel + 'º lugar';
+
+										    try {
+									            var rodada = tooltipItem.index + 1;
+									            var time = data.datasets[tooltipItem.datasetIndex].label;
+
+												var data = $.ajax({
+													type: "POST",
+													url: "acts/acts.rodada.php?act=pontuacao&rodada=" + rodada + "&time=" + time,
+	        										async: false
+												}).responseText;
+
+												var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+												if(retorno && retorno.succeed)
+				            						label += ' - ' + retorno.pontuacao + ' pts.';
+										    }
+										    catch (e) {
+										    	console.log(e);
+										    };
+
 								            return label;
 								        }
 								    }
