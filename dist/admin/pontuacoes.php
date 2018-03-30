@@ -15,31 +15,7 @@ $qrypontuacao = $conn->query("SELECT t.id AS id, t.nome_presidente AS presidente
 	                             AND tt.id_rodadas = " . (empty($_SESSION["rodada"]) ? "1" : $_SESSION["rodada"]) . "
 	                             AND t.ativo = 1
 				            ORDER BY t.nome_time ASC") or trigger_error($conn->error);
-?>
-<main class="maintable">
-	<div class="container">
-		<div class="jumbotron" style="padding: 0px;">
-			<div class="container" style="margin-left: 0px;">
-				<h2 class="display-5">Lançamento de pontuação da rodada</h2>
-				<hr class="my-4">
-				<h4 class="display-5">Temporada: <?php echo $temporada; ?></h4>
-				<h4 class="display-5">Rodada: <?php echo $rodada; ?> º</h4>
-				<p class="lead">A temporada está <b><?php echo ($flag_temp_aberta ? "aberta " : "fechada ") ?></b> e o mercado está <b><?php echo ($flag_merc_aberto ? "aberto" : "fechado") ?></b>.</p>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-12">
-				<form id="form-pontuacoes" action="acts/acts.pontuacoes.php" method="POST">
-					<table class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
-				        <thead>
-				            <tr>
-				                <th class='center'>&nbsp;</th>
-				                <th class='text-column'>Time</th>
-				                <th class='text-column'>Presidente</th>
-				                <th class='center'>Pontuação</th>
-				            </tr>
-				        </thead>
-				        	<?php 
+?> <main class="maintable"><div class="container"><div class="jumbotron" style="padding: 0px;"><div class="container" style="margin-left: 0px;"><h2 class="display-5">Lançamento de pontuação da rodada</h2><hr class="my-4"><h4 class="display-5">Temporada: <?php echo $temporada; ?></h4><h4 class="display-5">Rodada: <?php echo $rodada; ?> º</h4><p class="lead">A temporada está <b><?php echo ($flag_temp_aberta ? "aberta " : "fechada ") ?></b>e o mercado está <b><?php echo ($flag_merc_aberto ? "aberto" : "fechado") ?></b>.</p></div></div><div class="row"><div class="col-12"><form id="form-pontuacoes" action="acts/acts.pontuacoes.php" method="POST"><table class="table table-striped table-bordered table-hover" cellspacing="0" width="100%"><thead><tr><th class="center">&nbsp;</th><th class="text-column">Time</th><th class="text-column">Presidente</th><th class="center">Pontuação</th></tr></thead> <?php 
 				        	if($flag_temp_aberta) {
 					        	if($qrypontuacao && $qrypontuacao->num_rows > 0) {
 					        		echo "<tfoot>
@@ -57,10 +33,7 @@ $qrypontuacao = $conn->query("SELECT t.id AS id, t.nome_presidente AS presidente
 										   </tfoot>";
 					        	}
 			   				}
-							?>
-						</tbody>
-				        <tbody>
-				        	<?php 
+							?> <tbody> <?php 
 				        	if($flag_temp_aberta) {
 					        	if($qrypontuacao && $qrypontuacao->num_rows > 0) {
 					        		echo "<tr>
@@ -81,6 +54,10 @@ $qrypontuacao = $conn->query("SELECT t.id AS id, t.nome_presidente AS presidente
 						                $escudo = "../img/escudos/no-escudo.png";
 						                if(file_exists("../img/escudos/$time->escudo"))
 						                	$escudo = "../img/escudos/$time->escudo";
+						                
+						                $value = "";
+						                if(isset($time->pontuacao) && !empty($time->pontuacao) && floatval($time->pontuacao) > 0)
+						                	$value = "value='" . number_format($time->pontuacao, 2) . "'";
 
 						        		echo "<tr>
 										        <td class='center'><img src='$escudo' class='img-fluid'></td>
@@ -95,7 +72,7 @@ $qrypontuacao = $conn->query("SELECT t.id AS id, t.nome_presidente AS presidente
 															</select>
 														</div>
 														<div class='col-sm-12 col-md-12 col-lg-7 col-xl-7'>
-					  										<input type='text' class='form-control' id='pontuacao[$fake_id]' name='pontuacao[$fake_id]' placeholder='0,00' value='" . number_format($time->pontuacao, 2) . "' data-mask='##0,00' data-mask-selectonfocus='true' data-mask-clearifnotmatch='true' data-mask-reverse='true' " . ($flag_merc_aberto ? "disabled" : "") . " maxlength='6' />
+					  										<input type='text' class='form-control' id='pontuacao[$fake_id]' name='pontuacao[$fake_id]' placeholder='0,00' data-mask='##0,00' " . $value . " data-mask-selectonfocus='true' data-mask-clearifnotmatch='true' data-mask-reverse='true' " . ($flag_merc_aberto ? "disabled" : "") . " maxlength='6' />
 														</div>
 				  									</div>
 								                </td></tr>";
@@ -112,12 +89,4 @@ $qrypontuacao = $conn->query("SELECT t.id AS id, t.nome_presidente AS presidente
 						                <td colspan='4' class='center'>A temporada $temporada está fechada. Aguarde a abertura da mesma para lançar as pontuações das rodadas.</td>
 					                </tr>";
 				        	}
-							?>
-						</tbody>
-				    </table>
-				</form>
-			</div>
-		</div>
-	</div>
-</main>
-<?php require_once('footer.php'); ?>
+							?> </tbody></table></form></div></div></div></main> <?php require_once('footer.php'); ?>

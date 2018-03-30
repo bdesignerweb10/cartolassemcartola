@@ -26,26 +26,28 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 						$confrontoslist = $conn->query("SELECT nivel, id_rodadas
 														  FROM tbl_mata_mata_confrontos 
 														 WHERE id_mata_mata = $matamata->id
-														   AND chave = 1 
-													  ORDER BY id_rodadas DESC, nivel ASC LIMIT 1") or trigger_error($conn->error);
+													  ORDER BY id_rodadas DESC, nivel ASC, chave ASC LIMIT 1") or trigger_error($conn->error);
 			        	if($confrontoslist && $confrontoslist->num_rows > 0) {
 				        	while($confrontos = $confrontoslist->fetch_object()) {
 				        		if($confrontos->id_rodadas > $_SESSION["rodada"]) {
 				        			$confrontos->fase = "Aguardando início";
 				        			$confrontos->cor_fase = "bg-info";
 				        			$confrontos->img = "aguardando.png";
+				        			$ordem = "1";
 				        		} else if($confrontos->id_rodadas == $_SESSION["rodada"]) {
 				        			$confrontos->fase = "Em Andamento";
 				        			$confrontos->cor_fase = "bg-success";
 				        			$confrontos->img = "mitou.png";
+				        			$ordem = "0";
 				        		} else {
 				        			$confrontos->fase = "Encerrado";
 				        			$confrontos->cor_fase = "bg-danger";
 				        			$confrontos->img = "encerrada.png";
+				        			$ordem = "2";
 				        		}
 
 				        		$id = $matamata->id * $_SESSION["fake_id"];
-								$list_mata .= '{"id": ' . $id . ', "nome": "' . $matamata->descricao . '", "fase": "' . $confrontos->fase . '", "cor_fase": "' . $confrontos->cor_fase . '", "imagem": "' . $confrontos->img . '"}, ';
+								$list_mata .= '{"ordem": ' . $ordem . ', "id": ' . $id . ', "nome": "' . $matamata->descricao . '", "fase": "' . $confrontos->fase . '", "cor_fase": "' . $confrontos->cor_fase . '", "imagem": "' . $confrontos->img . '"}, ';
 				        	}
 				        }
 		        	}
@@ -60,6 +62,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 				exit();
 			}
 	        break;
+	        
 	    case 'confrontos':
 			try {
 				if(!isset($_GET['idmatamata']) || empty($_GET['idmatamata'])) {
@@ -74,7 +77,8 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 
 				$confrontoslist = $conn->query("SELECT *
 												  FROM vw_mata_mata_confrontos 
-												 WHERE id = $id") or trigger_error($conn->error);
+												 WHERE id = $id
+												 ORDER BY chave ASC ") or trigger_error($conn->error);
 	        	if($confrontoslist && $confrontoslist->num_rows > 0) {
 	        		$nivel = "";
 		        	while($confrontos = $confrontoslist->fetch_object()) {
@@ -85,7 +89,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 								$list_confrontos = substr($list_confrontos, 0, -2);
 		        				$list_confrontos .= "]}, ";
 		        			}
-		        			$list_confrontos .= '{ "nivel": ' . $confrontos->nivel . ', "fase": "' . $confrontos->fase . '", "active": "' . ($confrontos->rodada == $_SESSION["rodada"] ? " active" : "") . '", "confrontos": [';
+		        			$list_confrontos .= '{"chave": ' . $confrontos->chave . ', "nivel": ' . $confrontos->nivel . ', "fase": "' . $confrontos->fase . '", "active": "' . ($confrontos->rodada == $_SESSION["rodada"] ? " active" : "") . '", "confrontos": [';
 		        			$nivel = $confrontos->nivel;
 		        		}
 

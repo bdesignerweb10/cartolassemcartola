@@ -143,7 +143,7 @@ if ($result) {
 			}
 		}
 
-		if($_SESSION["mercado"] == 1 && $_SESSION["rodada"] == $maxrodada) {
+		if($_SESSION["mercado"] == 0 && $_SESSION["rodada"] == $maxrodada) {
 			$_SESSION["rodada_site"] = $maxrodada;
 		} else {
 			$qryselrodadaant = $conn->query("SELECT id_rodadas AS id 

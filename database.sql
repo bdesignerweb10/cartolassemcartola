@@ -283,3 +283,6 @@ CREATE TABLE `tbl_mata_mata_confrontos` (
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+ALTER TABLE `tbl_mata_mata` ADD `id_time_campeao` INT NULL AFTER `total_times`;
+ALTER TABLE `tbl_mata_mata` ADD CONSTRAINT `fkey_campeao_mata_mata` FOREIGN KEY (`id_time_campeao`) REFERENCES `tbl_times`(`id`) ON DELETE SET NULL ON UPDATE SET NULL;

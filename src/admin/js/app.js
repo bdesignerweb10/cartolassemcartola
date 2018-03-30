@@ -55,6 +55,49 @@ $(function() {
 		});
 	});
 
+	$('#btn-login').click(function(e) {
+		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.login.php?act=login",
+			data: $("#form-login").serialize(),
+			success: function(data)
+			{
+			    try {
+			        var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+					$('#loading').modal('hide');
+
+					if(retorno.succeed) {
+						window.location.href = 'home';
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+
+						if(retorno.errno == "21010") {
+							$('#alert').on('hidden.bs.modal', function (e) {
+								window.location.href = '../provisoria';
+							});
+						}
+					}
+			    }
+			    catch (e) {
+					$('#loading').modal('hide');
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
+					$('#alert').modal('show');
+			    };
+			}
+		});
+	});
+
 	$('#btn-esqueceu-senha').click(function(e) {
 		e.preventDefault();
 
@@ -63,7 +106,6 @@ $(function() {
 	});
 
 	$('#btn-recuperar-senha').click(function(e) {
-		e.preventDefault();
 		e.preventDefault();
 
 		$('#loading').modal({
@@ -747,6 +789,7 @@ $(function() {
 			type: "POST",
 			url: "acts/acts.pontuacoes.php?act=updpont",
 			data: $("#form-pontuacoes").serialize(),
+    		timeout: 0,
 			success: function(data)
 			{
 			    try {
@@ -800,6 +843,7 @@ $(function() {
 			$.ajax({
 				type: "POST",
 				url: "acts/acts.configuracoes.php?act=abrirtemporada",
+    			timeout: 0,
 				success: function(data)
 				{
 				    try {
@@ -850,6 +894,7 @@ $(function() {
 			$.ajax({
 				type: "POST",
 				url: "acts/acts.configuracoes.php?act=fechartemporada",
+    			timeout: 0,
 				success: function(data)
 				{
 				    try {
@@ -900,6 +945,7 @@ $(function() {
 			$.ajax({
 				type: "POST",
 				url: "acts/acts.configuracoes.php?act=abrirmercado",
+    			timeout: 0,
 				success: function(data)
 				{
 				    try {
@@ -950,6 +996,7 @@ $(function() {
 			$.ajax({
 				type: "POST",
 				url: "acts/acts.configuracoes.php?act=fecharmercado",
+    			timeout: 0,
 				success: function(data)
 				{
 				    try {
@@ -994,6 +1041,7 @@ $(function() {
 			type: "POST",
 			url: "acts/acts.configuracoes.php?act=upddados",
 			data: $("#form-config").serialize(),
+    		timeout: 0,
 			success: function(data)
 			{
 				try {

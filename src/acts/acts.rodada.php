@@ -118,7 +118,12 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 
 				$serieslist = "";
 				
-	    		$timeslist = $conn->query("SELECT id, nome_time FROM tbl_times WHERE ativo = 1 $where_time") or trigger_error($conn->error);
+	    		$timeslist = $conn->query("SELECT t.id AS id, t.nome_time AS nome_time
+										     FROM tbl_times t
+									   INNER JOIN tbl_inscricao i ON i.id_times = t.id
+										    WHERE t.ativo = 1
+										      AND i.ativo = 1
+										      AND i.id_anos = $temporada") or trigger_error($conn->error);
 	        	if($timeslist && $timeslist->num_rows > 0) {
 		        	while($times = $timeslist->fetch_object()) {
 		        		if((!isset($_SESSION["usu_time"]) && empty($_SESSION["usu_time"])) || $times->id == $_SESSION["usu_time"]) {

@@ -82,6 +82,54 @@ $(function() {
 		});
 	});
 
+	$("#btn-login").click(function(e) {
+		e.preventDefault();
+
+		$('#loading-modal').modal({
+			keyboard: false
+		});
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.login.php?act=login",
+			data: $("#form-login").serialize(),
+			success: function(data)
+			{
+			    try {
+					$('#loading-modal').modal('hide');
+
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+					if(retorno.succeed) {
+						if(retorno.href.length > 0) {
+							window.location.href = retorno.href;
+						}
+						else {
+							window.location.href = './';
+						}
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+
+						if(retorno.errno == "12010") {
+							$('#alert').on('hidden.bs.modal', function (e) {
+								window.location.href = 'provisoria';
+							});
+						}
+					}
+			    }
+			    catch (e) {
+					$('#loading-modal').modal('hide');
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
+					$('#alert').modal('show');
+			    };
+			}
+		});
+	});
+
 	$('#btn-esqueceu-senha').click(function(e) {
 		e.preventDefault();
 
@@ -427,7 +475,6 @@ $(function() {
 					if(retorno.succeed) {
 						if(retorno.list.length > 0) {
 							$.each(retorno.list, function(i, item) {
-								console.log(i);
 								var bg = "bg-table";
 								if(i < 6) 
 									bg = "bg-success";
@@ -654,6 +701,8 @@ $(function() {
 
 					if(retorno.succeed) {
 						if(retorno.list.length > 0) {
+							retorno.list.sort(function(a,b) {return (a.ordem > b.ordem) ? 1 : ((b.ordem > a.ordem) ? -1 : 0);} ); 
+
 							var fase = "";
 							$.each(retorno.list, function(i, item) {
 								if(fase != item.fase) {
@@ -724,8 +773,10 @@ $(function() {
 							
 							if(retorno.list.length > 0) {
 								$.each(retorno.list, function(n, nivel) {
-									$('#nav-niveis').append('<li class="nav-item"><a class="nav-link' + nivel.active + '" data-toggle="tab" href="#nivel' + nivel.nivel + '">' + nivel.fase + '</a></li>');
-									$('#nav-confrontos').append('<div id="nivel' + nivel.nivel + '" class="tab-pane' + nivel.active + '"><h4 class="confrontos">Confrontos</h4><div class="row" id="cards' + nivel.nivel + '" >');
+									if(nivel.chave == 1) {
+										$('#nav-niveis').append('<li class="nav-item"><a class="nav-link' + nivel.active + '" data-toggle="tab" href="#nivel' + nivel.nivel + '">' + nivel.fase + '</a></li>');
+										$('#nav-confrontos').append('<div id="nivel' + nivel.nivel + '" class="tab-pane' + nivel.active + '"><h4 class="confrontos">Confrontos</h4><div class="row" id="cards' + nivel.nivel + '" >');
+									}
 
 									$.each(nivel.confrontos, function(c, confronto) {
 										var desc_chave = 'Chave ' + confronto.chave;
@@ -735,7 +786,9 @@ $(function() {
 											else
 												desc_chave = '3º lugar';
 										}
-										$('#cards' + nivel.nivel).append('<div class="col-sm-12 col-md-12 col-lg-6 col-xl-6"><div class="card"><p class="chaveamento">' + desc_chave + '</p><div class="card-block confronto"><div class="col-sm-6"><img src="img/escudos/' + confronto.escudo_time_1 + '" class="img-fluid center-block"><p class="clube">' + confronto.time_1 + '</p><p class="pontuacao">' + confronto.pontuacao_time_1 + '</p></div><p class="vs">X</p><div class="col-sm-6"><img src="img/escudos/' + confronto.escudo_time_2 + '" class="img-fluid center-block"><p class="clube">' + confronto.time_2 + '</p><p class="pontuacao">' + confronto.pontuacao_time_2 + '</p></div></div></div>');
+										var pont_time_1 = parseFloat(confronto.pontuacao_time_1);
+										var pont_time_2 = parseFloat(confronto.pontuacao_time_2);
+										$('#cards' + nivel.nivel).append('<div class="col-sm-12 col-md-12 col-lg-6 col-xl-6"><div class="card"><p class="chaveamento">' + desc_chave + '</p><div class="card-block confronto"><div class="col-sm-6"><img src="img/escudos/' + confronto.escudo_time_1 + '" class="img-fluid center-block"><p class="clube">' + (pont_time_1 > pont_time_2 ? "<b>" + confronto.time_1 + "</b>" : confronto.time_1) + '</p><p class="pontuacao">' + pont_time_1 + '</p></div><p class="vs">X</p><div class="col-sm-6"><img src="img/escudos/' + confronto.escudo_time_2 + '" class="img-fluid center-block"><p class="clube">' + (pont_time_2 > pont_time_1 ? "<b>" + confronto.time_2 + "</b>" : confronto.time_2) + '</p><p class="pontuacao">' + pont_time_2 + '</p></div></div></div>');
 									});
 								});
 
@@ -1222,13 +1275,11 @@ $(function() {
 		$.ajax({
 			type: "POST",
 			url: "acts/acts.dados_clube.php",
-			type : 'POST',
 			data : formData,
 			processData: false,
 			contentType: false,
 			success: function(data)
 			{
-				console.log(data);
 			    try {
 					$('#loading-modal').modal('hide');
 
@@ -1283,7 +1334,7 @@ $(function() {
 
 	if(window.location.pathname.indexOf('clube') !== -1) {
 
-		// DESTAQUES RODADA
+		// HISTORIA DO CLUBE
 		$('#escudos-container').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
 		$.ajax({
 			type: "POST",
@@ -1298,13 +1349,15 @@ $(function() {
 					if(retorno.succeed) {
 						if(retorno.list.length > 0) {
 							$.each(retorno.list, function(i, item) {
-								$('.escudos').append('<li><a href="#" data-id="' + item.id + '"><img src="img/escudos/' + item.escudo + '" class="img-fluid" alt="' + item.time + '" title="Visualizar história de ' + item.time + '"></a></li>');
+								$('.escudos').append('<li><a href="#" data-id="' + item.id + '" class="btn-historia-clube"><img src="img/escudos/' + item.escudo + '" class="img-fluid" alt="' + item.time + '" title="Visualizar história de ' + item.time + '"></a></li>');
 							});
 
 							$('.escudos').fadeIn("slow", function() {
 								$('#loading').fadeOut();
 								$('#loading').remove();
 							});
+
+    						loadHistoryFromClube(retorno.id_clube_default);
 						}
 						else {
 							$('#escudos-container').append('<div class="col-12 center infor"><i class="fa fa-thumbs-down fa-2x"></i><br /><br />Não há dados a serem exibidos aqui.</div>');
@@ -1335,6 +1388,190 @@ $(function() {
 					$('#loading').remove();
 			    };
 			}
+		});
+
+		$('body').on('click', '.btn-historia-clube', function(e) {
+			e.preventDefault();
+    		loadHistoryFromClube($(this).data('id'));
+		});
+
+		function loadHistoryFromClube(idclube) {
+			$('#loading-modal').modal({
+				keyboard: false
+			});
+			$.ajax({
+				type: "POST",
+				url: "acts/acts.clube.php?act=historia&idclube=" + idclube,
+				success: function(data)
+				{
+				    try {
+						$('#loading-modal').modal('hide');
+
+						var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+						if(retorno.succeed) {
+							$('.brasao').prop("src", "img/escudos/clube/" + retorno.escudo);
+							$('.nome_time').html(retorno.nome_time);
+							$('.ano_fundacao').html(retorno.ano_fundacao);
+							$('.nome_presidente').html(retorno.nome_presidente);
+							$('.text-hitoria').html(retorno.historia);
+									
+							$('.dropdown-menu').html('');
+							if(retorno.list_temp.length > 0) {
+								$.each(retorno.list_temp, function(t, temp) {
+									if(temp.is_actual) {
+										$('.dropdown-menu').append('<div class="dropdown-divider"></div><a class="dropdown-item disabled" href="#" onclick="return false;">' + temp.temporada + '</a>');
+									}
+									else {
+										var role = "";
+										if(t == 0) {
+											role = 'role="tab"';
+										}
+										$('.dropdown-menu').append('<a class="dropdown-item" data-toggle="tab" href="#a' + temp.id + '" data-time-id="' + idclube + '" ' + role + '>' + temp.temporada + '</a>');
+										$('.tab-content').append('<div class="tab-pane" id="a' + temp.id + '" role="tabpanel"></div>');
+									}
+								});
+							}
+									
+							$('.geral-campeonatos').html('');
+							if(retorno.list_camps.length > 0) {
+								$.each(retorno.list_camps, function(t, temp) {
+									if(temp.tipo == "liga") {
+										var status_liga = "";
+										if(temp.posicao == 1) {
+											status_liga = '<img src="img/taca.png" class="img-fluid center-block">';
+										} else {
+											status_liga = '<h2 class="posicao">' + temp.posicao + 'º</h2>';
+										}
+										$('.geral-campeonatos').append('<div class="col-sm-3">' + status_liga + '<h3 class="nome-torneio">Cartolas sem cartola</h3><p class="ano">' + temp.temporada + '</p></div>');
+									}
+
+									if(temp.tipo == "mata_mata") {
+										var status_mm = "";
+										if(temp.campeao) {
+											if(temp.mata_mata.toLowerCase().indexOf("kempes") >= 0) {
+												status_mm = '<img src="img/mata-mata-kempes.png" class="img-fluid center-block">';
+											} else {
+												status_mm = '<img src="img/mata-mata.png" class="img-fluid center-block">';
+											}
+										} else {
+											status_mm = '<h2 class="posicao">X</h2>';
+										}
+										$('.geral-campeonatos').append('<div class="col-sm-3">' + status_mm + '<h3 class="nome-torneio">' + temp.mata_mata + '</h3><p class="ano">' + temp.temporada + '</p></div>');
+									}
+								});
+							}
+
+							$('.desempenho-geral').click();
+						}
+						else {
+							$('.brasao').prop("src", "");
+							$('.nome_time').html('');
+							$('.ano_fundacao').html('');
+							$('.nome_presidente').html('');
+							$('.text-hitoria').html('');
+							$('.dropdown-menu').html('');
+							$('.geral-campeonatos').html('');
+
+							$('#alert-title').html(retorno.title);
+							$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+							$('#alert').modal('show');
+						}
+				    }
+				    catch (e) {
+						$('.brasao').prop("src", "");
+						$('.nome_time').html('');
+						$('.ano_fundacao').html('');
+						$('.nome_presidente').html('');
+						$('.text-hitoria').html('');
+						$('.dropdown-menu').html('');
+						$('.geral-campeonatos').html('');
+
+						$('#loading-modal').modal('hide');
+						$('#alert-title').html("Erro ao fazer parse do JSON!");
+						$('#alert-content').html(String(e.stack));
+						$('#alert').modal('show');
+				    };
+				}
+			});
+		}
+
+		$('body').on('click', '.dropdown-item', function(e) {
+			var container = $(this).attr('href');
+			var idano = $(this).attr('href').replace('#a', '');
+			var idtime = $(this).data('time-id');
+
+			$(container).append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
+			$.ajax({
+				type: "POST",
+				url: "acts/acts.clube.php?act=paineis&idano=" + idano + "&idtime=" + idtime,
+				success: function(data)
+				{
+				    try {
+						var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+						if(retorno.succeed) {
+							$(container).html('');
+
+							$(container).append('<div class="row painel-' + idano + '"><h1 class="headline-rodada">Temporada selecionada: <strong>' + retorno.temporada + '</strong></h1></div>');
+							$(container).append('<div class="col-12 historia painel-' + idano + '"><div id="container-' + idano + '" class="row"></div><div class="btn btn-lg btn-primary btn-temporada"><a href="#" class="link-temporada">Confira sua pontuação detalhada da temporada ' + retorno.temporada + '</a></div></div>');
+
+							if(retorno.list_camps.length > 0) {
+								$.each(retorno.list_camps, function(t, temp) {
+									if(temp.tipo == "liga") {
+										var status_liga = "";
+										if(temp.posicao == 1) {
+											status_liga = '<img src="img/taca.png" class="img-fluid center-block">';
+										} else {
+											status_liga = '<h2 class="posicao">' + temp.posicao + 'º</h2>';
+										}
+										$('#container-' + idano).append('<div class="col-sm-3">' + status_liga + '<h3 class="nome-torneio">Cartolas sem cartola</h3><p class="ano">' + temp.temporada + '</p></div>');
+									}
+
+									if(temp.tipo == "mata_mata") {
+										var status_mm = "";
+										if(temp.campeao) {
+											if(temp.mata_mata.toLowerCase().indexOf("kempes") >= 0) {
+												status_mm = '<img src="img/mata-mata-kempes.png" class="img-fluid center-block">';
+											} else {
+												status_mm = '<img src="img/mata-mata.png" class="img-fluid center-block">';
+											}
+										} else {
+											status_mm = '<h2 class="posicao">X</h2>';
+										}
+										$('#container-' + idano).append('<div class="col-sm-3">' + status_mm + '<h3 class="nome-torneio">' + temp.mata_mata + '</h3><p class="ano">' + temp.temporada + '</p></div>');
+									}
+								});
+							}	
+
+							$('#container-' + idano).append('<div class="col-sm-3"><h2 class="pontuacao_temp">' + retorno.max_pontos + '</h2><h3 class="nome-torneio">Maior pontuação</h3><p class="ano">' + retorno.temporada + '</p></div>');
+							$('#container-' + idano).append('<div class="col-sm-3"><h2 class="pontuacao_temp">' + retorno.min_pontos + '</h2><h3 class="nome-torneio">Menor pontuação</h3><p class="ano">' + retorno.temporada + '</p></div>');
+							$('#container-' + idano).append('<div class="col-sm-3"><h2 class="pontuacao_temp">' + retorno.media + '</h2><h3 class="nome-torneio">Média de pontos</h3><p class="ano">' + retorno.temporada + '</p></div>');
+
+							$('.painel-' + idano).fadeIn("slow", function() {
+								$('#loading').fadeOut();
+								$('#loading').remove();
+							});
+						}
+						else {
+							$('#alert-title').html(retorno.title);
+							$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+							$('#alert').modal('show');
+						
+							$('#loading').remove();
+							$(container).html('');
+						}
+				    }
+				    catch (e) {
+						$('#alert-title').html("Erro ao fazer parse do JSON!");
+						$('#alert-content').html(String(e.stack));
+						$('#alert').modal('show');
+
+						$('#loading').remove();
+						$(container).html('');
+				    }
+				}
+			});
 		});
 	}
 

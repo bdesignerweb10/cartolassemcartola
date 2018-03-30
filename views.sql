@@ -15,22 +15,22 @@ INNER JOIN tbl_times_temporadas tt ON tt.id_times = t.id
   ORDER BY ROUND(SUM(tt.pontuacao), 2) DESC;
 
 CREATE OR REPLACE VIEW vw_mata_mata_andamento AS 
-    SELECT mmc.id_anos AS temporada, mmc.id_rodadas AS rodada, mm.descricao AS mata_mata, mmc.nivel AS nivel,
-      CASE mmc.nivel WHEN 1 THEN 'Final'
-      				 WHEN 2 THEN 'Semi-final'
-      				 WHEN 4 THEN 'Quartas de final'
-      				 WHEN 8 THEN 'Oitavas de final'
-      				 WHEN 16 THEN 'Primeira Fase'
+    SELECT mmc.id_anos AS temporada, MAX(mmc.id_rodadas) AS rodada, mm.descricao AS mata_mata, MIN(mmc.nivel) AS nivel,
+      CASE MIN(mmc.nivel) WHEN 1 THEN 'Final'
+               WHEN 2 THEN 'Semi-final'
+               WHEN 4 THEN 'Quartas de final'
+               WHEN 8 THEN 'Oitavas de final'
+               WHEN 16 THEN 'Primeira Fase'
       END AS fase,
-      CASE mmc.nivel WHEN 1 THEN 'bg-danger'
-      				 WHEN 2 THEN 'bg-warning'
-      				 WHEN 4 THEN 'bg-warning'
-      				 WHEN 8 THEN 'bg-success'
-      				 WHEN 16 THEN 'bg-info'
+      CASE MIN(mmc.nivel) WHEN 1 THEN 'bg-danger'
+               WHEN 2 THEN 'bg-warning'
+               WHEN 4 THEN 'bg-warning'
+               WHEN 8 THEN 'bg-success'
+               WHEN 16 THEN 'bg-info'
       END AS cor_fase
       FROM tbl_mata_mata_confrontos mmc
 INNER JOIN tbl_mata_mata mm ON mm.id = mmc.id_mata_mata
-     WHERE mmc.chave = 1
+     GROUP BY mmc.id_anos, mm.descricao
   ORDER BY mmc.id_rodadas ASC;
 
 CREATE OR REPLACE VIEW vw_mata_mata_confrontos AS 
@@ -67,4 +67,5 @@ CREATE OR REPLACE VIEW vw_escudos_temporada AS
       FROM tbl_times t
 INNER JOIN tbl_inscricao i ON i.id_times = t.id
      WHERE t.ativo = 1
-       AND i.ativo = 1;
+       AND i.ativo = 1
+  ORDER BY t.nome_time;
