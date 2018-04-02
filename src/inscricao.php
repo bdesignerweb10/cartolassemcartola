@@ -20,12 +20,18 @@ if($_SESSION["temporada"] == "1")
 			    			<input type="email" class="form-control" id="email" name="email" aria-describedby="email" placeholder="Informe seu e-mail" data-error="Por favor, informe um e-mail correto." maxlength="120" required>
 			    			<div class="help-block with-errors"></div>
 			            </div>         
-			  			<div class="form-inline">
-			  				<input type="text" class="form-control mb-3 mr-sm-3 mb-sm-3" id="telefone" name="telefone" placeholder="Informe nº do telefone" data-error="Por favor, informe um número de telefone correto." data-mask="(00) 00000-0000" data-mask-selectonfocus="true" data-mask-clearifnotmatch="true" maxlength="15" required>
-			  				<div class="help-block with-errors"></div>		  				
-			  				<input type="text" class="form-control mb-3 mr-sm-3 mb-sm-3" id="time" name="time" placeholder="Informe o seu time" data-error="Por favor, informe o nome de seu time." maxlength="120" required>
-			  				<div class="help-block with-errors"></div>
-			  				<input type="text" class="form-control mb-2 mr-sm-2 mb-sm-3" id="valor" name="valor" value="R$ 30,00" data-mask="R$ 00,00" data-mask-selectonfocus="true" data-mask-clearifnotmatch="true" readonly="readonly">
+						<div class="row" style="margin-bottom: 1rem;">			  			
+				  			<div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">	
+				  				<input type="text" class="form-control mb-3 mr-sm-3 mb-sm-3" id="telefone" name="telefone" placeholder="Informe nº do telefone" data-error="Por favor, informe um número de telefone correto." data-mask="(00) 00000-0000" data-mask-selectonfocus="true" data-mask-clearifnotmatch="true" maxlength="15" required>
+				  				<div class="help-block with-errors"></div>		  				
+			  				</div>
+				  			<div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">	
+				  				<input type="text" class="form-control mb-3 mr-sm-3 mb-sm-3" id="nome_time" name="nome_time" placeholder="Informe o seu time" data-error="Por favor, informe o nome de seu time." maxlength="120" required>
+				  				<div class="help-block with-errors"></div>
+			  				</div>
+				  			<div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">	
+			  					<input type="text" class="form-control mb-2 mr-sm-2 mb-sm-3" id="valor" name="valor" value="R$ 30,00" data-mask="R$ 00,00" data-mask-selectonfocus="true" data-mask-clearifnotmatch="true" readonly="readonly">
+			  				</div>
 			  			</div>
 					    <fieldset class="form-group row" style="margin-left: 0px; margin-right: 0px;">
       						<legend class="col-form-legend col-sm-12" style="padding-left: 0px;">Forma de pagamento: </legend>

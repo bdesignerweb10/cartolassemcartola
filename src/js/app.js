@@ -233,6 +233,15 @@ $(function() {
 	
 	// BEGIN INSCRICAO (inscricao)
 
+    $('#nome_time').textext({
+        plugins : 'autocomplete ajax',
+        ajax : {
+            url : 'acts/acts.inscricao.php?act=times',
+            dataType : 'json',
+            cacheResults : true
+        }
+    });
+
 	$('#btn-voltar-inscricao').click(function(e) {
 		e.preventDefault();
 
@@ -249,7 +258,7 @@ $(function() {
 
 		$.ajax({
 			type: "POST",
-			url: "acts/acts.inscricao.php",
+			url: "acts/acts.inscricao.php?act=add",
 			data: $("#form-inscricao").serialize(),
 			success: function(data)
 			{
@@ -1619,7 +1628,7 @@ $(function() {
 	// BEGIN BRASILEIRO (brasileiro)
 
 	if(window.location.pathname.indexOf('brasileiro') !== -1) {
-		
+
 	}
 
 	// END BRASILEIRO (brasileiro)

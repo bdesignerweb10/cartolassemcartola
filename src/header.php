@@ -33,6 +33,7 @@ else {
 	<link rel="stylesheet" href="css/style.css">
 	<link href='css/fullcalendar.min.css' rel='stylesheet' />
 	<link href='css/fullcalendar.print.min.css' rel='stylesheet' media='print' />
+	<link rel="stylesheet" href="css/textext.plugin.autocomplete.css" type="text/css">
 </head>
 <body>
 

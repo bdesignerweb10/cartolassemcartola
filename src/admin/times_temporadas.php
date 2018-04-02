@@ -47,7 +47,7 @@ $timestemp = $conn->query("SELECT t.id_anos AS id, a.descricao AS ano, COUNT(t.i
 
 				                $fake_id = $dados->id * $_SESSION["fake_id"];
 
-				                if($dados->descricao < $_SESSION["temp_atual"] || ($dados->id == $_SESSION["temporada_atual"] && $_SESSION["temporada"] == 1)) {
+				                if(intval($dados->ano) < intval($_SESSION["temp_atual"]) || ($dados->id == $_SESSION["temporada_atual"] && $_SESSION["temporada"] == 1)) {
 				                	echo "<i class='fa fa-edit fa-2x edit-disabled' alt='Edição desabilitada' title='Edição dos times da temporada $dados->id desabilitada'></i>";
 				                }
 				                else {

@@ -36,6 +36,9 @@
 		<script src='js/moment.min.js'></script>
 		<script src='js/fullcalendar.min.js'></script>
 		<script src='js/pt-br.js'></script>
+		<script src="js/textext.core.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/textext.plugin.autocomplete.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/textext.plugin.ajax.js" type="text/javascript" charset="utf-8"></script>
 		<?php if($conn) $conn->close(); ?>
 	</body>
 </html>
