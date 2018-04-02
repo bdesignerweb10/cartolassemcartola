@@ -1,7 +1,4 @@
 <?php
-header('Access-Control-Allow-Origin: *');
-header('Content-type: application/json');
-
 function sendRequest($path, $options = array()){
   if($options['body']){
     $c = curl_init();
@@ -41,7 +38,7 @@ function sendRequest($path, $options = array()){
     curl_close($c);
     echo $error_status;
     die;
-  } else if($options['token']){
+  } else if(isset($options['token'])){
     if (isset($options["api"]) && $options["api"] === "liga") {
       // $orderBy: campeonato, turno, mes, rodada, patrimonio
       $orderBy = "";
@@ -81,7 +78,7 @@ function login($login, $password){
     'serviceId' => 4728
   ));
 
-  return json_encode(sendRequest('authentication', array(
+  return json_decode(sendRequest('authentication', array(
     'base' => 'https://login.globo.com/api/',
     'body' => $body
   )));
@@ -89,13 +86,19 @@ function login($login, $password){
 
 function api($path, $options = array()){
   $opts = array(
-    'token' => isset($token) && !empty($token) ? $token : false,
     'body' => false,
     'base' => 'https://api.cartolafc.globo.com/'
   );
 
   if(count($options) > 0) {
-    array_merge($opts, $options);
+    $opts = $opts + $options;
+  }
+
+  if(strpos($path, "auth") !== FALSE) {
+    $auth = login($opts["login"], $opts["senha"]);
+    unset($opts["login"]);
+    unset($opts["senha"]);
+    $opts += array('token' => $auth->{"glbId"});
   }
 
   $results = sendRequest($path, $opts);
@@ -104,6 +107,6 @@ function api($path, $options = array()){
     header('HTTP/1.0 404 Not Found');
   }
 
-  echo json_encode($results);
+  return json_decode($results);
 }
 ?>

@@ -286,3 +286,5 @@ CREATE TABLE `tbl_mata_mata_confrontos` (
 
 ALTER TABLE `tbl_mata_mata` ADD `id_time_campeao` INT NULL AFTER `total_times`;
 ALTER TABLE `tbl_mata_mata` ADD CONSTRAINT `fkey_campeao_mata_mata` FOREIGN KEY (`id_time_campeao`) REFERENCES `tbl_times`(`id`) ON DELETE SET NULL ON UPDATE SET NULL;
+
+ALTER TABLE `tbl_times` ADD `slug_cartola` VARCHAR(60) NULL AFTER `nome_time`, ADD `patrimonio` DECIMAL NULL AFTER `slug_cartola`, ADD UNIQUE `uidx_slug_cartola` (`slug_cartola`);

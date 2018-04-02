@@ -49,7 +49,7 @@ $anos = $conn->query("SELECT id, descricao FROM tbl_anos ORDER BY descricao DESC
 
 						                $fake_id = $dados->id * $_SESSION["fake_id"];
 
-				                if($dados->id < $_SESSION["temporada_atual"] || ($dados->id == $_SESSION["temporada_atual"] && $_SESSION["temporada"] == 1)) {
+				                if($dados->descricao < $_SESSION["temp_atual"] || ($dados->id == $_SESSION["temporada_atual"] && $_SESSION["temporada"] == 1)) {
 				                	echo "<i class='fa fa-edit fa-2x edit-disabled' alt='Edição da temporada $dados->id desabilitada' title='Edição da temporada $dados->id desabilitada'></i><i class='fa fa-trash fa-2x del-disabled' alt='Remoção da temporada $dados->id desabilitada' title='Remoção da temporada $dados->id desabilitada'></i>";
 				                }
 				                else {
@@ -57,7 +57,7 @@ $anos = $conn->query("SELECT id, descricao FROM tbl_anos ORDER BY descricao DESC
 				                			<i class='fa fa-edit fa-2x edit'></i>
 			                			  </a>";
 
-			                		if($dados->id > $_SESSION["temporada_atual"]) {
+			                		if($dados->descricao > $_SESSION["temp_atual"]) {
 			                			echo "<a href='#' class='btn-del-temporadas' data-temporada='$fake_id' alt='Remover temporada $dados->id' title='Remover temporada $dados->id'>
 			                					<i class='fa fa-trash fa-2x del'></i>
 		                					  </a>";

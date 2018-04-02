@@ -124,7 +124,7 @@ else {
 				<div class="liga">					
 					<p>
 						<span class="mark hidden-xs-down">
-							Bom dia, hoje é <?php echo date('d'); ?> de <?php echo date('M'); ?> de <?php echo date('Y'); ?>
+							<?php echo strftime('Bom dia, hoje é %d de %B de %Y', strtotime('today')); ?>
 						</span>
 					</p>
 				</div><!-- liga -->

@@ -300,6 +300,7 @@ $(function() {
 	   window.location.pathname.indexOf('login') === -1 &&
 	   window.location.pathname.indexOf('logout') === -1 &&
 	   window.location.pathname.indexOf('brasileiro') === -1 &&
+	   window.location.pathname.indexOf('scouts') === -1 &&
 	   window.location.pathname.indexOf('clube') === -1 &&
 	   window.location.pathname.indexOf('dados_clube') === -1 &&
 	   window.location.pathname.indexOf('meus_dados') === -1 &&
@@ -440,7 +441,7 @@ $(function() {
 										    catch (e) {
 										    	console.log(e);
 										    };
-										    
+
 								            return label;
 								        }
 								    }
@@ -1614,6 +1615,21 @@ $(function() {
 	}
 
 	// END CLUBE (clube)
+
+	// BEGIN BRASILEIRO (brasileiro)
+
+	if(window.location.pathname.indexOf('brasileiro') !== -1) {
+		
+	}
+
+	// END BRASILEIRO (brasileiro)
+
+	// BEGIN SCOUTS (scouts)
+
+	if(window.location.pathname.indexOf('scouts') !== -1) {
+	}
+
+	// END SCOUTS (scouts)
 });
 
 function getRandomColor() {

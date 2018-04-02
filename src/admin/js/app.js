@@ -478,7 +478,7 @@ $(function() {
 							                							"<td>" + item.time + "</td>" +
 							                							"<td>" + item.presidente + "</td>" +
 							                							"<td class='center'>" + item.posicao_liga + " º</td>" +
-							                							"<td class='center'>" + item.pontuacao + " pts.</td>" +
+							                							"<td class='center'>" + parseFloat(item.pontuacao).toFixed(2) + " pts.</td>" +
 							                							"<td class='center'>" + (item.ativo == 1 ? "<i class='fa fa-check fa-2x add' alt='Time ativo' title='Time está ativo'></i>" : "<i class='fa fa-times fa-2x del' alt='Time inativo' title='Time ainda não está ativo'></i>") + "</td>" +
 							                							"<td class='center'>" + (item.ativo == 1 ? botao_inativar : botao_ativar) + "</td>" +
 						                							"</tr>");

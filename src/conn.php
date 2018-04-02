@@ -167,7 +167,7 @@ if ($result) {
 			}
 	    }
 	}
-
+    setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
 	date_default_timezone_set('America/Sao_Paulo');
 
 	// ########################################
@@ -219,6 +219,46 @@ if ($result) {
 	{
 		$x = pathinfo(full_url($_SERVER));
 	    return $x['dirname'] . "/";
+	}
+
+	function cartola_dict($info, $spec = null) {
+		$msgs = array(
+			'score_current' => 'Pontuação Parcial',
+			'score_last' => 'Pontuação',
+			'mercado_status' => array(
+				"1" => "Mercado Aberto",
+				"2" => "Mercado Fechado",
+				"3" => "Mercado em Atualização",
+				"4" => "Mercado em Manutenção",
+				"6" => "Final de temporada"
+			),
+			'athlete_score_current' => 'Parcial',
+			'athlete_score_last' => 'Última',
+			'esquema_tatico' => array(
+				"1" => "3-4-3",
+				"2" => "3-5-2",
+				"3" => "4-3-3",
+				"4" => "4-4-2",
+				"5" => "4-5-1",
+				"6" => "5-3-2",
+				"7" => "5-4-1"
+			),
+			'notify_msg' => array(
+				'team_empty' => "Digite o nome do seu time para consultar!",
+				'team_notfound' => "O time que você digitou não foi encontrado, verifique se o nome está correto!",
+				'team_error' => "Ocorreu algum erro ao consultar seu time!<br> Aguarde alguns instantes para uma nova consulta.",
+				'athletes_notfound' => "A escalação desse time ainda não pode ser exibida.",
+				'athletes_error' => "Ocorreu algum erro ao consultar a lista de jogadores!<br> Aguarde alguns instantes para uma nova consulta.",
+				'athletes_round_error' => "Ocorreu algum erro ao consultar os atletas da rodada atual!<br> Aguarde alguns instantes para uma nova consulta.",
+				'athlete_notfound' => "Nenhum jogador foi encontrado com esse termo."
+			)
+		);
+
+		$msg = $msgs[$info];
+		if($spec != null) {
+			$msg = $msg[$spec];
+		}
+		return $msg;
 	}
 }
 else {
