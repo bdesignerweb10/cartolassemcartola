@@ -1,6 +1,9 @@
 <?php
 require_once("../conn.php");
 
+if($_SESSION["temporada"] == "1")
+	header('location:./');
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
