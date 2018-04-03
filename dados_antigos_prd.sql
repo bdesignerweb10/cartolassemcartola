@@ -3229,6 +3229,56 @@ UPDATE tbl_inscricao SET ativo = 1 WHERE id_anos = 3;
 
 
 
+INSERT INTO tbl_mata_mata (descricao, total_times, id_time_campeao) VALUES ('Copa Kempes I', 2, 11);
+INSERT INTO tbl_mata_mata_times VALUES ((SELECT MAX(id) FROM tbl_mata_mata), 11);	-- Ferdesbar FC
+INSERT INTO tbl_mata_mata_times VALUES ((SELECT MAX(id) FROM tbl_mata_mata), 32);	-- Phanton X FC
+
+INSERT INTO tbl_mata_mata_confrontos (id_mata_mata, id_time_1, id_time_2, id_anos, id_rodadas, chave, nivel) 
+     VALUES ((SELECT MAX(id) FROM tbl_mata_mata), 11, 32, 3, 27, 1, 1);
+
+
+
+
+
+INSERT INTO tbl_mata_mata (descricao, total_times, id_time_campeao) VALUES ('Copa Kempes II', 2, 1);
+INSERT INTO tbl_mata_mata_times VALUES ((SELECT MAX(id) FROM tbl_mata_mata), 1);	-- Hasdrubal FC
+INSERT INTO tbl_mata_mata_times VALUES ((SELECT MAX(id) FROM tbl_mata_mata), 18);	-- ForestGump FC
+
+INSERT INTO tbl_mata_mata_confrontos (id_mata_mata, id_time_1, id_time_2, id_anos, id_rodadas, chave, nivel) 
+     VALUES ((SELECT MAX(id) FROM tbl_mata_mata), 1, 18, 4, 11, 1, 1);
+
+
+
+
+
+INSERT INTO tbl_mata_mata (descricao, total_times, id_time_campeao) VALUES ('Copa Kempes III', 8, 3);
+INSERT INTO tbl_mata_mata_times VALUES ((SELECT MAX(id) FROM tbl_mata_mata), 1);	-- Hasdrubal FC
+INSERT INTO tbl_mata_mata_times VALUES ((SELECT MAX(id) FROM tbl_mata_mata), 4);	-- E.C. UPU
+INSERT INTO tbl_mata_mata_times VALUES ((SELECT MAX(id) FROM tbl_mata_mata), 20);	-- Galaticc F.C
+INSERT INTO tbl_mata_mata_times VALUES ((SELECT MAX(id) FROM tbl_mata_mata), 3); 	-- S.F. Zangief
+INSERT INTO tbl_mata_mata_times VALUES ((SELECT MAX(id) FROM tbl_mata_mata), 19);	-- Gaviões 1969
+INSERT INTO tbl_mata_mata_times VALUES ((SELECT MAX(id) FROM tbl_mata_mata), 10); 	-- BierFortes EC
+INSERT INTO tbl_mata_mata_times VALUES ((SELECT MAX(id) FROM tbl_mata_mata), 11);	-- Ferdesbar FC
+INSERT INTO tbl_mata_mata_times VALUES ((SELECT MAX(id) FROM tbl_mata_mata), 26);	-- Mecônio Sport Club
+
+INSERT INTO tbl_mata_mata_confrontos (id_mata_mata, id_time_1, id_time_2, id_anos, id_rodadas, chave, nivel) 
+     VALUES ((SELECT MAX(id) FROM tbl_mata_mata), 1, 4, 4, 27, 1, 4);
+INSERT INTO tbl_mata_mata_confrontos (id_mata_mata, id_time_1, id_time_2, id_anos, id_rodadas, chave, nivel) 
+     VALUES ((SELECT MAX(id) FROM tbl_mata_mata), 20, 3, 4, 27, 2, 4);
+INSERT INTO tbl_mata_mata_confrontos (id_mata_mata, id_time_1, id_time_2, id_anos, id_rodadas, chave, nivel) 
+     VALUES ((SELECT MAX(id) FROM tbl_mata_mata), 19, 10, 4, 27, 3, 4);
+INSERT INTO tbl_mata_mata_confrontos (id_mata_mata, id_time_1, id_time_2, id_anos, id_rodadas, chave, nivel) 
+     VALUES ((SELECT MAX(id) FROM tbl_mata_mata), 11, 26, 4, 27, 4, 4);
+
+INSERT INTO tbl_mata_mata_confrontos (id_mata_mata, id_time_1, id_time_2, id_anos, id_rodadas, chave, nivel) 
+     VALUES ((SELECT MAX(id) FROM tbl_mata_mata), 1, 3, 4, 28, 1, 2);
+INSERT INTO tbl_mata_mata_confrontos (id_mata_mata, id_time_1, id_time_2, id_anos, id_rodadas, chave, nivel) 
+     VALUES ((SELECT MAX(id) FROM tbl_mata_mata), 19, 11, 4, 28, 2, 2);
+
+INSERT INTO tbl_mata_mata_confrontos (id_mata_mata, id_time_1, id_time_2, id_anos, id_rodadas, chave, nivel) 
+     VALUES ((SELECT MAX(id) FROM tbl_mata_mata), 3, 19, 4, 29, 1, 1);
+INSERT INTO tbl_mata_mata_confrontos (id_mata_mata, id_time_1, id_time_2, id_anos, id_rodadas, chave, nivel) 
+     VALUES ((SELECT MAX(id) FROM tbl_mata_mata), 11, 1, 4, 29, 2, 1);
 
 
 

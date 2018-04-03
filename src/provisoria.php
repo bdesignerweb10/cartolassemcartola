@@ -32,7 +32,7 @@ if (!isset($_SESSION["prov_id"]) || empty($_SESSION["prov_id"]) ||
 						<img src="img/logo.png" alt="Logo Cartola">
 						<span class="head-login">Criação de senha definitiva</span>
 					</div>
-					<form id="form-provisoria" data-toggle="validator" action="acts/acts.provisoria.php" method="POST">
+					<form id="form-provisoria" data-toggle="validator">
 			  			<div class="form-group">		    			
 							<label for="login">Usuário</label>
 			    			<input type="text" class="form-control form-control-lg" id="login" name="login" aria-describedby="login" value="<?php echo $_SESSION['prov_login']; ?>" disabled>
@@ -50,7 +50,7 @@ if (!isset($_SESSION["prov_id"]) || empty($_SESSION["prov_id"]) ||
 							<label for="senha2">Confirmação de Senha</label>
 							<input type="password" class="form-control form-control-lg" id="senha2" name="senha2" placeholder="Digite a confirmação da senha..." data-error="Por favor, informe a confirmação senha." maxlength="120" required>
 						</div>
-	  					<button id="btn-login" type="submit" class="btn btn-success btn-lg form-control" name="submit">
+	  					<button id="btn-provisoria" type="submit" class="btn btn-success btn-lg form-control" name="submit">
 	  						<i class='fa fa-save'></i> Alterar Senha
 	  					</button>		
 					</form>

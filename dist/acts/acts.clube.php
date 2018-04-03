@@ -99,7 +99,8 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 													  FROM tbl_mata_mata mm
 												INNER JOIN tbl_mata_mata_confrontos mmc ON mmc.id_mata_mata = mm.id
 												     WHERE mmc.id_anos = $liga->id_temporada
-												  GROUP BY mm.id_time_campeao") or trigger_error($conn->error);
+												  GROUP BY mm.id_time_campeao
+												  ORDER BY mmc.id_anos DESC, mm.descricao ASC") or trigger_error($conn->error);
 							if($mmlist && $mmlist->num_rows > 0) {
 								while($mm = $mmlist->fetch_object()) {
 									$campeao = "false";
@@ -161,11 +162,12 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 													  FROM tbl_mata_mata mm
 												INNER JOIN tbl_mata_mata_confrontos mmc ON mmc.id_mata_mata = mm.id
 												     WHERE mmc.id_anos = $idano
-												  GROUP BY mm.id_time_campeao") or trigger_error($conn->error);
+												  GROUP BY mm.id_time_campeao
+												  ORDER BY mmc.id_anos DESC, mm.descricao ASC") or trigger_error($conn->error);
 							if($mmlist && $mmlist->num_rows > 0) {
 								while($mm = $mmlist->fetch_object()) {
 									$campeao = "false";
-									if($id == $mm->time_campeao)
+									if($idtime == $mm->time_campeao)
 										$campeao = "true";
 									$list_camps .= '{"tipo": "mata_mata", "temporada": "' . $liga->temporada . '", "mata_mata": "' . $mm->mata_mata . '", "campeao": ' . $campeao . '}, ';
 								} 

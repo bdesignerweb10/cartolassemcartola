@@ -195,7 +195,7 @@ $(function() {
 		$.ajax({
 			type: "POST",
 			url: "acts/acts.provisoria.php",
-			data: $("#form-provisoria").serialize(),
+			data: $(this).serialize(),
 			success: function(data)
 			{
 			    try {
@@ -227,6 +227,11 @@ $(function() {
 			    };
 			}
 		});
+	});
+
+	$("#btn-provisoria").click(function(e) {
+		e.preventDefault();
+		$("#form-provisoria").submit();
 	});
 
 	// END PROVISORIA (provisoria)
@@ -1628,7 +1633,170 @@ $(function() {
 	// BEGIN BRASILEIRO (brasileiro)
 
 	if(window.location.pathname.indexOf('brasileiro') !== -1) {
+		$('#confrontos-br').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.brasileiro.php?act=confrontos",
+			success: function(data)
+			{
+			    try {
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
+					$('.escudos').html('');
+
+					if(retorno.succeed) {
+						if(retorno.confrontos.length > 0) {
+							$('.n-rodada').html(retorno.rodada + "ª Rodada");
+
+							loadConfrontosRodada(retorno.confrontos);
+							$('#confrontos-br .card').fadeIn("slow", function() {
+								$('#loading').fadeOut();
+								$('#loading').remove();
+							});
+						}
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+
+						$('.n-rodada').html('');
+						$('#confrontos-br .card').remove();
+						$('#loading').remove();
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
+					$('#alert').modal('show');
+
+					$('.n-rodada').html('');
+					$('#confrontos-br .card').remove();
+					$('#loading').remove();
+
+			    };
+			}
+		});
+
+		$('.voltar-rodada').on('click', function() {
+			$('#confrontos-br .card').remove();
+			$('#confrontos-br').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
+			$.ajax({
+				type: "POST",
+				url: "acts/acts.brasileiro.php?act=confrontos&rodant",
+				success: function(data)
+				{
+				    try {
+						var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+						$('.escudos').html('');
+
+						if(retorno.succeed) {
+							if(retorno.confrontos.length > 0) {
+								$('.n-rodada').html(retorno.rodada + "ª Rodada");
+
+								loadConfrontosRodada(retorno.confrontos);
+								$('#confrontos-br .card').fadeIn("slow", function() {
+									$('#loading').fadeOut();
+									$('#loading').remove();
+								});
+							}
+						}
+						else {
+							$('#alert-title').html(retorno.title);
+							$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+							$('#alert').modal('show');
+
+							$('.n-rodada').html('');
+							$('#confrontos-br .card').remove();
+							$('#loading').remove();
+						}
+				    }
+				    catch (e) {
+						$('#alert-title').html("Erro ao fazer parse do JSON!");
+						$('#alert-content').html(String(e.stack));
+						$('#alert').modal('show');
+
+						$('.n-rodada').html('');
+						$('#confrontos-br .card').remove();
+						$('#loading').remove();
+
+				    };
+				}
+			});
+		});
+
+		$('.avancar-rodada').on('click', function() {
+			$('#confrontos-br .card').remove();
+			$('#confrontos-br').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
+			$.ajax({
+				type: "POST",
+				url: "acts/acts.brasileiro.php?act=confrontos&proxrod",
+				success: function(data)
+				{
+				    try {
+						var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+						$('.escudos').html('');
+
+						if(retorno.succeed) {
+							if(retorno.confrontos.length > 0) {
+								$('.n-rodada').html(retorno.rodada + "ª Rodada");
+
+								loadConfrontosRodada(retorno.confrontos);
+								$('#confrontos-br .card').fadeIn("slow", function() {
+									$('#loading').fadeOut();
+									$('#loading').remove();
+								});
+							}
+						}
+						else {
+							$('#alert-title').html(retorno.title);
+							$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+							$('#alert').modal('show');
+
+							$('.n-rodada').html('');
+							$('#confrontos-br .card').remove();
+							$('#loading').remove();
+						}
+				    }
+				    catch (e) {
+						$('#alert-title').html("Erro ao fazer parse do JSON!");
+						$('#alert-content').html(String(e.stack));
+						$('#alert').modal('show');
+
+						$('.n-rodada').html('');
+						$('#confrontos-br .card').remove();
+						$('#loading').remove();
+
+				    };
+				}
+			});
+		});
+
+		function loadConfrontosRodada(confrontos) {
+			$.each(confrontos, function(c, confronto) {
+				//confronto.data
+				$('.escudos').append('');
+			});
+			// <div class="card estrutura"> \
+			// 	<p class="info-data"><i class="fa fa-calendar"></i> XXX 99/99/9999</p> \						
+			// 	<div class=" confronto"> \
+			// 		<div class="col-sm-3 titulo-clube"> \
+			// 			<p class="nome-abrev-right">' + confronto.m_time + '</p> \
+			// 			<img src="' + confronto.m_escudo + '" class="img-fluid center-block time"> \							
+			// 		</div> \
+			// 		<p class="confronto">' + confronto.m_placar + '</p> \
+			// 		<p class="confronto">X</p> \
+			// 		<p class="confronto">' + confronto.v_placar + '</p> \
+			// 		<div class="col-sm-3 titulo-clube"> \						
+			// 			<img src="' + confronto.m_escudo + '" class="img-fluid center-block time"> \
+			// 			<p class="nome-abrev-float">' + confronto.v_time + '</p> \																		
+			// 		</div> \
+			// 	</div> \
+			// 	<p class="info-local"><i class="fa fa-map-marker"></i> ' + confronto.local + ' - 99:99<strong>hrs</strong></p> \
+			// </div> \
+		}
 	}
 
 	// END BRASILEIRO (brasileiro)

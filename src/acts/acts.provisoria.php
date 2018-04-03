@@ -79,6 +79,9 @@ if(isset($_POST) && !empty($_POST) && $_POST["senha"]) {
 								$conn->rollback();
 								exit();
 				        	}
+							$usu_time = $usuario->times_id;
+							$usu_escudo = "";
+							$usu_nome = $usuario->usuario;
 
 							$upd_usuario = "UPDATE tbl_usuarios 
 							  			       SET senha = '" . md5($senha) . "',
@@ -87,7 +90,7 @@ if(isset($_POST) && !empty($_POST) && $_POST["senha"]) {
 							  			     WHERE id = $id";
 
 							if ($conn->query($upd_usuario) === TRUE) {
-								$sqltime = $conn->query("SELECT nome_presidente, email FROM tbl_times WHERE id = " . $usuario->times_id) or trigger_error("12110 - " . $conn->error);
+								$sqltime = $conn->query("SELECT nome_presidente, email, escudo_time FROM tbl_times WHERE id = " . $usuario->times_id) or trigger_error("12110 - " . $conn->error);
 
 								$nome = "Sem Nome";
 								$email = "sem@email";
@@ -96,6 +99,12 @@ if(isset($_POST) && !empty($_POST) && $_POST["senha"]) {
 					    			while($time = $sqltime->fetch_object()) {
 					    				$nome = $time->nome_presidente;
 					    				$email = $time->email;
+
+					    				$usu_nome = $time->nome_presidente;
+					    				if(file_exists("../img/escudos/" . $time->escudo_time))
+					    					$usu_escudo = $time->escudo_time;
+					    				else 
+					    					$usu_escudo = "no-escudo.png";
 					    			}
 
 					    			$mail = new PHPMailer(true); 
@@ -126,6 +135,9 @@ if(isset($_POST) && !empty($_POST) && $_POST["senha"]) {
 								$_SESSION["usu_id"] = $usuario->id;
 								$_SESSION["usu_login"] = $usuario->usuario;
 								$_SESSION["usu_nivel"] = $usuario->nivel;
+								$_SESSION["usu_time"] = $usu_time;
+								$_SESSION["usu_nome"] = $usu_nome;
+								$_SESSION["usu_escudo"] = $usu_escudo;
 								$_SESSION["prov_id"] = NULL;
 								$_SESSION["prov_login"] = NULL;
 

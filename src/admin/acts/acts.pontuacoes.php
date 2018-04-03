@@ -22,7 +22,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 								if(isset($operador) && !empty($operador)) {
 									$id = $idfake / $_SESSION["fake_id"];
 
-									$pontrodada = floatval(str_replace(',', '.', $pontarray[$idfake]));
+									$pontrodada = str_replace(',', '.', $pontarray[$idfake]);
 
 									if($operador == "-")
 										$pontrodada = $pontrodada * -1;
@@ -61,7 +61,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 												     AND id_times = $posicao->id_times";
 
 								if ($conn->query($qryupdposicao) !== TRUE) {
-									$var_erros .= "Erro ao lançar a pontuação " . $qryupdposicao . "<br>" . $conn->error;
+									$var_erros .= "Erro ao atualizar a posição na liga: " . $qryupdposicao . "<br>" . $conn->error;
 								}
 								else {
 									$id_posicao++;
