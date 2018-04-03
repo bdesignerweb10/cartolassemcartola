@@ -37,7 +37,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 	    case 'desempenho-geral':
 		    try {
 		    	$limit = "";
-				if($_GET['limit']) {
+				if(isset($_GET['limit']) && $_GET['limit']) {
 					$limit = "LIMIT " . $_GET['limit'];
 				}
 				$list_times = "[";
