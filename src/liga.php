@@ -1,6 +1,14 @@
 <?php
 require_once('header.php');
 ?>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.12';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 <main>
 	<div class="container">
 		<div class="row capa-liga">
@@ -52,6 +60,17 @@ require_once('header.php');
 						</footer>				
 					</div><!-- card -->
 				</article>
+				<div class="row">
+					<div class="col-sm-10"></div>
+					<div class="col-sm-2" style="margin-bottom: 20px;">
+						<div class="fb-share-button" data-href="http://www.cartolassemcartola.com.br/liga" data-layout="button_count" data-size="large" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.cartolassemcartola.com.br%2Fliga&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Compartilhar</a></div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="fb-comments" data-href="http://www.cartolassemcarola.com.br" data-width="1220" data-numposts="10"></div>
+					</div>
+				</div>				
 			</div>		
 		</div>
 	</main>
