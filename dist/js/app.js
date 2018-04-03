@@ -334,8 +334,10 @@ $(function() {
 
 					if(retorno.succeed) {
 						if(retorno.list.length > 0) {
+							var c_times = 1;
 							$.each(retorno.list, function(i, item) {
-								$('#destaques-rodada .card-block tbody').append('<tr class="bg-success"><th scope="row" class="table-title">' + item.posicao + 'º</th><td><img src="img/escudos/' + item.escudo + '" class="img-fluid"></td><td>' + item.time + '</td><td>' + item.pontuacao.toFixed(2) + '</td></tr>');
+								$('#destaques-rodada .card-block tbody').append('<tr class="bg-success"><th scope="row" class="table-title">' + c_times + 'º</th><td><img src="img/escudos/' + item.escudo + '" class="img-fluid"></td><td>' + item.time + '</td><td>' + item.pontuacao.toFixed(2) + '</td></tr>');
+								c_times++;
 							});
 						}
 						else {
@@ -623,7 +625,7 @@ $(function() {
 									c_times = 0;
 								}
 								if(c_times < 4){
-									$('#body_' + item.rodada).append('<tr class="bg-success"><th scope="row" class="table-title">' + item.posicao + 'º</th><td><img src="img/escudos/' + item.escudo + '" class="img-fluid"></td><td>' + item.time + '</td><td>' + item.pontuacao + '</td></tr>');
+									$('#body_' + item.rodada).append('<tr class="bg-success"><th scope="row" class="table-title">' + (c_times+1) + 'º</th><td><img src="img/escudos/' + item.escudo + '" class="img-fluid"></td><td>' + item.time + '</td><td>' + parseFloat(Math.round(item.pontuacao * 100) / 100).toFixed(2) + '</td></tr>');
 								}
 								c_times++;
 							});
@@ -1654,6 +1656,14 @@ $(function() {
 								$('#loading').remove();
 							});
 						}
+						else {
+							$('#confrontos-br').append('<div class="col-12 center infor"><i class="fa fa-thumbs-down fa-2x"></i><br /><br />Não há dados a serem exibidos aqui.</div>');
+
+							$('#confrontos-br .infor').fadeIn("slow", function() {
+								$('#loading').fadeOut();
+								$('#loading').remove();
+							});
+						}
 					}
 					else {
 						$('#alert-title').html(retorno.title);
@@ -1776,26 +1786,10 @@ $(function() {
 
 		function loadConfrontosRodada(confrontos) {
 			$.each(confrontos, function(c, confronto) {
-				//confronto.data
-				$('.escudos').append('');
+				var fdata = new Date(confronto.data);
+				$('#confrontos-br').append('<div class="card estrutura"><p class="info-data"><i class="fa fa-calendar"></i> ' + weekDay(fdata.getDay()) + ' ' + formatBRDate(fdata) + '</p><div class=" confronto"><div class="col-sm-3 titulo-clube"><p class="nome-abrev-right">' + confronto.m_time + '</p><img src="' + confronto.m_escudo + '" class="img-fluid center-block time"></div><p class="confronto">' + confronto.m_placar + '</p><p class="confronto">X</p><p class="confronto">' + confronto.v_placar + '</p><div class="col-sm-3 titulo-clube"><img src="' + confronto.v_escudo + '" class="img-fluid center-block time"><p class="nome-abrev-float">' + confronto.v_time + '</p></div></div><p class="info-local"><i class="fa fa-map-marker"></i> ' + confronto.local + ' - ' + formatTime(fdata) + '<strong>hrs</strong></p></div>');
 			});
-			// <div class="card estrutura"> \
-			// 	<p class="info-data"><i class="fa fa-calendar"></i> XXX 99/99/9999</p> \						
-			// 	<div class=" confronto"> \
-			// 		<div class="col-sm-3 titulo-clube"> \
-			// 			<p class="nome-abrev-right">' + confronto.m_time + '</p> \
-			// 			<img src="' + confronto.m_escudo + '" class="img-fluid center-block time"> \							
-			// 		</div> \
-			// 		<p class="confronto">' + confronto.m_placar + '</p> \
-			// 		<p class="confronto">X</p> \
-			// 		<p class="confronto">' + confronto.v_placar + '</p> \
-			// 		<div class="col-sm-3 titulo-clube"> \						
-			// 			<img src="' + confronto.m_escudo + '" class="img-fluid center-block time"> \
-			// 			<p class="nome-abrev-float">' + confronto.v_time + '</p> \																		
-			// 		</div> \
-			// 	</div> \
-			// 	<p class="info-local"><i class="fa fa-map-marker"></i> ' + confronto.local + ' - 99:99<strong>hrs</strong></p> \
-			// </div> \
+			
 		}
 	}
 
@@ -1836,6 +1830,42 @@ function formatDate(milliseconds) {
 	}
 
 	return dd + '/' + mm + '/' + yyyy + ' - ' + h + ':' + i + 'hrs';
+}
+
+function formatBRDate(date) {
+	var dd = date.getDate();
+	var mm = date.getMonth()+1; //January is 0!
+	var yyyy = date.getFullYear();
+
+	if(dd<10) {
+	    dd = '0'+dd
+	} 
+
+	if(mm<10) {
+	    mm = '0'+mm
+	}
+
+	return dd + '/' + mm + '/' + yyyy;
+}
+
+function formatTime(date) {
+	var h = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+	var i = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+	
+	return h + ':' + i;
+}
+
+function weekDay(day) {
+	var weekday = new Array(7);
+	weekday[0] =  "DOM";
+	weekday[1] = "SEG";
+	weekday[2] = "TER";
+	weekday[3] = "QUA";
+	weekday[4] = "QUI";
+	weekday[5] = "SEX";
+	weekday[6] = "SAB";
+
+	return weekday[day];
 }
 
 /*!

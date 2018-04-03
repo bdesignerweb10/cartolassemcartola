@@ -7,17 +7,19 @@ if (!isset($_SESSION["usu_id"]) || empty($_SESSION["usu_id"]) ||
 	$_SESSION["usu_id"] == "0")
 	header('Location: ../login');
 
-$rodbrasileiro = $_SESSION["rod_atual"];
-
 if(isset($_GET['act']) && !empty($_GET['act'])) {
 	switch ($_GET['act']) {
 	    case 'confrontos':
 	    	if(isset($_GET['rodant'])) {
-	    		$rodbrasileiro = intval($rodbrasileiro) - 1;
+	    		$rodbrasileiro = intval($_SESSION["rodbrasileiro"]) - 1;
+	    	} else if(isset($_GET['proxrod'])) {
+	    		$rodbrasileiro = intval($_SESSION["rodbrasileiro"]) + 1;
 	    	}
-	    	if(isset($_GET['proxrod'])) {
-	    		$rodbrasileiro = intval($rodbrasileiro) + 1;
+	    	else {
+				$rodbrasileiro = $_SESSION["rod_atual"];
 	    	}
+
+			$_SESSION["rodbrasileiro"] = $rodbrasileiro;
 
 			$rodada = api("partidas/". $rodbrasileiro); 
 			if(isset($rodada->{"mensagem"}) && !empty($rodada->{"mensagem"})) {
@@ -43,13 +45,12 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 							$local = $partida->{"local"};
 							$data = $partida->{"partida_data"};
 
-							$list_confrontos += '{"m_escudo": "'.$m_escudo.'", "m_time": "'.$m_time.'", "m_placar": "'.$m_placar.'", "v_escudo": "'.$v_escudo.'", "v_time": "'.$v_time.'", "v_placar": "'.$v_placar.'", "local": "'.$local.'", "data": "'.$data.'"}, ';
+							$list_confrontos .= '{"m_escudo": "'.$m_escudo.'", "m_time": "'.$m_time.'", "m_placar": "'.$m_placar.'", "v_escudo": "'.$v_escudo.'", "v_time": "'.$v_time.'", "v_placar": "'.$v_placar.'", "local": "'.$local.'", "data": "'.$data.'"}, ';
 						}
 				    }
 					$list_confrontos = substr($list_confrontos, 0, -2);
 
-					$_SESSION["rodbrasileiro"] = $rodbrasileiro;
-					echo '{"succeed": false, "rodada": "' . $rodbrasileiro . '", "confrontos": [' . $list_confrontos . ']}';	
+					echo '{"succeed": true, "rodada": "' . $rodbrasileiro . '", "confrontos": [' . $list_confrontos . ']}';	
 				} else {
 		       		echo '{"succeed": false, "errno": 31003, "title": "Erro na consulta da API do Cartola!", "erro": $rodada->{"mensagem"}}';
 		       		break;

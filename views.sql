@@ -4,7 +4,7 @@ CREATE OR REPLACE VIEW vw_destaques_rodada AS
 INNER JOIN tbl_times t    ON t.id  = r.id_times
 INNER JOIN tbl_rodadas ro ON ro.id = r.id_rodadas
      WHERE t.ativo = 1
-  ORDER BY r.id_anos ASC, r.id_rodadas ASC, r.posicao_liga ASC;
+  ORDER BY r.id_anos ASC, r.id_rodadas ASC, r.pontuacao DESC;
 
 CREATE OR REPLACE VIEW vw_desempenho_geral AS 
     SELECT t.id AS id_time, t.nome_time AS time, t.escudo_time AS escudo, tt.id_anos AS temporada, ROUND(SUM(tt.pontuacao), 2) AS total_pontos
