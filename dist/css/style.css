@@ -8875,9 +8875,6 @@ ul.escudos > li {
   color: #fff;
   font-weight: bold; }
 
-.table-responsive {
-  background-color: #fff; }
-
 .table-rodada th, .table-rodada td {
   background-color: #fff; }
 
@@ -9181,7 +9178,7 @@ ul.escudos > li {
 #desempenho-liga .card-block, #desempenho-liga footer, #destaques .col-sm-4,
 #mata-mata .bg-info, #mata-mata .bg-success, #mata-mata .bg-danger, #mata-mata .mata-and, #mainconfrontos, #nao-ha-dados,
 #pontrodada .table-responsive, #proximos-eventos, #eventos-passados, #eventos-container .bg-success, #eventos-container .bg-info,
-#eventos-container .infor, .escudos, #escudos-container .infor, #confrontos-br .card, #confrontos-br .infor {
+#eventos-container .infor, .escudos, #escudos-container .infor, #confrontos-br .card, #confrontos-br .infor, .table-brasileiro .infor, .table-brasileiro table {
   display: none; }
 
 .img-fit {

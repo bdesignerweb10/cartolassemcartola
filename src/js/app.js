@@ -1647,23 +1647,7 @@ $(function() {
 					$('.escudos').html('');
 
 					if(retorno.succeed) {
-						if(retorno.confrontos.length > 0) {
-							$('.n-rodada').html(retorno.rodada + "ª Rodada");
-
-							loadConfrontosRodada(retorno.confrontos);
-							$('#confrontos-br .card').fadeIn("slow", function() {
-								$('#loading').fadeOut();
-								$('#loading').remove();
-							});
-						}
-						else {
-							$('#confrontos-br').append('<div class="col-12 center infor"><i class="fa fa-thumbs-down fa-2x"></i><br /><br />Não há dados a serem exibidos aqui.</div>');
-
-							$('#confrontos-br .infor').fadeIn("slow", function() {
-								$('#loading').fadeOut();
-								$('#loading').remove();
-							});
-						}
+						loadConfrontosRodada(retorno);
 					}
 					else {
 						$('#alert-title').html(retorno.title);
@@ -1688,7 +1672,10 @@ $(function() {
 			}
 		});
 
-		$('.voltar-rodada').on('click', function() {
+		$('.voltar-rodada').on('click', function(e) {
+			e.preventDefault();
+
+			$('.n-rodada').html('');
 			$('#confrontos-br .card').remove();
 			$('#confrontos-br').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
 			$.ajax({
@@ -1702,15 +1689,7 @@ $(function() {
 						$('.escudos').html('');
 
 						if(retorno.succeed) {
-							if(retorno.confrontos.length > 0) {
-								$('.n-rodada').html(retorno.rodada + "ª Rodada");
-
-								loadConfrontosRodada(retorno.confrontos);
-								$('#confrontos-br .card').fadeIn("slow", function() {
-									$('#loading').fadeOut();
-									$('#loading').remove();
-								});
-							}
+							loadConfrontosRodada(retorno);
 						}
 						else {
 							$('#alert-title').html(retorno.title);
@@ -1736,7 +1715,10 @@ $(function() {
 			});
 		});
 
-		$('.avancar-rodada').on('click', function() {
+		$('.avancar-rodada').on('click', function(e) {
+			e.preventDefault();
+
+			$('.n-rodada').html('');
 			$('#confrontos-br .card').remove();
 			$('#confrontos-br').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
 			$.ajax({
@@ -1750,15 +1732,7 @@ $(function() {
 						$('.escudos').html('');
 
 						if(retorno.succeed) {
-							if(retorno.confrontos.length > 0) {
-								$('.n-rodada').html(retorno.rodada + "ª Rodada");
-
-								loadConfrontosRodada(retorno.confrontos);
-								$('#confrontos-br .card').fadeIn("slow", function() {
-									$('#loading').fadeOut();
-									$('#loading').remove();
-								});
-							}
+							loadConfrontosRodada(retorno);
 						}
 						else {
 							$('#alert-title').html(retorno.title);
@@ -1784,13 +1758,100 @@ $(function() {
 			});
 		});
 
-		function loadConfrontosRodada(confrontos) {
-			$.each(confrontos, function(c, confronto) {
-				var fdata = new Date(confronto.data);
-				$('#confrontos-br').append('<div class="card estrutura"><p class="info-data"><i class="fa fa-calendar"></i> ' + weekDay(fdata.getDay()) + ' ' + formatBRDate(fdata) + '</p><div class=" confronto"><div class="col-sm-3 titulo-clube"><p class="nome-abrev-right">' + confronto.m_time + '</p><img src="' + confronto.m_escudo + '" class="img-fluid center-block time"></div><p class="confronto">' + confronto.m_placar + '</p><p class="confronto">X</p><p class="confronto">' + confronto.v_placar + '</p><div class="col-sm-3 titulo-clube"><img src="' + confronto.v_escudo + '" class="img-fluid center-block time"><p class="nome-abrev-float">' + confronto.v_time + '</p></div></div><p class="info-local"><i class="fa fa-map-marker"></i> ' + confronto.local + ' - ' + formatTime(fdata) + '<strong>hrs</strong></p></div>');
-			});
-			
+		function loadConfrontosRodada(data) {
+			if(data.confrontos.length > 0) {
+				$('.n-rodada').html(data.rodada + "ª Rodada");
+
+				data.confrontos.sort(function(a,b) {
+				    return a.data - b.data;
+				});
+
+				$.each(data.confrontos, function(c, confronto) {
+					var fdata = new Date(confronto.data);
+					$('#confrontos-br').append('<div class="card estrutura"><p class="info-data"><i class="fa fa-calendar"></i> ' + weekDay(fdata.getDay()) + ' ' + formatBRDate(fdata) + '</p><div class=" confronto"><div class="col-sm-3 titulo-clube"><p class="nome-abrev-right">' + confronto.m_time + '</p><img src="' + confronto.m_escudo + '" class="img-fluid center-block time"></div><p class="confronto">' + confronto.m_placar + '</p><p class="confronto">X</p><p class="confronto">' + confronto.v_placar + '</p><div class="col-sm-3 titulo-clube"><img src="' + confronto.v_escudo + '" class="img-fluid center-block time"><p class="nome-abrev-float">' + confronto.v_time + '</p></div></div><p class="info-local"><i class="fa fa-map-marker"></i> ' + confronto.local + ' - ' + formatTime(fdata) + '<strong>hrs</strong></p></div>');
+				});
+
+				$('#confrontos-br .card').fadeIn("slow", function() {
+					$('#loading').fadeOut();
+					$('#loading').remove();
+				});
+			}
+			else {
+				$('#confrontos-br').append('<div class="col-12 center infor"><i class="fa fa-thumbs-down fa-2x"></i><br /><br />Não há dados a serem exibidos aqui.</div>');
+
+				$('#confrontos-br .infor').fadeIn("slow", function() {
+					$('#loading').fadeOut();
+					$('#loading').remove();
+				});
+			}
 		}
+
+		$('.table-responsive').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.brasileiro.php?act=tabela", 
+			success: function(data)
+			{
+			    try {
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+					$('.escudos').html('');
+
+					if(retorno.succeed) {
+						if(retorno.equipes.length > 0) {
+							var count = 0;
+
+							$.each(retorno.equipes, function(e, equipe) {
+								var class_cor = "";
+								if(count < 6) {
+									class_cor = "bom";
+								}
+								else if (count >= 6 && count < 16) {
+									class_cor = "media-parcial";
+								}
+								else {
+									class_cor = "ruim";
+								}
+
+								$('.tbl-pos-brasileiro').append('<tr><th class="'+class_cor+'">'+(count+1)+'</th><th>'+equipe.clube+'</th><td>'+equipe.pontos+'</td><td>'+equipe.jogos+'</td><td>'+equipe.vitorias+'</td><td>'+equipe.empates+'</td><td>'+equipe.derrotas+'</td><td>'+equipe.gols_pro+'</td><td>'+equipe.gols_contra+'</td><td>'+equipe.saldo_gols+'</td><td>'+equipe.aproveitamento+'%</td></tr>');
+								count++;
+							});
+
+							$('.table-responsive table').fadeIn("slow", function() {
+								$('#loading').fadeOut();
+								$('#loading').remove();
+							});
+						}
+						else {
+							$('.table-responsive').append('<div class="col-12 center infor"><i class="fa fa-thumbs-down fa-2x"></i><br /><br />Não há dados a serem exibidos aqui.</div>');
+
+							$('.table-responsive .infor').fadeIn("slow", function() {
+								$('#loading').fadeOut();
+								$('#loading').remove();
+							});
+						}
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+
+						$('.table-responsive .infor').remove();
+						$('.table-responsive table').remove();
+						$('#loading').remove();
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
+					$('#alert').modal('show');
+
+					$('.table-responsive .infor').remove();
+					$('.table-responsive table').remove();
+					$('#loading').remove();
+			    };
+			}
+		});
 	}
 
 	// END BRASILEIRO (brasileiro)
