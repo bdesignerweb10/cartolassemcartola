@@ -1635,6 +1635,73 @@ $(function() {
 	// BEGIN BRASILEIRO (brasileiro)
 
 	if(window.location.pathname.indexOf('brasileiro') !== -1) {
+		$('.table-responsive').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.brasileiro.php?act=tabela", 
+			success: function(data)
+			{
+			    try {
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+					$('.escudos').html('');
+
+					if(retorno.succeed) {
+						if(retorno.equipes.length > 0) {
+							var count = 0;
+
+							$.each(retorno.equipes, function(e, equipe) {
+								var class_cor = "";
+								if(count < 6) {
+									class_cor = "bom";
+								}
+								else if (count >= 6 && count < 16) {
+									class_cor = "media-parcial";
+								}
+								else {
+									class_cor = "ruim";
+								}
+
+								$('.tbl-pos-brasileiro').append('<tr><th class="'+class_cor+'">'+(count+1)+'</th><th>'+equipe.clube+'</th><td>'+equipe.pontos+'</td><td>'+equipe.jogos+'</td><td>'+equipe.vitorias+'</td><td>'+equipe.empates+'</td><td>'+equipe.derrotas+'</td><td>'+equipe.gols_pro+'</td><td>'+equipe.gols_contra+'</td><td>'+equipe.saldo_gols+'</td><td>'+equipe.aproveitamento+'%</td></tr>');
+								count++;
+							});
+
+							$('.table-responsive table').fadeIn("slow", function() {
+								$('#loading').fadeOut();
+								$('#loading').remove();
+							});
+						}
+						else {
+							$('.table-responsive').append('<div class="col-12 center infor"><i class="fa fa-thumbs-down fa-2x"></i><br /><br />Não há dados a serem exibidos aqui.</div>');
+
+							$('.table-responsive .infor').fadeIn("slow", function() {
+								$('#loading').fadeOut();
+								$('#loading').remove();
+							});
+						}
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+
+						$('.table-responsive .infor').remove();
+						$('.table-responsive table').remove();
+						$('#loading').remove();
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
+					$('#alert').modal('show');
+
+					$('.table-responsive .infor').remove();
+					$('.table-responsive table').remove();
+					$('#loading').remove();
+			    };
+			}
+		});
+
 		$('#confrontos-br').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
 		$.ajax({
 			type: "POST",
@@ -1785,73 +1852,6 @@ $(function() {
 				});
 			}
 		}
-
-		$('.table-responsive').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
-		$.ajax({
-			type: "POST",
-			url: "acts/acts.brasileiro.php?act=tabela", 
-			success: function(data)
-			{
-			    try {
-					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
-
-					$('.escudos').html('');
-
-					if(retorno.succeed) {
-						if(retorno.equipes.length > 0) {
-							var count = 0;
-
-							$.each(retorno.equipes, function(e, equipe) {
-								var class_cor = "";
-								if(count < 6) {
-									class_cor = "bom";
-								}
-								else if (count >= 6 && count < 16) {
-									class_cor = "media-parcial";
-								}
-								else {
-									class_cor = "ruim";
-								}
-
-								$('.tbl-pos-brasileiro').append('<tr><th class="'+class_cor+'">'+(count+1)+'</th><th>'+equipe.clube+'</th><td>'+equipe.pontos+'</td><td>'+equipe.jogos+'</td><td>'+equipe.vitorias+'</td><td>'+equipe.empates+'</td><td>'+equipe.derrotas+'</td><td>'+equipe.gols_pro+'</td><td>'+equipe.gols_contra+'</td><td>'+equipe.saldo_gols+'</td><td>'+equipe.aproveitamento+'%</td></tr>');
-								count++;
-							});
-
-							$('.table-responsive table').fadeIn("slow", function() {
-								$('#loading').fadeOut();
-								$('#loading').remove();
-							});
-						}
-						else {
-							$('.table-responsive').append('<div class="col-12 center infor"><i class="fa fa-thumbs-down fa-2x"></i><br /><br />Não há dados a serem exibidos aqui.</div>');
-
-							$('.table-responsive .infor').fadeIn("slow", function() {
-								$('#loading').fadeOut();
-								$('#loading').remove();
-							});
-						}
-					}
-					else {
-						$('#alert-title').html(retorno.title);
-						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
-						$('#alert').modal('show');
-
-						$('.table-responsive .infor').remove();
-						$('.table-responsive table').remove();
-						$('#loading').remove();
-					}
-			    }
-			    catch (e) {
-					$('#alert-title').html("Erro ao fazer parse do JSON!");
-					$('#alert-content').html(String(e.stack));
-					$('#alert').modal('show');
-
-					$('.table-responsive .infor').remove();
-					$('.table-responsive table').remove();
-					$('#loading').remove();
-			    };
-			}
-		});
 	}
 
 	// END BRASILEIRO (brasileiro)
@@ -1906,14 +1906,23 @@ function formatBRDate(date) {
 	    mm = '0'+mm
 	}
 
-	return dd + '/' + mm + '/' + yyyy;
+	if(isNaN(date.getTime())) {
+		return "A definir";
+	}
+	else {
+		return dd + '/' + mm + '/' + yyyy;
+	}
 }
 
 function formatTime(date) {
 	var h = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
 	var i = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
-	
-	return h + ':' + i;
+	if(isNaN(date.getTime())) {
+		return "--:--";
+	}
+	else {
+		return h + ':' + i;
+	}
 }
 
 function weekDay(day) {
@@ -1926,7 +1935,12 @@ function weekDay(day) {
 	weekday[5] = "SEX";
 	weekday[6] = "SAB";
 
-	return weekday[day];
+	if(isNaN(day)) {
+		return "---";
+	}
+	else {
+		return weekday[day];
+	}
 }
 
 /*!

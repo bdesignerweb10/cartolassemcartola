@@ -4,6 +4,8 @@ if (!isset($_SESSION["usu_id"]) || empty($_SESSION["usu_id"]) ||
 	!isset($_SESSION['usu_nivel']) || empty($_SESSION["usu_nivel"]) ||
 	$_SESSION['usu_nivel'] == "3" || $_SESSION["usu_id"] == "0") die('25001 - Você não tem permissão para acessar essa página!');
 
+if(intval($_SESSION["api_ligada"]) == 1) die('25008 - A pontuação do sistema só poderá ser atualizada pela integração com a API!');
+
 if(isset($_GET['act']) && !empty($_GET['act'])) {
 	switch ($_GET['act']) {
 	    case 'updpont':

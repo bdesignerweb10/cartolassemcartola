@@ -4,10 +4,64 @@ if (!isset($_SESSION["usu_id"]) || empty($_SESSION["usu_id"]) ||
 	!isset($_SESSION['usu_nivel']) || empty($_SESSION["usu_nivel"]) ||
 	$_SESSION['usu_nivel'] != "1" || $_SESSION["usu_id"] == "0") die('26001 - Você não tem permissão para acessar essa página!');
 
+require_once("../../acts/acts.cartola.php");
+
 if(isset($_GET['act']) && !empty($_GET['act'])) {
 	switch ($_GET['act']) {
 	    case 'abrirtemporada':
 			try {
+				// API do Cartola
+				$var_erros = "";
+				$ligas = api("auth/ligas", array('login' => "phmpilz@hotmail.com", 'senha' => "23@Wsx89(Nji"));
+	
+				foreach($ligas->{"ligas"} as $l => $liga) {
+					if($liga->{"patrocinador"} == false && $liga->{"time_dono_id"} == 13908998) {
+					 	$cartola = api("auth", array('login' => "phmpilz@hotmail.com", 
+												     'senha' => "23@Wsx89(Nji", 
+												     'api' => "liga",
+												     'liga_slug' => $liga->{"slug"}));
+					 	var_dump($cartola->{"times"});
+						foreach($cartola->{"times"} as $t => $time) {
+							$qryupdtime = "UPDATE tbl_times 
+										  	  SET slug_cartola = '" . $time->{"slug"} . "',
+										  		  patrimonio = " . number_format((float)$time->{"patrimonio"}, 2, '.', '') . "
+											WHERE UPPER(TRIM(nome_time)) = UPPER(TRIM('" . $time->{"nome"} . "'))";
+
+							if ($conn->query($qryupdtime) !== TRUE) {
+								$var_erros .= "Erro ao atualizar time com informações do Cartola FC " . $qryupdtime . "<br>" . $conn->error;
+							}
+						}
+					}
+				}
+
+				if(strlen($var_erros) > 0) {
+	        		throw new Exception($var_erros);
+				}
+
+				$var_nomes_times = "";
+				$resnullslug = $conn->query("SELECT t.nome_time AS time
+									       	   FROM tbl_times t
+									 	 INNER JOIN tbl_inscricao i ON i.id_times = t.id
+									      	  WHERE t.ativo = 1
+									        	AND i.ativo = 1
+									        	AND i.id_anos = " . $_SESSION["temporada_atual"] . "
+									        	AND t.slug_cartola IS NULL
+									   	   ORDER BY t.nome_time") or trigger_error("26026 - " . $conn->error);
+
+				if ($resnullslug && $resnullslug->num_rows > 0) {
+			        while($nullslug = $resnullslug->fetch_object()) {
+			        	$var_nomes_times .= $nullslug->time . ", ";
+					}
+				}
+
+				if(strlen($var_nomes_times) > 0) {
+					$var_nomes_times = substr($var_nomes_times, 0, -2);
+					$conn->rollback();
+					echo '{"succeed": false, "errno": 26027, "title": "Times não encontrados no Cartola FC!", "erro": "Os times <b>'.$var_nomes_times.'</b> não foram encontrados na API do Cartola FC. Favor revisar os nomes de acordo com o cadastrado no fantasy game e tente novamente, por favor!"}';
+					break;
+				}
+				// API do Cartola
+
 				$qrytempaberta = "UPDATE tbl_config SET temporada_aberta = 1";
 
 				if ($conn->query($qrytempaberta) === TRUE) {
@@ -97,20 +151,93 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 			try {
 				$conn->autocommit(FALSE);
 
+				// API do Cartola
+				if(intval($_SESSION["api_ligada"]) == 1) {
+					$status_mercado = api("mercado/status");
+
+					if ($status_mercado->{"status_mercado"} == 1) {
+						$ligas = api("auth/ligas", array('login' => "phmpilz@hotmail.com", 'senha' => "23@Wsx89(Nji"));
+			
+						if(count($ligas->{"ligas"}) > 0) {
+							$var_erros = "";
+
+							foreach($ligas->{"ligas"} as $l => $liga) {
+								if($liga->{"patrocinador"} == false && $liga->{"time_dono_id"} == 13908998) {
+								 	$cartola = api("auth", array('login' => "phmpilz@hotmail.com", 
+															     'senha' => "23@Wsx89(Nji", 
+															     'api' => "liga",
+															     'liga_slug' => $liga->{"slug"}));
+									if(count($cartola->{"times"}) > 0) {
+										foreach($cartola->{"times"} as $t => $time) {
+											$pontuacao = (!empty($time->{"pontos"}->{"rodada"}) ? str_replace(',', '.', $time->{"pontos"}->{"rodada"}) : "0");
+											$posicao = (!empty($time->{"ranking"}->{"campeonato"}) ? $time->{"ranking"}->{"campeonato"} : "0");
+
+											$qryupdpontuacao = "UPDATE tbl_times_temporadas 
+													  		   	   SET pontuacao = " . $pontuacao . ",
+													  		   	   	   posicao_liga = " . $posicao . ",
+															 		   usuario_id = " . $_SESSION["usu_id"] . ",
+															 		   alterado_em = NOW()
+														    	 WHERE id_anos = " . $_SESSION["temporada_atual"] . "
+														       	   AND id_rodadas = " . $_SESSION["rodada"] . " 
+														       	   AND id_times = (SELECT id 
+														       	   					 FROM tbl_times 
+														       	   					WHERE slug_cartola = '" . $time->{"slug"} . "' LIMIT 1)";
+
+											if ($conn->query($qryupdpontuacao) !== TRUE) {
+												$var_erros .= "Erro ao atualizar a pontuação do time da API do Cartola FC: " . $qryupdpontuacao . "<br>" . $conn->error;
+											}
+											else {
+												$patrimonio = number_format((float)$time->{"patrimonio"}, 2, '.', '');
+
+												$qryupdtime = "UPDATE tbl_times 
+															  	  SET patrimonio = " . $patrimonio . "
+																WHERE slug_cartola = '" . $time->{"slug"} . "'";
+
+												if ($conn->query($qryupdtime) !== TRUE) {
+													$var_erros .= "Erro ao atualizar o patrimônio do time com informações do Cartola FC " . $qryupdtime . "<br>" . $conn->error;
+												}
+											}
+										}
+									} else {
+										$conn->rollback();
+										echo '{"succeed": false, "errno": 26028, "title": "Times não encontados no Cartola FC!", "erro": "Os times da liga Cartolas sem Cartola não foram encontrados na API do Cartola FC, favor tentar novamente e caso o erro persista, favor procurar o administrador do sistema!"}';
+										break;
+									}
+								}
+							}
+
+							if(strlen($var_erros) > 0) {
+								$conn->rollback();
+								echo '{"succeed": false, "errno": 26029, "title": "Erro ao atualizar a pontuação dos times!", "erro": "Houve um erro ao atualizar a pontuação dos times de acordo com o publicado pela API do Cartola FC: '.$var_erros.'"}';
+								break;
+							}
+						} else {
+							$conn->rollback();
+							echo '{"succeed": false, "errno": 26028, "title": "Nenhuma liga encontrada no Cartola FC!", "erro": "Não foi encontrada a liga Cartolas sem Cartola na API do Cartola FC, favor tentar novamente e caso o erro persista, favor procurar o administrador do sistema!"}';
+							break;
+						} 
+					} else {
+						$conn->rollback();
+						echo '{"succeed": false, "errno": 26030, "title": "Mercado não está aberto no Cartola FC!", "erro": "O Cartola FC não está com o mercado aberto, não é possível definir a pontuação da rodada. Status atual do mercado: <b>'.cartola_dict("mercado_status", $status_mercado->{"status_mercado"}).'</b>"}';
+						break;
+					}
+				}
+				// API do Cartola
+				
 				$timeszerado = 0;
 				$pontuacaonull = 1;
 				$qrytimeszerado = $conn->query("SELECT COUNT(id_times) AS count 
 										   		  FROM tbl_times_temporadas 
 										   		 WHERE id_anos = " . $_SESSION["temporada_atual"] . " 
 										   		   AND id_rodadas = " . $_SESSION["rodada"] . "
-										   		   AND pontuacao = 0") or trigger_error("26020 - " . $conn->error);
+										   		   AND (pontuacao = 0 OR posicao_liga IS NULL)") or trigger_error("26020 - " . $conn->error);
 		        
 		        while($timezerado = $qrytimeszerado->fetch_object()) {
 					$timeszerado = $timezerado->count;
 				}
 
 				if($timeszerado > 2) {
-					echo '{"succeed": false, "errno": 26014, "title": "Muitos times com pontuação zerada!", "erro": "Não é possível abrir o mercado. Há mais de 2 times com a pontuação ZERADA para a rodada. Favor revisar e tentar novamente!"}';
+					echo '{"succeed": false, "errno": 26014, "title": "Muitos times com pontuação zerada!", "erro": "Não é possível abrir o mercado. Há mais de 2 times com a pontuação ZERADA ou com o ranking NULO para a rodada. Favor revisar e tentar novamente!"}';
 					$conn->rollback();
 					exit();
 				}
@@ -164,6 +291,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 					$descnextrod = $_SESSION["rod_atual"];
 				}
 
+				// Calculo do mata-mata
 				$temporada_atual = $_SESSION["temporada_atual"];
 				$rodada_atual = $_SESSION["rodada"];
 				$chave = 1;
@@ -197,7 +325,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 						  				     			  FROM tbl_times_temporadas 
 						  				    			 WHERE id_times   =  $confronto->id_time_2
 						  				      			   AND id_rodadas =  $rodada_atual
-						  				      			   AND id_anos    =  $temporada_atual") or trigger_error("26025 - " . $conn->error);;
+						  				      			   AND id_anos    =  $temporada_atual") or trigger_error("26025 - " . $conn->error);
 						if ($qryselpontime2 && $qryselpontime2->num_rows > 0) {
 					        while($pontime2 = $qryselpontime2->fetch_object()) {
 					        	$pontuacao_time_2 = doubleval($pontime2->pontuacao);
@@ -283,6 +411,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 					    }
 			        }
 			    }
+				// Calculo do mata-mata
 
 				$qryabrirmercado = "UPDATE tbl_config SET status_mercado = 1, rodada_atual = $nextrod";
 
