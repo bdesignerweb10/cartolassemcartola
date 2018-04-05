@@ -8319,6 +8319,12 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   clip: auto; }
 
 /* sidebar */
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+  .sidebar {
+    overflow-y: scroll;
+    bottom: 0;
+    position: absolute; } }
+
 .sidebar {
   width: 70%;
   max-width: 180px;
@@ -8508,7 +8514,8 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   .liga-csc .table-title {
     text-align: center; }
 
-.table th, .table td {
+.table th,
+.table td {
   padding: 0.56rem; }
 
 .liga-csc tbody tr td, .liga-csc tbody th {

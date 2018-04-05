@@ -1,3 +1,11 @@
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {	
+	.sidebar{	
+	overflow-y: scroll;
+    bottom: 0;	
+    position: absolute;
+	}
+}
+
 .sidebar{
 	width: 70%;
 	max-width: 180px;
