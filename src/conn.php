@@ -260,6 +260,19 @@ if ($result) {
 		}
 		return $msg;
 	}
+
+	function nl2p($string)
+	{
+	    $paragraphs = '';
+
+	    foreach (explode("\n", $string) as $line) {
+	        if (trim($line)) {
+	            $paragraphs .= '<p>' . $line . '</p>';
+	        }
+	    }
+
+	    return $paragraphs;
+	}
 }
 else {
     die("01002 - Erro ao buscar as configurações do sistema!");

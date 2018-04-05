@@ -133,8 +133,8 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 						exit();
 					}
 					else {
-						if($_POST["rodada_inicio"] <= $_SESSION["rodada"]) {
-							echo '{"succeed": false, "errno": 29009, "title": "Rodada de início antiga!", "erro": "início do mata-mata deve ser superior à rodada atual!"}';
+						if($_POST["rodada_inicio"] < $_SESSION["rodada"]) {
+							echo '{"succeed": false, "errno": 29009, "title": "Rodada de início antiga!", "erro": "início do mata-mata deve ser superior ou igual à rodada atual!"}';
 							$conn->rollback();
 							exit();
 						}

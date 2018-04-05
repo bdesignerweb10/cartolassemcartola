@@ -62,6 +62,9 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 						$escudo = "no-escudo.png";
 					if(!isset($historia) || empty($historia))
 						$historia = "Esse clube é muito pequeno, e por isso não tem história. Tá na hora de ganhar alguma coisa né, parça?";
+					else {
+						$historia = nl2p($historia);
+					}
 
 					$list_temps = "";
 					$temporadaslist = $conn->query("SELECT a.id AS id, a.descricao AS descricao

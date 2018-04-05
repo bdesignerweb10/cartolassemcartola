@@ -8947,14 +8947,16 @@ ul.escudos > li {
   background-color: #0f073f; }
 
 .media-parcial {
-  color: #1e3e84;
+  background-color: #1e3e84;
+  color: white;
   font-weight: bold; }
 
 .badge.media-parcial {
   background-color: #1e3e84; }
 
 .media-camp {
-  color: #175b0c;
+  background-color: #175b0c;
+  color: white;
   font-weight: bold; }
 
 .badge.media-camp {

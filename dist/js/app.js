@@ -1652,13 +1652,19 @@ $(function() {
 
 							$.each(retorno.equipes, function(e, equipe) {
 								var class_cor = "";
-								if(count < 6) {
-									class_cor = "bom";
-								}
-								else if (count >= 6 && count < 16) {
+								if(count < 4) {
 									class_cor = "media-parcial";
 								}
-								else {
+								else if (count >= 4 && count < 6) {
+									class_cor = "bom";
+								}
+								else if (count >= 6 && count < 12) {
+									class_cor = "media-camp";
+								}
+								else if (count >= 13 && count < 16) {
+									class_cor = "";
+								}
+								else if (count >= 16) {
 									class_cor = "ruim";
 								}
 
@@ -1859,6 +1865,7 @@ $(function() {
 	// BEGIN SCOUTS (scouts)
 
 	if(window.location.pathname.indexOf('scouts') !== -1) {
+
 	    $('#scout1').textext({
 	        plugins : 'autocomplete ajax',
 	        ajax : {
