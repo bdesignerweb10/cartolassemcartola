@@ -5,7 +5,25 @@ $timestemp = $conn->query("SELECT t.id_anos AS id, a.descricao AS ano, COUNT(t.i
    					   INNER JOIN tbl_anos AS a ON a.id = t.id_anos
    						 GROUP BY t.id_anos
    						 ORDER BY a.descricao DESC") or trigger_error($conn->error);
-?> <main class="maintable"><div class="container"><h3 class="headline">Gerenciamento de times por temporada</h3><div class="row"><div class="col-12"><table class="table table-striped table-bordered table-hover" cellspacing="0" width="100%"><thead><tr><th class="center">#</th><th class="bigcolumn">Ano</th><th class="center">Temporada Atual?</th><th class="center">Qtd. Rodadas</th><th class="center">Qtd. Times Cadastrados</th><th class="center">Opções</th></tr></thead><tbody> <?php 
+?>
+<main class="maintable">
+	<div class="container">
+		<h3 class="headline">Gerenciamento de times por temporada</h3>
+		<div class="row">
+			<div class="col-12">
+				<table class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+			        <thead>
+			            <tr>
+			                <th class='center'>#</th>
+			                <th class="bigcolumn">Ano</th>
+			                <th class='center'>Temporada Atual?</th>
+			                <th class='center'>Qtd. Rodadas</th>
+			                <th class='center'>Qtd. Times Cadastrados</th>
+			                <th class='center'>Opções</th>
+			            </tr>
+			        </thead>
+			        <tbody>
+			        	<?php 
 			        	if($timestemp && $timestemp->num_rows > 0) {
 				        	while($dados = $timestemp->fetch_object()) {
 
@@ -45,4 +63,41 @@ $timestemp = $conn->query("SELECT t.id_anos AS id, a.descricao AS ano, COUNT(t.i
 					                <td colspan='6' class='center'>Não há dados a serem exibidos para a listagem.</td>
 				                </tr>";
 			        	}
-						?> </tbody></table></div><!-- col-sm-8--></div><!-- row --></div><!-- col-sm-8--></main><main class="maintemporada"><div class="container"><h3 class="headline" id="headline-time-temporada"></h3><div class="row" style="margin-bottom: 10px;"><div class="col-sm-12 col-md-6 col-lg-2 col-xl-2"><button type="button" id="btn-voltar-lista-temporadas" class="btn btn-link btn-lg form-control btn-voltar"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;&nbsp;Voltar</button></div><!-- col-sm-8--></div><!-- row --><div class="row"><div class="col-12"><table class="table table-striped table-bordered table-hover" cellspacing="0" width="100%"><thead><tr><th class="center">#</th><th>Time</th><th>Presidente</th><th class="center">Posição</th><th class="center">Pontuação</th><th class="center">Status</th><th class="center">Opções</th></tr></thead><tbody id="lista-times-temporada"></tbody></table></div><!-- col-sm-8--></div><!-- row --></div><!-- col-sm-8--></main> <?php require_once('footer.php'); ?>
+						?>
+					</tbody>
+			    </table>
+			</div><!-- col-sm-8-->
+		</div><!-- row -->
+	</div><!-- col-sm-8-->
+</main>
+<main class="maintemporada">
+	<div class="container">
+		<h3 class="headline" id="headline-time-temporada"></h3>
+		<div class="row" style="margin-bottom: 10px;">
+			<div class="col-sm-12 col-md-6 col-lg-2 col-xl-2">
+				<button type="button" id="btn-voltar-lista-temporadas" class="btn btn-link btn-lg form-control btn-voltar">
+					<i class='fa fa-arrow-left'></i>&nbsp;&nbsp;&nbsp;Voltar
+				</button>	
+			</div><!-- col-sm-8-->
+		</div><!-- row -->	
+		<div class="row">
+			<div class="col-12">
+				<table class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+			        <thead>
+			            <tr>
+			                <th class='center'>#</th>
+			                <th>Time</th>
+			                <th>Presidente</th>
+			                <th class='center'>Posição</th>
+			                <th class='center'>Pontuação</th>
+			                <th class='center'>Status</th>
+			                <th class='center'>Opções</th>
+			            </tr>
+			        </thead>
+			        <tbody id="lista-times-temporada"></tbody>
+			    </table>
+			</div><!-- col-sm-8-->
+		</div><!-- row -->
+	</div><!-- col-sm-8-->
+</main>
+<?php require_once('footer.php'); ?>

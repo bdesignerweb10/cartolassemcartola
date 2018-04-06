@@ -174,7 +174,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 											     AND tt.id_rodadas = $rodgrafico") or trigger_error($conn->error);
 	        	if($pontuacaoqry && $pontuacaoqry->num_rows > 0) {
 		        	while($pont = $pontuacaoqry->fetch_object()) {
-						$pontos = floatval($pont->pontuacao);
+						$pontos = number_format(floatval($pont->pontuacao), 2, '.', '');
 		        	}
 		        }
 				echo '{"succeed": true, "pontuacao": ' . $pontos . '}';

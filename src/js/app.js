@@ -515,6 +515,7 @@ $(function() {
 												}).responseText;
 
 												var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
 												if(retorno.succeed)
 				            						label += ' - ' + retorno.pontuacao + ' pts.';
 										    }
