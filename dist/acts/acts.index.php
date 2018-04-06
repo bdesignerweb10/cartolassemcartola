@@ -238,7 +238,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 									$cidade = $partida->{"local"};
 									$data = $partida->{"data"} . "T" . str_replace("h", ":", $partida->{"horario"}) . ":00";
 
-			    					$eventoslist .= '{"id": '.$id_jogo.', "title": "'.$confronto.'", "description": "Estádio: '.$local.' - Cidade: '.$cidade.'", "start": "'.$data.'", "color": "#326410"}, ';
+			    					$eventoslist .= '{"id": '.$id_jogo.', "title": "'.$confronto.'", "description": "Rodada #'.$partida->{"rodada"}.' - Estádio: '.$local.' - Cidade: '.$cidade.'", "start": "'.$data.'", "color": "#326410"}, ';
 				    			}
 							}
 						}

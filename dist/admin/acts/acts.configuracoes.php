@@ -20,7 +20,6 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 												     'senha' => "23@Wsx89(Nji", 
 												     'api' => "liga",
 												     'liga_slug' => $liga->{"slug"}));
-					 	var_dump($cartola->{"times"});
 						foreach($cartola->{"times"} as $t => $time) {
 							$qryupdtime = "UPDATE tbl_times 
 										  	  SET slug_cartola = '" . $time->{"slug"} . "',
@@ -65,7 +64,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 				$qrytempaberta = "UPDATE tbl_config SET temporada_aberta = 1";
 
 				if ($conn->query($qrytempaberta) === TRUE) {
-					require_once("acts.inscricoes_encerradas.php");
+					//require_once("acts.inscricoes_encerradas.php");
 
 					$conn->commit();
 					$_SESSION["temporada"] = 1;
