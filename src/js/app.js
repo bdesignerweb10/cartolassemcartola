@@ -608,7 +608,7 @@ $(function() {
 			    try {
 					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-					$('#destaques-rodada .card-block tbody').html('');
+					$('#eventos .card-block tbody').html('');
 
 					if(retorno.succeed) {
 					   	$('#calendar').fullCalendar({
