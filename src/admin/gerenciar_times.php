@@ -101,9 +101,14 @@ $timeslist = $conn->query("SELECT t.id AS id, t.nome_time AS time, t.nome_presid
 			    		</div>
 					</div>
 					<div class="row">
-			  			<div class="col-12">		    			
+			  			<div class="col-sm-12 col-md-7 col-lg-9 col-xl-9">		    			
 							<label for="nome_presidente">Nome do Presidente</label>
 			    			<input type="text" class="form-control form-control-lg" id="nome_presidente" name="nome_presidente" aria-describedby="nome_presidente" placeholder="Informe o nome do presidente..." data-error="Por favor, informe o nome do presidente." maxlength="120" required>
+			    			<div class="help-block with-errors"></div>
+			    		</div>	  			
+			  			<div class="col-sm-12 col-md-5 col-lg-3 col-xl-3">		    			
+							<label for="ano_fundacao">Ano Fundação</label>
+			    			<input type="text" class="form-control form-control-lg" id="ano_fundacao" name="ano_fundacao" aria-describedby="time" data-error="Por favor, informe o nome do seu time no cartola." data-mask="0000" data-mask-selectonfocus="true" data-mask-clearifnotmatch="true" maxlength="4" required>
 			    			<div class="help-block with-errors"></div>
 			    		</div>
 					</div>

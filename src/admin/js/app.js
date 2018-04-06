@@ -654,6 +654,7 @@ $(function() {
 				    	$('#email').val(retorno.dados.email);
 				    	$('#telefone').val(retorno.dados.telefone);
 				    	$('#historia').val(retorno.dados.historia);
+				    	$('#ano_fundacao').val(retorno.dados.ano_fundacao);
 					}
 					else {
 						$('.maintable').show();
@@ -669,6 +670,7 @@ $(function() {
 				    	$('#email').val('');
 				    	$('#telefone').val('');
 				    	$('#historia').val('');
+				    	$('#ano_fundacao').val('');
 
 						$('#alert-title').html(retorno.title);
 						$('#alert-content').html(retorno.errno + " - " + retorno.erro);

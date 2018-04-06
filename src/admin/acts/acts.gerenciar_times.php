@@ -20,7 +20,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 				if ($qrytimes && $qrytimes->num_rows > 0) {
 					$dados = "";
 	    			while($time = $qrytimes->fetch_object()) {
-	    				$dados = '{"id" : "' . $time->id . '", "nome_time" : "' . $time->nome_time . '", "nome_presidente" : "' . $time->nome_presidente . '", "email" : "' . $time->email . '", "telefone" : "' . $time->telefone . '", "historia" : "' . $time->historia . '"}';
+	    				$dados = '{"id" : "' . $time->id . '", "nome_time" : "' . $time->nome_time . '", "nome_presidente" : "' . $time->nome_presidente . '", "email" : "' . $time->email . '", "telefone" : "' . $time->telefone . '", "historia" : "' . $time->historia . '", "ano_fundacao" : "' . $time->ano_fundacao . '"}';
 	    			}
 					echo '{"succeed": true, "dados": ' . $dados . '}';
 					exit();
@@ -89,6 +89,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 						$telefone = $_POST["telefone"];
 						$escudo = formataNomeEscudo($time);
 						$historia = $_POST["historia"];
+						$ano_fundacao = $_POST["ano_fundacao"];
 
 						$upd_time = "UPDATE tbl_times 
 						  				SET nome_time = '" . $time . "',
@@ -96,7 +97,8 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 						  				    escudo_time = '" . $escudo . "',
 						  				    email = '" . $email . "',
 						  				    telefone = '" . $telefone . "',
-						  				    historia = '" . $historia . "'
+						  				    historia = '" . $historia . "',
+						  				    ano_fundacao = '" . $ano_fundacao . "'
 						  			  WHERE id = $id";
 
 						if ($conn->query($upd_time) === TRUE) {

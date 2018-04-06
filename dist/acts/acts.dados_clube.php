@@ -26,6 +26,7 @@ if(isset($_POST) && !empty($_POST) && $_POST["time"]) {
 			$id_time = $_SESSION["usu_time"];
 			$time = $_POST["time"];
 			$historia = $_POST["historia"];
+			$ano_fundacao = $_POST["ano_fundacao"];
 
 			$timeqry = $conn->query("SELECT escudo_time
 									   FROM tbl_times
@@ -39,7 +40,8 @@ if(isset($_POST) && !empty($_POST) && $_POST["time"]) {
 			        while($escudo = $timeqry->fetch_object()) {
 						$upd_time = "UPDATE tbl_times 
 					  			        SET nome_time = '" . $time . "',
-					  			            historia = '" . $historia . "'
+					  			            historia = '" . $historia . "',
+					  			            ano_fundacao = '" . $ano_fundacao . "'
 						  			  WHERE id = " . $id_time;
 						if ($conn->query($upd_time) === TRUE) {
 							if(isset($_FILES['brasao'])) {

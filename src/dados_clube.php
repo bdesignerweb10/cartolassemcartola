@@ -1,6 +1,6 @@
 <?php
 require_once('header.php');
-$usu_qry = $conn->query("SELECT t.nome_time AS time, t.historia AS historia
+$usu_qry = $conn->query("SELECT t.nome_time AS time, t.historia AS historia, t.ano_fundacao AS ano_fundacao
 						   FROM tbl_usuarios u
 					  LEFT JOIN tbl_times t ON t.id = u.times_id
 					      WHERE u.id = " . $_SESSION["usu_id"]) or trigger_error($conn->error);
@@ -9,6 +9,7 @@ if ($usu_qry && $usu_qry->num_rows > 0) {
     while($usuario = $usu_qry->fetch_object()) {
 		$nome_time = $usuario->time;
 		$historia = $usuario->historia;
+		$ano_fundacao = $usuario->ano_fundacao;
 	}
 }
 ?>
@@ -22,9 +23,14 @@ if ($usu_qry && $usu_qry->num_rows > 0) {
 						<div id="box-ano" class="col-sm-12 col-md-12 col-lg-12 col-xl-12 form-box">
 							<h3 class="headline headline-form">Alterar informação de nome do time</h3> 
 							<div class="row">			  			
-					  			<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">		    			
+					  			<div class="col-sm-12 col-md-7 col-lg-9 col-xl-9">		    			
 									<label for="time">Time</label>
 					    			<input type="text" class="form-control form-control-lg" id="time" name="time" aria-describedby="time" data-error="Por favor, informe o nome do seu time no cartola." maxlength="120" value="<?php echo $nome_time; ?>" required>
+					    			<div class="help-block with-errors"></div>
+					    		</div>	  			
+					  			<div class="col-sm-12 col-md-5 col-lg-3 col-xl-3">		    			
+									<label for="ano_fundacao">Ano Fundação</label>
+					    			<input type="text" class="form-control form-control-lg" id="ano_fundacao" name="ano_fundacao" aria-describedby="time" data-error="Por favor, informe o nome do seu time no cartola." data-mask="0000" data-mask-selectonfocus="true" data-mask-clearifnotmatch="true" maxlength="4" value="<?php echo $ano_fundacao; ?>" required>
 					    			<div class="help-block with-errors"></div>
 					    		</div>
 							</div>

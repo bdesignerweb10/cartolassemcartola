@@ -290,6 +290,7 @@ ALTER TABLE `tbl_mata_mata` ADD CONSTRAINT `fkey_campeao_mata_mata` FOREIGN KEY 
 ALTER TABLE `tbl_times` ADD `slug_cartola` VARCHAR(60) NULL AFTER `nome_time`, ADD `patrimonio` DECIMAL NULL AFTER `slug_cartola`, ADD UNIQUE `uidx_slug_cartola` (`slug_cartola`);
 ALTER TABLE `tbl_times` ADD UNIQUE `ukey_tbl_times_nome_time` (`nome_time`);
 
+ALTER TABLE `tbl_times` ADD `ano_fundacao` VARCHAR(4) NULL AFTER `telefone`;
 
 
 

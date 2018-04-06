@@ -43,7 +43,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 			$id = $_GET['idclube'] / $_SESSION["fake_id"];
 
 			$sqltime = $conn->query("SELECT t.nome_time AS time, t.nome_presidente AS presidente, t.escudo_time AS escudo, 
-											t.historia AS historia, MIN(a.descricao) AS ano_fundacao
+											t.historia AS historia, t.ano_fundacao AS ano_fundacao, MIN(a.descricao) AS primeira_part
 								       FROM tbl_times t
 								 INNER JOIN tbl_inscricao i ON i.id_times = t.id
 								 INNER JOIN tbl_anos a ON a.id = i.id_anos
@@ -55,7 +55,12 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 					$nome_time = $time->time;
 					$presidente = $time->presidente;
 					$historia = $time->historia;
-					$ano_fundacao = $time->ano_fundacao;
+					if(isset($time->ano_fundacao) && !empty($time->ano_fundacao) && $time->ano_fundacao != null) {
+						$ano_fundacao = $time->ano_fundacao;
+					}
+					else {
+						$ano_fundacao = $time->primeira_part;
+					}
 					if(file_exists("../img/escudos/" . $time->escudo))
 						$escudo = $time->escudo;
 					else 
