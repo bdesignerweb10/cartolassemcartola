@@ -18,7 +18,7 @@ if ($usu_qry && $usu_qry->num_rows > 0) {
 		<div class="row">
 			<div class="col-sm-8">
 				<h3 class="headline-dados">Informações do Clube</h3>
-				<form id="form-dados-clube" data-toggle="validator" action="" method="POST">
+				<form id="form-dados-clube" data-toggle="validator">
 					<div class="row justify-content-md-center">
 						<div id="box-ano" class="col-sm-12 col-md-12 col-lg-12 col-xl-12 form-box">
 							<h3 class="headline headline-form">Alterar informação de nome do time</h3> 
@@ -30,7 +30,7 @@ if ($usu_qry && $usu_qry->num_rows > 0) {
 					    		</div>	  			
 					  			<div class="col-sm-12 col-md-5 col-lg-3 col-xl-3">		    			
 									<label for="ano_fundacao">Ano Fundação</label>
-					    			<input type="text" class="form-control form-control-lg" id="ano_fundacao" name="ano_fundacao" aria-describedby="time" data-error="Por favor, informe o nome do seu time no cartola." data-mask="0000" data-mask-selectonfocus="true" data-mask-clearifnotmatch="true" maxlength="4" value="<?php echo $ano_fundacao; ?>" required>
+					    			<input type="text" class="form-control form-control-lg" id="ano_fundacao" name="ano_fundacao" aria-describedby="ano_fundacao" data-error="Por favor, informe o nome do seu time no cartola." data-mask="0000" data-mask-selectonfocus="true" data-mask-clearifnotmatch="true" maxlength="4" value="<?php echo $ano_fundacao; ?>" required>
 					    			<div class="help-block with-errors"></div>
 					    		</div>
 							</div>

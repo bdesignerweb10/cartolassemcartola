@@ -2,6 +2,7 @@
 require_once("../conn.php");
 
 $temporada = $_SESSION["temporada_atual"];
+$desc_temp = $_SESSION["temp_atual"];
 $rodada = $_SESSION["rodada_site"];
 
 if(isset($_GET['act']) && !empty($_GET['act'])) {
@@ -198,7 +199,8 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 
 	        try {
 
-	    		$eventoslist = '{"id": 0, "title": "Campeonato Brasileiro '.$_SESSION["temp_atual"].'", "description": "Duração do maior e mais disputado campeonato do mundo! O nosso Brasileirão!", "start": "2018-04-14", "end": "2018-12-12" }, ';
+	    		//$eventoslist = '{"id": 0, "title": "Campeonato Brasileiro '.$_SESSION["temp_atual"].'", "description": "Duração do maior e mais disputado campeonato do mundo! O nosso Brasileirão!", "start": "2018-04-14", "end": "2018-12-12" }, ';
+	    		$eventoslist = '';
 
 				$eventosqry = $conn->query("SELECT id, titulo, local, descricao, data
 					 						  FROM tbl_eventos 
@@ -206,9 +208,43 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 					  						   AND ativo = 1") or trigger_error($conn->error);
 	        	if($eventosqry && $eventosqry->num_rows > 0) {
 		        	while($eventos = $eventosqry->fetch_object()) {
-	    				$eventoslist .= '{"id": '.$eventos->id.', "title": "'.$eventos->titulo.'", "description": "Local: '.$eventos->local.' - Descrição: '.$eventos->descricao.'", "start": "'.date('Y-m-d', strtotime($eventos->data)).'T'.date('H:i:s', strtotime($eventos->data)).'"}, ';
+	    				$eventoslist .= '{"id": '.$eventos->id.', "title": "'.$eventos->titulo.'", "description": "Local: '.$eventos->local.' - Descrição: '.$eventos->descricao.'", "start": "'.date('Y-m-d', strtotime($eventos->data)).'T'.date('H:i:s', strtotime($eventos->data)).'", "color": "#5893d6"}, ';
 		        	}
 		        }
+
+		        $jsonUOL = json_decode(exec("curl -X GET http://jsuol.com.br/c/monaco/utils/gestor/commons.js?file=commons.uol.com.br/sistemas/esporte/modalidades/futebol/campeonatos/dados/".$desc_temp."/30/dados.json"));
+
+			    if(isset($jsonUOL->{"fases"}) && isset($jsonUOL->{"agrupamento"}) && isset($jsonUOL->{"equipes"})) {
+			    	$agrupamento = $jsonUOL->{"agrupamento"}[0]->{"fases"}[0]->{"id"};
+			    	$jogos = $jsonUOL->{"fases"}->{$agrupamento}->{"jogos"};
+			    	$equipes = $jsonUOL->{"equipes"};
+			    	
+			    	$datas = $jogos->{"data"};
+
+					if(count($datas) > 0) {
+						foreach($datas as $d => $partidas_data) {
+							if($d != "0000-00-00") {
+				    			foreach($partidas_data AS $ij => $id_jogo) {
+				    				$partida = $jogos->{"id"}->{$id_jogo};
+
+									$clube_m = $equipes->{$partida->{"time1"}};
+									$clube_v = $equipes->{$partida->{"time2"}};
+
+									$m_time = $clube_m->{"nome-comum"};
+									$v_time = $clube_v->{"nome-comum"};
+									$confronto = $m_time . " x " . $v_time;
+
+									$local = $partida->{"estadio"};
+									$cidade = $partida->{"local"};
+									$data = $partida->{"data"} . "T" . str_replace("h", ":", $partida->{"horario"}) . ":00";
+
+			    					$eventoslist .= '{"id": '.$id_jogo.', "title": "'.$confronto.'", "description": "Estádio: '.$local.' - Cidade: '.$cidade.'", "start": "'.$data.'", "color": "#326410"}, ';
+				    			}
+							}
+						}
+					} 
+			    }
+
 				$eventoslist = substr($eventoslist, 0, -2);
 
 				echo '{"succeed": true, "eventos": [' . $eventoslist . ']}';

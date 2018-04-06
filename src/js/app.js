@@ -319,70 +319,6 @@ $(function() {
 	   window.location.pathname.indexOf('dados_clube') === -1 &&
 	   window.location.pathname.indexOf('meus_dados') === -1 &&
 	   window.location.pathname.indexOf('provisoria') === -1) {
-		
-		$('#eventos').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
-		$.ajax({
-			type: "POST",
-			url: "acts/acts.index.php?act=eventos",
-			success: function(data)
-			{
-			    try {
-					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
-
-					$('#destaques-rodada .card-block tbody').html('');
-
-					if(retorno.succeed) {
-					   	$('#calendar').fullCalendar({
-    						themeSystem: 'bootstrap4',
-							defaultView: 'month',
-							defaultDate: formatTodayEUDate(),
-							eventRender: function(eventObj, $el) {
-								var duracao = '';
-								if(eventObj.end != null) {
-									duracao = 'Duração: ' + eventObj.start.format('DD/MM/YYYY') + ' até ' + eventObj.end.format('DD/MM/YYYY');
-								} else {
-									duracao = 'Data: ' + eventObj.start.format('DD/MM/YYYY hh:mm') + 'hrs';
-								}
-								$el.popover({
-									title: eventObj.title,
-									content: function () {
-						                return duracao + ' - ' + eventObj.description;
-						            },
-									trigger: 'hover',
-									placement: 'top',
-									container: 'body'
-								});
-							},
-							events: retorno.eventos
-						});
-
-						$('#eventos .card-block').fadeIn("slow", function() {
-							$('#loading').fadeOut();
-							$('#loading').remove();
-						});
-						$('#eventos footer').fadeIn("slow");
-					}
-					else {
-						$('#alert-title').html(retorno.title);
-						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
-						$('#alert').modal('show');
-
-						$('#eventos .card-block').hide();
-						$('#eventos footer').hide();
-						$('#loading').remove();
-					}
-			    }
-			    catch (e) {
-					$('#alert-title').html("Erro ao fazer parse do JSON!");
-					$('#alert-content').html(String(e.stack));
-					$('#alert').modal('show');
-
-					$('#eventos .card-block').hide();
-					$('#eventos footer').hide();
-					$('#loading').remove();
-			    };
-			}
-		});
 				
 		// DESTAQUES RODADA
 		$('#destaques-rodada').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
@@ -659,6 +595,72 @@ $(function() {
 					$('#mata-mata-andamento footer').hide();
 					$('#loading').remove();
 			    }
+			}
+		});
+
+		// EVENTOS CALENDARIO 
+		$('#eventos').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.index.php?act=eventos",
+			success: function(data)
+			{
+			    try {
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+					$('#destaques-rodada .card-block tbody').html('');
+
+					if(retorno.succeed) {
+					   	$('#calendar').fullCalendar({
+    						themeSystem: 'bootstrap4',
+							defaultView: 'month',
+							defaultDate: formatTodayEUDate(),
+							eventRender: function(eventObj, $el) {
+								var duracao = '';
+								if(eventObj.end != null) {
+									duracao = 'Duração: ' + eventObj.start.format('DD/MM/YYYY') + ' até ' + eventObj.end.format('DD/MM/YYYY');
+								} else {
+									duracao = 'Data: ' + eventObj.start.format('DD/MM/YYYY HH:mm') + 'hrs';
+								}
+								$el.popover({
+									title: eventObj.title,
+									content: function () {
+						                return duracao + ' - ' + eventObj.description;
+						            },
+									trigger: 'hover',
+									placement: 'top',
+									container: 'body'
+								});
+							},
+							events: retorno.eventos,
+ 							timeFormat: 'H(:mm)'
+						});
+
+						$('#eventos .card-block').fadeIn("slow", function() {
+							$('#loading').fadeOut();
+							$('#loading').remove();
+						});
+						$('#eventos footer').fadeIn("slow");
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+
+						$('#eventos .card-block').hide();
+						$('#eventos footer').hide();
+						$('#loading').remove();
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
+					$('#alert').modal('show');
+
+					$('#eventos .card-block').hide();
+					$('#eventos footer').hide();
+					$('#loading').remove();
+			    };
 			}
 		});
 	}
@@ -1390,6 +1392,7 @@ $(function() {
 		var formData = new FormData();
 		formData.append('time', $('#time').val());
 		formData.append('historia', $('#historia').val());
+		formData.append('ano_fundacao', $('#ano_fundacao').val());
 		formData.append('brasao', $('#brasao')[0].files[0]);
 
 		$.ajax({
@@ -1406,11 +1409,10 @@ $(function() {
 					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
 					if(retorno.succeed) {
-						$('#nome').val('');
-						$('#email').val('');
-						$('#telefone').val('');
-						$('#senha').val('');
-						$('#senha2').val('');
+						$('#time').val('');
+						$('#historia').val('');
+						$('#ano_fundacao').val('');
+						$('#brasao').val('');
 
 						$('#alert-title').html("Dados alterados com sucesso!");
 						$('#alert-content').html("Você alterou os dados do seu clube com sucesso! Ao fechar esta mensagem a página será recarregada.");
@@ -1425,11 +1427,10 @@ $(function() {
 						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
 						$('#alert').modal('show');
 
-						$('#nome').val('');
-						$('#email').val('');
-						$('#telefone').val('');
-						$('#senha').val('');
-						$('#senha2').val('');
+						$('#time').val('');
+						$('#historia').val('');
+						$('#ano_fundacao').val('');
+						$('#brasao').val('');
 					}
 			    }
 			    catch (e) {
@@ -1438,11 +1439,10 @@ $(function() {
 					$('#alert-content').html(String(e.stack));
 					$('#alert').modal('show');
 
-					$('#nome').val('');
-					$('#email').val('');
-					$('#telefone').val('');
-					$('#senha').val('');
-					$('#senha2').val('');
+					$('#time').val('');
+					$('#historia').val('');
+					$('#ano_fundacao').val('');
+					$('#brasao').val('');
 			    };
 			}
 		});
@@ -1536,18 +1536,18 @@ $(function() {
 							$('.nome_presidente').html(retorno.nome_presidente);
 							$('.text-hitoria').html(retorno.historia);
 									
-							$('.dropdown-menu').html('');
+							$('.dropdown-temporada').html('');
 							if(retorno.list_temp.length > 0) {
 								$.each(retorno.list_temp, function(t, temp) {
 									if(temp.is_actual) {
-										$('.dropdown-menu').append('<div class="dropdown-divider"></div><a class="dropdown-item disabled" href="#" onclick="return false;">' + temp.temporada + '</a>');
+										$('.dropdown-temporada').append('<div class="dropdown-divider"></div><a class="dropdown-item disabled" href="#" onclick="return false;">' + temp.temporada + '</a>');
 									}
 									else {
 										var role = "";
 										if(t == 0) {
 											role = 'role="tab"';
 										}
-										$('.dropdown-menu').append('<a class="dropdown-item" data-toggle="tab" href="#a' + temp.id + '" data-time-id="' + idclube + '" ' + role + '>' + temp.temporada + '</a>');
+										$('.dropdown-temporada').append('<a class="dropdown-item" data-toggle="tab" href="#a' + temp.id + '" data-time-id="' + idclube + '" ' + role + '>' + temp.temporada + '</a>');
 										$('.tab-content').append('<div class="tab-pane" id="a' + temp.id + '" role="tabpanel"></div>');
 									}
 								});
@@ -1590,7 +1590,7 @@ $(function() {
 							$('.ano_fundacao').html('');
 							$('.nome_presidente').html('');
 							$('.text-hitoria').html('');
-							$('.dropdown-menu').html('');
+							$('.dropdown-temporada').html('');
 							$('.geral-campeonatos').html('');
 
 							$('#alert-title').html(retorno.title);
@@ -1604,7 +1604,7 @@ $(function() {
 						$('.ano_fundacao').html('');
 						$('.nome_presidente').html('');
 						$('.text-hitoria').html('');
-						$('.dropdown-menu').html('');
+						$('.dropdown-temporada').html('');
 						$('.geral-campeonatos').html('');
 
 						$('#loading-modal').modal('hide');

@@ -29,7 +29,7 @@
 				  </li>
 				  <li class="nav-item dropdown">
 				    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Desempenho por temporada</a>
-				    <div class="dropdown-menu">
+				    <div class="dropdown-menu dropdown-temporada">
 				    </div>
 				  </li>
 				  <li class="nav-item">
