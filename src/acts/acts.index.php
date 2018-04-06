@@ -194,6 +194,31 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 			}
         	break;
 
+        case 'eventos':
+
+	        try {
+
+	    		$eventoslist = '{"id": 0, "title": "Campeonato Brasileiro '.$_SESSION["temp_atual"].'", "description": "Duração do maior e mais disputado campeonato do mundo! O nosso Brasileirão!", "start": "2018-04-14", "end": "2018-12-12" }, ';
+
+				$eventosqry = $conn->query("SELECT id, titulo, local, descricao, data
+					 						  FROM tbl_eventos 
+					  						 WHERE data >= NOW() 
+					  						   AND ativo = 1") or trigger_error($conn->error);
+	        	if($eventosqry && $eventosqry->num_rows > 0) {
+		        	while($eventos = $eventosqry->fetch_object()) {
+	    				$eventoslist .= '{"id": '.$eventos->id.', "title": "'.$eventos->titulo.'", "description": "Local: '.$eventos->local.' - Descrição: '.$eventos->descricao.'", "start": "'.date('Y-m-d', strtotime($eventos->data)).'T'.date('H:i:s', strtotime($eventos->data)).'"}, ';
+		        	}
+		        }
+				$eventoslist = substr($eventoslist, 0, -2);
+
+				echo '{"succeed": true, "eventos": [' . $eventoslist . ']}';
+				exit();
+			} catch(Exception $e) {
+				echo '{"succeed": false, "errno": 13006, "title": "Erro ao carregar os dados!", "erro": "Ocorreu um erro ao carregar os dados: ' . $e->getMessage() . '"}';
+				exit();
+			}
+        	break;
+
 	    default:
 	       echo '{"succeed": false, "errno": 13001, "title": "Ação não definida!", "erro": "Não foi definida a ação para a requisição. Favor contatar o administrador da página!"}';
 	}

@@ -65,7 +65,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 						$isValid = false;
 					}
 
-					if(!isset($_POST["data"]) || empty($_POST["data"])) {
+					if(!isset($_POST["data_evento"]) || empty($_POST["data_evento"])) {
 						$errMsg .= "Data do evento";
 						$isValid = false;
 					}
@@ -82,7 +82,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 					}
 					else {
 						$titulo = $_POST["titulo"];
-						$data = strtotime($_POST["data"]);
+						$data = strtotime(str_replace('/', '-', $_POST["data_evento"]));
 						$local = (isset($_POST["local"]) ? $_POST["local"] : "");
 						$descricao = $_POST["descricao"];
 						$ativo = (isset($_POST["ativo"]) && $_POST["ativo"] == "on" ? "1" : "0");
@@ -135,7 +135,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 						$isValid = false;
 					}
 
-					if(!isset($_POST["data"]) || empty($_POST["data"])) {
+					if(!isset($_POST["data_evento"]) || empty($_POST["data_evento"])) {
 						$errMsg .= "Data do evento";
 						$isValid = false;
 					}
@@ -152,7 +152,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 					}
 					else {
 						$titulo = $_POST["titulo"];
-						$data = strtotime($_POST["data"]);
+						$data = strtotime(str_replace('/', '-', $_POST["data_evento"]));
 						$local = (isset($_POST["local"]) ? $_POST["local"] : "");
 						$descricao = $_POST["descricao"];
 						$ativo = (isset($_POST["ativo"]) && $_POST["ativo"] == "on" ? "1" : "0");

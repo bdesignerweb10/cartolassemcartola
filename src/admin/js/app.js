@@ -1078,6 +1078,15 @@ $(function() {
 
 	// BEGIN EVENTOS (eventos.php)
 
+	$.datetimepicker.setLocale('pt-BR');
+	$('#data_evento').datetimepicker({
+		startDate: '+'+getTodayDate(),
+ 		minDate: '-'+getTodayDate(),
+ 		mask: true,
+ 		step: 30,
+		format: 'd/m/Y H:i'
+	});
+
     $('#btn-voltar-eventos').click(function(e) {
 		e.preventDefault();
 
@@ -1091,7 +1100,7 @@ $(function() {
 
     	$('#id').val('');
     	$('#titulo').val('');
-    	$('#data').val('');
+    	$('#data_evento').val('');
     	$('#local').val('');
     	$('#descricao').val('');
     	$('#ativo').bootstrapToggle('off');
@@ -1111,7 +1120,7 @@ $(function() {
 
     	$('#id').val('');
     	$('#titulo').val('');
-    	$('#data').val('');
+    	$('#data_evento').val('');
     	$('#local').val('');
     	$('#descricao').val('');
     	$('#ativo').bootstrapToggle('off');
@@ -1150,7 +1159,7 @@ $(function() {
 
 				    	$('#id').val(retorno.dados.id);
 				    	$('#titulo').val(retorno.dados.titulo);
-				    	$('#data').val(d.toDatetimeLocal());
+				    	$('#data_evento').val(d.toDatePickerFormat());
 				    	$('#local').val(retorno.dados.local);
 				    	$('#descricao').val(retorno.dados.descricao);
 				    	$('#ativo').bootstrapToggle(retorno.dados.ativo == 1 ? 'on' : 'off');
@@ -1179,7 +1188,7 @@ $(function() {
 
 				    	$('#id').val('');
 				    	$('#titulo').val('');
-				    	$('#data').val('');
+				    	$('#data_evento').val('');
 				    	$('#local').val('');
 				    	$('#descricao').val('');
 				    	$('#ativo').bootstrapToggle('off');
@@ -1267,11 +1276,11 @@ $(function() {
 			data: $("#form-eventos").serialize(),
 			success: function(data)
 			{
+				console.log('data', data);
 				try {
 					$('#loading').modal('hide');
 
 					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
-
 					if(retorno.succeed) {
 						$('#alert-title').html($('#titulo').val() + (act == 'add' ? " adicionado " : " editado ") + "com sucesso!");
 						$('#alert-content').html("A " + (act == 'add' ? " adição " : " edição ") + " de " + $('#titulo').val() + " foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
@@ -2036,6 +2045,22 @@ Date.prototype.toDatetimeLocal =
              HH + ':' + II + ':' + SS;
   };
 
+Date.prototype.toDatePickerFormat =
+  function toDatePickerFormat() {
+    var
+      date = this,
+      ten = function (i) {
+        return (i < 10 ? '0' : '') + i;
+      },
+      YYYY = date.getFullYear(),
+      MM = ten(date.getMonth() + 1),
+      DD = ten(date.getDate()),
+      HH = ten(date.getHours()),
+      II = ten(date.getMinutes())
+    ;
+    return DD + '/' + MM + '/' + YYYY + ' ' + HH + ':' + II;
+  };
+
 Date.prototype.fromDatetimeLocal = (function (BST) {
   // BST should not be present as UTC time
   return new Date(BST).toISOString().slice(0, 16) === BST ?
@@ -2049,6 +2074,26 @@ Date.prototype.fromDatetimeLocal = (function (BST) {
     // otherwise can just be equivalent of toISOString
     Date.prototype.toISOString;
 }('2006-06-06T06:06'));
+
+function getTodayDate() {
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth()+1; //January is 0!
+	var yyyy = today.getFullYear();
+
+	var h = today.getHours() < 10 ? "0" + today.getHours() : today.getHours();
+	var i = today.getMinutes() < 10 ? "0" + today.getMinutes() : today.getMinutes();
+
+	if(dd<10) {
+	    dd = '0'+dd
+	} 
+
+	if(mm<10) {
+	    mm = '0'+mm
+	} 
+
+	return dd + '/' + mm + '/' + yyyy + ' ' + h + ':' + i;
+}
 
 /*!
  * Validator v0.11.9 for Bootstrap 3, by @1000hz

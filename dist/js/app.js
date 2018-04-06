@@ -319,6 +319,70 @@ $(function() {
 	   window.location.pathname.indexOf('dados_clube') === -1 &&
 	   window.location.pathname.indexOf('meus_dados') === -1 &&
 	   window.location.pathname.indexOf('provisoria') === -1) {
+		
+		$('#eventos').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.index.php?act=eventos",
+			success: function(data)
+			{
+			    try {
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+					$('#destaques-rodada .card-block tbody').html('');
+
+					if(retorno.succeed) {
+					   	$('#calendar').fullCalendar({
+    						themeSystem: 'bootstrap4',
+							defaultView: 'month',
+							defaultDate: formatTodayEUDate(),
+							eventRender: function(eventObj, $el) {
+								var duracao = '';
+								if(eventObj.end != null) {
+									duracao = 'Duração: ' + eventObj.start.format('DD/MM/YYYY') + ' até ' + eventObj.end.format('DD/MM/YYYY');
+								} else {
+									duracao = 'Data: ' + eventObj.start.format('DD/MM/YYYY hh:mm') + 'hrs';
+								}
+								$el.popover({
+									title: eventObj.title,
+									content: function () {
+						                return duracao + ' - ' + eventObj.description;
+						            },
+									trigger: 'hover',
+									placement: 'top',
+									container: 'body'
+								});
+							},
+							events: retorno.eventos
+						});
+
+						$('#eventos .card-block').fadeIn("slow", function() {
+							$('#loading').fadeOut();
+							$('#loading').remove();
+						});
+						$('#eventos footer').fadeIn("slow");
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+
+						$('#eventos .card-block').hide();
+						$('#eventos footer').hide();
+						$('#loading').remove();
+					}
+			    }
+			    catch (e) {
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
+					$('#alert').modal('show');
+
+					$('#eventos .card-block').hide();
+					$('#eventos footer').hide();
+					$('#loading').remove();
+			    };
+			}
+		});
 				
 		// DESTAQUES RODADA
 		$('#destaques-rodada').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
@@ -451,7 +515,7 @@ $(function() {
 												}).responseText;
 
 												var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
-												if(retorno && retorno.succeed)
+												if(retorno.succeed)
 				            						label += ' - ' + retorno.pontuacao + ' pts.';
 										    }
 										    catch (e) {
@@ -1013,7 +1077,7 @@ $(function() {
 												}).responseText;
 
 												var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
-												if(retorno && retorno.succeed)
+												if(retorno.succeed)
 				            						label += ' - ' + retorno.pontuacao + ' pts.';
 										    }
 										    catch (e) {
@@ -2012,6 +2076,28 @@ function formatBRDate(date) {
 	}
 	else {
 		return dd + '/' + mm + '/' + yyyy;
+	}
+}
+
+function formatTodayEUDate() {
+	var date = new Date();
+	var dd = date.getDate();
+	var mm = date.getMonth()+1; //January is 0!
+	var yyyy = date.getFullYear();
+
+	if(dd<10) {
+	    dd = '0'+dd
+	} 
+
+	if(mm<10) {
+	    mm = '0'+mm
+	}
+
+	if(isNaN(date.getTime())) {
+		return "0000-00-00";
+	}
+	else {
+		return yyyy + '-' + mm + '-' + dd;
 	}
 }
 

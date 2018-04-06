@@ -44,7 +44,7 @@ require_once('header.php');
 						</div><!-- card -->
 					</article>
 					<article>
-						<div class="card">
+						<div id="eventos" class="card">
 							<div class="card-header">
 								<header>
 									<h2 class="card-title">Próximos eventos</h2>
@@ -149,48 +149,3 @@ require_once('header.php');
 <?php
 	require_once('footer.php');
 ?>
-
-<script>
-
-  	$(function() {
-
-  $('#calendar').fullCalendar({
-    defaultView: 'month',
-    defaultDate: '2018-03-12',
-
-    eventRender: function(eventObj, $el) {
-      $el.popover({
-        title: eventObj.title,
-        content: eventObj.description,
-        trigger: 'hover',
-        placement: 'top',
-        container: 'body'
-      });
-    },
-
-      events: [
-        {
-          id: 1,
-          title: 'Churrasco',
-          description: 'Local: Chacará pompeu, levar 1kg de carne e 1 fardinho de cerveja, putas por conta da casa',
-          start: '2018-03-12'
-
-        },
-        {
-          id: 2,	
-          title: 'Inicio do Campeonato Brasileiro',
-          start: '2018-04-14',
-          end: '2018-12-12'
-        },
-        {
-          id: 3,
-          title: 'Assistir libertadores no bar',
-          description: 'Local: Clube do gole, cerveja gelada por R$2,99',
-          start: '2018-03-18T21:45:00'
-        }
-      ]
-    });
-
-  });
-
-</script>

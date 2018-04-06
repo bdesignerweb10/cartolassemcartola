@@ -22,6 +22,7 @@ if (!isset($_SESSION["usu_id"]) || empty($_SESSION["usu_id"]) ||
 	<link rel="icon" type="image/png" sizes="16x16" href="../img/favicon-16x16.png">
 	<link rel="stylesheet" type="text/css" href="../css/style.css">
 	<link rel="stylesheet" type="text/css" href="../css/bootstrap-toggle.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/jquery.datetimepicker.css">
 </head>
 <body>
 	<nav>

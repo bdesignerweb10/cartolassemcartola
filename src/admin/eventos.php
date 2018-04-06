@@ -79,7 +79,7 @@ $eventoslist = $conn->query("SELECT e.id AS id, e.titulo AS titulo, e.data AS da
 		</div><!-- row -->	
 		<div class="row justify-content-md-center">
 			<div id="box-ano" class="col-sm-12 col-md-10 col-lg-9 col-xl-9 form-box">
-				<form id="form-eventos" data-toggle="validator" action="acts/acts.eventos.php" method="POST">
+				<form id="form-eventos" data-toggle="validator">
 					<h3 class="headline headline-form"></h3> 
 					<div class="row">
 			  			<div class="col-sm-4 col-md-4 col-lg-2 col-xl-2">		    			
@@ -94,8 +94,8 @@ $eventoslist = $conn->query("SELECT e.id AS id, e.titulo AS titulo, e.data AS da
 					</div>
 					<div class="row">
 			  			<div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">		    			
-							<label for="data">Data do Evento</label>
-			    			<input type="datetime-local" class="form-control form-control-lg" id="data" name="data" aria-describedby="data" placeholder="Informe a data do evento..." data-error="Por favor, informe a data do evento." maxlength="15" required>
+							<label for="data_evento">Data do Evento</label>
+			    			<input type="text" class="form-control form-control-lg" id="data_evento" name="data_evento" aria-describedby="data_evento" placeholder="Informe a data do evento..." data-error="Por favor, informe a data do evento." maxlength="15" required>
 			    			<div class="help-block with-errors"></div>
 			    		</div>
 			  			<div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">		    			
