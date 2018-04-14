@@ -856,6 +856,7 @@ $(function() {
 						if(retorno.succeed) {
 							$('#alert-title').html("Temporada aberta com sucesso!");
 							$('#alert-content').html("A temporada foi aberta com sucesso! Que começem os jogos!<br /><br />Ao fechar esta mensagem a página será recarregada.");
+							$('#alert-content').append("<br /><br />" + retorno.msg);
 							$('#alert').modal('show');
 
 							$('#alert').on('hidden.bs.modal', function (e) {

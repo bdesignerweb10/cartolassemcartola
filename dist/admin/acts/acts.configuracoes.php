@@ -3,6 +3,7 @@ require_once("../../conn.php");
 if (!isset($_SESSION["usu_id"]) || empty($_SESSION["usu_id"]) || 
 	!isset($_SESSION['usu_nivel']) || empty($_SESSION["usu_nivel"]) ||
 	$_SESSION['usu_nivel'] != "1" || $_SESSION["usu_id"] == "0") die('26001 - Você não tem permissão para acessar essa página!');
+set_time_limit(0);
 
 require_once("../../acts/acts.cartola.php");
 
@@ -64,11 +65,16 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 				$qrytempaberta = "UPDATE tbl_config SET temporada_aberta = 1";
 
 				if ($conn->query($qrytempaberta) === TRUE) {
-					//require_once("acts.inscricoes_encerradas.php");
+					require_once("acts.inscricoes_encerradas.php");
+
+					$msg = "";
+					if(isset($err_emails) && !empty($err_emails) && strlen($err_emails) > 0) {
+						$msg = $err_emails;
+					}
 
 					$conn->commit();
 					$_SESSION["temporada"] = 1;
-					echo '{"succeed": true}';
+					echo '{"succeed": true, "msg": "' . $msg . '"}';
 				} else {
 	    			throw new Exception("Erro ao abrir a temporada: " . $qrytempaberta . "<br>" . $conn->error);
 				}

@@ -174,8 +174,16 @@ if ($result) {
 	// ############# FUNCTIONS ################
 	// ########################################
 
-	function formataNomeEscudo($string){
-	    return strtolower(str_replace(' ', '', preg_replace(array("/(á|à|ã|â|ä)/","/(Á|À|Ã|Â|Ä)/","/(é|è|ê|ë)/","/(É|È|Ê|Ë)/","/(í|ì|î|ï)/","/(Í|Ì|Î|Ï)/","/(ó|ò|õ|ô|ö)/","/(Ó|Ò|Õ|Ô|Ö)/","/(ú|ù|û|ü)/","/(Ú|Ù|Û|Ü)/","/(ñ)/","/(Ñ)/"),explode(" ","a A e E i I o O u U n N"),$string))) . ".png";
+	function formataNomeEscudo($str){
+	    $str = preg_replace('/[áàãâä]/ui', 'a', $str);
+	    $str = preg_replace('/[éèêë]/ui', 'e', $str);
+	    $str = preg_replace('/[íìîï]/ui', 'i', $str);
+	    $str = preg_replace('/[óòõôö]/ui', 'o', $str);
+	    $str = preg_replace('/[úùûü]/ui', 'u', $str);
+	    $str = preg_replace('/[ç]/ui', 'c', $str);
+	    $str = preg_replace('/[^a-z0-9]/i', '', $str);
+	    $str = preg_replace('/_+/', '', $str);
+	    return strtolower($str) . ".png";
 	}
 
 	function geraSenha($tamanho = 8, $maiusculas = true, $numeros = true, $simbolos = false)
@@ -259,6 +267,18 @@ if ($result) {
 			$msg = $msg[$spec];
 		}
 		return $msg;
+	}
+
+	function idx_pos($pos) {
+		$idx = array(
+			'G' => 0,
+			'L' => 1,
+			'Z' => 2,
+			'M' => 3,
+			'A' => 4,
+			'T' => 5
+		);
+		return $idx[$pos];
 	}
 
 	function nl2p($string)

@@ -65,6 +65,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 			                }
 
 							$atletas = api("time/slug/". $t->slug);
+							$pontuados = api("atletas/pontuados");
 							// // #########################################
 							// // MOCK
 							// $atletas = json_decode('{
@@ -133,7 +134,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 					 		if(!isset($atletas->{"mensagem"}) || empty($atletas->{"mensagem"})) {
 					 			if(count($atletas->{"atletas"}) > 0) {
 									$list_atletas = "";
-									$pont_total = 0;
+									$pont_total = (float)0.0;
 
 									foreach($atletas->{"atletas"} as $j => $jogador) {
 										if ($jogador->{"apelido"} != "") {
@@ -150,12 +151,13 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 											}
 
 											$athlete_posicao = $atletas->{"posicoes"}->{$jogador->{"posicao_id"}}->{"nome"};
+											$athlete_idx = idx_pos(substr($athlete_posicao,0,1));
 											$athlete_apelido = $jogador->{"apelido"};
-											$athlete_pontos = number_format((float)$jogador->{"pontuacao"}, 2, ',', '.');
+											$athlete_pontos = number_format((float)$pontuados->{"atletas"}->{$jogador->{"atleta_id"}}->{"pontuacao"}, 2, ',', '.');
 
-											$pont_total += $athlete_pontos;
+											$pont_total = $pont_total + (float)$pontuados->{"atletas"}->{$jogador->{"atleta_id"}}->{"pontuacao"};
 
-											$list_atletas .= '{"escudo" : "'.$athlete_clube_escudo.'", "posicao": "'. substr($athlete_posicao,0,1).'", "nome": "'.$athlete_apelido.'", "pontuacao": "'.$athlete_pontos.'"}, ';
+											$list_atletas .= '{"index" : "'.$athlete_idx.'", "escudo" : "'.$athlete_clube_escudo.'", "posicao": "'. substr($athlete_posicao,0,1).'", "nome": "'.$athlete_apelido.'", "pontuacao": "'.$athlete_pontos.'"}, ';
 										} else {
 											echo '{"succeed": false, "errno": 32008, "title": "Houveu um erro ao consultar as parcias do clube!", "erro": "Atleta do clube não possui informações para serem exibidas!"}';
 											break;
@@ -163,7 +165,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 									}
 									$list_atletas = substr($list_atletas, 0, -2);
 
-									echo '{"succeed": true, "time": "'.$time.'", "escudo": "'.$escudo.'", "patrimonio": "'.$patrimonio.'", "pont_total": "'.$pont_total.'", "atletas": [' . $list_atletas . ']}';	
+									echo '{"succeed": true, "time": "'.$time.'", "escudo": "'.$escudo.'", "patrimonio": "'.$patrimonio.'", "pont_total": "'.number_format($pont_total, 2, ',', '.').'", "atletas": [' . $list_atletas . ']}';	
 					 			} else {
 									echo '{"succeed": false, "errno": 32007, "title": "Houveu um erro ao consultar as parcias do clube!", "erro": "Não foram encontrados jogadores na escalação do time!"}';
 									break;

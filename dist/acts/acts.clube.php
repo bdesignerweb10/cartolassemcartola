@@ -68,7 +68,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 					if(!isset($historia) || empty($historia))
 						$historia = "Esse clube é muito pequeno, e por isso não tem história. Tá na hora de ganhar alguma coisa né, parça?";
 					else {
-						$historia = nl2p($historia);
+						$historia = nl2p(str_replace('"', '”', str_replace("'", "`", $historia)));
 					}
 
 					$list_temps = "";

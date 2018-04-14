@@ -40,28 +40,30 @@ $qrypontuacao = $conn->query("SELECT t.id AS id, t.nome_presidente AS presidente
 				            </tr>
 				        </thead>
 				        	<?php 
-				        	if($flag_temp_aberta) {
-					        	if($qrypontuacao && $qrypontuacao->num_rows > 0) {
-					        		echo "<tfoot>
-											<tr>
-												<th colspan='4'>
-													<div class='row'>
-														<div class='offset-md-6 offset-lg-9 offset-xl-9 col-sm-12 col-md-6 col-lg-3 col-xl-3'>
-															<button type='button' class='btn btn-success form-control btn-salvar-pontuacoes' " . ($flag_merc_aberto ? "disabled" : "") . ">
-																<i class='fa fa-save'></i> Salvar pontuações
-															</button>	
+							if(intval($_SESSION["api_ligada"]) != 1) {
+					        	if($flag_temp_aberta) {
+						        	if($qrypontuacao && $qrypontuacao->num_rows > 0) {
+						        		echo "<tfoot>
+												<tr>
+													<th colspan='4'>
+														<div class='row'>
+															<div class='offset-md-6 offset-lg-9 offset-xl-9 col-sm-12 col-md-6 col-lg-3 col-xl-3'>
+																<button type='button' class='btn btn-success form-control btn-salvar-pontuacoes' " . ($flag_merc_aberto ? "disabled" : "") . ">
+																	<i class='fa fa-save'></i> Salvar pontuações
+																</button>	
+															</div>
 														</div>
-													</div>
-												</th>
-											</tr>
-										   </tfoot>";
-					        	}
+													</th>
+												</tr>
+											   </tfoot>";
+						        	}
+				   				}
 			   				}
 							?>
 						</tbody>
 				        <tbody>
 				        	<?php 
-							if(intval($_SESSION["api_ligada"]) == 1) {
+							if(intval($_SESSION["api_ligada"]) != 1) {
 					        	if($flag_temp_aberta) {
 						        	if($qrypontuacao && $qrypontuacao->num_rows > 0) {
 						        		echo "<tr>

@@ -8517,7 +8517,7 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
 .table th, .table td {
   padding: 0.56rem; }
 
-.liga-csc tbody tr td, .liga-csc tbody th {
+.liga-csc tbody tr td, .liga-csc tbody th, .table-scouts tbody tr td, .table-scouts tbody th {
   vertical-align: middle; }
 
 .bg-table {

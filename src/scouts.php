@@ -26,7 +26,7 @@
 								<h3 class="card-title pont-cart"><strong class="dados-patri"></strong></h3>	
 							</div>
 						</div>
-						<table class="table table-striped">
+						<table class="table table-striped table-scouts">
 							<tbody>
 							</tbody>
 						</table>			    
@@ -45,14 +45,14 @@
 					   		</div>
 						   <div class="col-sm-6">
 						    	<h3 class="card-title pont-cart">Pontos</h3>
-						    	<h3 class="card-title pont-cart"><strong></strong></h3>	
+						    	<h3 class="card-title pont-cart"><strong class="dados-pont"></strong></h3>	
 						    </div>
 						    <div class="col-sm-6">
 						    	<h3 class="card-title pont-cart">Patrimônio</h3>
-						    	<h3 class="card-title pont-cart"><strong></strong></h3>	
+						    	<h3 class="card-title pont-cart"><strong class="dados-patri"></strong></h3>	
 						    </div>
 					    </div>
-					    <table class="table table-striped">						  
+					    <table class="table table-striped table-scouts">						  
 							<tbody>
 							</tbody>
 						</table>			    
@@ -71,14 +71,14 @@
 					   		</div>
 						   <div class="col-sm-6">
 						    	<h3 class="card-title pont-cart">Pontos</h3>
-						    	<h3 class="card-title pont-cart"><strong></strong></h3>	
+						    	<h3 class="card-title pont-cart"><strong class="dados-pont"></strong></h3>	
 						    </div>
 						    <div class="col-sm-6">
 						    	<h3 class="card-title pont-cart">Patrimônio</h3>
-						    	<h3 class="card-title pont-cart"><strong></strong></h3>	
+						    	<h3 class="card-title pont-cart"><strong class="dados-patri"></strong></h3>	
 						    </div>
 					    </div>
-					    <table class="table table-striped">						  
+					    <table class="table table-striped table-scouts">						  
 							<tbody>
 							</tbody>
 						</table>			    

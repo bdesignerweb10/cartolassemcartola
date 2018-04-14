@@ -1958,60 +1958,67 @@ $(function() {
 	        }
 	    });
 
+	    $('body').on('click', '.text-core .text-wrap .text-dropdown .text-list .text-suggestion', function(e) {
+	    	listaAtletas($(this).parent().parent().parent().parent().parent()); 
+	    });
+
 	    $('.busca-time').on('keyup', function (e) {
 		    if (e.keyCode == 13) {
-		    	var el = $(this).parent().parent().parent();
-				var formData = new FormData();
-				formData.append('nome_time', $(this).val());
+		    	listaAtletas($(this).parent().parent().parent());
+		    }
+	    });
 
-		    	el.append('<div style="margin-top:70px;" id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
-				$.ajax({
-					type: "POST",
-					url: "acts/acts.scouts.php?act=pontuacao",
-					data : formData,
-					processData: false,
-					contentType: false,
-					success: function(data)
-					{
-					    try {
-							var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+	    function listaAtletas(el) {
+			var formData = new FormData();
+			formData.append('nome_time', el.find('.busca-time').val());
 
-							if(retorno.succeed) {
-								el.find('.info-clube .nome').html(retorno.time);
-								el.find('.img-scouts').prop("src", "img/escudos/clube/" + retorno.escudo);
-								el.find('.dados-pont').html(retorno.pont_total);
-								el.find('.dados-patri').html("C$ " + retorno.patrimonio);
-								
-								if(retorno.atletas.length > 0) {
-									$.each(retorno.atletas, function(a, atleta) {
-										el.find('table tbody').append('<tr><td class="logo-time"><img src="'+atleta.escudo+'"></td><td>'+atleta.posicao+'</td><td>'+atleta.nome+'</td><td>'+atleta.pontuacao+'</td></tr>');
-									});
-								}
-								else {
-									el.find('table tbody').append('<tr class="bg-table"><td colspan="4" class="center infor"><i class="fa fa-thumbs-down fa-2x"></i><br /><br />Não há dados a serem exibidos aqui.</td></tr>');
-								}
+			el.find('.card').hide();
+			$('#loading').remove();
+			el.find('.info-clube .nome').html("");
+			el.find('.img-scouts').prop("src", "");
+			el.find('.dados-pont').html("");
+			el.find('.dados-patri').html("");
+			el.find('table tbody').html("");
+	    	el.append('<div style="margin-top:70px;" id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
+			
+			$.ajax({
+				type: "POST",
+				url: "acts/acts.scouts.php?act=pontuacao",
+				data : formData,
+				processData: false,
+				contentType: false,
+				success: function(data)
+				{
+				    try {
+						var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-								el.find('.card').fadeIn("slow", function() {
-									$('#loading').fadeOut();
-									$('#loading').remove();
+						if(retorno.succeed) {
+							el.find('.info-clube .nome').html(retorno.time);
+							el.find('.img-scouts').prop("src", "img/escudos/clube/" + retorno.escudo);
+							el.find('.dados-pont').html(retorno.pont_total);
+							el.find('.dados-patri').html("C$ " + retorno.patrimonio);
+							
+							if(retorno.atletas.length > 0) {
+								retorno.atletas.sort(function(a,b) {
+								    return a.index - b.index;
+								});
+
+								$.each(retorno.atletas, function(a, atleta) {
+									el.find('table tbody').append('<tr><td class="logo-time"><img src="'+atleta.escudo+'"></td><td>'+atleta.posicao+'</td><td>'+atleta.nome+'</td><td>'+atleta.pontuacao+'</td></tr>');
 								});
 							}
 							else {
-								$('#alert-title').html(retorno.title);
-								$('#alert-content').html(retorno.errno + " - " + retorno.erro);
-								$('#alert').modal('show');
-
-								el.find('.info-clube .nome').html("");
-								el.find('.img-scouts').prop("src", "");
-								el.find('.dados-pont').html("");
-								el.find('.dados-patri').html("");
-								el.find('table tbody').html("");
-								$('#loading').remove();
+								el.find('table tbody').append('<tr class="bg-table"><td colspan="4" class="center infor"><i class="fa fa-thumbs-down fa-2x"></i><br /><br />Não há dados a serem exibidos aqui.</td></tr>');
 							}
-					    }
-					    catch (e) {
-							$('#alert-title').html("Erro ao fazer parse do JSON!");
-							$('#alert-content').html(String(e.stack));
+
+							el.find('.card').fadeIn("slow", function() {
+								$('#loading').fadeOut();
+								$('#loading').remove();
+							});
+						}
+						else {
+							$('#alert-title').html(retorno.title);
+							$('#alert-content').html(retorno.errno + " - " + retorno.erro);
 							$('#alert').modal('show');
 
 							el.find('.info-clube .nome').html("");
@@ -2019,12 +2026,40 @@ $(function() {
 							el.find('.dados-pont').html("");
 							el.find('.dados-patri').html("");
 							el.find('table tbody').html("");
+							el.find('.card').hide();
 							$('#loading').remove();
-					    };
-					}
-				});
-		    }
-	    });
+						}
+				    }
+				    catch (e) {
+						$('#alert-title').html("Erro ao fazer parse do JSON!");
+						$('#alert-content').html(String(e.stack));
+						$('#alert').modal('show');
+
+						el.find('.info-clube .nome').html("");
+						el.find('.img-scouts').prop("src", "");
+						el.find('.dados-pont').html("");
+						el.find('.dados-patri').html("");
+						el.find('table tbody').html("");
+						el.find('.card').hide();
+						$('#loading').remove();
+				    };
+				}
+			});
+	    }
+
+	    self.setInterval(function () {
+    		if($('#scout1').val().length > 0) { 
+    			listaAtletas($('#scout1').parent().parent().parent()); 
+    		} 
+
+    		if($('#scout2').val().length > 0) { 
+    			listaAtletas($('#scout2').parent().parent().parent()); 
+    		} 
+
+    		if($('#scout3').val().length > 0) { 
+    			listaAtletas($('#scout3').parent().parent().parent()); 
+    		}
+    	}, 20000);
 	}
 
 	// END SCOUTS (scouts)
