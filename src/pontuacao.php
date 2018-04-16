@@ -7,7 +7,7 @@
 		<div class="row capa-pontuacao">
 			<div class="col-sm-12"></div>
 		</div>
-		<h3 class="headline" align="center">Endenta como funciona a pontuação do Cartola FC</h3>
+		<h3 class="headline" align="center">Entenda como funciona a pontuação do Cartola FC</h3>
 		<div class="row">			
 			<div class="col-sm-5 offset-sm-1">				
 				<table class="table table-bordered liga-csc">

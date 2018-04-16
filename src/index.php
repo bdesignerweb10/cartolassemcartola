@@ -44,16 +44,20 @@ require_once('header.php');
 						</div><!-- card -->
 					</article>
 					<article>
-						<div id="eventos" class="card">
+						<div id="mata-mata-andamento" class="card">
 							<div class="card-header">
 								<header>
-									<h2 class="card-title">Próximos eventos</h2>
+									<h2 class="card-title">Mata-Mata em andamento</h2>
 								</header>
 							</div><!-- card-header -->
 							<div class="card-block">
-								<div id='calendar'></div>
-							</div>
-						</div>
+							</div><!-- card-block -->
+							<footer>
+								<div class="card-footer">
+									<a href="mata_mata"><button class="btn btn-primary"><i class='fa fa-binoculars'></i>&nbsp;&nbsp;&nbsp;Acompanhar todos os mata mata</button></a>
+								</div><!-- card-footer -->
+							</footer>				
+						</div><!-- card -->
 					</article>
 				</div><!-- col-sm-5 -->
 				<div class="col-sm-12 col-md-6 col-lg-7 col-xl-7">
@@ -88,21 +92,18 @@ require_once('header.php');
 							</footer>				
 						</div><!-- card -->
 					</article>
+					
 					<article>
-						<div id="mata-mata-andamento" class="card">
+						<div id="eventos" class="card">
 							<div class="card-header">
 								<header>
-									<h2 class="card-title">Mata-Mata em andamento</h2>
+									<h2 class="card-title">Próximos eventos</h2>
 								</header>
 							</div><!-- card-header -->
 							<div class="card-block">
-							</div><!-- card-block -->
-							<footer>
-								<div class="card-footer">
-									<a href="mata_mata"><button class="btn btn-primary"><i class='fa fa-binoculars'></i>&nbsp;&nbsp;&nbsp;Acompanhar todos os mata mata</button></a>
-								</div><!-- card-footer -->
-							</footer>				
-						</div><!-- card -->
+								<div id='calendar'></div>
+							</div>
+						</div>
 					</article>
 				</div><!-- col-sm-7 -->
 				<div class="col-12">
