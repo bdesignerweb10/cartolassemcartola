@@ -370,6 +370,19 @@
 	margin-bottom: 15px;
 }
 
+.capa-tempo-real{
+	background: url(../img/tempo-real.png);
+	background-repeat: no-repeat;
+    background-size:100%;
+    bottom: 0;   
+    left: 0;
+    overflow: auto;
+    padding: 6em;
+    right: 0;    
+    top: 0;
+	margin-bottom: 15px;
+}
+
 .capa-brasileirao{
 	background: url(../img/brasileirao.jpeg);
 	background-repeat: no-repeat;
@@ -911,11 +924,42 @@ ul.escudos > li {
 #desempenho-liga .card-block, #desempenho-liga footer, #destaques .col-sm-4,
 #mata-mata .bg-info, #mata-mata .bg-success, #mata-mata .bg-danger, #mata-mata .mata-and, #mainconfrontos, #nao-ha-dados,
 #pontrodada .table-responsive, #proximos-eventos, #eventos-passados, #eventos-container .bg-success, #eventos-container .bg-info,
-#eventos-container .infor, .escudos, #escudos-container .infor, #confrontos-br .card, #confrontos-br .infor, .table-brasileiro .infor, .table-brasileiro table, .scouts .card, #eventos .card-block, #eventos footer {
+#eventos-container .infor, .escudos, #escudos-container .infor, #confrontos-br .card, #confrontos-br .infor, .table-brasileiro .infor, .table-brasileiro table, .scouts .card, #eventos .card-block, #eventos footer, #tempo-real .card-block, #tempo-real footer, #mainscout {
 	display:none;
 }
 
 .img-fit {
 	width: 100%;
 	height: auto;
+}
+
+.pont_zerado {
+	font-weight: bold;
+	fill:#333 !important;
+	color: #333 !important;
+}
+.pont_pos {
+	font-weight: bold;
+	fill:#26ca5e!important;
+	color:#26ca5e!important;
+}
+.pont_neg {
+	font-weight: bold;
+	fill:#ff0320!important;
+	color:#ff0320!important;
+}
+
+/* tablesorter */
+table.liga-csc thead tr .tsheader {
+	background-image: url(../img/bg.gif);
+	background-repeat: no-repeat;
+	background-position: center right;
+	cursor: pointer;
+}
+
+table.liga-csc thead tr .headerSortUp {
+	background-image: url(../img/asc.gif);
+}
+table.liga-csc thead tr .headerSortDown {
+	background-image: url(../img/desc.gif);
 }

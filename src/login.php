@@ -19,6 +19,16 @@ require_once('header_login.php');
 						<label for="senha">Senha</label>
 						<input type="password" class="form-control form-control-lg" id="senha" name="senha" placeholder="Digite sua senha..." data-error="Por favor, informe a senha." maxlength="120" required>
 					</div>
+					<div class="row">
+			  			<div class="col-12">
+			  				<div class="checkbox">
+								<label>
+									<input type="checkbox" id="lembrar" name="lembrar" data-toggle="toggle" data-on="Sim" data-off="Não" data-onstyle="success" data-offstyle="danger">
+									Mantenha-me conectado
+								</label>
+							</div>
+			    		</div>
+					</div>
 					<div class="form-group">
 						<button type="button" class="btn btn-link" id="btn-esqueceu-senha">Esqueceu sua senha? Clique aqui!</button>
 					</div>

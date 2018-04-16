@@ -30,10 +30,12 @@ else {
 	<title>Cartolas sem cartola</title>
 
 	<link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
-	<link rel="stylesheet" href="css/style.css">
-	<link href='css/fullcalendar.min.css' rel='stylesheet' />
-	<link href='css/fullcalendar.print.min.css' rel='stylesheet' media='print' />
-	<link rel="stylesheet" href="css/textext.plugin.autocomplete.css" type="text/css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel='stylesheet' type="text/css" href='css/fullcalendar.min.css' />
+	<link rel='stylesheet' type="text/css" href='css/fullcalendar.print.min.css' media='print' />
+	<link rel="stylesheet" type="text/css" href="css/bootstrap-toggle.min.css">
+	<link rel="stylesheet" type="text/css" href="css/jquery.datetimepicker.css">
+	<link rel="stylesheet" type="text/css" href="css/textext.plugin.autocomplete.css">
 </head>
 <body>
 
@@ -81,17 +83,23 @@ else {
 						<i class="fa fa-calendar"></i>	
 						Eventos
 						</a>
-					</li>					
+					</li>			
 					<li class="nav-item">					
-						<a href="pontuacao" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'pontuacao.php' ? ' nav-active' : ''; ?>">
-						<i class="fa fa-bar-chart"></i>	
-						Pontuação Cartola
+						<a href="tempo_real" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'tempo_real.php' ? ' nav-active' : ''; ?>">
+						<i class="fa fa-hourglass-2"></i>	
+						Tempo Real
 						</a>
 					</li>
 					<li class="nav-item">					
 						<a href="scouts" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'scouts.php' ? ' nav-active' : ''; ?>">
 						<i class="fa fa-area-chart"></i>	
 						Scouts
+						</a>
+					</li>		
+					<li class="nav-item">					
+						<a href="pontuacao" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'pontuacao.php' ? ' nav-active' : ''; ?>">
+						<i class="fa fa-bar-chart"></i>	
+						Pontuação Cartola
 						</a>
 					</li>
 				<?php endif; ?>

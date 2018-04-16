@@ -24,5 +24,6 @@ if(isset($_SESSION)) {
 
 	<link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
 	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap-toggle.min.css">
 </head>
 <body>

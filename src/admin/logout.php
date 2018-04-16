@@ -15,7 +15,13 @@ if(isset($_SESSION)) {
 	session_destroy();
 }
 
-/** Voila! Here we shall gently nudge them somewhere else. */
+setcookie('usu_id');
+setcookie('usu_time');
+setcookie('usu_login');
+setcookie('usu_nome');
+setcookie('usu_nivel');
+setcookie('usu_escudo');
+
 header('Location: ./');
 exit();
 ?>

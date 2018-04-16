@@ -31,14 +31,15 @@
 				</div>
 			</div>
 		</div>
-		<script src="js/main.js"></script>
-		<script src="js/app.js"></script>		
-		<script src='js/moment.min.js'></script>
-		<script src='js/fullcalendar.min.js'></script>
-		<script src='js/pt-br.js'></script>
+		<script src="js/main.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/app.js" type="text/javascript" charset="utf-8"></script>		
+		<script src='js/moment.min.js' type="text/javascript" charset="utf-8"></script>
+		<script src='js/fullcalendar.min.js' type="text/javascript" charset="utf-8"></script>
+		<script src='js/pt-br.js' type="text/javascript" charset="utf-8"></script>
 		<script src="js/textext.core.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/textext.plugin.autocomplete.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/textext.plugin.ajax.js" type="text/javascript" charset="utf-8"></script>
+ 		<script src="js/jquery.tablesorter.min.js" type="text/javascript"></script>
 		<?php if($conn) $conn->close(); ?>
 	</body>
 </html>
