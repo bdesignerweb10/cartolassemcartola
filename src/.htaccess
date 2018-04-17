@@ -17,7 +17,7 @@ RewriteRule ^provisoria/?$ provisoria.php
 RewriteRule ^regulamento/?$ regulamento.php
 RewriteRule ^rodada/?$ rodada.php
 RewriteRule ^scouts/?$ scouts.php
-RewriteRule ^tempo_real/?$ tempo_real.php
+RewriteRule ^temporeal/?$ tempo_real.php
 
 RewriteRule ^admin/configuracoes/?$ admin/configuracoes.php
 RewriteRule ^admin/eventos/?$ admin/eventos.php

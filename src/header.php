@@ -85,7 +85,7 @@ else {
 						</a>
 					</li>			
 					<li class="nav-item">					
-						<a href="tempo_real" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'tempo_real.php' ? ' nav-active' : ''; ?>">
+						<a href="temporeal" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'tempo_real.php' ? ' nav-active' : ''; ?>">
 						<i class="fa fa-hourglass-2"></i>	
 						Tempo Real
 						</a>
