@@ -8514,7 +8514,8 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   .liga-csc .table-title {
     text-align: center; }
 
-.table th, .table td {
+.table th,
+.table td {
   padding: 0.56rem; }
 
 .liga-csc tbody tr td, .liga-csc tbody th, .table-scouts tbody tr td, .table-scouts tbody th {
@@ -8522,6 +8523,67 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
 
 .bg-table {
   background-color: #efefef; }
+
+/* Tempo real */
+.campinho {
+  background: url(../img/campinho.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center; }
+
+.cartola-campinho-atleta-foto {
+  display: block;
+  background-color: #fff;
+  border-radius: 50%;
+  border-bottom: 3px solid #333;
+  cursor: pointer;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: 97px;
+  margin-bottom: 6px;
+  height: 70px;
+  width: 70px; }
+
+.a1 {
+  background: url(../img/jogador.png) #fff;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center; }
+
+.atleta {
+  padding-left: 145px;
+  padding-top: 63px; }
+
+.comissao-tecnica {
+  padding-left: 51px;
+  padding-top: 1px; }
+
+.tecnico {
+  padding-top: 81px;
+  padding-left: 62px; }
+
+.goleiro {
+  padding-left: 138px;
+  padding-top: 46px; }
+
+.pts-real {
+  margin-bottom: 25px; }
+
+.pts-neg {
+  color: #d9534f; }
+
+.pts-pos {
+  color: #5cb85c; }
+
+.pts-tot {
+  color: #5cb85c;
+  font-weight: bold;
+  font-size: 20px; }
+
+.nome-clube {
+  font-weight: bold;
+  font-size: 20px;
+  color: #293541; }
 
 /* Scouts */
 .busca-time {
@@ -8760,7 +8822,7 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   bottom: 0;
   left: 0;
   overflow: auto;
-  padding: 6em;
+  padding: 7em;
   right: 0;
   top: 0;
   margin-bottom: 15px; }

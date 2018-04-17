@@ -59,6 +59,7 @@ require_once('header.php');
 							</div><!-- card-footer -->
 						</footer>				
 					</div><!-- card -->
+					<a href="pontuacao.php" class="btn btn-primary"><i class="fa fa-bar-chart"></i>	Pontuação do Cartola</a>
 				</article>
 				<div class="row">
 					<div class="col-sm-10"></div>

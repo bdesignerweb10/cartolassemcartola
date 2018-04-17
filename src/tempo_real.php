@@ -69,7 +69,43 @@ require_once('header.php');
 				<button type="button" id="btn-voltar-listagem" class="btn btn-link btn-lg form-control btn-voltar">
 					<i class='fa fa-arrow-left'></i>&nbsp;&nbsp;&nbsp;Voltar
 				</button>	
-			</div><!-- col-sm-8-->
+			</div><!-- col-sm-12-->
+		</div>
+		<div class="row">	
+			<div class="col-sm-6">
+				<img src="img/campinho.png" class="img-fluid">
+			</div>
+			<div class="col-sm-6">
+				<table class="table table-hover">				  
+				  <tbody>
+				    <tr>
+				      <td>GOL</td>
+				      <th>Fernando Leal</th>
+				      <td class="pts-neg">-1.50</td>				      
+				    </tr>
+				    <tr>
+				      <td>LAT</td>
+				      <th>Liziero</th>
+				      <td class="pts-neg">-1.30</td>
+				    </tr>
+				    <tr>
+				      <td>LAT</td>
+				      <th>Thiago Carleto</th>
+				      <td class="pts-pos">13.20</td>
+				    </tr>
+				    <tr>
+				      <td>ZAG</td>
+				      <th>Rodrigo Caio</th>
+				      <td class="pts-pos">5.20</td>
+				    </tr>
+				    <tr>
+				      <td>ZAG</td>
+				      <th>Balbuena</th>
+				      <td class="pts-pos">18.20</td>
+				    </tr>
+				  </tbody>
+				</table>
+			</div>
 		</div><!-- row -->	
 	</div><!-- container -->	
 </main>

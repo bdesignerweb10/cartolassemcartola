@@ -95,12 +95,6 @@ else {
 						<i class="fa fa-area-chart"></i>	
 						Scouts
 						</a>
-					</li>		
-					<li class="nav-item">					
-						<a href="pontuacao" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'pontuacao.php' ? ' nav-active' : ''; ?>">
-						<i class="fa fa-bar-chart"></i>	
-						Pontuação Cartola
-						</a>
 					</li>
 				<?php endif; ?>
 				<?php if($_SESSION["temporada"] == "0") : ?>

@@ -46,19 +46,20 @@
                      <h5 class="mb-0"><a class="collapsed collapse-title" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">4) Premiação</a></h5>
                   </div>
                   <div id="collapseFour" class="collapse" role="tabpanel" aria-labelledby="headingFour">
-                     <div class="card-block">4.1. Ranking Geral: ao fim das 38 rodadas, os 6 maiores pontuadores da Liga serão premiados (Serão Pagos R$1050,00 em prêmios pela liga).</div>
-                     <div class="card-block">4.2. 1º colocado ao término das 38 rodadas do Campeonato Brasileiro 2018 receberá uma camisa do Clube do qual torce oficial no valor de R$400,00 ou o valor em dinheiro.</div>
-                     <div class="card-block">4.3. 2º colocado ao término das 38 rodadas do Campeonato Brasileiro 2018 receberá um produto do Clube do qual torce oficial no valor de R$230,00 ou o valor em dinheiro.</div>
-                     <div class="card-block">4.4. 3º colocado ao término das 38 rodadas do Campeonato Brasileiro 2018 receberá um produto do Clube do qual torce oficial no valor de R$150,00 ou o valor em dinheiro.</div>
-                     <div class="card-block">4.5. 4º colocado ao término das 38 rodadas do Campeonato Brasileiro 2018 receberá um produto do Clube do qual torce oficial no valor de R$110,00 ou o valor em dinheiro.</div>
-                     <div class="card-block">4.6. 5º colocado ao término das 38 rodadas do Campeonato Brasileiro 2018 receberá um produto do Clube do qual torce oficial no valor de R$90,00 ou o valor em dinheiro.</div>
-                     <div class="card-block">4.7. 6º colocado ao término das 38 rodadas do Campeonato Brasileiro 2018 receberá um produto do Clube do qual torce oficial no valor de R$70,00 ou o valor em dinheiro.</div>
+                     <div class="card-block">4.1. Ranking Geral: ao fim das 38 rodadas, os 6 maiores pontuadores da Liga serão premiados (Serão Pagos R$1460,00 em prêmios pela liga).</div>
+                     <div class="card-block">4.2. 1º colocado ao término das 38 rodadas do Campeonato Brasileiro 2018 receberá uma camisa do Clube do qual torce oficial no valor de R$500,00 ou o valor em dinheiro.</div>
+                     <div class="card-block">4.3. 2º colocado ao término das 38 rodadas do Campeonato Brasileiro 2018 receberá um produto do Clube do qual torce oficial no valor de R$340,00 ou o valor em dinheiro.</div>
+                     <div class="card-block">4.4. 3º colocado ao término das 38 rodadas do Campeonato Brasileiro 2018 receberá um produto do Clube do qual torce oficial no valor de R$200,00 ou o valor em dinheiro.</div>
+                     <div class="card-block">4.5. 4º colocado ao término das 38 rodadas do Campeonato Brasileiro 2018 receberá um produto do Clube do qual torce oficial no valor de R$160,00 ou o valor em dinheiro.</div>
+                     <div class="card-block">4.6. 5º colocado ao término das 38 rodadas do Campeonato Brasileiro 2018 receberá um produto do Clube do qual torce oficial no valor de R$100,00 ou o valor em dinheiro.</div>
+                     <div class="card-block">4.7. 6º colocado ao término das 38 rodadas do Campeonato Brasileiro 2018 receberá um produto do Clube do qual torce oficial no valor de R$90,00 ou o valor em dinheiro.</div>
+                     <div class="card-block">4.8. Maior pontuador em uma unica rodada ao término das 38 rodadas do Campeonato Brasileiro 2018 receberá um produto do Clube do qual torce oficial no valor de R$70,00 ou o valor em dinheiro.</div>
                      <div class="card-block">
                         4.8. Todas as premiações serão pagas ao final do campeonato, o Cartoleiro poderá receber o prêmio em Dinheiro ou em produtos oficiais do clube que torça, caso o cartoleiro opte por receber o prêmio em produto oficial, o valor será o mesmo. O Cartoleiro fica livre se quiser complementar o valor do prêmio para comprar um produto com valor superior ao prêmio, para isso entre em contato com a direção da liga.
-                        <p>Por exemplo o 5º colocado tem direito a um prêmio de até 90,00 (Produto oficial do clube que torça), caso o item escolhido tenha valor de 150,00 o Cartoleiro pode inteirar o valor a mais para a compra do produto.</p>
+                        <p>Por exemplo o 5º colocado tem direito a um prêmio de até 100,00 (Produto oficial do clube que torça), caso o item escolhido tenha valor de 150,00 o Cartoleiro pode inteirar o valor a mais para a compra do produto.</p>
                      </div>
                      <div class="card-block">4.9. Os Cartoleiros que receberem o prêmio deve postar no grupo do Facebook uma foto com o prêmio que ganhou.</div>
-                     <div class="card-block">5.0. As premiações poderão sofrer alterações dependendo dos números de inscritos, atualmente o cálculo das premiações apresentadas foram feitas para 35 inscritos na liga.</div>
+                     <div class="card-block">5.0. As premiações apresentadas foram feitas para 50 inscritos na liga.</div>
                   </div>
                </div>
                <!-- Card regulamento -->
