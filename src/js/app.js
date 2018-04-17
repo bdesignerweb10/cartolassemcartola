@@ -2138,9 +2138,9 @@ $(function() {
 
 	// END SCOUTS (scouts)
 
-	// BEGIN TEMPO REAL (tempo_real)
+	// BEGIN TEMPO REAL (temporeal)
 
-	if(window.location.pathname.indexOf('tempo_real') !== -1) {
+	if(window.location.pathname.indexOf('temporeal') !== -1) {
 				
 		// DESEMPENHO GERAL
 		$('#tempo-real').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
@@ -2323,7 +2323,7 @@ $(function() {
     	}, 180000);
 	}
 
-	// END TEMPO REAL (tempo_real)
+	// END TEMPO REAL (temporeal)
 });
 
 function getRandomColor() {
