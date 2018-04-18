@@ -1,0 +1,90 @@
+@import "../../components/bootstrap/scss/bootstrap";
+@import "../../components/components-font-awesome/scss/font-awesome";
+
+/* sidebar */
+@import "sidebar";
+
+
+/* Header */
+
+@import "header";
+
+/* Card-Custom */
+@import "card-custom";
+
+@include media-breakpoint-up('lg') {
+	.container{
+		width: 85%;
+		margin-left: 195px;
+	}
+}
+
+/* Titulo das páginas */
+.headline{
+	font-size: 1.5rem;
+	font-weight: bold;
+	padding: 15px 20px;
+}
+
+
+/* Pré inscrição */
+.premain {
+	display: none;
+}
+
+
+.headline-custom{
+	font-size: 2rem;
+	font-weight: bold;
+	margin-top: 40px;
+	text-align: center;
+	color: $brand-warning;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+/* Inscrição */
+.inscricao{
+	background-color: #fff;
+	padding: 30px 10px;
+	border-radius: 5px;
+	.form-control{
+		padding: 1.5rem 0.75rem;
+	}	
+	.form-inline{
+		justify-content: space-between;
+	}
+}
+
+.btn-palpites{
+	padding: 1.5rem 0.75rem;
+	margin-bottom: 20px;
+}
+
+.insc-resp{
+	color: #000;
+}
+
+.info{
+	margin-top: 63px;
+}
+
+.confronto{
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.band-sel{
+	width: 40px;
+	height: 40px;
+}
+
+.vs{
+	font-size: 1rem;
+}
+
+.palpites{
+	display: flex;
+    align-items: center;
+    text-align: center;
+    padding-left: 38px;
+}

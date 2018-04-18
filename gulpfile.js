@@ -31,13 +31,14 @@ gulp.task("sass", ['cache:css'], function() {
  	.pipe(gulp.dest('./dist/img'))
  });
 
+
 /* Task para mover a pasta fonts para pasta dist */
  gulp.task("move-fonts", function() { 
  	return gulp.src('./src/components/components-font-awesome/fonts/**') 
  	.pipe(gulp.dest('./dist/fonts'))
  });
 
- /* Task para mover a pasta acts para pasta dist */
+/* Task para mover a pasta acts para pasta dist */
  gulp.task("move-acts", function() { 
  	return gulp.src('./src/acts/*.php') 
  	.pipe(gulp.dest('./dist/acts'))
@@ -146,6 +147,85 @@ gulp.task("concat-js", function() {
 				.pipe(browserSync.stream());
  });
 
+
+ /*      COPA DO MUNDO 2018    */
+
+gulp.task("cache:css-copa", function() {
+	del("./dist/copa/css/style.css")
+});
+
+gulp.task("cache:js-copa", function() {
+	del("./dist/copa/js/app.js")
+});
+
+
+
+ gulp.task("css-copa", function() { 
+	return gulp.src("./src/copa/css/*.css")
+				.pipe(htmlmin({collapseWhitespace: true}))
+				.on('error', notify.onError({title: "erro js", message: "<%= error.message %>"}))
+				.pipe(gulp.dest("./dist/copa/css/"))
+				.pipe(browserSync.stream());
+ });
+
+gulp.task("js-copa", ['cache:js-copa'], function() {
+	return gulp.src("./src/copa/js/app.js")
+				.pipe(uglify())
+				.on('error', notify.onError({title: "erro js", message: "<%= error.message %>"}))
+				.pipe(gulp.dest("./dist/copa/js/"))
+				.pipe(browserSync.stream());
+});
+
+ gulp.task("move-js-copa", function() { 
+ 	return gulp.src('./src/copa/js/**') 
+ 	.pipe(gulp.dest('./dist/copa/js'))
+ });
+
+gulp.task("sass-copa", ['cache:css-copa'], function() {
+	return gulp.src("./src/copa/scss/style.scss")
+				.pipe(sass({outPutStyle: 'compressed'}))
+				.on('error', notify.onError({title: "erro scss", message: "<%= error.message %>"}))
+				.pipe(gulp.dest("./dist/copa/css"))
+				.pipe(browserSync.stream());
+});
+
+gulp.task("php-copa", function() {
+	return gulp.src("./src/copa/*.php")
+				.pipe(htmlmin({collapseWhitespace: true}))
+				.on('error', notify.onError({title: "erro js", message: "<%= error.message %>"}))
+				.pipe(gulp.dest("./dist/copa/"))
+				.pipe(browserSync.stream());
+});
+
+ gulp.task("move-img-copa", function() { 
+ 	return gulp.src('./src/copa/img/**') 
+ 	.pipe(gulp.dest('./dist/copa/img'))
+ });
+
+ gulp.task("move-fonts-copa", function() { 
+ 	return gulp.src('./src/components/components-font-awesome/fonts/**') 
+ 	.pipe(gulp.dest('./dist/copa/fonts'))
+ });
+
+ gulp.task("concat-js-copa", function() {
+	return gulp.src([
+					'./src/components/jquery/dist/jquery.js',
+					'./src/components/tether/dist/js/tether.js',
+					'./src/components/bootstrap/dist/js/bootstrap.js',
+					'./src/components/jquery-masks/jquery.mask.min.js',
+					'./src/components/bootstrap/bootstrap-toggle.min.js',
+					'./src/components/chartjs/Chart.bundle.min.js'
+				])
+				.pipe(concat("main.js"))
+				.pipe(gulp.dest("./dist/copa/js"))
+
+});
+
+
+
+
+
+
 /* Task server local */
 gulp.task("server", function() {
 	browserSync.init({
@@ -166,5 +246,11 @@ gulp.task("server", function() {
 	gulp.watch("./src/admin/acts/*.php", ['php-admin-acts']);
 	gulp.watch("./src/admin/js/**/*.js", ['js']);
 	gulp.watch("./src/js/**/*.js", ['move-js-calendar']);
+
+	//Copa do mundo 
+	gulp.watch("./src/copa/scss/**/*.scss", ['sass-copa']);
+	gulp.watch("./src/copa/css/*.css", ['css-copa']);
+	gulp.watch("./src/copa/js/**/*.js", ['js-copa']);
+	gulp.watch("./src/copa/*.php", ['php-copa']);
 });
-gulp.task("default", ["sass", "css", "move-htaccess", "php", "php-acts" , "php-admin" , "php-admin-acts" ,"js", "admin-js", "concat-js", "move-img", "move-fonts", "move-admin", "move-acts", "move-libs", "move-js-calendar" ,"server"]);
+gulp.task("default", ["sass", "css", "move-htaccess", "php", "php-acts" , "php-admin" , "php-admin-acts" ,"js", "admin-js", "concat-js", "move-img", "move-fonts", "move-admin", "move-acts", "move-libs", "move-js-calendar", "sass-copa", "move-js-copa" , "move-img-copa" ,"move-fonts-copa" ,"css-copa", "js-copa", "php-copa", "concat-js-copa" ,"server"]);
