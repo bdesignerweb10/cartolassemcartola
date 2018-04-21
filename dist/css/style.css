@@ -8514,8 +8514,7 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   .liga-csc .table-title {
     text-align: center; }
 
-.table th,
-.table td {
+.table th, .table td {
   padding: 0.56rem; }
 
 .liga-csc tbody tr td, .liga-csc tbody th, .table-scouts tbody tr td, .table-scouts tbody th {
@@ -8790,7 +8789,8 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   overflow: auto;
   padding: 7em;
   right: 0;
-  top: 0; }
+  top: 0;
+  margin-botton: 15px; }
 
 .capa-scouts {
   background-image: url(../img/scouts.jpeg);
