@@ -29,19 +29,19 @@
 
 				<ul class="nav">
 					<li class="nav-item">					
-						<a href="inscricao" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'inscricao.php' ? ' nav-active' : ''; ?>">
+						<a href="inscricao.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'inscricao.php' ? ' nav-active' : ''; ?>">
 						<i class="fa fa-edit"></i>	
 						Palpites
 						</a>
 					</li>
 					<li class="nav-item">					
-						<a href="ranking" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'ranking.php' ? ' nav-active' : ''; ?>">
+						<a href="ranking.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'ranking.php' ? ' nav-active' : ''; ?>">
 						<i class="fa fa-trophy"></i>	
 						Ranking
 						</a>
 					</li>
 					<li class="nav-item">					
-						<a href="palpites" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'palpites.php' ? ' nav-active' : ''; ?>">
+						<a href="palpites.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'palpites.php' ? ' nav-active' : ''; ?>">
 						<i class="fa fa-list-alt"></i>	
 						Palpites/Resultados
 						</a>

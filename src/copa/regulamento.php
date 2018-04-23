@@ -45,7 +45,7 @@
                      <h5 class="mb-0"><a class="collapsed collapse-title" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">4) Premiação</a></h5>
                   </div>
                   <div id="collapseFour" class="collapse" role="tabpanel" aria-labelledby="headingFour">
-                     <div class="card-block">4.1. Ao fim da copa do mundo, o participante que tenha somado mais pontosserá o premiado.</div>
+                     <div class="card-block">4.1. Ao fim da copa do mundo, o participante que tenha somado mais pontos será o premiado.</div>
                      <div class="card-block">4.2. Ao término da Copa do mundo o 1º colocado  receberá o Valor de R$00,00 (xxx reais).</div>
                      
                      <div class="card-block">

@@ -88,3 +88,48 @@
     text-align: center;
     padding-left: 38px;
 }
+
+.pontos{
+	float: right;
+	font-weight: bold;
+	color: $brand-success;
+	background-color: #f7f7f9;
+}
+
+.oficial{
+	font-weight: bold;
+	color: #b2afaf;
+}
+
+.res-ofi{
+	text-align: center;
+	font-size: 10px;
+	color: #b2afaf;
+}
+
+.liga-csc{
+	width: 100%;
+	overflow-x: auto;
+	display: table;
+	text-align: center;
+	.table-title{
+		text-align: center;
+	}
+}
+
+.pts{
+	font-weight: bold;
+}
+
+.card-tbl{
+	position: relative;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+}
+
+.bg-table{
+	background-color: #efefef;
+}
