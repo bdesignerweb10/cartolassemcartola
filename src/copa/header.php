@@ -29,7 +29,8 @@
 
 				<ul class="nav">
 					<li class="nav-item">					
-						<a href="inscricao.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'inscricao.php' ? ' nav-active' : ''; ?>">
+						<a href="inscricao.php
+						" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'inscricao.php' ? ' nav-active' : ''; ?>">
 						<i class="fa fa-edit"></i>	
 						Palpites
 						</a>

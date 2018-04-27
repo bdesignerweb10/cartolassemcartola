@@ -9295,3 +9295,55 @@ table.liga-csc thead tr .headerSortUp {
 
 table.liga-csc thead tr .headerSortDown {
   background-image: url(../img/desc.gif); }
+
+/* Modify */
+.modal-default .modal-header {
+  padding: 2rem; }
+
+.modal-default .modal-body .modal-title {
+  font-weight: bold;
+  font-size: 2rem;
+  text-align: center; }
+
+.modal-default .modal-body .modal-message {
+  font-size: 20px;
+  text-align: center; }
+
+.modal-default .modal-footer {
+  justify-content: space-around; }
+
+.modal-default .modal-footer .btn {
+  border-radius: 0;
+  text-transform: uppercase; }
+
+.modal-default .modal-header .modal-title {
+  margin: 0 auto; }
+
+/* Style */
+.modal-default.modal-info .modal-header {
+  background-color: #fc8f3e; }
+
+.modal-default.modal-danger .modal-header {
+  background-color: #c0392b; }
+
+.modal-default .modal-header .modal-title,
+.modal-default .modal-header .close {
+  color: #fff; }
+
+.modal-default.modal-info .modal-body .modal-title {
+  color: #fc8f3e; }
+
+.modal-default .modal-body .modal-message {
+  color: #9b9b9b; }
+
+.modal-default.modal-info .modal-footer .btn {
+  border-width: 2px;
+  background-color: transparent;
+  border-color: #2d98da;
+  color: #2d98da; }
+
+.modal-default.modal-info .modal-footer .btn:hover {
+  background-color: #45aaf2;
+  border-color: #2d98da;
+  color: #fff;
+  cursor: pointer; }
