@@ -34,12 +34,6 @@ $(function() {
 
 	// BEGIN LOGIN (login)
 
-	if(window.location.pathname.indexOf('login') === -1) {
-		$('#info').modal({
-			keyboard: false
-		});
-	}
-
 	$("#form-login").submit(function(e) {
 		e.preventDefault();
 
@@ -326,6 +320,10 @@ $(function() {
 	   window.location.pathname.indexOf('meus_dados') === -1 &&
 	   window.location.pathname.indexOf('provisoria') === -1 &&
 	   window.location.pathname.indexOf('temporeal') === -1) {
+	   	
+		$('#info').modal({
+			keyboard: false
+		});
 				
 		// DESTAQUES RODADA
 		$('#destaques-rodada').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
