@@ -102,6 +102,7 @@ require_once('header.php');
 							</div><!-- card-header -->
 							<div class="card-block">
 								<div id='calendar'></div>
+								<div id='popover-content' style="display: none;"></div>
 							</div>
 						</div>
 					</article>
@@ -145,25 +146,6 @@ require_once('header.php');
 			    </div>
 			  </div>
 			</div><!-- modal -->		
-
-			<!-- Modal Info -->
-		<div class="modal modal-default modal-info fade" id="info" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		  <div class="modal-dialog" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <h5 class="modal-title" id="exampleModalLabel"><img src="img/info.png"></h5>
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		          <span aria-hidden="true">&times;</span>
-		        </button>
-		      </div>
-		      <div class="modal-body">
-		      	<h3 class="modal-title" id="exampleModalLabel">Atenção</h3>
-		      	<p class="modal-message">O Jogo entre Santos x Vasco, da rodada #3, será apenas em julho. Portanto, não valerá para o Cartola FC. </p>
-		      </div>		      
-		    </div>
-		  </div>
-		</div>
-
 		</div><!-- container -->	
 	</main>
 <?php

@@ -154,8 +154,6 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 
 	    case 'abrirmercado':
 			try {
-				$conn->autocommit(FALSE);
-
 				// API do Cartola
 				if(intval($_SESSION["api_ligada"]) == 1) {
 					$status_mercado = api("mercado/status");
@@ -164,7 +162,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 						$ligas = api("auth/ligas", array('login' => "phmpilz@hotmail.com", 'senha' => "23@Wsx89(Nji"));
 			
 						if(count($ligas->{"ligas"}) > 0) {
-							$var_erros = "";
+							$var_err_cart = "";
 
 							foreach($ligas->{"ligas"} as $l => $liga) {
 								if($liga->{"patrocinador"} == false && $liga->{"time_dono_id"} == 13908998) {
@@ -172,80 +170,122 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 															     'senha' => "23@Wsx89(Nji", 
 															     'api' => "liga",
 															     'liga_slug' => $liga->{"slug"}));
+
 									if(count($cartola->{"times"}) > 0) {
 										foreach($cartola->{"times"} as $t => $time) {
-											$pontuacao = (!empty($time->{"pontos"}->{"rodada"}) ? str_replace(',', '.', $time->{"pontos"}->{"rodada"}) : "0");
+											$pontuacao = number_format((!empty($time->{"pontos"}->{"rodada"}) ? str_replace(',', '.', $time->{"pontos"}->{"rodada"}) : "0"), 2, '.', '');
 											$posicao = (!empty($time->{"ranking"}->{"campeonato"}) ? $time->{"ranking"}->{"campeonato"} : "0");
+											$patrimonio = number_format($time->{"patrimonio"}, 2, '.', '');
 
-											$qryupdpontuacao = "UPDATE tbl_times_temporadas 
-													  		   	   SET pontuacao = " . $pontuacao . ",
-													  		   	   	   posicao_liga = " . $posicao . ",
-															 		   usuario_id = " . $_SESSION["usu_id"] . ",
-															 		   alterado_em = NOW()
-														    	 WHERE id_anos = " . $_SESSION["temporada_atual"] . "
-														       	   AND id_rodadas = " . $_SESSION["rodada"] . " 
-														       	   AND id_times = (SELECT id 
-														       	   					 FROM tbl_times 
-														       	   					WHERE slug_cartola = '" . $time->{"slug"} . "' LIMIT 1)";
+											// print 'time: ' . $time->{"slug"};
+											// print PHP_EOL;
+											// print 'pontuacao: ' . $pontuacao;
+											// print PHP_EOL;
+											// print 'posicao: ' . $posicao;
+											// print PHP_EOL;
+											// print 'patrimonio: ' . $patrimonio;
+											// print PHP_EOL;
 
-											if ($conn->query($qryupdpontuacao) !== TRUE) {
-												$var_erros .= "Erro ao atualizar a pontuação do time da API do Cartola FC: " . $qryupdpontuacao . "<br>" . $conn->error;
+											$idtime = "";
+											$qryslug = $conn->query("SELECT id, nome_time
+																	   FROM tbl_times 
+														       	   	  WHERE UPPER(TRIM(slug_cartola)) = UPPER(TRIM('" . $time->{"slug"} . "')) LIMIT 1") or trigger_error("26020 - " . $conn->error);
+		        
+									        while($tslug = $qryslug->fetch_object()) {
+												// print 'time: ' . $tslug->id . ' - ' . $tslug->nome_time;
+												// print PHP_EOL;
+												$idtime = $tslug->id;
 											}
-											else {
-												$patrimonio = number_format((float)$time->{"patrimonio"}, 2, '.', '');
 
-												$qryupdtime = "UPDATE tbl_times 
-															  	  SET patrimonio = " . $patrimonio . "
-																WHERE slug_cartola = '" . $time->{"slug"} . "'";
+											if(!empty($idtime) && $idtime != "" && $pontuacao != 0 && $posicao != 0) {
+												$qryupdpontandpo = "UPDATE tbl_times_temporadas 
+														  		   	   SET pontuacao = " . $pontuacao . ",
+														  		   	   	   posicao_liga = " . $posicao . ",
+																 		   usuario_id = " . $_SESSION["usu_id"] . ",
+																 		   alterado_em = NOW()
+															    	 WHERE id_anos = " . $_SESSION["temporada_atual"] . "
+															       	   AND id_rodadas = " . $_SESSION["rodada"] . " 
+															       	   AND id_times = $idtime";
 
-												if ($conn->query($qryupdtime) !== TRUE) {
-													$var_erros .= "Erro ao atualizar o patrimônio do time com informações do Cartola FC " . $qryupdtime . "<br>" . $conn->error;
+												// print 'qryupdpontandpo: ' . $qryupdpontandpo;
+												// print PHP_EOL;
+												// print PHP_EOL;
+
+												if ($conn->query($qryupdpontandpo) === TRUE) {
+													$qryupdpatr = "UPDATE tbl_times 
+																  	  SET patrimonio = " . $patrimonio . "
+																	WHERE id = $idtime";
+
+													// print 'qryupdpatr: ' . $qryupdpatr;
+													// print PHP_EOL;
+													// print PHP_EOL;
+
+													if ($conn->query($qryupdpatr) !== TRUE) {
+														$var_err_cart .= "Erro ao atualizar o patrimônio do time com informações do Cartola FC " . $qryupdpatr . "<br>" . $conn->error;
+													}
+												}
+												else {
+													$var_err_cart .= "Erro ao atualizar a pontuação do time da API do Cartola FC: " . $qryupdpontandpo . "<br>" . $conn->error;
 												}
 											}
+											// else {
+											// 	print 'time: ' . $time->{"slug"};
+											// 	print PHP_EOL;
+											// 	print 'pontuacao: ' . $pontuacao;
+											// 	print PHP_EOL;
+											// 	print 'posicao: ' . $posicao;
+											// 	print PHP_EOL;
+											// 	print 'patrimonio: ' . $patrimonio;
+											// 	print PHP_EOL;
+											// 	var_dump($time);
+											// 	print PHP_EOL;
+											// }
 										}
 									} else {
-										$conn->rollback();
 										echo '{"succeed": false, "errno": 26028, "title": "Times não encontados no Cartola FC!", "erro": "Os times da liga Cartolas sem Cartola não foram encontrados na API do Cartola FC, favor tentar novamente e caso o erro persista, favor procurar o administrador do sistema!"}';
 										break;
 									}
 								}
 							}
 
-							if(strlen($var_erros) > 0) {
-								$conn->rollback();
-								echo '{"succeed": false, "errno": 26029, "title": "Erro ao atualizar a pontuação dos times!", "erro": "Houve um erro ao atualizar a pontuação dos times de acordo com o publicado pela API do Cartola FC: '.$var_erros.'"}';
+							if(strlen($var_err_cart) > 0) {
+								echo '{"succeed": false, "errno": 26029, "title": "Erro ao atualizar a pontuação dos times!", "erro": "Houve um erro ao atualizar a pontuação dos times de acordo com o publicado pela API do Cartola FC: '.$var_err_cart.'"}';
 								break;
 							}
 						} else {
-							$conn->rollback();
 							echo '{"succeed": false, "errno": 26028, "title": "Nenhuma liga encontrada no Cartola FC!", "erro": "Não foi encontrada a liga Cartolas sem Cartola na API do Cartola FC, favor tentar novamente e caso o erro persista, favor procurar o administrador do sistema!"}';
 							break;
 						} 
 					} else {
-						$conn->rollback();
 						echo '{"succeed": false, "errno": 26030, "title": "Mercado não está aberto no Cartola FC!", "erro": "O Cartola FC não está com o mercado aberto, não é possível definir a pontuação da rodada. Status atual do mercado: <b>'.cartola_dict("mercado_status", $status_mercado->{"status_mercado"}).'</b>"}';
 						break;
 					}
 				}
 				// API do Cartola
-				
-				$timeszerado = 0;
+
 				$pontuacaonull = 1;
-				$qrytimeszerado = $conn->query("SELECT COUNT(id_times) AS count 
-										   		  FROM tbl_times_temporadas 
-										   		 WHERE id_anos = " . $_SESSION["temporada_atual"] . " 
-										   		   AND id_rodadas = " . $_SESSION["rodada"] . "
-										   		   AND (pontuacao = 0 OR posicao_liga IS NULL)") or trigger_error("26020 - " . $conn->error);
+				$var_nomes_times = "";
+
+				$qrytimeszerado = $conn->query("SELECT t.nome_time as time 
+										   		  FROM tbl_times_temporadas tt
+                                            INNER JOIN tbl_times t ON t.id = tt.id_times
+										   		 WHERE tt.id_anos = 1
+										   		   AND tt.id_rodadas = 2
+										   		   AND (tt.pontuacao = 0 OR tt.posicao_liga IS NULL)") or trigger_error("26020 - " . $conn->error);
 		        
-		        while($timezerado = $qrytimeszerado->fetch_object()) {
-					$timeszerado = $timezerado->count;
+		        if ($qrytimeszerado && $qrytimeszerado->num_rows > 0) {
+			        while($timesz = $qrytimeszerado->fetch_object()) {
+			        	$var_nomes_times .= $timesz->time . ", ";
+					}
 				}
 
-				if($timeszerado > 2) {
-					echo '{"succeed": false, "errno": 26014, "title": "Muitos times com pontuação zerada!", "erro": "Não é possível abrir o mercado. Há mais de 2 times com a pontuação ZERADA ou com o ranking NULO para a rodada. Favor revisar e tentar novamente!"}';
-					$conn->rollback();
-					exit();
+				if(strlen($var_nomes_times) > 0) {
+					$var_nomes_times = substr($var_nomes_times, 0, -2);
+					echo '{"succeed": false, "errno": 26014, "title": "Muitos times com pontuação zerada!", "erro": "Os times <b>'.$var_nomes_times.'</b> estão com a pontuação ZERADA ou com o ranking NULO para a rodada. Favor revisar e tentar novamente, por favor!"}';
+					break;
 				}
+
+				$conn->autocommit(FALSE);
 
 				$qrypontuacaonula = $conn->query("SELECT COUNT(id_times) AS count 
 										   		    FROM tbl_times_temporadas 

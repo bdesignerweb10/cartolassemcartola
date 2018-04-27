@@ -55,7 +55,11 @@ try {
 	        	$variacao = "-";
 	        }
 
-			$list_times .= '{"posicao": ' . $posicao . ', "escudo": "' . $destaques->escudo . '", "time": "' . $destaques->time . '", "pontuacao": ' . $destaques->total_pontos . ', "pont_ult_rodada": ' . $pontuacao . ', "variacao": "' . $variacao . '"}, ';
+            $isMyTeam = "false";
+            if($_SESSION["usu_time"] == $destaques->id_time)
+            	$isMyTeam = "true";
+
+			$list_times .= '{"posicao": ' . $posicao . ', "escudo": "' . $destaques->escudo . '", "time": "' . $destaques->time . '", "pontuacao": ' . $destaques->total_pontos . ', "pont_ult_rodada": ' . $pontuacao . ', "variacao": "' . $variacao . '", "isMyTeam": ' . $isMyTeam . '}, ';
 		}
 
 		$list_times = substr($list_times, 0, -2);

@@ -7,7 +7,7 @@ require_once('header.php');
 			<div class="col-sm-12"></div>
 		</div>
 		<div class="row">	
-			<div class="col-sm-8">
+			<div class="col-sm-12 col-md-12 col-lg-8 col-xl-8">
 				<h1 class="headline">Tabela</h1>
 				<div class="table-responsive table-brasileiro">
 					<table class="table table-hover table-bordered tbl-brasileiro">
@@ -52,7 +52,7 @@ require_once('header.php');
 				</footer>
 			</div>
 
-			<div id="confrontos-br" class="col-sm-4">
+			<div id="confrontos-br" class="col-sm-12 col-md-12 col-lg-4 col-xl-4">
 				<h1 class="headline">Jogos</h1>
 				<ul class="paginacao est-rodada">			        
 			        <li class="page-item">

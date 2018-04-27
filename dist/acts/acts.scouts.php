@@ -34,11 +34,6 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
         case 'pontuacao':
 			$status_mercado = api("mercado/status");
 
-			// // #########################################
-			// // MOCK
-			// $status_mercado->{"status_mercado"} = 2;
-			// // #########################################
-
 			if ($status_mercado->{"status_mercado"} == 2) {
 				$time = str_replace('"', '', $_POST["nome_time"]);
 
@@ -59,77 +54,13 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 			                if(file_exists("../img/escudos/$t->escudo"))
 			                	$escudo = $t->escudo;
 
-			                $patrimonio = number_format((float)"0", 2, ',', '.');
+			                $patrimonio = number_format(0, 2, ',', '.');
 			                if(isset($t->patrimonio) && !empty($t->patrimonio) && $t->patrimonio != null) {
-			                	$patrimonio = number_format((float)$t->patrimonio, 2, ',', '.');
+			                	$patrimonio = number_format($t->patrimonio, 2, ',', '.');
 			                }
 
 							$atletas = api("time/slug/". $t->slug);
 							$pontuados = api("atletas/pontuados");
-							// // #########################################
-							// // MOCK
-							// $atletas = json_decode('{
-							// 	"atletas": [
-							// 		{"clube_id": 2, "apelido": "Muralha", "pontuacao": 5, "posicao_id": 1},
-							// 		{"clube_id": 2, "apelido": "Balbuceta", "pontuacao": 7.4, "posicao_id": 2},
-							// 		{"clube_id": 2, "apelido": "Rodrigo Caio", "pontuacao": 4.7, "posicao_id": 2},
-							// 		{"clube_id": 2, "apelido": "Zeca", "pontuacao": 3.2, "posicao_id": 3},
-							// 		{"clube_id": 2, "apelido": "Homem Arana", "pontuacao": 2.9, "posicao_id": 3},
-							// 		{"clube_id": 2, "apelido": "Diego Souza", "pontuacao": 0.45, "posicao_id": 4},
-							// 		{"clube_id": 2, "apelido": "Petros", "pontuacao": 1, "posicao_id": 4},
-							// 		{"clube_id": 2, "apelido": "Camacho", "pontuacao": 8, "posicao_id": 4},
-							// 		{"clube_id": 2, "apelido": "Lulinhha", "pontuacao": 16, "posicao_id": 5},
-							// 		{"clube_id": 2, "apelido": "Acosta", "pontuacao": 0.86, "posicao_id": 5},
-							// 		{"clube_id": 2, "apelido": "Kazim", "pontuacao": 16, "posicao_id": 5},
-							// 		{"clube_id": 2, "apelido": "Dorival Jr.", "pontuacao": 5.67, "posicao_id": 6}
-							// 	],
-							// 	"clubes": {
-							// 		"2": {
-							// 			"id":2,
-							// 			"nome":"Clube",
-							// 			"abreviacao":"CLU",
-							// 			"posicao":6,
-							// 			"escudos":{
-							// 				"60x60":"img/escudos/no-escudo.png",
-							// 				"45x45":"img/escudos/no-escudo.png",
-							// 				"30x30":"img/escudos/no-escudo.png"
-							// 			}
-							// 		}
-							// 	},
-							// 	"posicoes":{
-							// 		"1":{
-							// 			"id":1,
-							// 			"nome":"Goleiro",
-							// 			"abreviacao":"gol"
-							// 		},
-							// 		"2":{
-							// 			"id":2,
-							// 			"nome":"Lateral",
-							// 			"abreviacao":"lat"
-							// 		},
-							// 		"3":{
-							// 			"id":3,
-							// 			"nome":"Zagueiro",
-							// 			"abreviacao":"zag"
-							// 		},
-							// 		"4":{
-							// 			"id":4,
-							// 			"nome":"Meia",
-							// 			"abreviacao":"mei"
-							// 		},
-							// 		"5":{
-							// 			"id":5,
-							// 			"nome":"Atacante",
-							// 			"abreviacao":"ata"
-							// 		},
-							// 		"6":{
-							// 			"id":6,
-							// 			"nome":"Técnico",
-							// 			"abreviacao":"tec"
-							// 		}
-							// 	}
-							// }');
-							// // #########################################
 
 					 		if(!isset($atletas->{"mensagem"}) || empty($atletas->{"mensagem"})) {
 					 			if(count($atletas->{"atletas"}) > 0) {

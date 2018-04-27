@@ -34,6 +34,12 @@ $(function() {
 
 	// BEGIN LOGIN (login)
 
+	if(window.location.pathname.indexOf('login') === -1) {
+		$('#info').modal({
+			keyboard: false
+		});
+	}
+
 	$("#form-login").submit(function(e) {
 		e.preventDefault();
 
@@ -319,7 +325,7 @@ $(function() {
 	   window.location.pathname.indexOf('dados_clube') === -1 &&
 	   window.location.pathname.indexOf('meus_dados') === -1 &&
 	   window.location.pathname.indexOf('provisoria') === -1 &&
-	   window.location.pathname.indexOf('tempo_real') === -1) {
+	   window.location.pathname.indexOf('temporeal') === -1) {
 				
 		// DESTAQUES RODADA
 		$('#destaques-rodada').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
@@ -337,7 +343,10 @@ $(function() {
 						if(retorno.list.length > 0) {
 							var c_times = 1;
 							$.each(retorno.list, function(i, item) {
-								$('#destaques-rodada .card-block tbody').append('<tr class="bg-success"><th scope="row" class="table-title">' + c_times + 'º</th><td><img src="img/escudos/' + item.escudo + '" class="img-fluid"></td><td>' + item.time + '</td><td>' + item.pontuacao.toFixed(2) + '</td></tr>');
+								var myTeamClass = "";
+								if(item.isMyTeam)
+									myTeamClass = "myteam";
+								$('#destaques-rodada .card-block tbody').append('<tr class="bg-success '+myTeamClass+'"><th scope="row" class="table-title">' + c_times + 'º</th><td><img src="img/escudos/' + item.escudo + '" class="img-fluid"></td><td>' + item.time + '</td><td>' + item.pontuacao.toFixed(2) + '</td></tr>');
 								c_times++;
 							});
 						}
@@ -516,7 +525,11 @@ $(function() {
 								var bg = "bg-table";
 								if(i < 6) 
 									bg = "bg-success";
-								$('#desempenho-geral .card-block tbody').append('<tr class="' + bg + '"><th scope="row" class="table-title">' + item.posicao + 'º</th><td><img src="img/escudos/' + item.escudo + '" class="img-fluid"></td><td>' + item.time + '</td><td>' + item.pontuacao.toFixed(2) + '</td><td>' + item.variacao + '</td></tr>');
+
+								var myTeamClass = "";
+								if(item.isMyTeam)
+									myTeamClass = "myteam";
+								$('#desempenho-geral .card-block tbody').append('<tr class="' + bg + ' ' + myTeamClass + '"><th scope="row" class="table-title">' + item.posicao + 'º</th><td><img src="img/escudos/' + item.escudo + '" class="img-fluid"></td><td>' + item.time + '</td><td>' + item.pontuacao.toFixed(2) + '</td><td>' + item.variacao + '</td></tr>');
 							});
 						}
 						else {
@@ -617,24 +630,18 @@ $(function() {
 							defaultView: 'month',
 							defaultDate: formatTodayEUDate(),
 							eventRender: function(eventObj, $el) {
-								var duracao = '';
-								if(eventObj.end != null) {
-									duracao = 'Duração: ' + eventObj.start.format('DD/MM/YYYY') + ' até ' + eventObj.end.format('DD/MM/YYYY');
-								} else {
-									duracao = 'Data: ' + eventObj.start.format('DD/MM/YYYY HH:mm') + 'hrs';
-								}
 								$el.popover({
-									title: eventObj.title,
 									content: function () {
-						                return duracao + ' - ' + eventObj.description;
+						                return eventObj.description
 						            },
+            						html: true,
 									trigger: 'hover',
 									placement: 'top',
 									container: 'body'
 								});
 							},
 							events: retorno.eventos,
- 							timeFormat: 'H(:mm)'
+ 							timeFormat: 'H:mm'
 						});
 
 						$('#eventos .card-block').fadeIn("slow", function() {
@@ -687,13 +694,17 @@ $(function() {
 							var rodada = "";
 							var c_times = 0;
 							$.each(retorno.list, function(i, item) {
+								var myTeamClass = "";
+								if(item.isMyTeam)
+									myTeamClass = "myteam";
+
 								if(rodada != item.rodada) {
-									$('#destaques').append('<div class="col-sm-4"><div class="card"><div class="card-header"><header><h2 class="card-title card-destaque">Destaques da ' + item.rodada + 'º rodada</h2></header></div><div class="card-block"><table class="table table-responsive liga-csc"><thead><tr class="bg-warning"><th class="table-title">#</th><th class="table-title"></th><th class="table-title">Time</th><th class="table-title">Pontos</th></tr></thead><tbody id="body_' + item.rodada + '">');
+									$('#destaques').append('<div class="col-sm-6 col-md-6 col-lg-4 col-xl-4"><div class="card"><div class="card-header"><header><h2 class="card-title card-destaque">Destaques da ' + item.rodada + 'º rodada</h2></header></div><div class="card-block"><table class="table table-responsive liga-csc"><thead><tr class="bg-warning"><th class="table-title">#</th><th class="table-title"></th><th class="table-title">Time</th><th class="table-title">Pontos</th></tr></thead><tbody id="body_' + item.rodada + '">');
 									rodada = item.rodada;
 									c_times = 0;
 								}
 								if(c_times < 4){
-									$('#body_' + item.rodada).append('<tr class="bg-success"><th scope="row" class="table-title">' + (c_times+1) + 'º</th><td><img src="img/escudos/' + item.escudo + '" class="img-fluid"></td><td>' + item.time + '</td><td>' + parseFloat(Math.round(item.pontuacao * 100) / 100).toFixed(2) + '</td></tr>');
+									$('#body_' + item.rodada).append('<tr class="bg-success '+myTeamClass+'"><th scope="row" class="table-title">' + (c_times+1) + 'º</th><td><img src="img/escudos/' + item.escudo + '" class="img-fluid"></td><td>' + item.time + '</td><td>' + parseFloat(Math.round(item.pontuacao * 100) / 100).toFixed(2) + '</td></tr>');
 								}
 								c_times++;
 							});
@@ -753,7 +764,11 @@ $(function() {
 									bg = "bg-success";
 								if(i > 6 && i >= rebaixamento) 
 									bg = "bg-danger";
-								$('#desempenho-liga .card-block tbody').append('<tr class="' + bg + '"><th scope="row" class="table-title">' + item.posicao + 'º</th><td><img src="img/escudos/' + item.escudo + '" class="img-fluid"></td><td>' + item.time + '</td><td>' + item.pontuacao.toFixed(2) + '</td><td>' + item.pont_ult_rodada.toFixed(2) + '</td><td>' + item.variacao + '</td></tr>');
+
+								var myTeamClass = "";
+								if(item.isMyTeam)
+									myTeamClass = "myteam";
+								$('#desempenho-liga .card-block tbody').append('<tr class="' + bg + ' '+myTeamClass+'"><th scope="row" class="table-title">' + item.posicao + 'º</th><td><img src="img/escudos/' + item.escudo + '" class="img-fluid"></td><td>' + item.time + '</td><td>' + item.pontuacao.toFixed(2) + '</td><td>' + item.pont_ult_rodada.toFixed(2) + '</td><td>' + item.variacao + '</td></tr>');
 							});
 
 							$('.liga-csc').tablesorter({
@@ -827,7 +842,7 @@ $(function() {
 									fase = item.fase;
 								}
 
-								$('#body_' + item.cor_fase).append('<div class="col-sm-4 mata-and"><a href="#" class="open-confrontos" data-id="' + item.id + '"><img src="img/' + item.imagem + '" class="rounded img-fluid" alt="Mata Mata ' + item.fase + '"><h2 class="headline">' + item.nome + '</h2></a></div>');
+								$('#body_' + item.cor_fase).append('<div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 mata-and"><a href="#" class="open-confrontos" data-id="' + item.id + '"><img src="img/' + item.imagem + '" class="rounded img-fluid" alt="Mata Mata ' + item.fase + '"><h2 class="headline">' + item.nome + '</h2></a></div>');
 							});
 						}
 						else {
@@ -1577,7 +1592,7 @@ $(function() {
 										} else {
 											status_liga = '<h2 class="posicao">' + temp.posicao + 'º</h2>';
 										}
-										$('.geral-campeonatos').append('<div class="col-sm-3">' + status_liga + '<h3 class="nome-torneio">Cartolas sem cartola</h3><p class="ano">' + temp.temporada + '</p></div>');
+										$('.geral-campeonatos').append('<div class="col-sm-4 col-md-4 col-lg-3 col-xl-3">' + status_liga + '<h3 class="nome-torneio">Cartolas sem cartola</h3><p class="ano">' + temp.temporada + '</p></div>');
 									}
 
 									if(temp.tipo == "mata_mata") {
@@ -1591,7 +1606,7 @@ $(function() {
 										} else {
 											status_mm = '<h2 class="posicao">X</h2>';
 										}
-										$('.geral-campeonatos').append('<div class="col-sm-3">' + status_mm + '<h3 class="nome-torneio">' + temp.mata_mata + '</h3><p class="ano">' + temp.temporada + '</p></div>');
+										$('.geral-campeonatos').append('<div class="col-sm-4 col-md-4 col-lg-3 col-xl-3">' + status_mm + '<h3 class="nome-torneio">' + temp.mata_mata + '</h3><p class="ano">' + temp.temporada + '</p></div>');
 									}
 								});
 							}
@@ -1659,7 +1674,7 @@ $(function() {
 										} else {
 											status_liga = '<h2 class="posicao">' + temp.posicao + 'º</h2>';
 										}
-										$('#container-' + idano).append('<div class="col-sm-3">' + status_liga + '<h3 class="nome-torneio">Cartolas sem cartola</h3><p class="ano">' + temp.temporada + '</p></div>');
+										$('#container-' + idano).append('<div class="col-sm-4 col-md-4 col-lg-3 col-xl-3">' + status_liga + '<h3 class="nome-torneio">Cartolas sem cartola</h3><p class="ano">' + temp.temporada + '</p></div>');
 									}
 
 									if(temp.tipo == "mata_mata") {
@@ -1673,14 +1688,14 @@ $(function() {
 										} else {
 											status_mm = '<h2 class="posicao">X</h2>';
 										}
-										$('#container-' + idano).append('<div class="col-sm-3">' + status_mm + '<h3 class="nome-torneio">' + temp.mata_mata + '</h3><p class="ano">' + temp.temporada + '</p></div>');
+										$('#container-' + idano).append('<div class="col-sm-4 col-md-4 col-lg-3 col-xl-3">' + status_mm + '<h3 class="nome-torneio">' + temp.mata_mata + '</h3><p class="ano">' + temp.temporada + '</p></div>');
 									}
 								});
 							}	
 
-							$('#container-' + idano).append('<div class="col-sm-3"><h2 class="pontuacao_temp">' + retorno.max_pontos + '</h2><h3 class="nome-torneio">Maior pontuação</h3><p class="ano">' + retorno.temporada + '</p></div>');
-							$('#container-' + idano).append('<div class="col-sm-3"><h2 class="pontuacao_temp">' + retorno.min_pontos + '</h2><h3 class="nome-torneio">Menor pontuação</h3><p class="ano">' + retorno.temporada + '</p></div>');
-							$('#container-' + idano).append('<div class="col-sm-3"><h2 class="pontuacao_temp">' + retorno.media + '</h2><h3 class="nome-torneio">Média de pontos</h3><p class="ano">' + retorno.temporada + '</p></div>');
+							$('#container-' + idano).append('<div class="col-sm-4 col-md-4 col-lg-3 col-xl-3"><h2 class="pontuacao_temp">' + retorno.max_pontos + '</h2><h3 class="nome-torneio">Maior pontuação</h3><p class="ano">' + retorno.temporada + '</p></div>');
+							$('#container-' + idano).append('<div class="col-sm-4 col-md-4 col-lg-3 col-xl-3"><h2 class="pontuacao_temp">' + retorno.min_pontos + '</h2><h3 class="nome-torneio">Menor pontuação</h3><p class="ano">' + retorno.temporada + '</p></div>');
+							$('#container-' + idano).append('<div class="col-sm-4 col-md-4 col-lg-3 col-xl-3"><h2 class="pontuacao_temp">' + retorno.media + '</h2><h3 class="nome-torneio">Média de pontos</h3><p class="ano">' + retorno.temporada + '</p></div>');
 
 							$('.painel-' + idano).fadeIn("slow", function() {
 								$('#loading').fadeOut();
@@ -2184,7 +2199,12 @@ $(function() {
 						        else {
 						        	variacao = "-";
 						        }
-								$('#tempo-real .card-block tbody').append('<tr class="' + bg + '"><th scope="row" class="table-title">' + posatual + 'º</th><td><img src="img/escudos/' + item.escudo + '" class="img-fluid"></td><td><a href="#" class="scout-time" data-id="' + item.id + '">' + item.time + '</a></td><td>' + item.pontuacao.toFixed(2) + '</td><td>' + item.parcial.toFixed(2) + '</td><td>' + item.parcial_total.toFixed(2) + '</td><td>' + variacao + '</td></tr>');
+
+								var myTeamClass = "";
+								if(item.isMyTeam)
+									myTeamClass = "myteam";
+								
+								$('#tempo-real .card-block tbody').append('<tr class="' + bg + ' '+myTeamClass+'"><th scope="row" class="table-title">' + posatual + 'º</th><td><img src="img/escudos/' + item.escudo + '" class="img-fluid"></td><td><a href="#" class="scout-time" data-id="' + item.id + '">' + item.time + '</a></td><td>' + item.pontuacao.toFixed(2) + '</td><td>' + item.parcial.toFixed(2) + '</td><td>' + item.parcial_total.toFixed(2) + '</td><td>' + variacao + '</td></tr>');
 							});
 
 							$('.liga-csc').tablesorter({
@@ -2239,6 +2259,12 @@ $(function() {
 
 			var id = $(this).data("id");
 
+			$('.table-lista-scout tbody').html('');
+			$('.comissao-tecnica').html('');
+			$('.idx1_2').html('');
+			$('.idx3').html('');
+			$('.idx4').html('');
+
 			$.ajax({
 				type: "POST",
 				url: "acts/acts.tempo_real.php?act=scouts&idtime=" + id,
@@ -2250,31 +2276,92 @@ $(function() {
 						var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
 						if(retorno.succeed) {
-							$('#headline-scouts').html('Pontuação de ' + retorno.time);
-
 							if(retorno.atletas.length > 0) {
-								// $('.info-clube .nome').html(retorno.time);
-								// $('.img-scouts').prop("src", "img/escudos/clube/" + retorno.escudo);
-								// $('.dados-pont').html(retorno.pont_total);
-								// $('.dados-patri').html("C$ " + retorno.patrimonio);
-
 								retorno.atletas.sort(function(a,b) {
 								    return a.index - b.index;
 								});
 
-								console.log(retorno.atletas);
+								$('.table-lista-scout tbody').append('<tr><td class="nome-clube">#</td><th class="nome-clube">'+retorno.time+'</th><td class="pts-tot">'+retorno.pont_total+'</td></tr>');
 								
+								var countidx12 = 0,
+									countidx3 = 0,
+									countidx4 = 0;
+
 								$.each(retorno.atletas, function(a, atleta) {
-									var capitao = "";
+									if(atleta.index == 1 || atleta.index == 2)
+										countidx12++;
+
+									if(atleta.index == 3)
+										countidx3++;
+
+									if(atleta.index == 4)
+										countidx4++;
+								});
+
+								var idx12class = "col-sm-2",
+								    idx3class = "col-sm-3", 
+								    idx4class = "col-sm-3";
+
+							    if(countidx12 == 3)
+							    	idx12class = "col-sm-3";
+							    if(countidx12 == 5)
+							    	idx12class = "col-sm-2";
+
+							    if(countidx3 == 2) 
+							    	idx3class = "col-sm-6";
+							    if(countidx3 == 3) 
+							    	idx3class = "col-sm-3";
+							    if(countidx3 == 4) 
+							    	idx3class = "col-sm-2";
+							    if(countidx3 == 5) 
+							    	idx3class = "col-sm-2";
+
+							    if(countidx4 == 1) 
+							    	idx4class = "col-sm-12";
+							    if(countidx4 == 2) 
+							    	idx4class = "col-sm-4";
+							    if(countidx4 == 3) 
+							    	idx4class = "col-sm-3";
+
+							    var hasLateral = false;
+
+								$.each(retorno.atletas, function(a, atleta) {
+									var capitao = "", capitaowrp = "";
 									if(atleta.capitao) {
 										capitao = '<img class="capitao" src="img/capitao.png" />';
+										capitaowrp = '<div class="capitao-wrapper"><img class="capitao" src="img/capitao.png" /></div>';
+									}
+									
+									var escudowrp = '<div class="brasao-wrapper"><img src="'+atleta.escudo+'" /></div>';
+
+									if(atleta.index == 0) {
+										$('.comissao-tecnica').append('<div class="clearfix col-sm-2 goleiro">'+capitaowrp+escudowrp+'<div class="cartola-campinho-atleta-foto" style="background: #fff url('+atleta.foto+') no-repeat center center; background-size: contain;"></div></div>');
+									}
+									if(atleta.index == 1) {
+										$('.idx1_2').append('<div class="clearfix '+idx12class+' lat'+a+'">'+capitaowrp+escudowrp+'<div class="cartola-campinho-atleta-foto" style="background: #fff url('+atleta.foto+') no-repeat center center; background-size: contain;"></div></div>');
+										hasLateral = true;
+									}
+									if(atleta.index == 2) {
+										var idx = 0;
+										if(hasLateral)
+											idx = a;
+										$('.idx1_2').append('<div class="clearfix '+idx12class+' zag'+idx+'">'+capitaowrp+escudowrp+'<div class="cartola-campinho-atleta-foto" style="background: #fff url('+atleta.foto+') no-repeat center center; background-size: contain;"></div></div>');
+									}
+									if(atleta.index == 3) {
+										$('.idx3').append('<div class="clearfix '+idx3class+'">'+capitaowrp+escudowrp+'<div class="cartola-campinho-atleta-foto" style="background: #fff url('+atleta.foto+') no-repeat center center; background-size: contain;"></div></div>');
+									}
+									if(atleta.index == 4) {
+										$('.idx4').append('<div class="clearfix '+idx4class+'">'+capitaowrp+escudowrp+'<div class="cartola-campinho-atleta-foto" style="background: #fff url('+atleta.foto+') no-repeat center center; background-size: contain;"></div></div>');
+									}
+									if(atleta.index == 5) {
+										$('.comissao-tecnica').append('<div class="col-sm-2 tecnico">'+escudowrp+'<div class="cartola-campinho-atleta-foto" style="background: #fff url('+atleta.foto+') no-repeat center center; background-size: contain;"></div></div>');
 									}
 
-									//$('table tbody').append('<tr><td class="logo-time"><img src="'+atleta.escudo+'"></td><td>'+atleta.posicao+'</td><td>'+capitao+atleta.nome+'</td><td class="'+atleta.css_pont+'">'+atleta.pontuacao+'</td></tr>');
+									$('.table-lista-scout tbody').append('<tr><td>'+atleta.posicao+'</td><th>'+capitao+atleta.nome+'</th><td class="'+atleta.css_pont+'">'+atleta.pontuacao+'</td></tr>');
 								});
 							}
 							else {
-								//$('table tbody').append('<tr class="bg-table"><td colspan="4" class="center infor"><i class="fa fa-thumbs-down fa-2x"></i><br /><br />Não há dados a serem exibidos aqui.</td></tr>');
+								$('.table-lista-scout tbody').append('<tr class="bg-table"><td colspan="4" class="center infor"><i class="fa fa-thumbs-down fa-2x"></i><br /><br />Não há dados a serem exibidos aqui.</td></tr>');
 							}
 
 							$('#maintable').fadeOut("fast", function() {
@@ -2288,7 +2375,11 @@ $(function() {
 
 							$('#maintable').show();
 							$('#mainscout').hide();
-							$('#headline-scouts').html('');
+							$('.table-lista-scout tbody').html('');
+							$('.comissao-tecnica').html('');
+							$('.idx1_2').html('');
+							$('.idx3').html('');
+							$('.idx4').html('');
 						}
 				    }
 				    catch (e) {
@@ -2299,7 +2390,11 @@ $(function() {
 						$('#loading-modal').modal('hide');
 						$('#maintable').show();
 						$('#mainscout').hide();
-						$('#headline-scouts').html('');
+						$('.table-lista-scout tbody').html('');
+						$('.comissao-tecnica').html('');
+						$('.idx1_2').html('');
+						$('.idx3').html('');
+						$('.idx4').html('');
 				    };
 				}
 			});
@@ -2314,7 +2409,11 @@ $(function() {
 				$('#maintable').fadeIn("slow");
 			});
 
-			$('#headline-scouts').html('');
+			$('.table-lista-scout tbody').html('');
+			$('.comissao-tecnica').html('');
+			$('.idx1_2').html('');
+			$('.idx3').html('');
+			$('.idx4').html('');
 	    });
 
 	    self.setInterval(function () {

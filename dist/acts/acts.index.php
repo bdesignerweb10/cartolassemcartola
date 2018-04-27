@@ -21,7 +21,11 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 		                if(file_exists("../img/escudos/$destaques->escudo"))
 		                	$escudo = $destaques->escudo;
 
-						$list_times .= '{"posicao": ' . $destaques->posicao . ', "escudo": "' . $escudo . '", "time": "' . $destaques->time . '", "pontuacao": ' . $destaques->pontuacao . '}, ';
+		                $isMyTeam = "false";
+		                if($_SESSION["usu_time"] == $destaques->id_time)
+		                	$isMyTeam = "true";
+
+						$list_times .= '{"posicao": ' . $destaques->posicao . ', "escudo": "' . $escudo . '", "time": "' . $destaques->time . '", "pontuacao": ' . $destaques->pontuacao . ', "isMyTeam": ' . $isMyTeam . '}, ';
 		        	}
 
 					$list_times = substr($list_times, 0, -2);
@@ -92,7 +96,11 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 		                if(file_exists("../img/escudos/$destaques->escudo"))
 		                	$escudo = $destaques->escudo;
 
-						$list_times .= '{"posicao": ' . $posicao . ', "escudo": "' . $escudo . '", "time": "' . $destaques->time . '", "pontuacao": ' . $destaques->total_pontos . ', "pont_ult_rodada": ' . $pontuacao . ', "variacao": "' . $variacao . '"}, ';
+		                $isMyTeam = "false";
+		                if($_SESSION["usu_time"] == $destaques->id_time)
+		                	$isMyTeam = "true";
+
+						$list_times .= '{"posicao": ' . $posicao . ', "escudo": "' . $escudo . '", "time": "' . $destaques->time . '", "pontuacao": ' . $destaques->total_pontos . ', "pont_ult_rodada": ' . $pontuacao . ', "variacao": "' . $variacao . '", "isMyTeam": ' . $isMyTeam . '}, ';
 		        	}
 
 					$list_times = substr($list_times, 0, -2);
@@ -196,9 +204,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
         	break;
 
         case 'eventos':
-
 	        try {
-
 	    		//$eventoslist = '{"id": 0, "title": "Campeonato Brasileiro '.$_SESSION["temp_atual"].'", "description": "Duração do maior e mais disputado campeonato do mundo! O nosso Brasileirão!", "start": "2018-04-14", "end": "2018-12-12" }, ';
 	    		$eventoslist = '';
 
@@ -230,15 +236,22 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 									$clube_m = $equipes->{$partida->{"time1"}};
 									$clube_v = $equipes->{$partida->{"time2"}};
 
-									$m_time = $clube_m->{"nome-comum"};
-									$v_time = $clube_v->{"nome-comum"};
+									$m_escudo = str_replace("40x40", "20x20", $clube_m->{"brasao"});
+									$m_time = $clube_m->{"sigla"};
+									$mc_time = $clube_m->{"nome-comum"};
+									
+									$v_escudo = str_replace("40x40", "20x20", $clube_v->{"brasao"});
+									$v_time = $clube_v->{"sigla"};
+									$vc_time = $clube_v->{"nome-comum"};
+									
 									$confronto = $m_time . " x " . $v_time;
+									$confrontoc = '<img src=\''.$m_escudo.'\' /> ' . $mc_time . " x " . $vc_time . ' <img src=\''.$v_escudo.'\' />';
 
 									$local = $partida->{"estadio"};
 									$cidade = $partida->{"local"};
 									$data = $partida->{"data"} . "T" . str_replace("h", ":", $partida->{"horario"}) . ":00";
 
-			    					$eventoslist .= '{"id": '.$id_jogo.', "title": "'.$confronto.'", "description": "Rodada #'.$partida->{"rodada"}.' - Estádio: '.$local.' - Cidade: '.$cidade.'", "start": "'.$data.'", "color": "#326410"}, ';
+			    					$eventoslist .= '{"id": '.$id_jogo.', "title": "'.$confronto.'", "description": "<b>Rodada #'.$partida->{"rodada"}.'</b><br/><br/>'.$confrontoc.'<br /><b>Estádio:</b> '.$local.'<br/><b>Cidade:</b> '.$cidade.'<br /><b>Data:</b> '.date('d/m/Y H:i', strtotime($data)).'hrs", "start": "'.$data.'", "color": "#326410"}, ';
 				    			}
 							}
 						}

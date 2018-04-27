@@ -8514,8 +8514,7 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   .liga-csc .table-title {
     text-align: center; }
 
-.table th,
-.table td {
+.table th, .table td {
   padding: 0.56rem; }
 
 .liga-csc tbody tr td, .liga-csc tbody th, .table-scouts tbody tr td, .table-scouts tbody th {
@@ -8529,7 +8528,8 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   background: url(../img/campinho.png);
   background-repeat: no-repeat;
   background-size: contain;
-  background-position: center; }
+  background-position: center;
+  display: none; }
 
 .cartola-campinho-atleta-foto {
   display: block;
@@ -8544,27 +8544,112 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   height: 70px;
   width: 70px; }
 
-.a1 {
-  background: url(../img/jogador.png) #fff;
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center; }
+.campinho .idx1_2, .campinho .idx3, .campinho .idx4, .campinho .comissao-tecnica {
+  position: relative; }
 
 .atleta {
-  padding-left: 145px;
+  padding-left: 120px;
   padding-top: 63px; }
 
 .comissao-tecnica {
   padding-left: 51px;
-  padding-top: 1px; }
+  padding-top: 35px; }
+
+.lat1 {
+  position: absolute;
+  top: 40px;
+  left: 110px; }
+  .lat1 .capitao-wrapper {
+    left: 7px; }
+  .lat1 .brasao-wrapper {
+    right: 8px; }
+
+.lat2 {
+  position: absolute;
+  top: 45px;
+  right: 110px; }
+  .lat2 .capitao-wrapper {
+    left: 7px; }
+  .lat2 .brasao-wrapper {
+    right: 8px; }
+
+.zag0 {
+  margin-left: 6px; }
+  .zag0 .brasao-wrapper {
+    right: 30px; }
+  .zag0 .capitao-wrapper {
+    left: 7px; }
+
+.zag3 {
+  margin-left: 80px; }
+  .zag3 .brasao-wrapper {
+    right: -10px; }
+  .zag3 .capitao-wrapper {
+    left: 7px; }
+
+.zag4 {
+  margin-left: 20px; }
+  .zag4 .brasao-wrapper {
+    right: -10px; }
+  .zag4 .capitao-wrapper {
+    left: 7px; }
+
+.idx4 .col-sm-3 {
+  padding-left: 28px;
+  padding-right: 15px; }
+
+.idx4 .col-sm-4 {
+  margin-left: 7%; }
+  .idx4 .col-sm-4 .brasao-wrapper {
+    right: 75px; }
+  .idx4 .col-sm-4 .capitao-wrapper {
+    left: 50px; }
+
+.idx4 .col-sm-12 .cartola-campinho-atleta-foto {
+  margin: auto; }
+
+.idx3 .col-sm-2 {
+  margin-right: 10px; }
+  .idx3 .col-sm-2 .brasao-wrapper {
+    right: -8px; }
+  .idx3 .col-sm-2 .capitao-wrapper {
+    left: 3px; }
+
+.idx3 .col-sm-3 {
+  padding-left: 28px;
+  padding-right: 15px; }
 
 .tecnico {
-  padding-top: 81px;
-  padding-left: 62px; }
+  position: relative;
+  top: 15px;
+  left: -45px; }
+  .tecnico .brasao-wrapper {
+    right: 3px; }
 
 .goleiro {
-  padding-left: 138px;
-  padding-top: 46px; }
+  position: relative;
+  top: 0px;
+  left: 206px; }
+  .goleiro .brasao-wrapper {
+    right: 3px; }
+  .goleiro .capitao-wrapper {
+    left: 7px; }
+
+.capitao-wrapper {
+  position: absolute;
+  top: -7px;
+  left: 16px; }
+
+.brasao-wrapper {
+  position: absolute;
+  bottom: -0px;
+  right: 15px;
+  width: 30px;
+  height: 30px; }
+
+.brasao-wrapper img {
+  max-width: 100%;
+  max-height: 100%; }
 
 .pts-real {
   margin-bottom: 25px; }
@@ -8778,6 +8863,7 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   left: 0;
   overflow: auto;
   padding: 7em;
+  padding-bottom: 1em;
   right: 0;
   top: 0; }
 
@@ -8789,6 +8875,7 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   left: 0;
   overflow: auto;
   padding: 7em;
+  padding-bottom: 1em;
   right: 0;
   top: 0;
   margin-botton: 15px; }
@@ -8801,6 +8888,7 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   left: 0;
   overflow: auto;
   padding: 6em;
+  padding-bottom: 0em;
   right: 0;
   top: 0; }
 
@@ -8812,6 +8900,7 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   left: 0;
   overflow: auto;
   padding: 6em;
+  padding-bottom: 0em;
   right: 0;
   top: 0;
   margin-bottom: 15px; }
@@ -8824,6 +8913,7 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   left: 0;
   overflow: auto;
   padding: 7em;
+  padding-bottom: 1em;
   right: 0;
   top: 0;
   margin-bottom: 15px; }
@@ -8836,6 +8926,7 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   left: 0;
   overflow: auto;
   padding: 6em;
+  padding-bottom: 0em;
   right: 0;
   top: 0;
   margin-bottom: 15px; }
@@ -8848,6 +8939,7 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   left: 0;
   overflow: auto;
   padding: 6em;
+  padding-bottom: 0em;
   right: 0;
   top: 0;
   margin-bottom: 15px; }
@@ -8860,6 +8952,7 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   left: 0;
   overflow: auto;
   padding: 6em;
+  padding-bottom: 0em;
   right: 0;
   top: 0;
   margin-bottom: 15px; }
@@ -8872,6 +8965,7 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   left: 0;
   overflow: auto;
   padding: 6em;
+  padding-bottom: 0em;
   right: 0;
   top: 0;
   margin-bottom: 15px; }
@@ -8884,6 +8978,7 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   left: 0;
   overflow: auto;
   padding: 6em;
+  padding-bottom: 0em;
   right: 0;
   top: 0;
   margin-bottom: 15px; }
@@ -8896,6 +8991,7 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   left: 0;
   overflow: auto;
   padding: 6em;
+  padding-bottom: 0em;
   right: 0;
   top: 0;
   margin-bottom: 15px; }
@@ -9015,14 +9111,15 @@ ul.escudos > li {
   background-color: #ed7d31; }
 
 .total-pontos {
+  background-color: #0f073f !important;
   font-weight: bold;
-  color: #0f073f; }
+  color: white; }
 
 .pontos-total {
   background-color: #0f073f; }
 
 .media-parcial {
-  background-color: #1e3e84;
+  background-color: #1e3e84 !important;
   color: white;
   font-weight: bold; }
 
@@ -9030,7 +9127,7 @@ ul.escudos > li {
   background-color: #1e3e84; }
 
 .media-camp {
-  background-color: #175b0c;
+  background-color: #175b0c !important;
   color: white;
   font-weight: bold; }
 
@@ -9092,8 +9189,6 @@ ul.escudos > li {
   -moz-box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.15);
   box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.15);
   margin-top: 2%;
-  margin-left: 10px;
-  margin-right: 10px;
   padding: 0px !important;
   background-color: white;
   padding-left: 30px !important;
@@ -9297,9 +9392,6 @@ table.liga-csc thead tr .headerSortDown {
   background-image: url(../img/desc.gif); }
 
 /* Modify */
-.modal-default .modal-header {
-  padding: 2rem; }
-
 .modal-default .modal-body .modal-title {
   font-weight: bold;
   font-size: 2rem;
@@ -9330,8 +9422,16 @@ table.liga-csc thead tr .headerSortDown {
 .modal-default .modal-header .close {
   color: #fff; }
 
+.modal-default .modal-header .modal-title {
+  font-size: 2.5rem !important; }
+
 .modal-default.modal-info .modal-body .modal-title {
-  color: #fc8f3e; }
+  color: #fc8f3e;
+  margin-bottom: 20px; }
+
+.modal-default.modal-danger .modal-body .modal-title {
+  color: #c0392b;
+  margin-bottom: 20px; }
 
 .modal-default .modal-body .modal-message {
   color: #9b9b9b; }
@@ -9347,3 +9447,64 @@ table.liga-csc thead tr .headerSortDown {
   border-color: #2d98da;
   color: #fff;
   cursor: pointer; }
+
+.myteam {
+  font-weight: bolder !important;
+  background-color: #cce5ff !important; }
+
+/* ajustes responsividade */
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+  .sidebar .sidebar-header {
+    position: fixed;
+    width: 180px; }
+  .sidebar {
+    overflow: auto; }
+  .sidebar .nav {
+    margin-top: 70px; } }
+
+@media (min-width: 576px) {
+  .container {
+    width: 100% !important;
+    max-width: 100%; }
+  .header .mark {
+    font-size: .8rem; }
+  .sidebar .sidebar-header {
+    position: fixed;
+    width: 180px; }
+  .sidebar {
+    overflow: auto; }
+  .sidebar .nav {
+    margin-top: 70px; } }
+
+@media (min-width: 768px) {
+  .container {
+    width: 100% !important;
+    max-width: 100%; }
+  .header .mark {
+    font-size: 1rem; } }
+
+@media (min-width: 992px) {
+  .container {
+    width: 80% !important;
+    margin-left: 195px; }
+  .header .mark {
+    font-size: 20px; }
+  .capa-inscricao, .capa-matamata, .capa-tempo-real {
+    padding-bottom: 7em; }
+  .capa-scouts, .capa-liga, .capa-brasileirao, .capa-eventos, .capa-regulamento, .capa-pontuacao, .capa-rodada, .capa-destaques {
+    padding-bottom: 6em; }
+  .campinho {
+    display: block; } }
+
+@media (min-width: 1200px) {
+  .container {
+    width: 85% !important;
+    margin-left: 195px; }
+  .header .mark {
+    font-size: 20px; }
+  .capa-inscricao, .capa-matamata, .capa-tempo-real {
+    padding-bottom: 7em; }
+  .capa-scouts, .capa-liga, .capa-brasileirao, .capa-eventos, .capa-regulamento, .capa-pontuacao, .capa-rodada, .capa-destaques {
+    padding-bottom: 6em; }
+  .campinho {
+    display: block; } }

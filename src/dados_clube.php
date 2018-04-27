@@ -16,7 +16,7 @@ if ($usu_qry && $usu_qry->num_rows > 0) {
 <main>
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-8">
+			<div class="col-sm-12 col-md-12 col-lg-8 col-xl-8">
 				<h3 class="headline-dados">Informações do Clube</h3>
 				<form id="form-dados-clube" data-toggle="validator">
 					<div class="row justify-content-md-center">
@@ -58,7 +58,7 @@ if ($usu_qry && $usu_qry->num_rows > 0) {
 					</div>
 				</form>
 			</div>
-			<div class="col-sm-4">
+			<div class="col-sm-12 col-md-12 col-lg-4 col-xl-4">
 				<div class="card card-inverse card-warning info">
 					<div class="card-block">
 				    	<blockquote class="card-blockquote">

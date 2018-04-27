@@ -67,7 +67,11 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 
 			 			$parcial_total = (float)$destaques->total_pontos + $parcial;
 
-						$list_times .= '{"id": ' . $destaques->id_time * $_SESSION["fake_id"] . ', "posicao": ' . $posicao . ', "escudo": "' . $destaques->escudo . '", "time": "' . $destaques->time . '", "pontuacao": ' . $destaques->total_pontos . ', "parcial": ' . number_format($parcial, 2, '.', ',') . ', "parcial_total": ' . number_format($parcial_total, 2, '.', ',') . '}, ';
+			            $isMyTeam = "false";
+			            if($_SESSION["usu_time"] == $destaques->id_time)
+			            	$isMyTeam = "true";
+
+						$list_times .= '{"id": ' . $destaques->id_time * $_SESSION["fake_id"] . ', "posicao": ' . $posicao . ', "escudo": "' . $destaques->escudo . '", "time": "' . $destaques->time . '", "pontuacao": ' . $destaques->total_pontos . ', "parcial": ' . number_format($parcial, 2, '.', ',') . ', "parcial_total": ' . number_format($parcial_total, 2, '.', ',') . ', "isMyTeam": ' . $isMyTeam . '}, ';
 					}
 
 					$list_times = substr($list_times, 0, -2);
@@ -79,6 +83,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 				exit();
 			}
 	        break;
+	        
 	    case 'scouts':
 			$status_mercado = api("mercado/status");
 
@@ -122,8 +127,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 
 									foreach($atletas->{"atletas"} as $j => $jogador) {
 										if ($jogador->{"apelido"} != "") {
-
-											$atleta_foto = $pontuados->{"atletas"}->{$jogador->{"atleta_id"}}->{"foto"};
+											$atleta_foto = $jogador->{"foto"};
 											$atleta_foto140x140 = "";
 											if (isset($atleta_foto) && !empty($atleta_foto)) {
 												$atleta_foto140x140 = str_replace("FORMATO", "140x140", $atleta_foto);
@@ -143,7 +147,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 												$athlete_clube_escudo = "img/escudos/no-escudo.png";
 											}
 
-											$athlete_posicao = $atletas->{"posicoes"}->{$jogador->{"posicao_id"}}->{"nome"};
+											$athlete_posicao = strtoupper(substr(formataNomeEscudo($atletas->{"posicoes"}->{$jogador->{"posicao_id"}}->{"nome"}),0,3));
 											$athlete_idx = idx_pos(substr($athlete_posicao,0,1));
 											$athlete_apelido = $jogador->{"apelido"};
 											$athlete_pontos = (float)$pontuados->{"atletas"}->{$jogador->{"atleta_id"}}->{"pontuacao"};
@@ -165,7 +169,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 												$estilo_pontos = "pont_neg";
 											}
 
-											$list_atletas .= '{"index" : "'.$athlete_idx.'", "escudo" : "'.$athlete_clube_escudo.'", "foto" : "'.$atleta_foto140x140.'", "posicao": "'. substr($athlete_posicao,0,1).'", "nome": "'.$athlete_apelido.'", "pontuacao": "'.number_format($athlete_pontos, 2, ',', '.').'", "capitao": '.$isCapitao.', "css_pont": "'.$estilo_pontos.'"}, ';
+											$list_atletas .= '{"index" : "'.$athlete_idx.'", "escudo" : "'.$athlete_clube_escudo.'", "foto" : "'.$atleta_foto140x140.'", "posicao": "'. $athlete_posicao .'", "nome": "'.$athlete_apelido.'", "pontuacao": "'.number_format($athlete_pontos, 2, ',', '.').'", "capitao": '.$isCapitao.', "css_pont": "'.$estilo_pontos.'"}, ';
 										} else {
 											echo '{"succeed": false, "errno": 15007, "title": "Houveu um erro ao consultar as parcias do clube!", "erro": "Atleta do clube não possui informações para serem exibidas!"}';
 											break;

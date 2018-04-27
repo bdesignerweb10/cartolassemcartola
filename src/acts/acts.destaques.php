@@ -21,7 +21,12 @@ try {
             $escudo = "no-escudo.png";
             if(file_exists("../img/escudos/$destaques->escudo"))
             	$escudo = $destaques->escudo;
-			$list_times .= '{"rodada": ' . $destaques->desc_rodada . ', "posicao": ' . $destaques->posicao . ', "escudo": "' . $escudo . '", "time": "' . $destaques->time . '", "pontuacao": ' . $destaques->pontuacao . '}, ';
+
+            $isMyTeam = "false";
+            if($_SESSION["usu_time"] == $destaques->id_time)
+            	$isMyTeam = "true";
+		                
+			$list_times .= '{"rodada": ' . $destaques->desc_rodada . ', "posicao": ' . $destaques->posicao . ', "escudo": "' . $escudo . '", "time": "' . $destaques->time . '", "pontuacao": ' . $destaques->pontuacao . ', "isMyTeam": ' . $isMyTeam . '}, ';
 		}
 
 		$list_times = substr($list_times, 0, -2);

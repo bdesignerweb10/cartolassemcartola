@@ -47,8 +47,8 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 			    												   AND id_times = $time") or trigger_error($conn->error);
 								if($totalpontosqry && $totalpontosqry->num_rows > 0) {
 									while($totalpontos = $totalpontosqry->fetch_object()) {
-										$media_parcial = number_format(floatval($totalpontos->total_pontos) / intval($rodada), 3);
-										$media_camp = number_format(floatval($totalpontos->total_pontos) / intval($icountrod), 3);
+										$media_parcial = number_format(floatval($totalpontos->total_pontos) / intval($rodada), 2);
+										$media_camp = number_format(floatval($totalpontos->total_pontos) / intval($icountrod), 2);
 										$linha .= '<td class=\'rodada total-pontos\'>' . $totalpontos->total_pontos . '</td>';
 										$linha .= '<td class=\'rodada media-parcial\'>' . $media_parcial . '</td>';
 										$linha .= '<td class=\'rodada media-camp\'>' . $media_camp . '</td>';
@@ -76,7 +76,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 					 		$tipo_pont = "mitou";
 					 	}
 
-						$linha .= '<td class=\'rodada ' . $tipo_pont . '\'>' . ($destaques->pontuacao == 0 ? "&nbsp;" : $destaques->pontuacao) . '</td>';
+						$linha .= '<td class=\'rodada ' . $tipo_pont . '\'>' . ($destaques->pontuacao == 0 ? "&nbsp;" : number_format($destaques->pontuacao, 2)) . '</td>';
 					}
 
     				$totalpontosqry = $conn->query("SELECT ROUND(SUM(pontuacao), 2) AS total_pontos
@@ -85,8 +85,8 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
     												   AND id_times = $time") or trigger_error($conn->error);
 					if($totalpontosqry && $totalpontosqry->num_rows > 0) {
 						while($totalpontos = $totalpontosqry->fetch_object()) {
-							$media_parcial = number_format(floatval($totalpontos->total_pontos) / intval($rodada), 3);
-							$media_camp = number_format(floatval($totalpontos->total_pontos) / intval($icountrod), 3);
+							$media_parcial = number_format(floatval($totalpontos->total_pontos) / intval($rodada), 2);
+							$media_camp = number_format(floatval($totalpontos->total_pontos) / intval($icountrod), 2);
 							$linha .= '<td class=\'rodada total-pontos\'>' . $totalpontos->total_pontos . '</td>';
 							$linha .= '<td class=\'rodada media-parcial\'>' . $media_parcial . '</td>';
 							$linha .= '<td class=\'rodada media-camp\'>' . $media_camp . '</td>';

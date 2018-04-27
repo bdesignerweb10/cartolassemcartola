@@ -62,14 +62,13 @@ require_once('header.php');
 					<a href="pontuacao.php" class="btn btn-primary"><i class="fa fa-bar-chart"></i>	Pontuação do Cartola</a>
 				</article>
 				<div class="row">
-					<div class="col-sm-10"></div>
-					<div class="col-sm-2" style="margin-bottom: 20px;">
+					<div class="col-sm-6 col-md-6 col-lg-3 col-xl-3 offset-sm-6 offset-md-6 offset-lg-9 offset-xl-9" style="margin-bottom: 20px;">
 						<div class="fb-share-button" data-href="http://www.cartolassemcartola.com.br/liga" data-layout="button_count" data-size="large" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.cartolassemcartola.com.br%2Fliga&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Compartilhar</a></div>
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-sm-12">
-						<div class="fb-comments" data-href="http://www.cartolassemcarola.com.br" data-width="1220" data-numposts="10"></div>
+					<div class="col-12">
+						<div class="fb-comments" data-href="http://www.cartolassemcarola.com.br" data-numposts="10"></div>
 					</div>
 				</div>				
 			</div>		

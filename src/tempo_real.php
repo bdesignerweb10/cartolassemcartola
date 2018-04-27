@@ -6,64 +6,61 @@ require_once('header.php');
 		<div class="row capa-tempo-real">
 			<div class="col-sm-12"></div>
 		</div>	
-			<div class="col-sm 10">
-				<article>
-					<div id="tempo-real" class="card">
-						<div class="card-header">
-							<header>
-								<h2 class="card-title">Pontuação da Liga em Tempo Real</h2>
-							</header>
-						</div><!-- card-header -->
-						<div class="card-block">
-							<div class="table-responsive">
-								<table class="table liga-csc">
-									<thead>
-								    	<tr class="bg-warning">
-								      		<th class="table-title">#</th>
-								      		<th class="table-title"></th>
-								      		<th class="table-title">Time</th>
-								      		<th class="table-title">Pontos no Campeonato</th>
-								      		<th class="table-title">Parcial Rodada</th>	
-								      		<th class="table-title">Total Parcial</th>	
-								      		<th class="table-title">Variação</th>					      
-								    	</tr>
-									</thead>
-									<tbody>
-									</tbody>
-								</table>
-							</div><!-- table-responsive -->	
-						</div><!-- card-block -->
-						<footer>
-							<div class="card-footer">
-								<ul class="nav">
-									<li class="nav-item">
-										<span class="badge premiacao"></span> 
-										Zona de Premiação
-									</li>
-									<li class="nav-item">
-										<span class="badge neutro"></span>
-										Zona Neutra
-									</li>
-									<li class="nav-item">
-										<span class="badge rebaixamento"></span>
-										Zona de Rebaixamento
-									</li>
-								</ul>
-							</div><!-- card-footer -->
-						</footer>				
-					</div><!-- card -->
-				</article>
-			</div>		
-		</div>
-
-	</main>
+		<div class="col-12">
+			<article>
+				<div id="tempo-real" class="card">
+					<div class="card-header">
+						<header>
+							<h2 class="card-title">Pontuação da Liga em Tempo Real</h2>
+						</header>
+					</div><!-- card-header -->
+					<div class="card-block">
+						<div class="table-responsive">
+							<table class="table liga-csc">
+								<thead>
+							    	<tr class="bg-warning">
+							      		<th class="table-title">#</th>
+							      		<th class="table-title"></th>
+							      		<th class="table-title">Time</th>
+							      		<th class="table-title">Pontos no Campeonato</th>
+							      		<th class="table-title">Parcial Rodada</th>	
+							      		<th class="table-title">Total Parcial</th>	
+							      		<th class="table-title">Variação</th>					      
+							    	</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div><!-- table-responsive -->	
+					</div><!-- card-block -->
+					<footer>
+						<div class="card-footer">
+							<ul class="nav">
+								<li class="nav-item">
+									<span class="badge premiacao"></span> 
+									Zona de Premiação
+								</li>
+								<li class="nav-item">
+									<span class="badge neutro"></span>
+									Zona Neutra
+								</li>
+								<li class="nav-item">
+									<span class="badge rebaixamento"></span>
+									Zona de Rebaixamento
+								</li>
+							</ul>
+						</div><!-- card-footer -->
+					</footer>				
+				</div><!-- card -->
+			</article>
+		</div>		
+	</div>
+</main>
 <main id="mainscout">
 	<div class="container">
-		<div class="row" style="margin-bottom: 10px;">
-			<div class="col-sm-12">
-				<h3 class="headline" id="headline-scouts"></h3>
-			</div><!-- col-sm-8-->
-		</div><!-- row -->	
+		<div class="row">
+			<h1 class="headline">Pontuação em tempo real</h1>	
+		</div>
 		<div class="row">
 			<div class="col-sm-12 col-md-6 col-lg-2 col-xl-2">
 				<button type="button" id="btn-voltar-listagem" class="btn btn-link btn-lg form-control btn-voltar">
@@ -71,43 +68,25 @@ require_once('header.php');
 				</button>	
 			</div><!-- col-sm-12-->
 		</div>
-		<div class="row">	
-			<div class="col-sm-6">
-				<img src="img/campinho.png" class="img-fluid">
+		<div class="row pts-real">		
+			<div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 campinho">				
+				<div class="row atleta idx4">
+				</div>
+				<div class="row atleta idx3">
+				</div>
+				<div class="row atleta idx1_2">
+				</div>
+				<div class="row comissao-tecnica">
+				</div>
 			</div>
-			<div class="col-sm-6">
-				<table class="table table-hover">				  
+			<div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+				<table class="table table-hover table-lista-scout">				  
 				  <tbody>
-				    <tr>
-				      <td>GOL</td>
-				      <th>Fernando Leal</th>
-				      <td class="pts-neg">-1.50</td>				      
-				    </tr>
-				    <tr>
-				      <td>LAT</td>
-				      <th>Liziero</th>
-				      <td class="pts-neg">-1.30</td>
-				    </tr>
-				    <tr>
-				      <td>LAT</td>
-				      <th>Thiago Carleto</th>
-				      <td class="pts-pos">13.20</td>
-				    </tr>
-				    <tr>
-				      <td>ZAG</td>
-				      <th>Rodrigo Caio</th>
-				      <td class="pts-pos">5.20</td>
-				    </tr>
-				    <tr>
-				      <td>ZAG</td>
-				      <th>Balbuena</th>
-				      <td class="pts-pos">18.20</td>
-				    </tr>
 				  </tbody>
 				</table>
 			</div>
-		</div><!-- row -->	
-	</div><!-- container -->	
+		</div><!-- row -->
+	</div><!-- container -->
 </main>
 <?php
 	require_once('footer.php');
