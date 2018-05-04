@@ -27,6 +27,9 @@ require_once('header.php');
 					    </tr>
 					  </thead>
 					  <tbody class="tbl-pos-brasileiro">
+					  	<tr>
+					  		<th class="media-parcial">1</th>
+					  	</tr>	
 					  </tbody>
 					</table>
 				</div><!-- table-responsive -->	
@@ -58,7 +61,7 @@ require_once('header.php');
 			        <li class="page-item">
 			            <a class="page-rodada pos-rodada voltar-rodada" href="#">&lt;</a>
 			        </li>			        
-			        <h3 class="n-rodada"></h3>
+			        <h3 class="n-rodada">1º Rodada</h3>
 			        <li class="page-item">
 			            <a class="page-rodada pos-rodada avancar-rodada" href="#">&gt;</a>
 			        </li>

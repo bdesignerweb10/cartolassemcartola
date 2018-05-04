@@ -8477,6 +8477,10 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
 .premain {
   display: none; }
 
+.local {
+  font-size: 1.1rem;
+  text-align: center; }
+
 .headline-custom {
   font-size: 2rem;
   font-weight: bold;
@@ -8561,3 +8565,112 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
 
 #form-palpites {
   display: none; }
+
+.form-group {
+  margin-bottom: 1rem;
+  border: solid 1px #ccc;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-top: -1px; }
+
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-item.show .nav-link {
+  color: #fff;
+  background-color: #293541;
+  border-color: #ddd #ddd #efefef; }
+
+.tbl-brasileiro {
+  text-align: center;
+  background-color: #fff; }
+
+.legenda {
+  list-style: none;
+  padding-top: 10px;
+  padding-left: 0; }
+
+.media-parcial {
+  background-color: #175b0c !important;
+  color: white;
+  font-weight: bold; }
+
+.paginacao {
+  display: flex;
+  padding-left: 0;
+  list-style: none; }
+
+.tbl-brasileiro .tbl-head-brasileiro th {
+  text-align: center;
+  color: #fff; }
+
+.est-rodada {
+  justify-content: space-between;
+  background-color: #fc8f3e; }
+
+.pos-rodada {
+  font-size: 1rem;
+  font-weight: bold; }
+
+.table th,
+.table td {
+  padding: 1.2rem;
+  vertical-align: top;
+  border-top: 1px solid #eceeef; }
+
+.page-rodada {
+  position: relative;
+  display: block;
+  padding: 1.3rem 0.75rem;
+  line-height: 1.25;
+  color: #fff;
+  background-color: #fc8f3e; }
+
+.page-rodada:hover {
+  color: #fff;
+  text-decoration: none; }
+
+.colocacao {
+  text-align: center; }
+
+.n-rodada {
+  padding-top: 7px;
+  font-size: 2.1rem;
+  font-weight: bold;
+  color: #fff; }
+
+.estrutura {
+  margin-bottom: 2px; }
+
+.info-data {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #999; }
+
+.confronto {
+  display: flex;
+  justify-content: space-around;
+  font-weight: bold;
+  color: #293541; }
+
+.titulo-clube {
+  display: flex; }
+
+.nome-abrev-right {
+  padding-right: 6px;
+  text-transform: uppercase; }
+
+.time {
+  width: 30px;
+  height: 30px; }
+
+.center-block {
+  display: block;
+  margin-left: auto;
+  margin-right: auto; }
+
+.info-local {
+  text-align: center;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #999; }

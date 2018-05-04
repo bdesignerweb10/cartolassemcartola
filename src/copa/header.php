@@ -54,7 +54,13 @@ require_once("conn.php");
 						<i class="fa fa-list-alt"></i>	
 						Palpites/Resultados
 						</a>
-					</li>			
+					</li>	
+					<li class="nav-item">					
+						<a href="tabela" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'tabela.php' ? ' nav-active' : ''; ?>">
+						<i class="fa fa-table"></i>	
+						Tabela Copa
+						</a>
+					</li>		
 					<li class="nav-item">					
 						<a href="regulamento" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'regulamento.php' ? ' nav-active' : ''; ?>">
 						<i class="fa fa-file-text-o"></i>	

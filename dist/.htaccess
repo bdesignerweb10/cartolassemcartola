@@ -34,4 +34,5 @@ RewriteRule ^admin/usuarios/?$ admin/usuarios.php
 RewriteRule ^copa/inscricao/?$ copa/inscricao.php
 RewriteRule ^copa/palpites/?$ copa/palpites.php
 RewriteRule ^copa/ranking/?$ copa/ranking.php
+RewriteRule ^copa/tabela/?$ copa/tabela.php
 RewriteRule ^copa/regulamento/?$ copa/regulamento.php
