@@ -158,21 +158,31 @@ gulp.task("cache:js-copa", function() {
 	del("./dist/copa/js/app.js")
 });
 
+gulp.task("cache:js-copa-admin", function() {
+	del("./dist/copa/admin/js/app.js")
+});
 
-
- gulp.task("css-copa", function() { 
+gulp.task("css-copa", function() { 
 	return gulp.src("./src/copa/css/*.css")
-				.pipe(htmlmin({collapseWhitespace: true}))
-				.on('error', notify.onError({title: "erro js", message: "<%= error.message %>"}))
-				.pipe(gulp.dest("./dist/copa/css/"))
-				.pipe(browserSync.stream());
- });
+			   .pipe(htmlmin({collapseWhitespace: true}))
+			   .on('error', notify.onError({title: "erro js", message: "<%= error.message %>"}))
+			   .pipe(gulp.dest("./dist/copa/css/"))
+			   .pipe(browserSync.stream());
+});
 
 gulp.task("js-copa", ['cache:js-copa'], function() {
 	return gulp.src("./src/copa/js/app.js")
 				.pipe(uglify())
 				.on('error', notify.onError({title: "erro js", message: "<%= error.message %>"}))
 				.pipe(gulp.dest("./dist/copa/js/"))
+				.pipe(browserSync.stream());
+});
+
+gulp.task("js-copa-admin", ['cache:js-copa-admin'], function() {
+	return gulp.src("./src/copa/admin/js/app.js")
+				.pipe(uglify())
+				.on('error', notify.onError({title: "erro js", message: "<%= error.message %>"}))
+				.pipe(gulp.dest("./dist/copa/admin/js/"))
 				.pipe(browserSync.stream());
 });
 
@@ -194,6 +204,14 @@ gulp.task("php-copa", function() {
 				.pipe(htmlmin({collapseWhitespace: true}))
 				.on('error', notify.onError({title: "erro js", message: "<%= error.message %>"}))
 				.pipe(gulp.dest("./dist/copa/"))
+				.pipe(browserSync.stream());
+});
+
+gulp.task("php-copa-admin", function() {
+	return gulp.src("./src/admin/copa/*.php")
+				.pipe(htmlmin({collapseWhitespace: true}))
+				.on('error', notify.onError({title: "erro js", message: "<%= error.message %>"}))
+				.pipe(gulp.dest("./dist/admin/copa/"))
 				.pipe(browserSync.stream());
 });
 
@@ -251,6 +269,35 @@ gulp.task("server", function() {
 	gulp.watch("./src/copa/scss/**/*.scss", ['sass-copa']);
 	gulp.watch("./src/copa/css/*.css", ['css-copa']);
 	gulp.watch("./src/copa/js/**/*.js", ['js-copa']);
+	gulp.watch("./src/copa/admin/js/**/*.js", ['js-copa-admin']);
 	gulp.watch("./src/copa/*.php", ['php-copa']);
+	gulp.watch("./src/copa/admin/*.php", ['php-copa-admin']);
 });
-gulp.task("default", ["sass", "css", "move-htaccess", "php", "php-acts" , "php-admin" , "php-admin-acts" ,"js", "admin-js", "concat-js", "move-img", "move-fonts", "move-admin", "move-acts", "move-libs", "move-js-calendar", "sass-copa", "move-js-copa" , "move-img-copa" ,"move-fonts-copa" ,"css-copa", "js-copa", "php-copa", "concat-js-copa" ,"server"]);
+
+gulp.task("default", ["sass", 
+					  "css", 
+					  "move-htaccess", 
+					  "php", 
+					  "php-acts", 
+					  "php-admin", 
+					  "php-admin-acts",
+					  "js",
+					  "admin-js",
+					  "concat-js",
+					  "move-img",
+					  "move-fonts",
+					  "move-admin",
+					  "move-acts",
+					  "move-libs", 
+					  "move-js-calendar",
+					  "sass-copa",
+					  "move-js-copa",
+					  "move-img-copa",
+					  "move-fonts-copa",
+					  "css-copa",
+					  "js-copa",
+					  "js-copa-admin",
+					  "php-copa",
+					  "php-copa-admin",
+					  "concat-js-copa",
+					  "server"]);

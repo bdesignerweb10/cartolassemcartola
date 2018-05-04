@@ -19,7 +19,16 @@ if (!isset($_SESSION["usu_id"]) || empty($_SESSION["usu_id"]) ||
 
 	<title>Admin | Cartolas sem cartola</title>
 
+	<link rel="apple-touch-icon" sizes="180x180" href="../img/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="../img/favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="../img/favicon-16x16.png">
+	<link rel="manifest" href="../img/site.webmanifest">
+	<link rel="mask-icon" href="../img/safari-pinned-tab.svg" color="#5bbad5">
+	<link rel="shortcut icon" href="../img/favicon.ico">
+	<meta name="msapplication-TileColor" content="#da532c">
+	<meta name="msapplication-config" content="../img/browserconfig.xml">
+	<meta name="theme-color" content="#ffffff">
+	
 	<link rel="stylesheet" type="text/css" href="../css/style.css">
 	<link rel="stylesheet" type="text/css" href="../css/bootstrap-toggle.min.css">
 	<link rel="stylesheet" type="text/css" href="../css/jquery.datetimepicker.css">
@@ -125,7 +134,7 @@ if (!isset($_SESSION["usu_id"]) || empty($_SESSION["usu_id"]) ||
 							</span>
 						</div>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-    						<div class="dropdown-item"><a href="logout">Sair</a></div>
+    						<div class="dropdown-item"><a id="logout" href="#">Sair</a></div>
     					</div>	
 					</div>
 				</div><!-- liga-logo -->

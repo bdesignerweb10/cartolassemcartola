@@ -126,19 +126,26 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 									echo '{"succeed": true}';
 
 									if(isset($_POST["lembrar"]) && !empty($_POST["lembrar"]) && $_POST["lembrar"] == "on") {
-										setcookie('usu_id', $_SESSION["usu_id"], (time() + (3 * 24 * 3600)));
-										setcookie('usu_time', $_SESSION["usu_time"], (time() + (3 * 24 * 3600)));
-										setcookie('usu_login', $_SESSION["usu_login"], (time() + (3 * 24 * 3600)));
-										setcookie('usu_nome', $_SESSION["usu_nome"], (time() + (3 * 24 * 3600)));
-										setcookie('usu_nivel', $_SESSION["usu_nivel"], (time() + (3 * 24 * 3600)));
-										setcookie('usu_escudo', $_SESSION["usu_escudo"], (time() + (3 * 24 * 3600)));
+										setcookie('usu_id', $_SESSION["usu_id"], (time() + (3 * 24 * 3600)), '/');
+										setcookie('usu_time', $_SESSION["usu_time"], (time() + (3 * 24 * 3600)), '/');
+										setcookie('usu_login', $_SESSION["usu_login"], (time() + (3 * 24 * 3600)), '/');
+										setcookie('usu_nome', $_SESSION["usu_nome"], (time() + (3 * 24 * 3600)), '/');
+										setcookie('usu_nivel', $_SESSION["usu_nivel"], (time() + (3 * 24 * 3600)), '/');
+										setcookie('usu_escudo', $_SESSION["usu_escudo"], (time() + (3 * 24 * 3600)), '/');
 									} else {
-										setcookie('usu_id');
-										setcookie('usu_time');
-										setcookie('usu_login');
-										setcookie('usu_nome');
-										setcookie('usu_nivel');
-										setcookie('usu_escudo');
+										setcookie('usu_id', null, time() - 42000, '/');
+										setcookie('usu_time', null, time() - 42000, '/');
+										setcookie('usu_login', null, time() - 42000, '/');
+										setcookie('usu_nome', null, time() - 42000, '/');
+										setcookie('usu_nivel', null, time() - 42000, '/');
+										setcookie('usu_escudo', null, time() - 42000, '/');
+
+										unset($_COOKIE["usu_id"]);
+										unset($_COOKIE["usu_time"]);
+										unset($_COOKIE["usu_login"]);
+										unset($_COOKIE["usu_nome"]);
+										unset($_COOKIE["usu_nivel"]);
+										unset($_COOKIE["usu_escudo"]);
 									}
 									exit();
 								}

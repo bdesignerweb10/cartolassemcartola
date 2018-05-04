@@ -10,6 +10,49 @@ $(function() {
 		$("html").addClass("open-sidebar");
 	});
 
+	$("#logout").on("click", function(e) {
+		e.preventDefault();
+
+		$('#loading-modal').modal({
+			keyboard: false
+		});
+
+		$.ajax({
+			type: "POST",
+			url: "../acts/acts.logout.php",
+			success: function(data)
+			{
+			    try {
+					$('#loading-modal').modal('hide');
+
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+					if(retorno.succeed) {
+						document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
+						window.location.href = "./";
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+
+						if(retorno.errno == "12010") {
+							$('#alert').on('hidden.bs.modal', function (e) {
+								window.location.href = 'provisoria';
+							});
+						}
+					}
+			    }
+			    catch (e) {
+					$('#loading-modal').modal('hide');
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
+					$('#alert').modal('show');
+			    };
+			}
+		});
+	});
+
 	// BEGIN LOGIN (login.php)
 
 	$("#form-login").submit(function(e) {

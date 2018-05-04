@@ -30,3 +30,8 @@ RewriteRule ^admin/pontuacoes/?$ admin/pontuacoes.php
 RewriteRule ^admin/temporadas/?$ admin/temporadas.php
 RewriteRule ^admin/times_temporadas/?$ admin/times_temporadas.php
 RewriteRule ^admin/usuarios/?$ admin/usuarios.php
+
+RewriteRule ^copa/inscricao/?$ copa/inscricao.php
+RewriteRule ^copa/palpites/?$ copa/palpites.php
+RewriteRule ^copa/ranking/?$ copa/ranking.php
+RewriteRule ^copa/regulamento/?$ copa/regulamento.php

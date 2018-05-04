@@ -1,3 +1,6 @@
+<?php 
+require_once("conn.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,13 +14,19 @@
 	<meta name="robots" content="index, follow" />
 	<meta name="googlebot" content="index, follow" />
 	
-	<title>Cartolas sem cartola</title>
+	<title>Bolão da Copa | Cartolas sem cartola</title>
 
-	<link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="../img/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="../img/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="../img/favicon-16x16.png">
+	<link rel="manifest" href="../img/site.webmanifest">
+	<link rel="mask-icon" href="../img/safari-pinned-tab.svg" color="#5bbad5">
+	<link rel="shortcut icon" href="../img/favicon.ico">
+	<meta name="msapplication-TileColor" content="#da532c">
+	<meta name="msapplication-config" content="../img/browserconfig.xml">
+	<meta name="theme-color" content="#ffffff">
+
 	<link rel="stylesheet" type="text/css" href="css/style.css">	
-	<link rel="stylesheet" type="text/css" href="css/bootstrap-toggle.min.css">
-	<link rel="stylesheet" type="text/css" href="css/jquery.datetimepicker.css">
-	<link rel="stylesheet" type="text/css" href="css/textext.plugin.autocomplete.css">
 </head>
 <body>
 
@@ -29,26 +38,25 @@
 
 				<ul class="nav">
 					<li class="nav-item">					
-						<a href="inscricao.php
-						" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'inscricao.php' ? ' nav-active' : ''; ?>">
+						<a href="inscricao" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'inscricao.php' ? ' nav-active' : ''; ?>">
 						<i class="fa fa-edit"></i>	
 						Palpites
 						</a>
 					</li>
 					<li class="nav-item">					
-						<a href="ranking.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'ranking.php' ? ' nav-active' : ''; ?>">
+						<a href="ranking" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'ranking.php' ? ' nav-active' : ''; ?>">
 						<i class="fa fa-trophy"></i>	
 						Ranking
 						</a>
 					</li>
 					<li class="nav-item">					
-						<a href="palpites.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'palpites.php' ? ' nav-active' : ''; ?>">
+						<a href="palpites" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'palpites.php' ? ' nav-active' : ''; ?>">
 						<i class="fa fa-list-alt"></i>	
 						Palpites/Resultados
 						</a>
 					</li>			
 					<li class="nav-item">					
-						<a href="regulamento.php" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'regulamento.php' ? ' nav-active' : ''; ?>">
+						<a href="regulamento" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'regulamento.php' ? ' nav-active' : ''; ?>">
 						<i class="fa fa-file-text-o"></i>	
 						Regulamento
 						</a>

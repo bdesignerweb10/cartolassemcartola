@@ -20,6 +20,49 @@ $(function() {
 		}
 	});
 
+	$("#logout").on("click", function(e) {
+		e.preventDefault();
+
+		$('#loading-modal').modal({
+			keyboard: false
+		});
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.logout.php",
+			success: function(data)
+			{
+			    try {
+					$('#loading-modal').modal('hide');
+
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+					if(retorno.succeed) {
+						document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
+						window.location.href = "./";
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+
+						if(retorno.errno == "12010") {
+							$('#alert').on('hidden.bs.modal', function (e) {
+								window.location.href = 'provisoria';
+							});
+						}
+					}
+			    }
+			    catch (e) {
+					$('#loading-modal').modal('hide');
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
+					$('#alert').modal('show');
+			    };
+			}
+		});
+	});
+
 	$("#pag-maos").on("click", function(){
 		$("#valor").val("R$ 30,00");
 	});
@@ -321,9 +364,9 @@ $(function() {
 	   window.location.pathname.indexOf('provisoria') === -1 &&
 	   window.location.pathname.indexOf('temporeal') === -1) {
 	   	
-		$('#info').modal({
-			keyboard: false
-		});
+		// $('#info').modal({
+		// 	keyboard: false
+		// });
 				
 		// DESTAQUES RODADA
 		$('#destaques-rodada').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
@@ -2566,6 +2609,17 @@ function deleteCookie(name) {
 	if (getCookie(name)) {
 		document.cookie = name + "=" + "; expires=Thu, 01-Jan-70 00:00:01 GMT";
 	}
+}
+
+function deleteAllCookies() {
+    var cookies = document.cookie.split(";");
+
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i];
+        var eqPos = cookie.indexOf("=");
+        var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
 }
 
 /*!

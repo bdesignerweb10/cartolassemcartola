@@ -8558,3 +8558,6 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
 
 .bg-table {
   background-color: #efefef; }
+
+#form-palpites {
+  display: none; }
