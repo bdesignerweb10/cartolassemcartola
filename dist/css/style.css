@@ -8868,6 +8868,17 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   right: 0;
   top: 0; }
 
+.capa-comparar {
+  background-image: url(../img/comparar.png);
+  background-repeat: no-repeat;
+  left: 0;
+  overflow: auto;
+  right: 0;
+  top: 0;
+  background-size: cover;
+  padding: 8em;
+  margin-bottom: 20px; }
+
 .capa-matamata {
   background-image: url(../img/mata-mata.jpeg);
   background-repeat: no-repeat;
@@ -9453,6 +9464,33 @@ table.liga-csc thead tr .headerSortDown {
   font-weight: bolder !important;
   background-color: #cce5ff !important; }
 
+/* Comparar */
+.comp-headline {
+  font-size: 1.5rem;
+  font-weight: bold; }
+
+.comp-rodada {
+  text-align: center;
+  font-size: 0.9em;
+  color: #999898; }
+
+.table-comparar tbody tr {
+  text-align: center;
+  font-size: 1.3rem; }
+  .table-comparar tbody tr > th {
+    text-align: center; }
+
+.comparar-titulo {
+  width: 100%;
+  text-align: center;
+  background-color: #293541;
+  color: #fff;
+  padding: 10px;
+  margin: 10px auto;
+  font-family: Verdana;
+  text-transform: uppercase;
+  font-weight: 700; }
+
 /* ajustes responsividade */
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
   .sidebar .sidebar-header {
@@ -9492,7 +9530,7 @@ table.liga-csc thead tr .headerSortDown {
     font-size: 20px; }
   .capa-inscricao, .capa-matamata, .capa-tempo-real {
     padding-bottom: 7em; }
-  .capa-scouts, .capa-liga, .capa-brasileirao, .capa-eventos, .capa-regulamento, .capa-pontuacao, .capa-rodada, .capa-destaques {
+  .capa-scouts, .capa-liga, .capa-brasileirao, .capa-eventos, .capa-regulamento, .capa-pontuacao, .capa-rodada, .capa-destaques, .capa-comparar {
     padding-bottom: 6em; }
   .campinho {
     display: block; } }
@@ -9503,7 +9541,7 @@ table.liga-csc thead tr .headerSortDown {
     margin-left: 195px; }
   .header .mark {
     font-size: 20px; }
-  .capa-inscricao, .capa-matamata, .capa-tempo-real {
+  .capa-inscricao, .capa-matamata, .capa-tempo-real, .capa-comparar {
     padding-bottom: 7em; }
   .capa-scouts, .capa-liga, .capa-brasileirao, .capa-eventos, .capa-regulamento, .capa-pontuacao, .capa-rodada, .capa-destaques {
     padding-bottom: 6em; }

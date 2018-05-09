@@ -55,6 +55,10 @@ require_once('header.php');
 										<span class="badge rebaixamento"></span>
 										Zona de Rebaixamento
 									</li>
+									<li class="nav-item">
+										<img src="img/medal.png">
+										Maior pontuador em uma única rodada
+									</li>
 								</ul>
 							</div><!-- card-footer -->
 						</footer>				

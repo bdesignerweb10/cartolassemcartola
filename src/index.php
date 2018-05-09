@@ -58,6 +58,21 @@ require_once('header.php');
 								</div><!-- card-footer -->
 							</footer>				
 						</div><!-- card -->
+						<div class="card">
+							<div class="card-header">
+								<header>
+									<h2 class="card-title">Compare seu time com um adversário</h2>
+								</header>
+							</div><!-- card-header -->
+							<div class="card-block">
+								<img src="img/comparar-times.png" class="rounded img-fluid">
+							</div>
+							<footer>
+								<div class="card-footer">
+									<a href="comparar.php"><button class="btn btn-primary"><i class="fa fa-window-restore" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Comparar times</button></a>
+								</div><!-- card-footer -->
+							</footer>
+						</div>
 					</article>
 				</div><!-- col-sm-5 -->
 				<div class="col-sm-12 col-md-6 col-lg-7 col-xl-7">
