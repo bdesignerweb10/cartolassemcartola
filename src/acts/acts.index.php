@@ -40,7 +40,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 	        break;
 
 	    case 'desempenho-geral':
-		    try {
+			try {
 		    	$limit = "";
 				if(isset($_GET['limit']) && $_GET['limit']) {
 					$limit = "LIMIT " . $_GET['limit'];
@@ -67,6 +67,19 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 				        	while($pos = $qryselposicao->fetch_object()) {
 				        		$posicao = $pos->posicao_liga;
 				        		$pontuacao = $pos->pontuacao;
+				        	}
+				        }
+
+				        $hasmaxpont = "false";
+				        $qryselmaxpont = $conn->query("SELECT id_times, MAX(pontuacao)
+														 FROM tbl_times_temporadas 
+														WHERE id_anos = $temporada 
+													 GROUP BY id_times
+													 ORDER BY MAX(pontuacao) DESC LIMIT 1") or trigger_error($conn->error);
+				    	if($qryselmaxpont && $qryselmaxpont->num_rows > 0) {
+				        	while($maxpont = $qryselmaxpont->fetch_object()) {
+				        		if ($maxpont->id_times == $destaques->id_time)
+				        			$hasmaxpont = "true";
 				        	}
 				        }
 
@@ -100,7 +113,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 		                if($_SESSION["usu_time"] == $destaques->id_time)
 		                	$isMyTeam = "true";
 
-						$list_times .= '{"posicao": ' . $posicao . ', "escudo": "' . $escudo . '", "time": "' . $destaques->time . '", "pontuacao": ' . $destaques->total_pontos . ', "pont_ult_rodada": ' . $pontuacao . ', "variacao": "' . $variacao . '", "isMyTeam": ' . $isMyTeam . '}, ';
+						$list_times .= '{"posicao": ' . $posicao . ', "escudo": "' . $escudo . '", "time": "' . $destaques->time . '", "pontuacao": ' . $destaques->total_pontos . ', "pont_ult_rodada": ' . $pontuacao . ', "variacao": "' . $variacao . '", "isMyTeam": ' . $isMyTeam . ', "hasMaxPont": ' . $hasmaxpont . '}, ';
 		        	}
 
 					$list_times = substr($list_times, 0, -2);

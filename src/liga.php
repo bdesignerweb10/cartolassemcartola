@@ -56,7 +56,11 @@ require_once('header.php');
 										Zona de Rebaixamento
 									</li>
 									<li class="nav-item">
-										<img src="img/medal.png">
+										<span class="badge myteam"></span>
+										Meu time
+									</li>
+									<li class="nav-item">
+										<img src="img/medal.png" />
 										Maior pontuador em uma única rodada
 									</li>
 								</ul>

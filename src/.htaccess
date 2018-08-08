@@ -31,8 +31,17 @@ RewriteRule ^admin/temporadas/?$ admin/temporadas.php
 RewriteRule ^admin/times_temporadas/?$ admin/times_temporadas.php
 RewriteRule ^admin/usuarios/?$ admin/usuarios.php
 
+RewriteRule ^copa/?$ copa/index.php
 RewriteRule ^copa/inscricao/?$ copa/inscricao.php
 RewriteRule ^copa/palpites/?$ copa/palpites.php
 RewriteRule ^copa/ranking/?$ copa/ranking.php
 RewriteRule ^copa/tabela/?$ copa/tabela.php
 RewriteRule ^copa/regulamento/?$ copa/regulamento.php
+
+RewriteRule ^copa/admin/?$ copa/admin/index.php
+RewriteRule ^copa/admin/ativar/?$ copa/admin/ativar.php
+RewriteRule ^copa/admin/configuracoes/?$ copa/admin/configuracoes.php
+RewriteRule ^copa/admin/confrontos/?$ copa/admin/confrontos.php
+RewriteRule ^copa/admin/copa/?$ copa/admin/copa.php
+RewriteRule ^copa/admin/home/?$ copa/admin/home.php
+RewriteRule ^copa/admin/selecoes/?$ copa/admin/selecoes.php

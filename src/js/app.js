@@ -316,15 +316,15 @@ $(function() {
 					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
 					if(retorno.succeed) {
-						$('.premain').show(function() {
-							$('.inscmain').hide();
-
+						$('.inscmain').fadeOut("fast", function() {
 							$('#nome').val('');
 							$('#email').val('');
 							$('#telefone').val('');
 							$('#time').val('');
 							$('input[name="forma-pagto"]').prop('checked', false);
 							$('#regulamento').prop('checked', false);
+							
+							$('.premain').fadeIn("slow");
 						});
 					}
 					else {
@@ -788,7 +788,7 @@ $(function() {
 		$('#desempenho-liga').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
 		$.ajax({
 			type: "POST",
-			url: "acts/acts.index.php?act=desempenho-geral",
+			url: "acts/acts.liga.php",
 			success: function(data)
 			{
 			    try {
@@ -809,7 +809,11 @@ $(function() {
 								var myTeamClass = "";
 								if(item.isMyTeam)
 									myTeamClass = "myteam";
-								$('#desempenho-liga .card-block tbody').append('<tr class="' + bg + ' '+myTeamClass+'"><th scope="row" class="table-title">' + item.posicao + 'º</th><td><img src="img/escudos/' + item.escudo + '" class="img-fluid"></td><td>' + item.time + '</td><td>' + item.pontuacao.toFixed(2) + '</td><td>' + item.pont_ult_rodada.toFixed(2) + '</td><td>' + item.variacao + '</td></tr>');
+
+								var maxPontImg = "";
+								if(item.hasMaxPont)
+									maxPontImg = "<img class='badge-medal' src='img/medal.png' />";
+								$('#desempenho-liga .card-block tbody').append('<tr class="' + bg + ' '+myTeamClass+'"><th scope="row" class="table-title">' + item.posicao + 'º</th><td><img src="img/escudos/' + item.escudo + '" class="img-fluid"></td><td>' + maxPontImg + item.time + '</td><td>' + item.pontuacao.toFixed(2) + '</td><td>' + item.pont_ult_rodada.toFixed(2) + '</td><td>' + item.variacao + '</td></tr>');
 							});
 
 							$('.liga-csc').tablesorter({
