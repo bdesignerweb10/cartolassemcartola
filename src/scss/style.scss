@@ -435,7 +435,6 @@
 		padding: 0;
 	}
 }
-
 .info-clube{
 	font-size: 11px;
 	font-weight: bold;
@@ -443,6 +442,21 @@
 	padding:0; 
 	.nome{
 		font-size: 2rem;
+		font-style: italic;
+		color: $brand-primary;
+		text-shadow: 1px 0px 0px white, -1px 0px 0px white, 0px 1px 0px white, 0px -1px 0px white;
+		text-align: justify;
+	}
+}
+
+.ano-rodadas {
+	position:absolute;
+	top: 120px;
+	left: 245px;
+	.info-ano{
+		font-weight: bold;
+		padding:0; 
+		font-size: 3rem;
 		font-style: italic;
 		color: $brand-primary;
 		text-shadow: 1px 0px 0px white, -1px 0px 0px white, 0px 1px 0px white, 0px -1px 0px white;
@@ -1137,7 +1151,7 @@ ul.escudos > li {
 #desempenho-liga .card-block, #desempenho-liga footer, #destaques .col-sm-4,
 #mata-mata .bg-info, #mata-mata .bg-success, #mata-mata .bg-danger, #mata-mata .mata-and, #mainconfrontos, #nao-ha-dados,
 #pontrodada .table-responsive, #proximos-eventos, #eventos-passados, #eventos-container .bg-success, #eventos-container .bg-info,
-#eventos-container .infor, .escudos, #escudos-container .infor, #confrontos-br .card, #confrontos-br .infor, .table-brasileiro .infor, .table-brasileiro table, .scouts .card, #eventos .card-block, #eventos footer, #tempo-real .card-block, #tempo-real footer, #mainscout {
+#eventos-container .infor, .escudos, #escudos-container .infor, #confrontos-br .card, #confrontos-br .infor, .table-brasileiro .infor, .table-brasileiro table, .scouts .card, #eventos .card-block, #eventos footer, #tempo-real .card-block, #tempo-real footer, #mainscout, #maindetold {
 	display:none;
 }
 
