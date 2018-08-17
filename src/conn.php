@@ -1,7 +1,4 @@
 <?php
-ob_start();
-if (!isset($_SESSION)) session_start(); 
-
 // ########################################
 // ######## VARIAVEIS DE AMBIENTE #########
 // ########################################
@@ -10,6 +7,9 @@ setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
 date_default_timezone_set('America/Sao_Paulo');
 ini_set('session.gc_probability', 1);
 ini_set('session.gc_divisor', 100);
+
+ob_start();
+if (!isset($_SESSION)) session_start(); 
 
 //require_once("acts/errorhandling.php");
 

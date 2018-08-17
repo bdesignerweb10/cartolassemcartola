@@ -9380,7 +9380,7 @@ ul.escudos > li {
 #desempenho-liga .card-block, #desempenho-liga footer, #destaques .col-sm-4,
 #mata-mata .bg-info, #mata-mata .bg-success, #mata-mata .bg-danger, #mata-mata .mata-and, #mainconfrontos, #nao-ha-dados,
 #pontrodada .table-responsive, #proximos-eventos, #eventos-passados, #eventos-container .bg-success, #eventos-container .bg-info,
-#eventos-container .infor, .escudos, #escudos-container .infor, #confrontos-br .card, #confrontos-br .infor, .table-brasileiro .infor, .table-brasileiro table, .scouts .card, #eventos .card-block, #eventos footer, #tempo-real .card-block, #tempo-real footer, #mainscout, #maindetold {
+#eventos-container .infor, .escudos, #escudos-container .infor, #confrontos-br .card, #confrontos-br .infor, .table-brasileiro .infor, .table-brasileiro table, .scouts .card, #eventos .card-block, #eventos footer, #tempo-real .card-block, #tempo-real footer, #mainscout, #maindetold, .table-estatisticas, .table-medias {
   display: none; }
 
 .img-fit {
@@ -9561,4 +9561,5 @@ table.liga-csc thead tr .headerSortDown {
     display: block; } }
 
 .badge-medal {
-  margin-right: 10px; }
+  margin-right: 10px;
+  max-height: 32px; }

@@ -65,11 +65,11 @@ require_once('header.php');
 								</header>
 							</div><!-- card-header -->
 							<div class="card-block">
-								<img src="img/comparar-times.png" class="rounded img-fluid">
+								<img src="img/comparartimes.png" class="rounded img-fluid">
 							</div>
 							<footer>
 								<div class="card-footer">
-									<a href="comparar.php"><button class="btn btn-primary"><i class="fa fa-window-restore" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Comparar times</button></a>
+									<a href="comparacao"><button class="btn btn-primary"><i class="fa fa-window-restore" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Comparar times</button></a>
 								</div><!-- card-footer -->
 							</footer>
 						</div>
@@ -151,12 +151,12 @@ require_once('header.php');
 			        </button>
 			      </div>
 			      <div class="modal-body">
-			      	<h3 class="modal-title" id="exampleModalLabel">Great!</h3>
-			      	<p class="modal-message">Your data has been successfuly saved.</p>
+			      	<h3 class="modal-title" id="exampleModalLabel">Ótimo!</h3>
+			      	<p class="modal-message">Seus dados foram salvos com sucesso.</p>
 			      </div>
 			      <div class="modal-footer">
-			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Back to my work</button>
-			        <button type="button" class="btn btn-primary">Back to store hours</button>
+			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
+			        <button type="button" class="btn btn-primary">Voltar para as horas</button>
 			      </div>
 			    </div>
 			  </div>

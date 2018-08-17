@@ -362,7 +362,8 @@ $(function() {
 	   window.location.pathname.indexOf('dados_clube') === -1 &&
 	   window.location.pathname.indexOf('meus_dados') === -1 &&
 	   window.location.pathname.indexOf('provisoria') === -1 &&
-	   window.location.pathname.indexOf('temporeal') === -1) {
+	   window.location.pathname.indexOf('temporeal') === -1 &&
+	   window.location.pathname.indexOf('comparacao') === -1) {
 	   	
 		// $('#info').modal({
 		// 	keyboard: false
@@ -2674,6 +2675,479 @@ $(function() {
 	}
 
 	// END TEMPO REAL (temporeal)
+
+	// BEGIN SCOUTS (comparacao)
+
+	if(window.location.pathname.indexOf('comparacao') !== -1) {
+
+	    $('#comparacao1').textext({
+	        plugins : 'autocomplete ajax',
+	        ajax : {
+	            url : 'acts/acts.comparacao.php?act=times',
+	            dataType : 'json',
+	            cacheResults : true
+	        }
+	    });
+
+	    $('#comparacao2').textext({
+	        plugins : 'autocomplete ajax',
+	        ajax : {
+	            url : 'acts/acts.comparacao.php?act=times',
+	            dataType : 'json',
+	            cacheResults : true
+	        }
+	    });
+
+	    $('#salva_comparacao1').change(function() {
+	    	if($(this).prop('checked')) {
+		        setCookie("comparacao1", $('#comparacao1').val(), 1);
+	    	}
+	    	else {
+	    		deleteCookie("comparacao1");
+	    	}
+	    });
+
+	    $('#salva_comparacao2').change(function() {
+	    	if($(this).prop('checked')) {
+		        setCookie("comparacao2", $('#comparacao2').val(), 1);
+	    	}
+	    	else {
+	    		deleteCookie("comparacao2");
+	    	}
+	    });
+
+		if (getCookie("comparacao1")) {
+			$('#comparacao1').val(getCookie("comparacao1"));
+    		$('#salva_comparacao1').bootstrapToggle('on');
+		}
+
+		if (getCookie("comparacao2")) {
+			$('#comparacao2').val(getCookie("comparacao2"));
+    		$('#salva_comparacao2').bootstrapToggle('on');
+		}
+
+		if($('#comparacao1').val().length > 0) { 
+			carregaInfos($('#comparacao1').val(), 1); 
+		} 
+
+		if($('#comparacao2').val().length > 0) { 
+			carregaInfos($('#comparacao2').val(), 2); 
+		}
+
+	    $('body').on('click', '.text-core .text-wrap .text-dropdown .text-list .text-suggestion', function(e) {
+	    	carregaInfos($(this).parent().parent().parent().find('.busca-time').val(), $(this).parent().parent().parent().find('.busca-time').attr('id').replace('comparacao', '')); 
+	    });
+
+	    $('.busca-time').on('keyup', function (e) {
+		    if (e.keyCode == 13) {
+		    	carregaInfos($(this).val(), $(this).attr('id').replace('comparacao', ''));
+		    }
+	    });
+
+	    function carregaInfos(nome_time, idx) {
+			var formData = new FormData();
+			formData.append('nome_time', nome_time);
+
+			$('#loading-modal').modal({
+				keyboard: false
+			});
+
+			var idx2 = 1;
+
+			if(idx == 1)
+				idx2 = 2;
+
+			$('.dados_time' + idx).html('');
+			$('.posicao_time' + idx).html('');
+			$('.pontos_time' + idx).html('');
+			$('.patrimonio_time' + idx).html('');
+			$('.media_time' + idx).html('');
+			$('.maior_time' + idx).html('');
+			$('.menor_time' + idx).html('');
+			$('.ultima_time' + idx).html('');
+			$('.table-estatisticas').hide();
+
+			$('.med_g_time' + idx).html('');
+			$('.med_l_time' + idx).html('');
+			$('.med_z_time' + idx).html('');
+			$('.med_m_time' + idx).html('');
+			$('.med_a_time' + idx).html('');
+			$('.med_t_time' + idx).html('');
+			$('.table-medias').hide();
+
+			$.ajax({
+				type: "POST",
+				url: "acts/acts.comparacao.php?act=dados_time",
+				data : formData,
+				processData: false,
+				contentType: false,
+    			timeout: 0,
+				success: function(data)
+				{
+				    try {
+						var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+						if(retorno.succeed) {
+							$('.dados_time' + idx).html('<img src="img/escudos/' + retorno.escudo + '"> ' + retorno.time);
+							$('.posicao_time' + idx).html(retorno.posicao + ' º');
+							$('.pontos_time' + idx).html(retorno.tot_pontos.toFixed(2));
+							$('.patrimonio_time' + idx).html('C$' + retorno.patrimonio.replace(',', '.'));
+							$('.media_time' + idx).html(retorno.media);
+							$('.maior_time' + idx).html(retorno.max_pontos);
+							$('.menor_time' + idx).html(retorno.min_pontos);
+							$('.ultima_time' + idx).html(retorno.ult_pontos);
+
+							$('.posicao_time' + idx).removeClass('positivo');
+							$('.posicao_time' + idx).removeClass('negativo');
+							$('.pontos_time' + idx).removeClass('positivo');
+							$('.pontos_time' + idx).removeClass('negativo');
+							$('.patrimonio_time' + idx).removeClass('positivo');
+							$('.patrimonio_time' + idx).removeClass('negativo');
+							$('.media_time' + idx).removeClass('positivo');
+							$('.media_time' + idx).removeClass('negativo');
+							$('.maior_time' + idx).removeClass('positivo');
+							$('.maior_time' + idx).removeClass('negativo');
+							$('.menor_time' + idx).removeClass('positivo');
+							$('.menor_time' + idx).removeClass('negativo');
+							$('.ultima_time' + idx).removeClass('positivo');
+							$('.ultima_time' + idx).removeClass('negativo');
+							$('.med_g_time' + idx).removeClass('positivo');
+							$('.med_g_time' + idx).removeClass('negativo');
+							$('.med_l_time' + idx).removeClass('positivo');
+							$('.med_l_time' + idx).removeClass('negativo');
+							$('.med_z_time' + idx).removeClass('positivo');
+							$('.med_z_time' + idx).removeClass('negativo');
+							$('.med_m_time' + idx).removeClass('positivo');
+							$('.med_m_time' + idx).removeClass('negativo');
+							$('.med_a_time' + idx).removeClass('positivo');
+							$('.med_a_time' + idx).removeClass('negativo');
+							$('.med_t_time' + idx).removeClass('positivo');
+							$('.med_t_time' + idx).removeClass('negativo');
+
+							$('.posicao_time' + idx2).removeClass('positivo');
+							$('.posicao_time' + idx2).removeClass('negativo');
+							$('.pontos_time' + idx2).removeClass('positivo');
+							$('.pontos_time' + idx2).removeClass('negativo');
+							$('.patrimonio_time' + idx2).removeClass('positivo');
+							$('.patrimonio_time' + idx2).removeClass('negativo');
+							$('.media_time' + idx2).removeClass('positivo');
+							$('.media_time' + idx2).removeClass('negativo');
+							$('.maior_time' + idx2).removeClass('positivo');
+							$('.maior_time' + idx2).removeClass('negativo');
+							$('.menor_time' + idx2).removeClass('positivo');
+							$('.menor_time' + idx2).removeClass('negativo');
+							$('.ultima_time' + idx2).removeClass('positivo');
+							$('.ultima_time' + idx2).removeClass('negativo');
+							$('.med_g_time' + idx2).removeClass('positivo');
+							$('.med_g_time' + idx2).removeClass('negativo');
+							$('.med_l_time' + idx2).removeClass('positivo');
+							$('.med_l_time' + idx2).removeClass('negativo');
+							$('.med_z_time' + idx2).removeClass('positivo');
+							$('.med_z_time' + idx2).removeClass('negativo');
+							$('.med_m_time' + idx2).removeClass('positivo');
+							$('.med_m_time' + idx2).removeClass('negativo');
+							$('.med_a_time' + idx2).removeClass('positivo');
+							$('.med_a_time' + idx2).removeClass('negativo');
+							$('.med_t_time' + idx2).removeClass('positivo');
+							$('.med_t_time' + idx2).removeClass('negativo');
+
+							if(parseFloat($('.posicao_time' + idx).html().replace(' º', '')) < 
+							   parseFloat($('.posicao_time' + idx2).html().replace(' º', ''))) {
+								$('.posicao_time' + idx).addClass('positivo');
+								$('.posicao_time' + idx2).addClass('negativo');
+							}
+							else {
+								$('.posicao_time' + idx).addClass('negativo');
+								$('.posicao_time' + idx2).addClass('positivo');
+							}
+
+							if(parseFloat($('.pontos_time' + idx).html()) > parseFloat($('.pontos_time' + idx2).html())) {
+								$('.pontos_time' + idx).addClass('positivo');
+								$('.pontos_time' + idx2).addClass('negativo');
+							}
+							else {
+								$('.pontos_time' + idx).addClass('negativo');
+								$('.pontos_time' + idx2).addClass('positivo');
+							}
+
+							if(parseFloat($('.patrimonio_time' + idx).html().replace('C$', '')) > 
+							   parseFloat($('.patrimonio_time' + idx2).html().replace('C$', ''))) {
+								$('.patrimonio_time' + idx).addClass('positivo');
+								$('.patrimonio_time' + idx2).addClass('negativo');
+							}
+							else {
+								$('.patrimonio_time' + idx).addClass('negativo');
+								$('.patrimonio_time' + idx2).addClass('positivo');
+							}
+
+							if(parseFloat($('.media_time' + idx).html()) > parseFloat($('.media_time' + idx2).html())) {
+								$('.media_time' + idx).addClass('positivo');
+								$('.media_time' + idx2).addClass('negativo');
+							}
+							else {
+								$('.media_time' + idx).addClass('negativo');
+								$('.media_time' + idx2).addClass('positivo');
+							}
+
+							if(parseFloat($('.maior_time' + idx).html()) > parseFloat($('.maior_time' + idx2).html())) {
+								$('.maior_time' + idx).addClass('positivo');
+								$('.maior_time' + idx2).addClass('negativo');
+							}
+							else {
+								$('.maior_time' + idx).addClass('negativo');
+								$('.maior_time' + idx2).addClass('positivo');
+							}
+
+							if(parseFloat($('.menor_time' + idx).html()) > parseFloat($('.menor_time' + idx2).html())) {
+								$('.menor_time' + idx).addClass('positivo');
+								$('.menor_time' + idx2).addClass('negativo');
+							}
+							else {
+								$('.menor_time' + idx).addClass('negativo');
+								$('.menor_time' + idx2).addClass('positivo');
+							}
+
+							if(parseFloat($('.ultima_time' + idx).html()) > parseFloat($('.ultima_time' + idx2).html())) {
+								$('.ultima_time' + idx).addClass('positivo');
+								$('.ultima_time' + idx2).addClass('negativo');
+							}
+							else {
+								$('.ultima_time' + idx).addClass('negativo');
+								$('.ultima_time' + idx2).addClass('positivo');
+							}
+
+							$('.table-estatisticas').fadeIn("slow");
+
+							$('.med_g_time' + idx).html(retorno.media_g);
+							$('.med_l_time' + idx).html(retorno.media_l);
+							$('.med_z_time' + idx).html(retorno.media_z);
+							$('.med_m_time' + idx).html(retorno.media_m);
+							$('.med_a_time' + idx).html(retorno.media_a);
+							$('.med_t_time' + idx).html(retorno.media_t);
+
+							if(parseFloat($('.med_g_time' + idx).html()) > parseFloat($('.med_g_time' + idx2).html())) {
+								$('.med_g_time' + idx).addClass('positivo');
+								$('.med_g_time' + idx2).addClass('negativo');
+							}
+							else {
+								$('.med_g_time' + idx).addClass('negativo');
+								$('.med_g_time' + idx2).addClass('positivo');
+							}
+
+							if(parseFloat($('.med_l_time' + idx).html()) > parseFloat($('.med_l_time' + idx2).html())) {
+								$('.med_l_time' + idx).addClass('positivo');
+								$('.med_l_time' + idx2).addClass('negativo');
+							}
+							else {
+								$('.med_l_time' + idx).addClass('negativo');
+								$('.med_l_time' + idx2).addClass('positivo');
+							}
+
+							if(parseFloat($('.med_z_time' + idx).html()) > parseFloat($('.med_z_time' + idx2).html())) {
+								$('.med_z_time' + idx).addClass('positivo');
+								$('.med_z_time' + idx2).addClass('negativo');
+							}
+							else {
+								$('.med_z_time' + idx).addClass('negativo');
+								$('.med_z_time' + idx2).addClass('positivo');
+							}
+
+							if(parseFloat($('.med_m_time' + idx).html()) > parseFloat($('.med_m_time' + idx2).html())) {
+								$('.med_m_time' + idx).addClass('positivo');
+								$('.med_m_time' + idx2).addClass('negativo');
+							}
+							else {
+								$('.med_m_time' + idx).addClass('negativo');
+								$('.med_m_time' + idx2).addClass('positivo');
+							}
+
+							if(parseFloat($('.med_a_time' + idx).html()) > parseFloat($('.med_a_time' + idx2).html())) {
+								$('.med_a_time' + idx).addClass('positivo');
+								$('.med_a_time' + idx2).addClass('negativo');
+							}
+							else {
+								$('.med_a_time' + idx).addClass('negativo');
+								$('.med_a_time' + idx2).addClass('positivo');
+							}
+
+							if(parseFloat($('.med_t_time' + idx).html()) > parseFloat($('.med_t_time' + idx2).html())) {
+								$('.med_t_time' + idx).addClass('positivo');
+								$('.med_t_time' + idx2).addClass('negativo');
+							}
+							else {
+								$('.med_t_time' + idx).addClass('negativo');
+								$('.med_t_time' + idx2).addClass('positivo');
+							}
+
+							$('.table-medias').fadeIn("slow");
+
+							$('#loading-modal').modal('hide');
+						}
+						else {
+							$('#alert-title').html(retorno.title);
+							$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+							$('#alert').modal('show');
+
+							$('.dados_time' + idx).html('');
+							$('.posicao_time' + idx).html('');
+							$('.pontos_time' + idx).html('');
+							$('.patrimonio_time' + idx).html('');
+							$('.media_time' + idx).html('');
+							$('.maior_time' + idx).html('');
+							$('.menor_time' + idx).html('');
+							$('.ultima_time' + idx).html('');
+							$('.table-estatisticas').hide();
+
+							$('.med_g_time' + idx).html('');
+							$('.med_l_time' + idx).html('');
+							$('.med_z_time' + idx).html('');
+							$('.med_m_time' + idx).html('');
+							$('.med_a_time' + idx).html('');
+							$('.med_t_time' + idx).html('');
+							$('.table-medias').hide();
+
+							$('.posicao_time' + idx).removeClass('positivo');
+							$('.posicao_time' + idx).removeClass('negativo');
+							$('.pontos_time' + idx).removeClass('positivo');
+							$('.pontos_time' + idx).removeClass('negativo');
+							$('.patrimonio_time' + idx).removeClass('positivo');
+							$('.patrimonio_time' + idx).removeClass('negativo');
+							$('.media_time' + idx).removeClass('positivo');
+							$('.media_time' + idx).removeClass('negativo');
+							$('.maior_time' + idx).removeClass('positivo');
+							$('.maior_time' + idx).removeClass('negativo');
+							$('.menor_time' + idx).removeClass('positivo');
+							$('.menor_time' + idx).removeClass('negativo');
+							$('.ultima_time' + idx).removeClass('positivo');
+							$('.ultima_time' + idx).removeClass('negativo');
+							$('.med_g_time' + idx).removeClass('positivo');
+							$('.med_g_time' + idx).removeClass('negativo');
+							$('.med_l_time' + idx).removeClass('positivo');
+							$('.med_l_time' + idx).removeClass('negativo');
+							$('.med_z_time' + idx).removeClass('positivo');
+							$('.med_z_time' + idx).removeClass('negativo');
+							$('.med_m_time' + idx).removeClass('positivo');
+							$('.med_m_time' + idx).removeClass('negativo');
+							$('.med_a_time' + idx).removeClass('positivo');
+							$('.med_a_time' + idx).removeClass('negativo');
+							$('.med_t_time' + idx).removeClass('positivo');
+							$('.med_t_time' + idx).removeClass('negativo');
+
+							$('.posicao_time' + idx2).removeClass('positivo');
+							$('.posicao_time' + idx2).removeClass('negativo');
+							$('.pontos_time' + idx2).removeClass('positivo');
+							$('.pontos_time' + idx2).removeClass('negativo');
+							$('.patrimonio_time' + idx2).removeClass('positivo');
+							$('.patrimonio_time' + idx2).removeClass('negativo');
+							$('.media_time' + idx2).removeClass('positivo');
+							$('.media_time' + idx2).removeClass('negativo');
+							$('.maior_time' + idx2).removeClass('positivo');
+							$('.maior_time' + idx2).removeClass('negativo');
+							$('.menor_time' + idx2).removeClass('positivo');
+							$('.menor_time' + idx2).removeClass('negativo');
+							$('.ultima_time' + idx2).removeClass('positivo');
+							$('.ultima_time' + idx2).removeClass('negativo');
+							$('.med_g_time' + idx2).removeClass('positivo');
+							$('.med_g_time' + idx2).removeClass('negativo');
+							$('.med_l_time' + idx2).removeClass('positivo');
+							$('.med_l_time' + idx2).removeClass('negativo');
+							$('.med_z_time' + idx2).removeClass('positivo');
+							$('.med_z_time' + idx2).removeClass('negativo');
+							$('.med_m_time' + idx2).removeClass('positivo');
+							$('.med_m_time' + idx2).removeClass('negativo');
+							$('.med_a_time' + idx2).removeClass('positivo');
+							$('.med_a_time' + idx2).removeClass('negativo');
+							$('.med_t_time' + idx2).removeClass('positivo');
+							$('.med_t_time' + idx2).removeClass('negativo');
+
+							$('#loading-modal').modal('hide');
+						}
+				    }
+				    catch (e) {
+						$('#alert-title').html("Erro ao fazer parse do JSON!");
+						$('#alert-content').html(String(e.stack));
+						$('#alert').modal('show');
+
+						$('.dados_time' + idx).html('');
+						$('.posicao_time' + idx).html('');
+						$('.pontos_time' + idx).html('');
+						$('.patrimonio_time' + idx).html('');
+						$('.media_time' + idx).html('');
+						$('.maior_time' + idx).html('');
+						$('.menor_time' + idx).html('');
+						$('.ultima_time' + idx).html('');
+						$('.table-estatisticas').hide();
+
+						$('.med_g_time' + idx).html('');
+						$('.med_l_time' + idx).html('');
+						$('.med_z_time' + idx).html('');
+						$('.med_m_time' + idx).html('');
+						$('.med_a_time' + idx).html('');
+						$('.med_t_time' + idx).html('');
+						$('.table-medias').hide();
+
+						$('.posicao_time' + idx).removeClass('positivo');
+						$('.posicao_time' + idx).removeClass('negativo');
+						$('.pontos_time' + idx).removeClass('positivo');
+						$('.pontos_time' + idx).removeClass('negativo');
+						$('.patrimonio_time' + idx).removeClass('positivo');
+						$('.patrimonio_time' + idx).removeClass('negativo');
+						$('.media_time' + idx).removeClass('positivo');
+						$('.media_time' + idx).removeClass('negativo');
+						$('.maior_time' + idx).removeClass('positivo');
+						$('.maior_time' + idx).removeClass('negativo');
+						$('.menor_time' + idx).removeClass('positivo');
+						$('.menor_time' + idx).removeClass('negativo');
+						$('.ultima_time' + idx).removeClass('positivo');
+						$('.ultima_time' + idx).removeClass('negativo');
+						$('.med_g_time' + idx).removeClass('positivo');
+						$('.med_g_time' + idx).removeClass('negativo');
+						$('.med_l_time' + idx).removeClass('positivo');
+						$('.med_l_time' + idx).removeClass('negativo');
+						$('.med_z_time' + idx).removeClass('positivo');
+						$('.med_z_time' + idx).removeClass('negativo');
+						$('.med_m_time' + idx).removeClass('positivo');
+						$('.med_m_time' + idx).removeClass('negativo');
+						$('.med_a_time' + idx).removeClass('positivo');
+						$('.med_a_time' + idx).removeClass('negativo');
+						$('.med_t_time' + idx).removeClass('positivo');
+						$('.med_t_time' + idx).removeClass('negativo');
+
+						$('.posicao_time' + idx2).removeClass('positivo');
+						$('.posicao_time' + idx2).removeClass('negativo');
+						$('.pontos_time' + idx2).removeClass('positivo');
+						$('.pontos_time' + idx2).removeClass('negativo');
+						$('.patrimonio_time' + idx2).removeClass('positivo');
+						$('.patrimonio_time' + idx2).removeClass('negativo');
+						$('.media_time' + idx2).removeClass('positivo');
+						$('.media_time' + idx2).removeClass('negativo');
+						$('.maior_time' + idx2).removeClass('positivo');
+						$('.maior_time' + idx2).removeClass('negativo');
+						$('.menor_time' + idx2).removeClass('positivo');
+						$('.menor_time' + idx2).removeClass('negativo');
+						$('.ultima_time' + idx2).removeClass('positivo');
+						$('.ultima_time' + idx2).removeClass('negativo');
+						$('.med_g_time' + idx2).removeClass('positivo');
+						$('.med_g_time' + idx2).removeClass('negativo');
+						$('.med_l_time' + idx2).removeClass('positivo');
+						$('.med_l_time' + idx2).removeClass('negativo');
+						$('.med_z_time' + idx2).removeClass('positivo');
+						$('.med_z_time' + idx2).removeClass('negativo');
+						$('.med_m_time' + idx2).removeClass('positivo');
+						$('.med_m_time' + idx2).removeClass('negativo');
+						$('.med_a_time' + idx2).removeClass('positivo');
+						$('.med_a_time' + idx2).removeClass('negativo');
+						$('.med_t_time' + idx2).removeClass('positivo');
+						$('.med_t_time' + idx2).removeClass('negativo');
+
+						$('#loading-modal').modal('hide');
+				    };
+				}
+			});
+	    }
+	}
+
+	// END SCOUTS (comparacao)
 });
 
 function getRandomColor() {
