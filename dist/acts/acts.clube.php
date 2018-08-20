@@ -103,29 +103,31 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 						while($liga = $ligaslist->fetch_object()) {
 							$list_camps .= '{"tipo": "liga", "temporada": "' . $liga->temporada . '", "posicao": ' . $liga->posicao . '}, ';
 						}
+					}
 
-						$mmlist = $conn->query("SELECT a.id AS id_temporada, a.descricao AS temporada, mm.id_time_campeao AS time_campeao, 
-													   mm.descricao AS mata_mata
-												  FROM tbl_mata_mata mm
-											INNER JOIN tbl_mata_mata_confrontos mmc ON mmc.id_mata_mata = mm.id
-										    INNER JOIN tbl_anos a ON a.id = mmc.id_anos
-											     WHERE mm.id_time_campeao IS NOT NULL
-											       AND EXISTS(SELECT mmt.id_time 
-											       				FROM tbl_mata_mata_times mmt 
-											                   WHERE mmt.id_mata_mata = mm.id
-											                     AND mmt.id_time = $id)
-											  GROUP BY mm.id_time_campeao
-											  ORDER BY a.descricao DESC, mm.descricao ASC") or trigger_error($conn->error);
+					$mmlist = $conn->query("SELECT a.id AS id_temporada, a.descricao AS temporada, mm.id_time_campeao AS time_campeao, 
+												   mm.descricao AS mata_mata
+											  FROM tbl_mata_mata mm
+										INNER JOIN tbl_mata_mata_confrontos mmc ON mmc.id_mata_mata = mm.id
+									    INNER JOIN tbl_anos a ON a.id = mmc.id_anos
+										     WHERE mm.id_time_campeao IS NOT NULL
+										       AND EXISTS(SELECT mmt.id_time 
+										       				FROM tbl_mata_mata_times mmt 
+										                   WHERE mmt.id_mata_mata = mm.id
+										                     AND mmt.id_time = $id)
+										  GROUP BY mm.id_time_campeao
+										  ORDER BY a.descricao DESC, mm.descricao ASC") or trigger_error($conn->error);
 
-						if($mmlist && $mmlist->num_rows > 0) {
-							while($mm = $mmlist->fetch_object()) {
-								$campeao = "false";
-								if($id == $mm->time_campeao)
-									$campeao = "true";
-								$list_camps .= '{"tipo": "mata_mata", "temporada": "' . $mm->temporada . '", "mata_mata": "' . $mm->mata_mata . '", "campeao": ' . $campeao . '}, ';
-							} 
-						}
+					if($mmlist && $mmlist->num_rows > 0) {
+						while($mm = $mmlist->fetch_object()) {
+							$campeao = "false";
+							if($id == $mm->time_campeao)
+								$campeao = "true";
+							$list_camps .= '{"tipo": "mata_mata", "temporada": "' . $mm->temporada . '", "mata_mata": "' . $mm->mata_mata . '", "campeao": ' . $campeao . '}, ';
+						} 
+					}
 
+					if(strlen($list_camps) > 2) {
 						$list_camps = substr($list_camps, 0, -2);
 					}
 				}

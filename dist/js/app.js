@@ -1615,7 +1615,7 @@ $(function() {
 							if(retorno.list_temp.length > 0) {
 								$.each(retorno.list_temp, function(t, temp) {
 									if(temp.is_actual) {
-										$('.dropdown-temporada').append('<div class="dropdown-divider"></div><a class="dropdown-item disabled" href="#" onclick="return false;">' + temp.temporada + '</a>');
+										$('.dropdown-temporada').append('<div class="dropdown-divider"></div><a class="dropdown-item disabled" href="#">' + temp.temporada + '</a>');
 									}
 									else {
 										var role = "";
