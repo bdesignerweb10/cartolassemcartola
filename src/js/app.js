@@ -1991,6 +1991,7 @@ $(function() {
 					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
 					$('.escudos').html('');
+					$('.tbl-pos-brasileiro').html('');
 
 					if(retorno.succeed) {
 						if(retorno.equipes.length > 0) {
