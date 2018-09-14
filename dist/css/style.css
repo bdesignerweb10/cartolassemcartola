@@ -267,7 +267,7 @@ html {
 
 html {
   -ms-overflow-style: scrollbar;
-  -webkit-tap-highlight-color: transparent; }
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
 
 body {
   font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -8514,7 +8514,8 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   .liga-csc .table-title {
     text-align: center; }
 
-.table th, .table td {
+.table th,
+.table td {
   padding: 0.56rem; }
 
 .liga-csc tbody tr td, .liga-csc tbody th, .table-scouts tbody tr td, .table-scouts tbody th {
@@ -9569,3 +9570,113 @@ table.liga-csc thead tr .headerSortDown {
 .badge-medal {
   margin-right: 10px;
   max-height: 32px; }
+
+/* Fim de Temporada */
+.fim-temporada {
+  margin-top: 90px; }
+
+.headline-fim {
+  /* font-size: 1.5rem; */
+  font-weight: bold;
+  padding: 15px 20px; }
+
+.taca-temp {
+  margin-left: 1px;
+  height: 80px;
+  width: 75px; }
+
+.temp-torneio {
+  text-align: center;
+  margin-top: 12px; }
+
+.cs-style-4 figcaption h3 {
+  font-size: 1.5rem; }
+
+.card-temporada {
+  background-image: url(../img/fimtemporada/background-temporada.png);
+  height: 300px; }
+
+.temporada-escudo {
+  width: 154px;
+  height: 164px;
+  margin-left: 126px;
+  margin-top: 50px; }
+
+.temporada-clube {
+  margin-left: 110px;
+  margin-top: 15px;
+  background-color: #293541;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: 5px;
+  font-size: 1.3rem; }
+
+.temp-esc-clube {
+  background: url(../img/fimtemporada/palco.png) no-repeat;
+  position: relative;
+  top: 250px;
+  height: 110px; }
+
+.temp-esc {
+  position: absolute;
+  top: -220px;
+  margin-left: 73px; }
+
+.temp-result {
+  font-size: 4.5rem;
+  font-weight: bold;
+  font-family: verdana;
+  color: #fc8f3e;
+  margin-top: 130px; }
+  .temp-result > span {
+    font-size: 1rem;
+    font-weight: 100;
+    font-style: italic;
+    color: #293541; }
+
+.temp-info {
+  font-size: 1.6rem;
+  font-style: italic;
+  color: #293541;
+  float: right; }
+
+.temp-info-detalhado {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: #293541;
+  padding-left: 75px; }
+
+.resumo-temporada-clube {
+  margin-bottom: 200px; }
+
+.temp-nome {
+  margin-top: 110px;
+  padding-left: 30px;
+  font-weight: bold;
+  font-size: 2.5rem;
+  color: #293541; }
+
+.resumo-temporada {
+  margin-top: 20px; }
+
+.resumo {
+  text-align: center; }
+
+.resumo-detalhado {
+  font-size: 3rem;
+  padding-left: 66px; }
+
+.sep-bottom {
+  border-top: 5px solid #fc8f3e;
+  margin: 0 100px; }
+
+.sep {
+  border: solid 0.3px #b3b9bf; }
+
+.temp-img {
+  float: left; }
+
+.card-temporada-clube {
+  margin-bottom: 30px; }
