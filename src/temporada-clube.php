@@ -3,7 +3,8 @@
 ?>
 <main>
 	<div class="container">
-		<div class="row resumo-temporada-clube">
+		<div class="row capa-temporada-clube"></div>
+		<div class="row resumo-temporada-clube">			
 			<div class="col-sm-4 offset-1 temp-esc-clube">	
 				<div class="col-sm-12 temp-esc">
 					<img src="img/escudos/clube/hasdrubalf.c.png">

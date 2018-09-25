@@ -4,14 +4,13 @@
 <link rel="stylesheet" type="text/css" href="css/default.css" />
 <link rel="stylesheet" type="text/css" href="css/component.css" />
 <script src="js/modernizr.custom.js"></script>
-<main>
-	<div class="container">		
+<main>	
+	<div class="container">	
+	<div class="row capa-temporada-encerrada"></div>	
 		<div class="jumbotron jumbotron-fluid fim-temporada">
-		  <div class="container">
-		    <h1 class="display-3">Fim da temporada 2018</h1>
+		  <div class="container">		    
 		    <p class="lead">Foram muitas mitadas, muitas zicadas e também muitas risadas. Esse ano de 2018 ficará marcada na história da liga "Cartolas sem cartola" por ser a edição com o maior número de participantes de sua tagetória.</p>
-		    <p class="lead">Obrigado <strong><?php echo $_SESSION["usu_nome"] ?></strong>, que já faz parte dessa história. Esperamos você em 2019.</p>
-		    <p class="lead">Confira o resumo geral da temporada e o desempenho de seu time</p>
+		    <p class="lead">Obrigado <strong><?php echo $_SESSION["usu_nome"] ?></strong>, que já faz parte dessa história. Esperamos você em 2019.</p>		    
 		    <a href="temporada-clube.php"><button class="btn btn-large btn-info">Ver desempenho do meu time</button></a>
 		  </div>
 		</div>	

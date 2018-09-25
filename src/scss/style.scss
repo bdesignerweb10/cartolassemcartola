@@ -568,7 +568,7 @@
     padding-bottom: 1em;
     right: 0;    
     top: 0;
-    margin-botton:15px;
+    margin-bottom:15px;
 }
 
 .capa-scouts{
@@ -690,6 +690,33 @@
     left: 0;
     overflow: auto;
     padding: 6em;
+    padding-bottom: 0em;
+    right: 0;    
+    top: 0;
+	margin-bottom: 15px;
+}
+
+.capa-temporada-encerrada{
+	background-image: url(../img/temporada-encerrada.png);
+    background-repeat: no-repeat;
+    background-size:100%;
+    bottom: 0;   
+    left: 0;
+    overflow: auto;
+    padding: 14em;
+   margin-top: 84px;
+    right: 0;    
+    top: 0;
+}
+
+.capa-temporada-clube{
+	background-image: url(../img/temporada-clube.png);
+    background-repeat: no-repeat;
+    background-size:100%;
+    bottom: 0;   
+    left: 0;
+    overflow: auto;
+    padding: 14em;
     padding-bottom: 0em;
     right: 0;    
     top: 0;
@@ -1397,7 +1424,7 @@ table.liga-csc thead tr .headerSortDown {
 /* Fim de Temporada */
 
 .fim-temporada{
-	margin-top: 90px;
+	margin-top: -192px;
 }
 
 .headline-fim {
