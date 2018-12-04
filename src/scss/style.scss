@@ -709,18 +709,19 @@
     top: 0;
 }
 
-.capa-temporada-clube{
-	background-image: url(../img/temporada-clube.png);
+.capa-temporada-clube {
+    background-image: url(../img/temporada-clube.png);
     background-repeat: no-repeat;
-    background-size:100%;
-    bottom: 0;   
+    background-size: 100%;
+    bottom: 0;
     left: 0;
     overflow: auto;
     padding: 14em;
+   	margin-top: 84px;
     padding-bottom: 0em;
-    right: 0;    
+    right: 0;
     top: 0;
-	margin-bottom: 15px;
+    margin-bottom: 15px;
 }
 
 .brasao{
@@ -1185,8 +1186,12 @@ ul.escudos > li {
 #desempenho-liga .card-block, #desempenho-liga footer, #destaques .col-sm-4,
 #mata-mata .bg-info, #mata-mata .bg-success, #mata-mata .bg-danger, #mata-mata .mata-and, #mainconfrontos, #nao-ha-dados,
 #pontrodada .table-responsive, #proximos-eventos, #eventos-passados, #eventos-container .bg-success, #eventos-container .bg-info,
-#eventos-container .infor, .escudos, #escudos-container .infor, #confrontos-br .card, #confrontos-br .infor, .table-brasileiro .infor, .table-brasileiro table, .scouts .card, #eventos .card-block, #eventos footer, #tempo-real .card-block, #tempo-real footer, #mainscout, #maindetold, .table-estatisticas, .table-medias {
+#eventos-container .infor, .escudos, #escudos-container .infor, #confrontos-br .card, #confrontos-br .infor, .table-brasileiro .infor, .table-brasileiro table, .scouts .card, #eventos .card-block, #eventos footer, #tempo-real .card-block, #tempo-real footer, #mainscout, #maindetold, .table-estatisticas, .table-medias, #resumo-temporada li, #resumo-mata-mata li, #main-clube {
 	display:none;
+}
+
+#resumo-temporada li.loading-li, #resumo-mata-mata li.loading-li {
+	display: inline-block;
 }
 
 .img-fit {
@@ -1486,11 +1491,11 @@ table.liga-csc thead tr .headerSortDown {
 }
 
 .temp-result{
-	font-size: 4.5rem;
-	font-weight: bold;
-	font-family: verdana;
-	color: #fc8f3e;
-	margin-top: 130px;
+    font-size: 4rem;
+    font-weight: bold;
+    font-family: verdana;
+    color: #fc8f3e;
+    margin-top: 130px;
 	> span{
 		font-size: 1rem;
 		font-weight: 100;
@@ -1518,8 +1523,8 @@ table.liga-csc thead tr .headerSortDown {
 }
 
 .temp-nome{
-	margin-top: 110px; 
-	padding-left: 30px;
+	margin-top: 110px;
+	text-align: center;
 	font-weight: bold; 
 	font-size: 2.5rem; 
 	color: #293541; 
@@ -1534,7 +1539,7 @@ table.liga-csc thead tr .headerSortDown {
 }
 
 .resumo-detalhado{
-	font-size: 3rem;
+	font-size: 1.9rem;
 	padding-left: 66px;
 }
 

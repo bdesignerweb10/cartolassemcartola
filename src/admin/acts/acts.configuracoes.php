@@ -103,6 +103,34 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 					exit();
 				}
 
+				if($_SESSION["mercado"] == 0) {
+					echo '{"succeed": false, "errno": 26031, "title": "Mercado precisa estar aberto!", "erro": "Para encerrar a temporada, a rodada atual PRECISA ser a última configurada para a temporada (' . $maxrodada . ') e o mercado precisa estar aberto, com as pontuações da última rodada lançadas. Favor contatar o administrador da página!"}';
+					$conn->rollback();
+					exit();
+				}
+
+				$pontuacaonull = 1;
+				$var_nomes_times = "";
+
+				$qrytimeszerado = $conn->query("SELECT t.nome_time as time 
+										   		  FROM tbl_times_temporadas tt
+                                            INNER JOIN tbl_times t ON t.id = tt.id_times
+										   		 WHERE tt.id_anos = 1
+										   		   AND tt.id_rodadas = 2
+										   		   AND (tt.pontuacao = 0 OR tt.posicao_liga IS NULL)") or trigger_error("26020 - " . $conn->error);
+		        
+		        if ($qrytimeszerado && $qrytimeszerado->num_rows > 0) {
+			        while($timesz = $qrytimeszerado->fetch_object()) {
+			        	$var_nomes_times .= $timesz->time . ", ";
+					}
+				}
+
+				if(strlen($var_nomes_times) > 0) {
+					$var_nomes_times = substr($var_nomes_times, 0, -2);
+					echo '{"succeed": false, "errno": 26032, "title": "Muitos times com pontuação zerada!", "erro": "Os times <b>'.$var_nomes_times.'</b> estão com a pontuação ZERADA ou com o ranking NULO para a rodada. Favor revisar e tentar novamente, por favor!"}';
+					break;
+				}
+
 				$upd_times = "UPDATE tbl_times SET ativo = 0 WHERE id IN (SELECT id_times FROM tbl_inscricao WHERE id_anos = " . $_SESSION["temporada_atual"] . ")";
 				if ($conn->query($upd_times) === TRUE) {
 					$upd_incricao = "UPDATE tbl_inscricao SET ativo = 0 WHERE id_anos = " . $_SESSION["temporada_atual"];
@@ -158,7 +186,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 				if(intval($_SESSION["api_ligada"]) == 1) {
 					$status_mercado = api("mercado/status");
 
-					if ($status_mercado->{"status_mercado"} == 1) {
+					if ($status_mercado->{"status_mercado"} == 1 || $status_mercado->{"status_mercado"} == 6) {
 						$ligas = api("auth/ligas", array('login' => "phmpilz@hotmail.com", 'senha' => "23@Wsx89(Nji"));
 			
 						if(count($ligas->{"ligas"}) > 0) {

@@ -5,9 +5,9 @@ if($_SESSION["temporada"] == 0 && (basename($_SERVER['PHP_SELF']) != "inscricao.
 	header('Location: inscricao');
 else {
 	if ($_SESSION["user_ativado"] &&
-		basename($_SERVER['PHP_SELF']) != "inscricao.php" && 
-		basename($_SERVER['PHP_SELF']) != "regulamento.php" &&
-		basename($_SERVER['PHP_SELF']) != "index.php" &&
+		basename($_SERVER['PHP_SELF']) == "meus_dados.php" && 
+		basename($_SERVER['PHP_SELF']) == "dados_clube.php" &&
+		basename($_SERVER['PHP_SELF']) == "eventos.php" &&
 		(!isset($_SESSION["usu_id"]) || empty($_SESSION["usu_id"]) || 
 		!isset($_SESSION['usu_nivel']) || empty($_SESSION["usu_nivel"]) || 
 		$_SESSION["usu_id"] == "0")) 

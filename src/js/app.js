@@ -368,351 +368,537 @@ $(function() {
 		// $('#info').modal({
 		// 	keyboard: false
 		// });
-				
-		// DESTAQUES RODADA
-		$('#destaques-rodada').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
-		$.ajax({
-			type: "POST",
-			url: "acts/acts.index.php?act=destaques-rodada",
-			success: function(data)
-			{
-			    try {
-					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-					$('#destaques-rodada .card-block tbody').html('');
+		if($('#resumo-temporada').length == 0) {
+			// DESTAQUES RODADA
+			$('#destaques-rodada').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
+			$.ajax({
+				type: "POST",
+				url: "acts/acts.index.php?act=destaques-rodada",
+				success: function(data)
+				{
+				    try {
+						var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-					if(retorno.succeed) {
-						if(retorno.list.length > 0) {
-							var c_times = 1;
-							$.each(retorno.list, function(i, item) {
-								var myTeamClass = "";
-								if(item.isMyTeam)
-									myTeamClass = "myteam";
-								$('#destaques-rodada .card-block tbody').append('<tr class="bg-success '+myTeamClass+'"><th scope="row" class="table-title">' + c_times + 'º</th><td><img src="img/escudos/' + item.escudo + '" class="img-fluid"></td><td>' + item.time + '</td><td>' + item.pontuacao.toFixed(2) + '</td></tr>');
-								c_times++;
+						$('#destaques-rodada .card-block tbody').html('');
+
+						if(retorno.succeed) {
+							if(retorno.list.length > 0) {
+								var c_times = 1;
+								$.each(retorno.list, function(i, item) {
+									var myTeamClass = "";
+									if(item.isMyTeam)
+										myTeamClass = "myteam";
+									$('#destaques-rodada .card-block tbody').append('<tr class="bg-success '+myTeamClass+'"><th scope="row" class="table-title">' + c_times + 'º</th><td><img src="img/escudos/' + item.escudo + '" class="img-fluid"></td><td>' + item.time + '</td><td>' + item.pontuacao.toFixed(2) + '</td></tr>');
+									c_times++;
+								});
+							}
+							else {
+								$('#destaques-rodada .card-block tbody').append('<tr class="bg-table"><td colspan="4" class="center infor"><i class="fa fa-thumbs-down fa-2x"></i><br /><br />Não há dados a serem exibidos aqui.</td></tr>');
+							}
+
+							$('#destaques-rodada .card-block').fadeIn("slow", function() {
+								$('#loading').fadeOut();
+								$('#loading').remove();
 							});
+							$('#destaques-rodada footer').fadeIn("slow");
 						}
 						else {
-							$('#destaques-rodada .card-block tbody').append('<tr class="bg-table"><td colspan="4" class="center infor"><i class="fa fa-thumbs-down fa-2x"></i><br /><br />Não há dados a serem exibidos aqui.</td></tr>');
-						}
+							$('#alert-title').html(retorno.title);
+							$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+							$('#alert').modal('show');
 
-						$('#destaques-rodada .card-block').fadeIn("slow", function() {
-							$('#loading').fadeOut();
-							$('#loading').remove();
-						});
-						$('#destaques-rodada footer').fadeIn("slow");
-					}
-					else {
-						$('#alert-title').html(retorno.title);
-						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+							$('#destaques-rodada .card-block').hide();
+							$('#destaques-rodada footer').hide();
+						}
+				    }
+				    catch (e) {
+						$('#alert-title').html("Erro ao fazer parse do JSON!");
+						$('#alert-content').html(String(e.stack));
 						$('#alert').modal('show');
 
 						$('#destaques-rodada .card-block').hide();
 						$('#destaques-rodada footer').hide();
-					}
-			    }
-			    catch (e) {
-					$('#alert-title').html("Erro ao fazer parse do JSON!");
-					$('#alert-content').html(String(e.stack));
-					$('#alert').modal('show');
+						$('#loading').remove();
+				    };
+				}
+			});
 
-					$('#destaques-rodada .card-block').hide();
-					$('#destaques-rodada footer').hide();
-					$('#loading').remove();
-			    };
-			}
-		});
-
-		// DESEMPENHO POR RODADA (GRAFICO)
-		$('#desempenho-rodada').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
-		$.ajax({
-			type: "POST",
-			url: "acts/acts.index.php?act=desempenho-rodada",
-			success: function(data)
-			{
-			    try {
-					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
-					$('#desempenho-rodada .card-block tbody').html('');
-					if(retorno.succeed) {
-						if(retorno.series.length > 0 && retorno.series[0].data && retorno.series[0].data.length > 0) {
-							$('#desempenho-rodada .card-block').append('<canvas id="chart-desempenho-rodada"></canvas>');
-							$.each(retorno.series, function(i, item) {
-								var color = getRandomColor();
-								item["backgroundColor"] = color;
-								item["borderColor"] = color;
-							});
-							var myChart = new Chart($("#chart-desempenho-rodada"), {
-						    type: 'line',
-						    data: {
-						        labels: retorno.labels,
-						        datasets: retorno.series
-						    },
-							options: {
-								responsive: true,
-								hoverMode: 'label',
-								stacked: false,
-								scales: {
-									xAxes: [
-										{
-											display: false,
-											gridLines: {
-												offsetGridLines: false
-											},
-											ticks: {
-												stepSize: 1, 
-												callback: function(value, index, values) {
-							                        return "Rodada " + value;
-							                    }
+			// DESEMPENHO POR RODADA (GRAFICO)
+			$('#desempenho-rodada').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
+			$.ajax({
+				type: "POST",
+				url: "acts/acts.index.php?act=desempenho-rodada",
+				success: function(data)
+				{
+				    try {
+						var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+						$('#desempenho-rodada .card-block tbody').html('');
+						if(retorno.succeed) {
+							if(retorno.series.length > 0 && retorno.series[0].data && retorno.series[0].data.length > 0) {
+								$('#desempenho-rodada .card-block').append('<canvas id="chart-desempenho-rodada"></canvas>');
+								$.each(retorno.series, function(i, item) {
+									var color = getRandomColor();
+									item["backgroundColor"] = color;
+									item["borderColor"] = color;
+								});
+								var myChart = new Chart($("#chart-desempenho-rodada"), {
+							    type: 'line',
+							    data: {
+							        labels: retorno.labels,
+							        datasets: retorno.series
+							    },
+								options: {
+									responsive: true,
+									hoverMode: 'label',
+									stacked: false,
+									scales: {
+										xAxes: [
+											{
+												display: false,
+												gridLines: {
+													offsetGridLines: false
+												},
+												ticks: {
+													stepSize: 1, 
+													callback: function(value, index, values) {
+								                        return "Rodada " + value;
+								                    }
+												}
 											}
-										}
-									],
-									yAxes: [
-										{
-											labelString: 'Posição na Liga',
-											ticks: {
-												reverse: true,
-												stepSize: 1, 
-												callback: function(value, index, values) {
-							                        return value + "º";
-							                    }
+										],
+										yAxes: [
+											{
+												labelString: 'Posição na Liga',
+												ticks: {
+													reverse: true,
+													stepSize: 1, 
+													callback: function(value, index, values) {
+								                        return value + "º";
+								                    }
+												}
 											}
-										}
-									]
-								},
-								legend: {
-									position: 'bottom'
-								},
-								tooltips: {
-								    callbacks: {
-								        label: function(tooltipItem, data) {
-								            var label = data.datasets[tooltipItem.datasetIndex].label || '';
+										]
+									},
+									legend: {
+										position: 'bottom'
+									},
+									tooltips: {
+									    callbacks: {
+									        label: function(tooltipItem, data) {
+									            var label = data.datasets[tooltipItem.datasetIndex].label || '';
 
-								            if (label) {
-								                label += ' - ';
-								            }
-								            label += tooltipItem.yLabel + 'º lugar';
+									            if (label) {
+									                label += ' - ';
+									            }
+									            label += tooltipItem.yLabel + 'º lugar';
 
-										    try {
-									            var rodada = tooltipItem.index + 1;
-									            var time = data.datasets[tooltipItem.datasetIndex].label;
+											    try {
+										            var rodada = tooltipItem.index + 1;
+										            var time = data.datasets[tooltipItem.datasetIndex].label;
 
-												var data = $.ajax({
-													type: "POST",
-													url: "acts/acts.rodada.php?act=pontuacao&rodada=" + rodada + "&time=" + time,
-	        										async: false
-												}).responseText;
+													var data = $.ajax({
+														type: "POST",
+														url: "acts/acts.rodada.php?act=pontuacao&rodada=" + rodada + "&time=" + time,
+		        										async: false
+													}).responseText;
 
-												var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+													var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-												if(retorno.succeed)
-				            						label += ' - ' + retorno.pontuacao + ' pts.';
-										    }
-										    catch (e) {
-										    	console.log(e);
-										    };
+													if(retorno.succeed)
+					            						label += ' - ' + retorno.pontuacao + ' pts.';
+											    }
+											    catch (e) {
+											    	console.log(e);
+											    };
 
-								            return label;
-								        }
-								    }
+									            return label;
+									        }
+									    }
+									}
 								}
+							});
 							}
-						});
+							else {
+								$('#desempenho-rodada .card-block').append('<div class="bg-default center infor"><i class="fa fa-thumbs-down fa-2x"></i><br /><br />Não há dados a serem exibidos aqui.</div>');
+							}
+
+							$('#desempenho-rodada .card-block').fadeIn("slow", function() {
+								$('#loading').fadeOut();
+								$('#loading').remove();
+							});
+							$('#desempenho-rodada footer').fadeIn("slow");
 						}
 						else {
-							$('#desempenho-rodada .card-block').append('<div class="bg-default center infor"><i class="fa fa-thumbs-down fa-2x"></i><br /><br />Não há dados a serem exibidos aqui.</div>');
-						}
+							$('#alert-title').html(retorno.title);
+							$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+							$('#alert').modal('show');
 
-						$('#desempenho-rodada .card-block').fadeIn("slow", function() {
-							$('#loading').fadeOut();
-							$('#loading').remove();
-						});
-						$('#desempenho-rodada footer').fadeIn("slow");
-					}
-					else {
-						$('#alert-title').html(retorno.title);
-						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+							$('#desempenho-rodada .card-block').hide();
+							$('#desempenho-rodada footer').hide();
+						}
+				    }
+				    catch (e) {
+						$('#alert-title').html("Erro ao fazer parse do JSON!");
+						$('#alert-content').html(String(e.stack));
 						$('#alert').modal('show');
 
 						$('#desempenho-rodada .card-block').hide();
 						$('#desempenho-rodada footer').hide();
-					}
-			    }
-			    catch (e) {
-					$('#alert-title').html("Erro ao fazer parse do JSON!");
-					$('#alert-content').html(String(e.stack));
-					$('#alert').modal('show');
+						$('#loading').remove();
+				    }
+				}
+			});
+					
+			// DESEMPENHO GERAL
+			$('#desempenho-geral').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
+			$.ajax({
+				type: "POST",
+				url: "acts/acts.index.php?act=desempenho-geral&limit=8",
+				success: function(data)
+				{
+				    try {
+						var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-					$('#desempenho-rodada .card-block').hide();
-					$('#desempenho-rodada footer').hide();
-					$('#loading').remove();
-			    }
-			}
-		});
-				
-		// DESEMPENHO GERAL
-		$('#desempenho-geral').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
-		$.ajax({
-			type: "POST",
-			url: "acts/acts.index.php?act=desempenho-geral&limit=8",
-			success: function(data)
-			{
-			    try {
-					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+						$('#desempenho-geral .card-block tbody').html('');
 
-					$('#desempenho-geral .card-block tbody').html('');
+						if(retorno.succeed) {
+							if(retorno.list.length > 0) {
+								$.each(retorno.list, function(i, item) {
+									var bg = "bg-table";
+									if(i < 6) 
+										bg = "bg-success";
 
-					if(retorno.succeed) {
-						if(retorno.list.length > 0) {
-							$.each(retorno.list, function(i, item) {
-								var bg = "bg-table";
-								if(i < 6) 
-									bg = "bg-success";
+									var myTeamClass = "";
+									if(item.isMyTeam)
+										myTeamClass = "myteam";
+									$('#desempenho-geral .card-block tbody').append('<tr class="' + bg + ' ' + myTeamClass + '"><th scope="row" class="table-title">' + item.posicao + 'º</th><td><img src="img/escudos/' + item.escudo + '" class="img-fluid"></td><td>' + item.time + '</td><td>' + item.pontuacao.toFixed(2) + '</td><td>' + item.variacao + '</td></tr>');
+								});
+							}
+							else {
+								$('#desempenho-geral .card-block tbody').append('<tr class="bg-table"><td colspan="5" class="center infor"><i class="fa fa-thumbs-down fa-2x"></i><br /><br />Não há dados a serem exibidos aqui.</td></tr>');
+							}
 
-								var myTeamClass = "";
-								if(item.isMyTeam)
-									myTeamClass = "myteam";
-								$('#desempenho-geral .card-block tbody').append('<tr class="' + bg + ' ' + myTeamClass + '"><th scope="row" class="table-title">' + item.posicao + 'º</th><td><img src="img/escudos/' + item.escudo + '" class="img-fluid"></td><td>' + item.time + '</td><td>' + item.pontuacao.toFixed(2) + '</td><td>' + item.variacao + '</td></tr>');
+							$('#desempenho-geral .card-block').fadeIn("slow", function() {
+								$('#loading').fadeOut();
+								$('#loading').remove();
 							});
+							$('#desempenho-geral footer').fadeIn("slow");
 						}
 						else {
-							$('#desempenho-geral .card-block tbody').append('<tr class="bg-table"><td colspan="5" class="center infor"><i class="fa fa-thumbs-down fa-2x"></i><br /><br />Não há dados a serem exibidos aqui.</td></tr>');
-						}
+							$('#alert-title').html(retorno.title);
+							$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+							$('#alert').modal('show');
 
-						$('#desempenho-geral .card-block').fadeIn("slow", function() {
-							$('#loading').fadeOut();
-							$('#loading').remove();
-						});
-						$('#desempenho-geral footer').fadeIn("slow");
-					}
-					else {
-						$('#alert-title').html(retorno.title);
-						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+							$('#desempenho-geral .card-block').hide();
+							$('#desempenho-geral footer').hide();
+						}
+				    }
+				    catch (e) {
+						$('#alert-title').html("Erro ao fazer parse do JSON!");
+						$('#alert-content').html(String(e.stack));
 						$('#alert').modal('show');
 
 						$('#desempenho-geral .card-block').hide();
 						$('#desempenho-geral footer').hide();
-					}
-			    }
-			    catch (e) {
-					$('#alert-title').html("Erro ao fazer parse do JSON!");
-					$('#alert-content').html(String(e.stack));
-					$('#alert').modal('show');
+						$('#loading').remove();
+				    };
+				}
+			});
 
-					$('#desempenho-geral .card-block').hide();
-					$('#desempenho-geral footer').hide();
-					$('#loading').remove();
-			    };
-			}
-		});
+			// MATA-MATA EM ANDAMENTO
+			$('#mata-mata-andamento').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
+			$.ajax({
+				type: "POST",
+				url: "acts/acts.index.php?act=mata-mata-andamento",
+				success: function(data)
+				{
+				    try {
+						var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-		// MATA-MATA EM ANDAMENTO
-		$('#mata-mata-andamento').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
-		$.ajax({
-			type: "POST",
-			url: "acts/acts.index.php?act=mata-mata-andamento",
-			success: function(data)
-			{
-			    try {
-					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+						$('#mata-mata-andamento .card-block tbody').html('');
 
-					$('#mata-mata-andamento .card-block tbody').html('');
+						if(retorno.succeed) {
+							if(retorno.list.length > 0) {
+								$.each(retorno.list, function(i, item) {
+									$('#mata-mata-andamento .card-block').append('<div class="' + item.cor_fase + ' text-white"><i class="fa fa-trophy"></i> ' + item.nome + ' - ' + item.fase + '</div>');
+								});
+							}
+							else {
+								$('#mata-mata-andamento .card-block').append('<div class="bg-secondary center infor"><i class="fa fa-thumbs-down fa-2x"></i><br /><br />Não há dados a serem exibidos aqui.</div>');
+							}
 
-					if(retorno.succeed) {
-						if(retorno.list.length > 0) {
-							$.each(retorno.list, function(i, item) {
-								$('#mata-mata-andamento .card-block').append('<div class="' + item.cor_fase + ' text-white"><i class="fa fa-trophy"></i> ' + item.nome + ' - ' + item.fase + '</div>');
+							$('#mata-mata-andamento .card-block').fadeIn("slow", function() {
+								$('#loading').fadeOut();
+								$('#loading').remove();
 							});
+							$('#mata-mata-andamento footer').fadeIn("slow");
 						}
 						else {
-							$('#mata-mata-andamento .card-block').append('<div class="bg-secondary center infor"><i class="fa fa-thumbs-down fa-2x"></i><br /><br />Não há dados a serem exibidos aqui.</div>');
-						}
+							$('#alert-title').html(retorno.title);
+							$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+							$('#alert').modal('show');
 
-						$('#mata-mata-andamento .card-block').fadeIn("slow", function() {
-							$('#loading').fadeOut();
-							$('#loading').remove();
-						});
-						$('#mata-mata-andamento footer').fadeIn("slow");
-					}
-					else {
-						$('#alert-title').html(retorno.title);
-						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+							$('#mata-mata-andamento .card-block').hide();
+							$('#mata-mata-andamento footer').hide();
+						}
+				    }
+				    catch (e) {
+						$('#alert-title').html("Erro ao fazer parse do JSON!");
+						$('#alert-content').html(String(e.stack));
 						$('#alert').modal('show');
 
 						$('#mata-mata-andamento .card-block').hide();
 						$('#mata-mata-andamento footer').hide();
-					}
-			    }
-			    catch (e) {
-					$('#alert-title').html("Erro ao fazer parse do JSON!");
-					$('#alert-content').html(String(e.stack));
-					$('#alert').modal('show');
+						$('#loading').remove();
+				    }
+				}
+			});
 
-					$('#mata-mata-andamento .card-block').hide();
-					$('#mata-mata-andamento footer').hide();
-					$('#loading').remove();
-			    }
-			}
-		});
+			// EVENTOS CALENDARIO 
+			$('#eventos').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
+			$.ajax({
+				type: "POST",
+				url: "acts/acts.index.php?act=eventos",
+				success: function(data)
+				{
+				    try {
+						var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-		// EVENTOS CALENDARIO 
-		$('#eventos').append('<div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div>');
-		$.ajax({
-			type: "POST",
-			url: "acts/acts.index.php?act=eventos",
-			success: function(data)
-			{
-			    try {
-					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+						$('#eventos .card-block tbody').html('');
 
-					$('#eventos .card-block tbody').html('');
+						if(retorno.succeed) {
+						   	$('#calendar').fullCalendar({
+	    						themeSystem: 'bootstrap4',
+								defaultView: 'month',
+								defaultDate: formatTodayEUDate(),
+								eventRender: function(eventObj, $el) {
+									$el.popover({
+										content: function () {
+							                return eventObj.description
+							            },
+	            						html: true,
+										trigger: 'hover',
+										placement: 'top',
+										container: 'body'
+									});
+								},
+								events: retorno.eventos,
+	 							timeFormat: 'H:mm'
+							});
 
-					if(retorno.succeed) {
-					   	$('#calendar').fullCalendar({
-    						themeSystem: 'bootstrap4',
-							defaultView: 'month',
-							defaultDate: formatTodayEUDate(),
-							eventRender: function(eventObj, $el) {
-								$el.popover({
-									content: function () {
-						                return eventObj.description
-						            },
-            						html: true,
-									trigger: 'hover',
-									placement: 'top',
-									container: 'body'
-								});
-							},
-							events: retorno.eventos,
- 							timeFormat: 'H:mm'
-						});
+							$('#eventos .card-block').fadeIn("slow", function() {
+								$('#loading').fadeOut();
+								$('#loading').remove();
+							});
+							$('#eventos footer').fadeIn("slow");
+						}
+						else {
+							$('#alert-title').html(retorno.title);
+							$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+							$('#alert').modal('show');
 
-						$('#eventos .card-block').fadeIn("slow", function() {
-							$('#loading').fadeOut();
+							$('#eventos .card-block').hide();
+							$('#eventos footer').hide();
 							$('#loading').remove();
-						});
-						$('#eventos footer').fadeIn("slow");
-					}
-					else {
-						$('#alert-title').html(retorno.title);
-						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						}
+				    }
+				    catch (e) {
+						$('#alert-title').html("Erro ao fazer parse do JSON!");
+						$('#alert-content').html(String(e.stack));
 						$('#alert').modal('show');
 
 						$('#eventos .card-block').hide();
 						$('#eventos footer').hide();
 						$('#loading').remove();
-					}
-			    }
-			    catch (e) {
-					$('#alert-title').html("Erro ao fazer parse do JSON!");
-					$('#alert-content').html(String(e.stack));
-					$('#alert').modal('show');
+				    };
+				}
+			});
+		} else {
+			$('#resumo-temporada').append('<li class="loading-li"><div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div></li>');
+			$.ajax({
+				type: "POST",
+				url: "acts/acts.index.php?act=resumo",
+				success: function(data)
+				{
+				    try {
+						var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
 
-					$('#eventos .card-block').hide();
-					$('#eventos footer').hide();
-					$('#loading').remove();
-			    };
-			}
-		});
+						if(retorno.succeed) {
+							if(retorno.list.length > 0) {
+								var c_times = 1;
+								$.each(retorno.list, function(i, item) {
+									var desc_pos = "";
+
+									if(c_times == 1) {
+										desc_pos = "Campeão da Liga Cartolas sem cartola";
+									}
+									else if(c_times == 2) {
+										desc_pos = "Vice Campeão da Liga Cartolas sem cartola";
+									}
+									else {
+										desc_pos = c_times + "º Colocado da Liga Cartolas sem cartola";
+									}
+
+									var desc_pont = "";
+
+									if(item.hasMaxPont) {
+										desc_pont = '<p><span>Maior pontuador da liga em uma única rodada</span></p><h3>' + item.max_pont.toFixed(2) + ' <span style="font-size: 10px;">pontos</span></h3>';
+									}
+
+									$('#resumo-temporada').append('<li><figure><div class="card-temporada"><img src="img/escudos/clube/' + item.escudo + '" class="temporada-escudo"><h3 class="temporada-clube">' + item.time + '</h3></div><figcaption><p><span>' + desc_pos + '</span></p><h3 class="temporada-pontos">' + item.pontuacao.toFixed(2) + ' <span style="font-size: 10px;">pontos</span></h3>' + desc_pont + '</figcaption></figure></li>');
+									c_times++;
+								});
+							}
+							else {
+								$('#resumo-temporada').append('<li class="loading-li"><i class="fa fa-thumbs-down fa-2x"></i><br /><br />Não há dados a serem exibidos aqui.</li>');
+							}
+
+							$('#resumo-temporada li').fadeIn("slow", function() {
+								$('.loading-li').fadeOut();
+								$('.loading-li').remove();
+								$('#resumo-temporada li').css('display', "inline-block");
+							});
+						}
+						else {
+							$('#alert-title').html(retorno.title);
+							$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+							$('#alert').modal('show');
+
+							$('#resumo-temporada').html("");
+						}
+				    }
+				    catch (e) {
+						$('#alert-title').html("Erro ao fazer parse do JSON!");
+						$('#alert-content').html(String(e.stack));
+						$('#alert').modal('show');
+
+						$('#resumo-temporada').html("");
+				    };
+				}
+			});
+
+			$('#resumo-mata-mata').append('<li class="loading-li"><div id="loading"><p style="text-align: center;"><img src="img/loading2.svg" height="150px" border="0"><br />Aguarde! Carregando conteúdo...</p></div></li>');
+			$.ajax({
+				type: "POST",
+				url: "acts/acts.index.php?act=res-mata",
+				success: function(data)
+				{
+				    try {
+						var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+						if(retorno.succeed) {
+							if(retorno.list.length > 0) {
+								$.each(retorno.list, function(i, item) {
+									var img_taca = "";
+
+									if(item.mata_mata.toLowerCase().indexOf('kempes') > -1) {
+										img_taca = "kempes.png";
+									}
+									else if(item.mata_mata.toLowerCase().indexOf('beer') > -1) {
+										img_taca = "copa-beer.png";
+									}
+									else {
+										img_taca = "taca-default.png";
+									}
+
+									$('#resumo-mata-mata').append('<li><figure><div class="card-temporada"><img src="img/escudos/clube/' + item.escudo + '" class="temporada-escudo"><h3 class="temporada-clube">' + item.time + '</h3></div><figcaption><img src="img/fimtemporada/' + img_taca + '" class="taca-temp"><p class="temp-torneio"><span>' + item.mata_mata + '</span></p></figcaption></figure></li>');
+								});
+							}
+							else {
+								$('#resumo-mata-mata').append('<li class="loading-li"><i class="fa fa-thumbs-down fa-2x"></i><br /><br />Não há dados a serem exibidos aqui.</li>');
+							}
+
+							$('#resumo-mata-mata li').fadeIn("slow", function() {
+								$('.loading-li').fadeOut();
+								$('.loading-li').remove();
+								$('#resumo-mata-mata li').css('display', "inline-block");
+							});
+						}
+						else {
+							$('#alert-title').html(retorno.title);
+							$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+							$('#alert').modal('show');
+
+							$('#resumo-mata-mata').html("");
+						}
+				    }
+				    catch (e) {
+						$('#alert-title').html("Erro ao fazer parse do JSON!");
+						$('#alert-content').html(String(e.stack));
+						$('#alert').modal('show');
+
+						$('#resumo-temporada').html("");
+				    };
+				}
+			});
+
+			$('#btn-dados-time').on("click", function(e) {
+	    		e.preventDefault();
+
+				$('#loading-modal').modal({
+					keyboard: false
+				});
+
+	    		$.ajax({
+					type: "POST",
+					url: "acts/acts.index.php?act=dados-time",
+					success: function(data)
+					{
+						try {
+							var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+						
+							$('#loading-modal').modal('hide');
+
+							if(retorno.succeed) {
+
+								$('.temp-escudo').attr('src', 'img/escudos/clube/' + retorno.escudo);
+								$('.temp-nome').html(retorno.nome_time);
+								$('.pont-result').html(retorno.total_pontos.toFixed(2) + '<span>pts</span>');
+								$('.media-result').html(retorno.media.toFixed(2) + '<span>média</span>');
+
+								$('.total-g').html(retorno.total_g.toFixed(2));
+								$('.total-l').html(retorno.total_l.toFixed(2));
+								$('.total-z').html(retorno.total_z.toFixed(2));
+								$('.total-m').html(retorno.total_m.toFixed(2));
+								$('.total-a').html(retorno.total_a.toFixed(2));
+								$('.total-t').html(retorno.total_t.toFixed(2));
+								$('.maior-j').html(retorno.maior_j.toFixed(2));
+								$('.menor-j').html(retorno.menor_j.toFixed(2));
+								$('.maior-c').html(retorno.maior_c.toFixed(2));
+								$('.menor-c').html(retorno.menor_c.toFixed(2));
+
+								$('.max-pont').html(retorno.max_pontos.toFixed(2));
+								$('.max-rodada').html('Maior pontuação <br />' + retorno.max_rodada + 'º Rodada');
+								$('.min-pont').html(retorno.min_pontos.toFixed(2));
+								$('.min-rodada').html('Menor pontuação <br />' + retorno.min_rodada + 'º Rodada');
+								$('.patrimonio').html('C$' + retorno.patrimonio.toFixed(2));
+
+								$('#main-resumo').fadeOut("fast", function() {
+									$('#main-clube').fadeIn("slow");
+								});
+							}
+							else {
+								$('#loading-modal').modal('hide');
+								$('#alert-title').html(retorno.title);
+								$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+								$('#alert').modal('show');
+								$('#main-resumo').show();
+								$('#main-clube').hide();
+							}
+					    }
+					    catch (e) {
+							$('#loading-modal').modal('hide');
+							$('#alert-title').html("Erro ao fazer parse do JSON!");
+							$('#alert-content').html(String(e.stack));
+							$('#alert').modal('show');
+							$('#main-resumo').show();
+							$('#main-clube').hide();
+					    }
+					}
+				});
+			});
+		}
 	}
 
 	// END INDEX (index)

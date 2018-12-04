@@ -1,9 +1,11 @@
 <?php
 require_once("../conn.php");
+require_once("acts.cartola.php");
 
 $temporada = $_SESSION["temporada_atual"];
 $desc_temp = $_SESSION["temp_atual"];
 $rodada = $_SESSION["rodada_site"];
+$id_time = $_SESSION["usu_time"];
 
 if(isset($_GET['act']) && !empty($_GET['act'])) {
 	switch ($_GET['act']) {
@@ -279,6 +281,233 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 				echo '{"succeed": false, "errno": 13006, "title": "Erro ao carregar os dados!", "erro": "Ocorreu um erro ao carregar os dados: ' . $e->getMessage() . '"}';
 				exit();
 			}
+        	break;
+
+        case 'resumo':
+        	try {
+				$list_times = "[";
+
+				$destaqueslist = $conn->query("SELECT * 
+												 FROM vw_desempenho_geral 
+												WHERE temporada = $temporada 
+											 ORDER BY total_pontos DESC LIMIT 6") or trigger_error($conn->error);
+	        	if($destaqueslist && $destaqueslist->num_rows > 0) {
+		        	while($destaques = $destaqueslist->fetch_object()) {
+		                $escudo = "no-escudo.png";
+		                if(file_exists("../img/escudos/$destaques->escudo"))
+		                	$escudo = $destaques->escudo;
+
+		                $hasmaxpont = "false";
+		                $maxpontz = "0";
+
+				        $qryselmaxpont = $conn->query("SELECT id_times, MAX(pontuacao) as max_pont
+														 FROM tbl_times_temporadas 
+														WHERE id_anos = $temporada 
+													 GROUP BY id_times
+													 ORDER BY MAX(pontuacao) DESC LIMIT 1") or trigger_error($conn->error);
+				    	if($qryselmaxpont && $qryselmaxpont->num_rows > 0) {
+				        	while($maxpont = $qryselmaxpont->fetch_object()) {
+				        		if ($maxpont->id_times == $destaques->id_time)
+				        			$hasmaxpont = "true";
+		                			$maxpontz = $maxpont->max_pont;
+				        	}
+				        }
+
+						$list_times .= '{"escudo": "' . $escudo . '", "time": "' . $destaques->time . '", "pontuacao": ' . $destaques->total_pontos . ', "hasMaxPont": ' . $hasmaxpont . ', "max_pont": ' . $maxpontz . '}, ';
+		        	}
+
+					$list_times = substr($list_times, 0, -2);
+		        }
+				$list_times .= "]";
+				echo '{"succeed": true, "list": ' . $list_times . '}';
+				exit();
+			} catch(Exception $e) {
+				echo '{"succeed": false, "errno": 13007, "title": "Erro ao carregar os dados!", "erro": "Ocorreu um erro ao carregar os dados: ' . $e->getMessage() . '"}';
+				exit();
+			}
+        	break;
+
+        case 'res-mata':
+        	try {
+				$list_times = "[";
+
+				$destaqueslist = $conn->query("SELECT mm.descricao AS mata_mata, t.nome_time AS time, t.escudo_time AS escudo
+      											 FROM tbl_mata_mata_confrontos mmc
+										   INNER JOIN tbl_mata_mata mm ON mm.id = mmc.id_mata_mata
+										   INNER JOIN tbl_times t ON t.id = mm.id_time_campeao
+										   WHERE mmc.id_anos = $temporada
+     									GROUP BY mmc.id_anos, mm.descricao
+  										ORDER BY mmc.id_rodadas ASC") or trigger_error($conn->error);
+	        	if($destaqueslist && $destaqueslist->num_rows > 0) {
+		        	while($destaques = $destaqueslist->fetch_object()) {
+		                $escudo = "no-escudo.png";
+		                if(file_exists("../img/escudos/$destaques->escudo"))
+		                	$escudo = $destaques->escudo;
+
+						$list_times .= '{"mata_mata": "' . $destaques->mata_mata . '", "escudo": "' . $escudo . '", "time": "' . $destaques->time . '"}, ';
+		        	}
+
+					$list_times = substr($list_times, 0, -2);
+		        }
+				$list_times .= "]";
+				echo '{"succeed": true, "list": ' . $list_times . '}';
+				exit();
+			} catch(Exception $e) {
+				echo '{"succeed": false, "errno": 13008, "title": "Erro ao carregar os dados!", "erro": "Ocorreu um erro ao carregar os dados: ' . $e->getMessage() . '"}';
+				exit();
+			}
+        	break;
+
+        case 'dados-time':
+
+    		$sqltime = $conn->query("SELECT t.escudo_time AS escudo, t.nome_time as time, t.slug_cartola AS slug, t.patrimonio as patrimonio, 
+    										ROUND(SUM(tt.pontuacao), 2) AS total_pontos, 
+    										ROUND(SUM(tt.pontuacao), 2) / COUNT(tt.pontuacao) AS media, 
+    										MAX(tt.pontuacao) AS max_pontos, 
+    										MIN(tt.pontuacao) AS min_pontos
+								       FROM tbl_times t
+								 INNER JOIN tbl_times_temporadas tt ON tt.id_times = t.id
+								      WHERE t.id = $id_time
+										AND tt.id_anos = $temporada
+										AND tt.id_rodadas <= $rodada
+								   GROUP BY t.escudo_time, t.nome_time") or trigger_error("13010 - " . $conn->error);
+
+			if ($sqltime && $sqltime->num_rows > 0) {
+				while($time = $sqltime->fetch_object()) {
+					if(file_exists("../img/escudos/" . $time->escudo))
+						$escudo = $time->escudo;
+					else 
+						$escudo = "no-escudo.png";
+
+					$qryrodmaxpont = $conn->query("SELECT id_rodadas
+													 FROM tbl_times_temporadas 
+													WHERE id_times = $id_time
+													  AND id_anos = $temporada
+													  AND pontuacao = $time->max_pontos LIMIT 1") or trigger_error($conn->error);
+		        	if($qryrodmaxpont && $qryrodmaxpont->num_rows > 0) {
+			        	while($rodmaxpont = $qryrodmaxpont->fetch_object()) {
+			        		$max_rodada = $rodmaxpont->id_rodadas;
+			        	}
+			        }
+
+					$qryrodminpont = $conn->query("SELECT id_rodadas
+													 FROM tbl_times_temporadas 
+													WHERE id_times = $id_time
+													  AND id_anos = $temporada
+													  AND pontuacao = $time->min_pontos LIMIT 1") or trigger_error($conn->error);
+		        	if($qryrodminpont && $qryrodminpont->num_rows > 0) {
+			        	while($rodminpont = $qryrodminpont->fetch_object()) {
+			        		$min_rodada = $rodminpont->id_rodadas;
+			        	}
+			        }
+
+			        $total_g = (float)0.0;
+					$total_l = (float)0.0;
+					$total_z = (float)0.0;
+					$total_m = (float)0.0;
+					$total_a = (float)0.0;
+					$total_t = (float)0.0;
+
+					$maior_j = (float)0.0;
+					$menor_j = (float)0.0;
+
+					$maior_c = (float)0.0;
+					$menor_c = (float)0.0;
+
+					$isFirstJ = true;
+					$isFirstC = true;
+
+	                $qryselrodadaant = $conn->query("SELECT r.descricao AS rodada 
+													   FROM tbl_temporadas t
+											     INNER JOIN tbl_rodadas r ON r.id = t.id_rodadas
+													  WHERE t.id_anos = $temporada
+													    AND t.id_rodadas <= $rodada
+												   ORDER BY t.id_rodadas ASC") or trigger_error($conn->error);
+
+					if ($qryselrodadaant && $qryselrodadaant->num_rows > 0) {
+				        while($rodadaant = $qryselrodadaant->fetch_object()) {
+							$atletas = api("time/slug/". $time->slug . "/" . $rodadaant->rodada);
+
+							foreach($atletas->{"atletas"} as $j => $jogador) {
+								if ($jogador->{"apelido"} != "") {
+
+									$athlete_posicao = $atletas->{"posicoes"}->{$jogador->{"posicao_id"}}->{"abreviacao"};
+									$athlete_pontos = (float)$jogador->{"pontos_num"};
+
+									if($jogador->{"atleta_id"} == $atletas->{"capitao_id"}) {
+										$athlete_pontos = $athlete_pontos * 2;
+
+										if($isFirstC) {
+											$menor_c = $athlete_pontos;
+											$isFirstC = false;
+										}
+										
+										if($athlete_pontos > $maior_c) {
+											$maior_c = $athlete_pontos;
+										}
+										
+										if($athlete_pontos < $menor_c) {
+											$menor_c = $athlete_pontos;
+										}
+									}
+									else {
+										if($isFirstJ) {
+											$menor_j = $athlete_pontos;
+											$isFirstJ = false;
+										}
+										
+										if($athlete_pontos > $maior_j) {
+											$maior_j = $athlete_pontos;
+										}
+										
+										if($athlete_pontos < $menor_j) {
+											$menor_j = $athlete_pontos;
+										}
+									}
+
+									if($athlete_posicao == "gol") {
+										$total_g = $total_g + $athlete_pontos;				
+									}
+									if($athlete_posicao == "lat") {
+										$total_l = $total_l + $athlete_pontos;
+									}
+									if($athlete_posicao == "zag") {
+										$total_z = $total_z + $athlete_pontos;
+									}
+									if($athlete_posicao == "mei") {
+										$total_m = $total_m + $athlete_pontos;
+									}
+									if($athlete_posicao == "ata") {
+										$total_a = $total_a + $athlete_pontos;
+									}
+									if($athlete_posicao == "tec") {
+										$total_t = $total_t + $athlete_pontos;
+									}
+								}
+							}
+				        }
+				    }
+
+					$total_g = number_format($total_g, 2, '.', '');
+					$total_l = number_format($total_l, 2, '.', '');
+					$total_z = number_format($total_z, 2, '.', '');
+					$total_m = number_format($total_m, 2, '.', '');
+					$total_a = number_format($total_a, 2, '.', '');
+					$total_t = number_format($total_t, 2, '.', '');
+
+					$maior_j = number_format($maior_j, 2, '.', '');
+					$menor_j = number_format($menor_j, 2, '.', '');
+
+					$maior_c = number_format($maior_c, 2, '.', '');
+					$menor_c = number_format($menor_c, 2, '.', '');
+
+					echo '{"succeed": true, "escudo": "' . $escudo . '", "nome_time": "' . $time->time . '", "patrimonio": ' . $time->patrimonio . ', "total_pontos": ' . $time->total_pontos . ', "media": ' . $time->media . ', "max_pontos": ' . $time->max_pontos . ', "max_rodada": ' . $max_rodada . ', "min_pontos": ' . $time->min_pontos . ', "min_rodada": ' . $min_rodada . ', "total_g": ' . $total_g . ', "total_l": ' . $total_l . ', "total_z": ' . $total_z . ', "total_m": ' . $total_m . ', "total_a": ' . $total_a . ', "total_t": ' . $total_t . ', "maior_j": ' . $maior_j . ', "menor_j": ' . $menor_j . ', "maior_c": ' . $maior_c . ', "menor_c": ' . $menor_c . '}';
+				}
+			}
+			else {
+	       		echo '{"succeed": false, "errno": 13009, "title": "Clube não encontrado!", "erro": "O clube informado não foi encontrado no banco de dados! Favor contatar o administrador do site!"}';
+			}
+
         	break;
 
 	    default:
