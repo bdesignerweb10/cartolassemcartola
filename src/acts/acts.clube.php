@@ -16,7 +16,8 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 	    	$list_times = "";
 			$timeslist = $conn->query("SELECT *
 										 FROM vw_escudos_temporada
-										WHERE temporada = $temporada") or trigger_error($conn->error);
+										WHERE temporada = $temporada
+								     ORDER BY time ASC") or trigger_error($conn->error);
         	if($timeslist && $timeslist->num_rows > 0) {
 	        	while($time = $timeslist->fetch_object()) {
 	        		if(!isset($id_clube_default) && empty($id_clube_default)) {

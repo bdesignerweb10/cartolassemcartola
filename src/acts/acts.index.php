@@ -488,6 +488,52 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 				        }
 				    }
 
+					// $conn->autocommit(FALSE);
+				 //    $qryatualizapont = $conn->query("SELECT t.id AS id_time, t.slug_cartola AS slug_cartola,r.id as id_rodada,
+				 //    									   r.descricao AS rodada
+					// 						   		  FROM tbl_times_temporadas tt
+	    //                                         INNER JOIN tbl_times t ON t.id = tt.id_times
+					// 						    INNER JOIN tbl_rodadas r ON r.id = tt.id_rodadas
+					// 						   		 WHERE tt.id_anos = $temporada") or trigger_error("26020 - " . $conn->error);
+			        
+			  //       if ($qryatualizapont && $qryatualizapont->num_rows > 0) {
+				 //        while($timesz = $qryatualizapont->fetch_object()) {
+					// 		$atletas = api("time/slug/". $timesz->slug_cartola . "/" . $timesz->rodada);
+
+					// 		// $pontuacao = (float)0.0;
+					// 		// foreach($atletas->{"atletas"} as $j => $jogador) {
+					// 		// 	if ($jogador->{"apelido"} != "") {
+					// 		// 		$athlete_pontos = (float)$jogador->{"pontos_num"};
+
+					// 		// 		if($jogador->{"atleta_id"} == $atletas->{"capitao_id"}) {
+					// 		// 			$athlete_pontos = $athlete_pontos * 2;
+					// 		// 		}
+
+					// 		// 		$pontuacao = $pontuacao + $athlete_pontos;
+					// 		// 	}
+					// 		// }
+
+					// 		// $pontuacao = number_format($pontuacao, 2, '.', '');
+
+					// 		$pontuacao = number_format((!empty($atletas->{"pontos"}) ? str_replace(',', '.', $atletas->{"pontos"}) : "0"), 2, '.', '');
+
+				 //    		$qryupdpontandpo = "UPDATE tbl_times_temporadas 
+					// 				  		   	   SET pontuacao = " . $pontuacao . ",
+					// 						 		   usuario_id = " . $_SESSION["usu_id"] . ",
+					// 						 		   alterado_em = NOW()
+					// 					    	 WHERE id_anos = $temporada
+					// 					       	   AND id_rodadas = $timesz->id_rodada 
+					// 					       	   AND id_times = $timesz->id_time";
+
+					// 		if ($conn->query($qryupdpontandpo) !== TRUE) {
+					// 			$conn->rollback();
+					// 			echo '{"succeed": false, "errno": 99999, "title": "Erro ao salvar os dados!", "erro": "Erro ao atualizar pontuacoes: ' . $qryupdpontandpo . '<br />' . $conn->error . '"}';
+					// 		}
+
+					// 		$conn->commit();
+					// 	}
+					// }
+
 					$total_g = number_format($total_g, 2, '.', '');
 					$total_l = number_format($total_l, 2, '.', '');
 					$total_z = number_format($total_z, 2, '.', '');

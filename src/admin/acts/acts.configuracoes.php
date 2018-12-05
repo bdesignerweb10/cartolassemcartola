@@ -103,11 +103,117 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 					exit();
 				}
 
-				if($_SESSION["mercado"] == 0) {
-					echo '{"succeed": false, "errno": 26031, "title": "Mercado precisa estar aberto!", "erro": "Para encerrar a temporada, a rodada atual PRECISA ser a última configurada para a temporada (' . $maxrodada . ') e o mercado precisa estar aberto, com as pontuações da última rodada lançadas. Favor contatar o administrador da página!"}';
-					$conn->rollback();
-					exit();
+				// API do Cartola
+				if(intval($_SESSION["api_ligada"]) == 1) {
+					$status_mercado = api("mercado/status");
+
+					if ($status_mercado->{"status_mercado"} == 1 || $status_mercado->{"status_mercado"} == 6) {
+						$ligas = api("auth/ligas", array('login' => "phmpilz@hotmail.com", 'senha' => "23@Wsx89(Nji"));
+			
+						if(count($ligas->{"ligas"}) > 0) {
+							$var_err_cart = "";
+
+							foreach($ligas->{"ligas"} as $l => $liga) {
+								if($liga->{"patrocinador"} == false && $liga->{"time_dono_id"} == 13908998) {
+								 	$cartola = api("auth", array('login' => "phmpilz@hotmail.com", 
+															     'senha' => "23@Wsx89(Nji", 
+															     'api' => "liga",
+															     'liga_slug' => $liga->{"slug"}));
+
+									if(count($cartola->{"times"}) > 0) {
+										foreach($cartola->{"times"} as $t => $time) {
+											$pontuacao = number_format((!empty($time->{"pontos"}->{"rodada"}) ? str_replace(',', '.', $time->{"pontos"}->{"rodada"}) : "0"), 2, '.', '');
+											$posicao = (!empty($time->{"ranking"}->{"campeonato"}) ? $time->{"ranking"}->{"campeonato"} : "0");
+											$patrimonio = number_format($time->{"patrimonio"}, 2, '.', '');
+
+											// print 'time: ' . $time->{"slug"};
+											// print PHP_EOL;
+											// print 'pontuacao: ' . $pontuacao;
+											// print PHP_EOL;
+											// print 'posicao: ' . $posicao;
+											// print PHP_EOL;
+											// print 'patrimonio: ' . $patrimonio;
+											// print PHP_EOL;
+
+											$idtime = "";
+											$qryslug = $conn->query("SELECT id, nome_time
+																	   FROM tbl_times 
+														       	   	  WHERE UPPER(TRIM(slug_cartola)) = UPPER(TRIM('" . $time->{"slug"} . "')) LIMIT 1") or trigger_error("26020 - " . $conn->error);
+		        
+									        while($tslug = $qryslug->fetch_object()) {
+												// print 'time: ' . $tslug->id . ' - ' . $tslug->nome_time;
+												// print PHP_EOL;
+												$idtime = $tslug->id;
+											}
+
+											if(!empty($idtime) && $idtime != "" && $pontuacao != 0 && $posicao != 0) {
+												$qryupdpontandpo = "UPDATE tbl_times_temporadas 
+														  		   	   SET pontuacao = " . $pontuacao . ",
+														  		   	   	   posicao_liga = " . $posicao . ",
+																 		   usuario_id = " . $_SESSION["usu_id"] . ",
+																 		   alterado_em = NOW()
+															    	 WHERE id_anos = " . $_SESSION["temporada_atual"] . "
+															       	   AND id_rodadas = " . $_SESSION["rodada"] . " 
+															       	   AND id_times = $idtime";
+
+												// print 'qryupdpontandpo: ' . $qryupdpontandpo;
+												// print PHP_EOL;
+												// print PHP_EOL;
+
+												if ($conn->query($qryupdpontandpo) === TRUE) {
+													$qryupdpatr = "UPDATE tbl_times 
+																  	  SET patrimonio = " . $patrimonio . "
+																	WHERE id = $idtime";
+
+													// print 'qryupdpatr: ' . $qryupdpatr;
+													// print PHP_EOL;
+													// print PHP_EOL;
+
+													if ($conn->query($qryupdpatr) !== TRUE) {
+														$var_err_cart .= "Erro ao atualizar o patrimônio do time com informações do Cartola FC " . $qryupdpatr . "<br>" . $conn->error;
+													}
+												}
+												else {
+													$var_err_cart .= "Erro ao atualizar a pontuação do time da API do Cartola FC: " . $qryupdpontandpo . "<br>" . $conn->error;
+												}
+											}
+											// else {
+											// 	print 'time: ' . $time->{"slug"};
+											// 	print PHP_EOL;
+											// 	print 'pontuacao: ' . $pontuacao;
+											// 	print PHP_EOL;
+											// 	print 'posicao: ' . $posicao;
+											// 	print PHP_EOL;
+											// 	print 'patrimonio: ' . $patrimonio;
+											// 	print PHP_EOL;
+											// 	var_dump($time);
+											// 	print PHP_EOL;
+											// }
+										}
+									} else {
+										echo '{"succeed": false, "errno": 26028, "title": "Times não encontados no Cartola FC!", "erro": "Os times da liga Cartolas sem Cartola não foram encontrados na API do Cartola FC, favor tentar novamente e caso o erro persista, favor procurar o administrador do sistema!"}';
+										break;
+									}
+								}
+							}
+
+							if(strlen($var_err_cart) > 0) {
+								echo '{"succeed": false, "errno": 26029, "title": "Erro ao atualizar a pontuação dos times!", "erro": "Houve um erro ao atualizar a pontuação dos times de acordo com o publicado pela API do Cartola FC: '.$var_err_cart.'"}';
+								break;
+							}
+						} else {
+							echo '{"succeed": false, "errno": 26028, "title": "Nenhuma liga encontrada no Cartola FC!", "erro": "Não foi encontrada a liga Cartolas sem Cartola na API do Cartola FC, favor tentar novamente e caso o erro persista, favor procurar o administrador do sistema!"}';
+							break;
+						} 
+					} else {
+						echo '{"succeed": false, "errno": 26030, "title": "Mercado não está aberto no Cartola FC!", "erro": "O Cartola FC não está com o mercado aberto, não é possível definir a pontuação da rodada. Status atual do mercado: <b>'.cartola_dict("mercado_status", $status_mercado->{"status_mercado"}).'</b>"}';
+						break;
+					}
 				}
+				// API do Cartola
+
+				$temporada_atual = $_SESSION["temporada_atual"];
+				$rodada_atual = $_SESSION["rodada"];
 
 				$pontuacaonull = 1;
 				$var_nomes_times = "";
@@ -115,8 +221,8 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 				$qrytimeszerado = $conn->query("SELECT t.nome_time as time 
 										   		  FROM tbl_times_temporadas tt
                                             INNER JOIN tbl_times t ON t.id = tt.id_times
-										   		 WHERE tt.id_anos = 1
-										   		   AND tt.id_rodadas = 2
+										   		 WHERE tt.id_anos = $temporada_atual
+										   		   AND tt.id_rodadas = $rodada_atual
 										   		   AND (tt.pontuacao = 0 OR tt.posicao_liga IS NULL)") or trigger_error("26020 - " . $conn->error);
 		        
 		        if ($qrytimeszerado && $qrytimeszerado->num_rows > 0) {
@@ -131,43 +237,163 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 					break;
 				}
 
+				// Calculo do mata-mata
+				$chave = 1;
+				$vencedor_1 = "";
+				$vencedor_2 = "";
+				$perdedor_1 = "";
+				$perdedor_2 = "";
+
+				$qryselconfrontos = $conn->query("SELECT id_mata_mata, id_time_1, id_time_2, nivel, chave
+				  				       				FROM tbl_mata_mata_confrontos 
+				  				      			   WHERE id_anos    =  $temporada_atual
+				  				        			 AND id_rodadas =  $rodada_atual
+		  				           				ORDER BY id_mata_mata, nivel, chave") or trigger_error("26023 - " . $conn->error);
+				if ($qryselconfrontos && $qryselconfrontos->num_rows > 0) {
+			        while($confronto = $qryselconfrontos->fetch_object()) {
+			        	$pontuacao_time_1 = 0;
+			        	$pontuacao_time_2 = 0;
+
+			        	$qryselpontime1 = $conn->query("SELECT pontuacao
+						  				     			  FROM tbl_times_temporadas 
+						  				    			 WHERE id_times   =  $confronto->id_time_1
+						  				      			   AND id_rodadas =  $rodada_atual
+						  				      			   AND id_anos    =  $temporada_atual") or trigger_error("26024 - " . $conn->error);
+						if ($qryselpontime1 && $qryselpontime1->num_rows > 0) {
+					        while($pontime1 = $qryselpontime1->fetch_object()) {
+					        	$pontuacao_time_1 = doubleval($pontime1->pontuacao);
+					        }
+					    }
+
+			        	$qryselpontime2 = $conn->query("SELECT pontuacao
+						  				     			  FROM tbl_times_temporadas 
+						  				    			 WHERE id_times   =  $confronto->id_time_2
+						  				      			   AND id_rodadas =  $rodada_atual
+						  				      			   AND id_anos    =  $temporada_atual") or trigger_error("26025 - " . $conn->error);
+						if ($qryselpontime2 && $qryselpontime2->num_rows > 0) {
+					        while($pontime2 = $qryselpontime2->fetch_object()) {
+					        	$pontuacao_time_2 = doubleval($pontime2->pontuacao);
+					        }
+					    }
+
+					    if(isset($vencedor_1) && !empty($vencedor_1) && $vencedor_1 > 0) {
+					    	if($confronto->nivel > 1) {
+						    	if($pontuacao_time_1 > $pontuacao_time_2) {
+						    		$vencedor_2 = intval($confronto->id_time_1);
+						    		$perdedor_2 = intval($confronto->id_time_2);
+						    	}
+						    	else {
+						    		$vencedor_2 = intval($confronto->id_time_2);
+						    		$perdedor_2 = intval($confronto->id_time_1);
+						    	}
+					    		$qryselproxrodada = $conn->query("SELECT id_rodadas AS id 
+						    									    FROM tbl_temporadas 
+						    									   WHERE id_anos = $temporada_atual
+						    									     AND id_rodadas > $rodada_atual LIMIT 1") or trigger_error("26017 - " . $conn->error);
+
+								if ($qryselproxrodada && $qryselproxrodada->num_rows > 0) {
+							        while($proxrod = $qryselproxrodada->fetch_object()) {
+							        	$proxrodada = $proxrod->id;
+								    	$novo_nivel = $confronto->nivel / 2;
+
+								    	// Disputa de 3 lugar.
+								    	// Quando chegamos ao ultimo nivel de competicao (finais) pegamos os perdedores das semi-finais e fazemos um confronto entre eles.
+								    	// A definicao de 3 lugar está no fato do nivel do confronto ser 1 e a chave 2
+								    	if($novo_nivel == 1) {
+								    		$qryconfrontos = "INSERT INTO tbl_mata_mata_confrontos (id_mata_mata, id_time_1, id_time_2, id_anos, id_rodadas, chave, nivel) VALUES ($confronto->id_mata_mata, $perdedor_1, $perdedor_2, $temporada_atual, $proxrodada, 2, $novo_nivel)";
+
+											if ($conn->query($qryconfrontos) === TRUE) {
+								    			$chave = 1;
+								    		} else {
+												throw new Exception("Erro ao inserir o confronto de terceiro lugar do mata-mata: " . $qryconfrontos . '<br />' . $conn->error);
+											}
+								    	}
+
+								    	$qryconfrontos = "INSERT INTO tbl_mata_mata_confrontos (id_mata_mata, id_time_1, id_time_2, id_anos, id_rodadas, chave, nivel) VALUES ($confronto->id_mata_mata, $vencedor_1, $vencedor_2, $temporada_atual, $proxrodada, $chave, $novo_nivel)";
+
+										if ($conn->query($qryconfrontos) === TRUE) {
+											$vencedor_1 = "";
+											$vencedor_2 = "";
+								    		$chave++;
+										}
+										else {
+											throw new Exception("Erro ao inserir o confronto do mata-mata: " . $qryconfrontos . '<br />' . $conn->error);
+										}
+									}
+								} else {
+									throw new Exception("Não foi possível inserir o confronto do mata-mata porque a rodada seguinte a atual ($rodada_atual) não existe");
+
+								}
+					    	}
+					    }
+					    else {
+					    	if($pontuacao_time_1 > $pontuacao_time_2) {
+					    		$vencedor_1 = intval($confronto->id_time_1);
+					    		$perdedor_1 = intval($confronto->id_time_2);
+					    	}
+					    	else {
+					    		$vencedor_1 = intval($confronto->id_time_2);
+					    		$perdedor_1 = intval($confronto->id_time_1);
+					    	}
+
+					    	if($confronto->nivel == 1) {
+					    		if($confronto->chave == 1) {
+						    		$qryatualizamm = "UPDATE tbl_mata_mata SET id_time_campeao = $vencedor_1 WHERE id = $confronto->id_mata_mata";
+
+									if ($conn->query($qryatualizamm) === TRUE) {
+										$vencedor_1 = "";
+										$vencedor_2 = "";
+									} else {
+										throw new Exception("Erro definir o campeão do mata-mata: " . $qryatualizamm . '<br />' . $conn->error);
+									}
+					    		}
+					    		else {
+									$vencedor_1 = "";
+									$vencedor_2 = "";
+					    		}
+					    	}
+					    }
+			        }
+			    }
+				// Calculo do mata-mata
+
 				$upd_times = "UPDATE tbl_times SET ativo = 0 WHERE id IN (SELECT id_times FROM tbl_inscricao WHERE id_anos = " . $_SESSION["temporada_atual"] . ")";
 				if ($conn->query($upd_times) === TRUE) {
 					$upd_incricao = "UPDATE tbl_inscricao SET ativo = 0 WHERE id_anos = " . $_SESSION["temporada_atual"];
 					if ($conn->query($upd_incricao) === TRUE) {
 
-						$nexttemp = 0;
-						$descnexttemp = "";
-						$qrynexttemp = $conn->query("SELECT t.id_anos AS id, a.descricao AS ano 
-													   FROM tbl_temporadas t
-											     INNER JOIN tbl_anos a ON a.id = t.id_anos
-													  WHERE a.descricao > '" . $_SESSION["temp_atual"] . "'
-												   ORDER BY a.descricao ASC LIMIT 1") or trigger_error($conn->error);
+						// $nexttemp = 0;
+						// $descnexttemp = "";
+						// $qrynexttemp = $conn->query("SELECT t.id_anos AS id, a.descricao AS ano 
+						// 							   FROM tbl_temporadas t
+						// 					     INNER JOIN tbl_anos a ON a.id = t.id_anos
+						// 							  WHERE a.descricao > '" . $_SESSION["temp_atual"] . "'
+						// 						   ORDER BY a.descricao ASC LIMIT 1") or trigger_error($conn->error);
 
-						if ($qrynexttemp && $qrynexttemp->num_rows > 0) {
-					        while($temp = $qrynexttemp->fetch_object()) {
-								$nexttemp = $temp->id;
-								$descnexttemp = $temp->ano;
-							}
-						} else {
-							echo '{"succeed": false, "errno": 26012, "title": "Próxima temporada não definida!", "erro": "Para encerrar a temporada, é preciso ter uma nova temporada cadastrada e configurada. Cadastre uma nova temporada e tente novamente!"}';
-							$conn->rollback();
-							exit();
-						}
+						// if ($qrynexttemp && $qrynexttemp->num_rows > 0) {
+					 //        while($temp = $qrynexttemp->fetch_object()) {
+						// 		$nexttemp = $temp->id;
+						// 		$descnexttemp = $temp->ano;
+						// 	}
+						// } else {
+						// 	echo '{"succeed": false, "errno": 26012, "title": "Próxima temporada não definida!", "erro": "Para encerrar a temporada, é preciso ter uma nova temporada cadastrada e configurada. Cadastre uma nova temporada e tente novamente!"}';
+						// 	$conn->rollback();
+						// 	exit();
+						// }
 
-						$qryencerrartemp = "UPDATE tbl_config SET temporada_aberta = 0, status_mercado = 0, rodada_atual = NULL, temporada_atual = $nexttemp";
+						//$qryencerrartemp = "UPDATE tbl_config SET temporada_aberta = 0, status_mercado = 0, rodada_atual = NULL, temporada_atual = $nexttemp";
 
-						if ($conn->query($qryencerrartemp) === TRUE) {
+						//if ($conn->query($qryencerrartemp) === TRUE) {
 							$conn->commit();
-							$_SESSION["temporada"] = 0;
-							$_SESSION["temporada_atual"] = $nexttemp;
-							$_SESSION["mercado"] = 0;
-							$_SESSION["rodada"] = "";
-							$_SESSION["rodada_site"] = "";
+							// $_SESSION["temporada"] = 0;
+							// $_SESSION["temporada_atual"] = $nexttemp;
+							// $_SESSION["mercado"] = 0;
+							// $_SESSION["rodada"] = "";
+							// $_SESSION["rodada_site"] = "";
 							echo '{"succeed": true, "temporada": "' . $descnexttemp . '"}';
-						} else {
-			    			throw new Exception("Erro ao encerrar a temporada: " . $qryencerrartemp . "<br>" . $conn->error);
-						}
+						// } else {
+			   //  			throw new Exception("Erro ao encerrar a temporada: " . $qryencerrartemp . "<br>" . $conn->error);
+						// }
 					} else {
 				        throw new Exception("Erro ao desativar as inscrições: " . $upd_incricao . "<br>" . $conn->error);
 				}
@@ -297,8 +523,8 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 				$qrytimeszerado = $conn->query("SELECT t.nome_time as time 
 										   		  FROM tbl_times_temporadas tt
                                             INNER JOIN tbl_times t ON t.id = tt.id_times
-										   		 WHERE tt.id_anos = 1
-										   		   AND tt.id_rodadas = 2
+										   		 WHERE tt.id_anos = " . $_SESSION["temporada_atual"] . "
+										       	   AND tt.id_rodadas = " . $_SESSION["rodada"] . "
 										   		   AND (tt.pontuacao = 0 OR tt.posicao_liga IS NULL)") or trigger_error("26020 - " . $conn->error);
 		        
 		        if ($qrytimeszerado && $qrytimeszerado->num_rows > 0) {

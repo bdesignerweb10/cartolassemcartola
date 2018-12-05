@@ -1425,17 +1425,25 @@ table.liga-csc thead tr .headerSortDown {
 	max-height:32px;
 }
 
+.badge-bottom {
+	width: 21px;
+	max-height:32px;
+	margin-right: 0px !important;
+}
+
 
 /* Fim de Temporada */
 
 .fim-temporada{
 	margin-top: -192px;
+	color: #b3b9bf;
 }
 
 .headline-fim {
     /* font-size: 1.5rem; */
     font-weight: bold;
     padding: 15px 20px;
+    color: #b3b9bf;
 }
 
 .taca-temp{
@@ -1475,6 +1483,7 @@ table.liga-csc thead tr .headerSortDown {
     padding-right: 5px;
     border-radius: 5px; 
     font-size: 1.3rem;   
+    color: #b3b9bf;
 }
 
 .temp-esc-clube{	

@@ -3,14 +3,12 @@ CREATE OR REPLACE VIEW vw_destaques_rodada AS
       FROM tbl_times_temporadas r 
 INNER JOIN tbl_times t    ON t.id  = r.id_times
 INNER JOIN tbl_rodadas ro ON ro.id = r.id_rodadas
-     WHERE t.ativo = 1
   ORDER BY r.id_anos ASC, r.id_rodadas DESC, r.pontuacao DESC;
 
 CREATE OR REPLACE VIEW vw_desempenho_geral AS 
     SELECT t.id AS id_time, t.nome_time AS time, t.escudo_time AS escudo, t.slug_cartola AS slug_cartola, tt.id_anos AS temporada, ROUND(SUM(tt.pontuacao), 2) AS total_pontos
       FROM tbl_times t
 INNER JOIN tbl_times_temporadas tt ON tt.id_times = t.id
-     WHERE t.ativo = 1
   GROUP BY t.nome_time, t.escudo_time, tt.id_anos
   ORDER BY ROUND(SUM(tt.pontuacao), 2) DESC;
 
@@ -58,7 +56,6 @@ CREATE OR REPLACE VIEW vw_eventos AS
    SELECT e.id AS id, e.titulo AS titulo, UNIX_TIMESTAMP(e.data) AS data, e.local AS local, e.descricao AS descricao, EXTRACT(YEAR FROM e.data) AS ano, COUNT(ep.id_times) AS participantes
      FROM tbl_eventos e
 LEFT JOIN tbl_eventos_presenca ep ON ep.id_eventos = e.id
-    WHERE ativo = 1
  GROUP BY e.id, e.titulo, e.data, EXTRACT(YEAR FROM e.data)
  ORDER BY e.data DESC, e.id ASC;
 
@@ -66,6 +63,8 @@ CREATE OR REPLACE VIEW vw_escudos_temporada AS
     SELECT i.id_anos AS temporada, t.id AS id, t.nome_time AS time, t.escudo_time AS escudo 
       FROM tbl_times t
 INNER JOIN tbl_inscricao i ON i.id_times = t.id
-     WHERE t.ativo = 1
-       AND i.ativo = 1
+INNER JOIN tbl_times_temporadas tt ON tt.id_times   = t.id
+     WHERE t.slug_cartola IS NOT NULL
+  GROUP BY i.id_anos, t.id, t.nome_time, t.escudo_time
+    HAVING SUM(tt.pontuacao) > 0
   ORDER BY t.nome_time;

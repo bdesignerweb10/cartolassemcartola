@@ -44,23 +44,23 @@ require_once('header.php');
 							<div class="card-footer">
 								<ul class="nav">
 									<li class="nav-item">
-										<span class="badge premiacao"></span> 
+										<span class="badge premiacao badge-bottom"></span> 
 										Zona de Premiação
 									</li>
 									<li class="nav-item">
-										<span class="badge neutro"></span>
+										<span class="badge neutro badge-bottom"></span>
 										Zona Neutra
 									</li>
 									<li class="nav-item">
-										<span class="badge rebaixamento"></span>
+										<span class="badge rebaixamento badge-bottom"></span>
 										Zona de Rebaixamento
 									</li>
 									<li class="nav-item">
-										<span class="badge myteam"></span>
+										<span class="badge myteam badge-bottom"></span>
 										Meu time
 									</li>
 									<li class="nav-item">
-										<img src="img/medal.png" />
+										<img class="badge-bottom" src="img/medal.png" />
 										Maior pontuador em uma única rodada
 									</li>
 								</ul>

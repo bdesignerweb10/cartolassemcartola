@@ -15,7 +15,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 			try {
 				$list_mata = "[";
 
-				$matamatalist = $conn->query("SELECT mm.id AS id, mm.descricao AS descricao
+				$matamatalist = $conn->query("SELECT mm.id AS id, mm.descricao AS descricao, mm.id_time_campeao as campeao
 												FROM tbl_mata_mata mm
 										  INNER JOIN tbl_mata_mata_confrontos mmc ON mm.id = mmc.id_mata_mata
 										 	   WHERE mmc.id_anos = $temporada 
@@ -34,7 +34,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 				        			$confrontos->cor_fase = "bg-info";
 				        			$confrontos->img = "aguardando.png";
 				        			$ordem = "1";
-				        		} else if($confrontos->id_rodadas == $_SESSION["rodada"]) {
+				        		} else if($confrontos->id_rodadas == $_SESSION["rodada"] && (empty($matamata->campeao) || $matamata->campeao == "" || $matamata->campeao == 0)) {
 				        			$confrontos->fase = "Em Andamento";
 				        			$confrontos->cor_fase = "bg-success";
 				        			$confrontos->img = "mitou.png";
@@ -78,7 +78,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 				$confrontoslist = $conn->query("SELECT *
 												  FROM vw_mata_mata_confrontos 
 												 WHERE id = $id
-												 ORDER BY chave ASC ") or trigger_error($conn->error);
+												 ORDER BY chave ASC") or trigger_error($conn->error);
 	        	if($confrontoslist && $confrontoslist->num_rows > 0) {
 	        		$nivel = "";
 		        	while($confrontos = $confrontoslist->fetch_object()) {
