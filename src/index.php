@@ -194,7 +194,7 @@ else :
 									<a href="comparacao"><button class="btn btn-primary"><i class="fa fa-window-restore" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Comparar times</button></a>
 								</div><!-- card-footer -->
 							</footer>
-						</div>
+						</div>						
 					</article>
 				</div><!-- col-sm-5 -->
 				<div class="col-sm-12 col-md-6 col-lg-7 col-xl-7">

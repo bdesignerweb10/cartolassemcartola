@@ -56,6 +56,11 @@
 		<script src="js/textext.plugin.autocomplete.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/textext.plugin.ajax.js" type="text/javascript" charset="utf-8"></script>
  		<script src="js/jquery.tablesorter.min.js" type="text/javascript"></script>
+ 		<script>
+ 			$(function() {
+				$('[data-toggle="tooltip"]').tooltip();
+			});
+ 		</script>
 		<?php if($conn) $conn->close(); ob_end_flush(); ob_clean(); ?>
 	</body>
 </html>

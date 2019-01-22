@@ -1,0 +1,33 @@
+RewriteEngine On
+
+RewriteRule ^/?$ index.php
+RewriteRule ^brasileiro/?$ brasileiro.php
+RewriteRule ^clube/?$ clube.php
+RewriteRule ^dados_clube/?$ dados_clube.php
+RewriteRule ^destaques/?$ destaques.php
+RewriteRule ^eventos/?$ eventos.php
+RewriteRule ^inscricao/?$ inscricao.php
+RewriteRule ^liga/?$ liga.php
+RewriteRule ^login/?$ login.php
+RewriteRule ^logout/?$ logout.php
+RewriteRule ^mata_mata/?$ mata_mata.php
+RewriteRule ^meus_dados/?$ meus_dados.php
+RewriteRule ^pontuacao/?$ pontuacao.php
+RewriteRule ^provisoria/?$ provisoria.php
+RewriteRule ^regulamento/?$ regulamento.php
+RewriteRule ^rodada/?$ rodada.php
+RewriteRule ^scouts/?$ scouts.php
+RewriteRule ^temporeal/?$ tempo_real.php
+RewriteRule ^comparacao/?$ comparacao.php
+
+RewriteRule ^admin/configuracoes/?$ admin/configuracoes.php
+RewriteRule ^admin/eventos/?$ admin/eventos.php
+RewriteRule ^admin/gerenciar_times/?$ admin/gerenciar_times.php
+RewriteRule ^admin/home/?$ admin/home.php
+RewriteRule ^admin/?$ admin/index.php
+RewriteRule ^admin/logout/?$ admin/logout.php
+RewriteRule ^admin/mata_mata/?$ admin/mata_mata.php
+RewriteRule ^admin/pontuacoes/?$ admin/pontuacoes.php
+RewriteRule ^admin/temporadas/?$ admin/temporadas.php
+RewriteRule ^admin/times_temporadas/?$ admin/times_temporadas.php
+RewriteRule ^admin/usuarios/?$ admin/usuarios.php

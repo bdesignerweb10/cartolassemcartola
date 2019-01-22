@@ -76,24 +76,6 @@ else {
 						</a>
 					</li>
 					<li class="nav-item">					
-						<a href="clube" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'clube.php' ? ' nav-active' : ''; ?>">
-						<i class="fa fa-id-card"></i>	
-						Historia do Clube
-						</a>
-					</li>
-					<li class="nav-item">					
-						<a href="brasileiro" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'brasileiro.php' ? ' nav-active' : ''; ?>">
-						<i class="fa fa-list-alt"></i>	
-						Tabela Brasileirão
-						</a>
-					</li>
-					<li class="nav-item">					
-						<a href="eventos" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'eventos.php' ? ' nav-active' : ''; ?>">
-						<i class="fa fa-calendar"></i>	
-						Eventos
-						</a>
-					</li>			
-					<li class="nav-item">					
 						<a href="temporeal" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'tempo_real.php' ? ' nav-active' : ''; ?>">
 						<i class="fa fa-hourglass-2"></i>	
 						Tempo Real
@@ -105,6 +87,24 @@ else {
 						Scouts
 						</a>
 					</li>
+					<li class="nav-item">					
+						<a href="mensal" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'mensal.php' ? ' nav-active' : ''; ?>">
+						<i class="fa fa-calendar"></i>	
+						Pontuação Mensal
+						</a>
+					</li>
+					<li class="nav-item">					
+						<a href="brasileiro" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'brasileiro.php' ? ' nav-active' : ''; ?>">
+						<i class="fa fa-list-alt"></i>	
+						Tabela Brasileirão
+						</a>
+					</li>
+					<li class="nav-item">					
+						<a href="clube" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'clube.php' ? ' nav-active' : ''; ?>">
+						<i class="fa fa-id-card"></i>	
+						Historia do Clube
+						</a>
+					</li>										
 				<?php endif; ?>
 				<?php if($_SESSION["temporada"] == "3") : ?>
 					<li class="nav-item">					
