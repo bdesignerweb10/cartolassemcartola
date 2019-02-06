@@ -1,7 +1,7 @@
 <?php
 require_once("../conn.php");
 
-if($_SESSION["temporada"] == "1")
+if($_SESSION["temporada"] != "2")
 	header('location:./');
 
 use PHPMailer\PHPMailer\PHPMailer;

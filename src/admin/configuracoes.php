@@ -17,7 +17,7 @@ if (!isset($_SESSION["usu_id"]) || empty($_SESSION["usu_id"]) ||
 					<div class="row">
 			  			<div class="col-sm-6 col-md-6 col-lg-3 col-xl-3">		    			
 							<label for="status_temporada">Status Temporada</label>
-							<h3><?php echo ($_SESSION["temporada"] == 1 ? "Temp. Aberta" : "Temp. Fechada"); ?></h3>
+							<h3><?php echo ($_SESSION["temporada"] == 1 ? "Temp. Aberta" : ($_SESSION["temporada"] == 2 ? "Insc. Abertas" : "Temp. Fechada")); ?></h3>
 			    		</div>
 			  			<div class="col-sm-6 col-md-6 col-lg-3 col-xl-3">		    			
 							<label for="status_mercado">Status Mercado</label>
@@ -36,7 +36,7 @@ if (!isset($_SESSION["usu_id"]) || empty($_SESSION["usu_id"]) ||
 					<fieldset class="form-group">
 					<legend>Ações</legend>
 					<div class="row">
-			  			<div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+			  			<div class="col-sm-12 col-md-12 col-lg-4 col-xl-4">
 			  				<?php
 		  					if($_SESSION["temporada"] == 0) {
 		  						echo "<button type='button' class='btn btn-success btn-lg form-control' id='btn-abrir-temporada'><i class='fa fa-clock-o'></i> Abrir temporada!</button>";
@@ -46,7 +46,7 @@ if (!isset($_SESSION["usu_id"]) || empty($_SESSION["usu_id"]) ||
 			  				?>
 		  					
 			    		</div>
-			  			<div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+			  			<div class="col-sm-12 col-md-12 col-lg-4 col-xl-4">
 			  				<?php
 		  					if($_SESSION["mercado"] == 0) {
 		  						echo "<button type='button' class='btn btn-info btn-lg form-control' id='btn-abrir-mercado' " . ($_SESSION["temporada"] == 0 ? "disabled" : "") . "><i class='fa fa-shopping-cart'></i> Abrir mercado!</button>";
@@ -55,6 +55,9 @@ if (!isset($_SESSION["usu_id"]) || empty($_SESSION["usu_id"]) ||
 		  					} 
 			  				?>
 		  							    			
+			    		</div>
+			  			<div class="col-sm-12 col-md-12 col-lg-4 col-xl-4">
+			  				<button type='button' class='btn btn-warning btn-lg form-control' id='btn-abrir-inscricao' <?php echo ($_SESSION["temporada"] == 1 ? "disabled" : "") ?>><i class='fa fa-edit'></i> Abrir inscrições!</button>
 			    		</div>
 					</div>
 				</fieldset>

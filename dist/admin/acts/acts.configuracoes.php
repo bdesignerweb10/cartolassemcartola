@@ -760,6 +760,48 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 			}
 	    break;
 
+	    case 'abririnscricoes':
+			try {
+				$conn->autocommit(FALSE);
+
+				$nexttemp = 0;
+				$descnexttemp = "";
+				$qrynexttemp = $conn->query("SELECT t.id_anos AS id, a.descricao AS ano 
+											   FROM tbl_temporadas t
+									     INNER JOIN tbl_anos a ON a.id = t.id_anos
+											  WHERE a.descricao > '" . $_SESSION["temp_atual"] . "'
+										   ORDER BY a.descricao ASC LIMIT 1") or trigger_error($conn->error);
+
+				if ($qrynexttemp && $qrynexttemp->num_rows > 0) {
+			        while($temp = $qrynexttemp->fetch_object()) {
+						$nexttemp = $temp->id;
+						$descnexttemp = $temp->ano;
+					}
+				} else {
+					echo '{"succeed": false, "errno": 26012, "title": "Próxima temporada não definida!", "erro": "Para encerrar a temporada, é preciso ter uma nova temporada cadastrada e configurada. Cadastre uma nova temporada e tente novamente!"}';
+					$conn->rollback();
+					exit();
+				}
+
+				$qryencerrartemp = "UPDATE tbl_config SET temporada_aberta = 2, status_mercado = 0, rodada_atual = NULL, temporada_atual = $nexttemp";
+
+				if ($conn->query($qryencerrartemp) === TRUE) {
+					$conn->commit();
+					$_SESSION["temporada"] = 2;
+					$_SESSION["temporada_atual"] = $nexttemp;
+					$_SESSION["mercado"] = 0;
+					$_SESSION["rodada"] = "";
+					$_SESSION["rodada_site"] = "";
+					echo '{"succeed": true, "temporada": "' . $descnexttemp . '"}';
+				} else {
+	    			throw new Exception("Erro ao encerrar a temporada: " . $qryencerrartemp . "<br>" . $conn->error);
+				}
+			} catch(Exception $e) {
+				$conn->rollback();
+				echo '{"succeed": false, "errno": 26010, "title": "Erro ao salvar os dados!", "erro": "Ocorreu um erro ao salvar os dados: ' . $e->getMessage() . '"}';
+			}
+	    break;
+
 	    case 'upddados':
 	    	if(isset($_POST) && !empty($_POST) && $_POST["inicio_temporada"]) {
 				$isValid = true;

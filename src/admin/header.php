@@ -47,6 +47,14 @@ if (!isset($_SESSION["usu_id"]) || empty($_SESSION["usu_id"]) ||
 					Home
 					</a>
 				</li>
+				<?php if($_SESSION['usu_nivel'] == "1") : ?>
+					<li class="nav-item">					
+						<a href="competicoes" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'competicoes.php' ? ' nav-active' : ''; ?>">
+						<i class="fa fa-fa"></i>	
+						Competições
+						</a>
+					</li>
+				<?php endif; ?>
 				<li class="nav-item">					
 					<a href="temporadas" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'temporadas.php' ? ' nav-active' : ''; ?>">
 					<i class="fa fa-calendar"></i>	

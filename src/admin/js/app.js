@@ -483,6 +483,46 @@ $(function() {
 
     // END TEMPORADAS (temporadas.php)
 
+	// BEGIN COMPETICOES (competicoes.php)
+
+    $('#btn-voltar-competicoes').click(function(e) {
+		e.preventDefault();
+
+    	$('#btn-salvar-competicao').data('id', null);
+    	$('#btn-salvar-competicao').data('act', null);
+    	$('#headline-competicao').html('');
+		$('.headline-form').html('');
+
+    	$('#id').val('');
+    	$('#descricao').val('');
+    	$('#valor').val('');
+    	$('#capa').val('');
+    	$('#is_default').bootstrapToggle('off');
+
+		$('.mainform').hide();
+		$('.maintable').show();
+    });	
+
+    $('#btn-add-competicoes').click(function(e) {
+		e.preventDefault();
+
+		$('.maintable').hide();
+		$('.mainform').show();
+
+    	$('#btn-salvar-competicao').data('id', null);
+    	$('#btn-salvar-competicao').data('act', 'add');
+    	$('#headline-competicao').html('Cadastrar nova competição');
+		$('.headline-form').html('Insira as informações da nova competição');
+
+    	$('#id').val('');
+    	$('#descricao').val('');
+    	$('#valor').val('');
+    	$('#capa').val('');
+    	$('#is_default').bootstrapToggle('off');
+    });	
+
+    // END COMPETICOES (competicoes.php)
+
 	// BEGIN TIMES TEMPORADAS (times_temporadas.php)
 
 	$('.btn-times-temporada').click(function(e) {
@@ -1053,6 +1093,57 @@ $(function() {
 						if(retorno.succeed) {
 							$('#alert-title').html("Mercado fechado com sucesso!");
 							$('#alert-content').html("O mercado foi fechado com sucesso! Não se esqueça de lançar e conferir a pontuação de todos os times!<br /><br />Ao fechar esta mensagem a página será recarregada.");
+							$('#alert').modal('show');
+
+							$('#alert').on('hidden.bs.modal', function (e) {
+								window.location.reload();
+							})
+						}
+						else {
+							$('#alert-title').html(retorno.title);
+							$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+							$('#alert').modal('show');
+						}
+				    }
+				    catch (e) {
+						$('#loading').modal('hide');
+						$('#alert-title').html("Erro ao fazer parse do JSON!");
+						$('#alert-content').html(String(e.stack));
+						$('#alert').modal('show');
+				    };
+				}
+			});
+		});
+    });	
+
+    $('#btn-abrir-inscricao').click(function(e) {
+    	e.preventDefault();
+
+		$('#confirm-title').html("ATENÇÃO!!");
+		$('#confirm-content').html("Você irá ABRIR AS INSCRIÇÕES e a temporada será alterada para do próximo ano!<br /><br />Esse processo é IRREVERSÍVEL!");
+		$('#confirm').modal('show');
+
+    	$('#btn-confirm-modal').click(function(e) {
+			$('#confirm').modal('hide');
+
+			$('#loading').modal({
+				keyboard: false
+			});
+
+			$.ajax({
+				type: "POST",
+				url: "acts/acts.configuracoes.php?act=abririnscricoes",
+    			timeout: 0,
+				success: function(data)
+				{
+				    try {
+						$('#loading').modal('hide');
+
+						var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+						if(retorno.succeed) {
+							$('#alert-title').html("Inscrições abertas com sucesso!");
+							$('#alert-content').html("As inscrições para a nova temporada foram abertas com sucesso! <br /><br />Ao fechar esta mensagem a página será recarregada.");
 							$('#alert').modal('show');
 
 							$('#alert').on('hidden.bs.modal', function (e) {

@@ -1,7 +1,7 @@
 <?php 
 require_once("conn.php");
 
-if($_SESSION["temporada"] == 3 && (basename($_SERVER['PHP_SELF']) != "inscricao.php" && basename($_SERVER['PHP_SELF']) != "regulamento.php"))
+if($_SESSION["temporada"] == 2 && (basename($_SERVER['PHP_SELF']) != "inscricao.php" && basename($_SERVER['PHP_SELF']) != "regulamento.php"))
 	header('Location: inscricao');
 else {
 	if ($_SESSION["user_ativado"] &&
@@ -106,7 +106,7 @@ else {
 						</a>
 					</li>										
 				<?php endif; ?>
-				<?php if($_SESSION["temporada"] == "3") : ?>
+				<?php if($_SESSION["temporada"] == "2") : ?>
 					<li class="nav-item">					
 						<a href="inscricao" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'inscricao.php' ? ' nav-active' : ''; ?>">
 						<i class="fa fa-check-square-o"></i>	

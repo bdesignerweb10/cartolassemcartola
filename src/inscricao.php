@@ -1,6 +1,6 @@
 <?php 
 require_once('header.php');
-if($_SESSION["temporada"] == "1")
+if($_SESSION["temporada"] != "2")
 	header('location:./');
 ?>
 <main class="inscmain">
