@@ -365,9 +365,15 @@ $(function() {
 	   window.location.pathname.indexOf('temporeal') === -1 &&
 	   window.location.pathname.indexOf('comparacao') === -1) {
 	   	
-		// $('#info').modal({
-		// 	keyboard: false
-		// });
+		/* Modal de Informações  */
+		/* $('#info').modal({
+		 	keyboard: false
+		 });*/
+
+		 /* Modal Resumo da Rodada  */
+		 $('#res-rodada').modal({
+		 	keyboard: false
+		 });
 
 		if($('#resumo-temporada').length == 0) {
 			// DESTAQUES RODADA

@@ -88,11 +88,17 @@ if (!isset($_SESSION["usu_id"]) || empty($_SESSION["usu_id"]) ||
 					</a>
 				</li>
 				<li class="nav-item">					
+					<a href="recados" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'recados.php' ? ' nav-active' : ''; ?>">
+					<i class="fa fa-window-maximize" aria-hidden="true"></i>
+					Recados (Modal)
+					</a>
+				</li>
+				<!--<li class="nav-item">					
 					<a href="eventos" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'eventos.php' ? ' nav-active' : ''; ?>">
 					<i class="fa fa-beer"></i>	
 					Eventos
 					</a>
-				</li>
+				</li>-->
 				<?php if($_SESSION['usu_nivel'] == "1") : ?>
 					<li class="nav-item">					
 						<a href="usuarios" class="nav-link<?php echo basename($_SERVER['PHP_SELF']) == 'usuarios.php' ? ' nav-active' : ''; ?>">
