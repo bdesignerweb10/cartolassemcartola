@@ -8936,6 +8936,19 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   top: 0;
   margin-bottom: 15px; }
 
+.capa-mensal {
+  background: url(../img/mensal.png);
+  background-repeat: no-repeat;
+  background-size: 100%;
+  bottom: 0;
+  left: 0;
+  overflow: auto;
+  padding: 15em;
+  padding-bottom: 0em;
+  right: 0;
+  top: 0;
+  margin-bottom: 15px; }
+
 .capa-tempo-real {
   background: url(../img/tempo-real.png);
   background-repeat: no-repeat;
