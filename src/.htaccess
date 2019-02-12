@@ -19,6 +19,7 @@ RewriteRule ^rodada/?$ rodada.php
 RewriteRule ^scouts/?$ scouts.php
 RewriteRule ^temporeal/?$ tempo_real.php
 RewriteRule ^comparacao/?$ comparacao.php
+RewriteRule ^mensal/?$ mensal.php
 
 RewriteRule ^admin/configuracoes/?$ admin/configuracoes.php
 RewriteRule ^admin/eventos/?$ admin/eventos.php

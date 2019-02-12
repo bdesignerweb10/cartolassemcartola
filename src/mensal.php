@@ -3,8 +3,7 @@
 ?>
 <main>
 	<div class="container">
-		<div class="row capa-mensal">
-			
+		<div class="row capa-mensal">			
 		</div>
 		<div id="mensal" class="row">
 			<div class="col-sm-9">				

@@ -34,6 +34,9 @@ require_once('header_login.php');
 					</div>
   					<button id="btn-login" type="submit" class="btn btn-success btn-lg form-control" name="submit">
   						<i class='fa fa-home'></i> Entrar
+  					</button>
+  					<button id="btn-login-facebook" type="submit" class="btn btn-facebook btn-lg form-control" name="submit">
+  						<i class="fa fa-facebook" aria-hidden="true"></i> Entrar com Facebook
   					</button>		
 	    			<input type="hidden" id="href" name="href" aria-describedby="href" value="<?php echo $_GET["href"]; ?>">
 				</form>

@@ -9252,6 +9252,12 @@ ul.escudos > li {
   padding-right: 30px !important;
   padding-bottom: 30px !important; }
 
+.btn-facebook {
+  background-color: #395498;
+  border-color: #395498;
+  color: #fff;
+  margin-top: 10px; }
+
 .table-bordered, .table-bordered th, .table-bordered td {
   border: 1px solid #cccdce;
   vertical-align: middle !important; }
