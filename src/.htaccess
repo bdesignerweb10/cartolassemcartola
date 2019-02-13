@@ -5,7 +5,6 @@ RewriteRule ^brasileiro/?$ brasileiro.php
 RewriteRule ^clube/?$ clube.php
 RewriteRule ^dados_clube/?$ dados_clube.php
 RewriteRule ^destaques/?$ destaques.php
-RewriteRule ^eventos/?$ eventos.php
 RewriteRule ^inscricao/?$ inscricao.php
 RewriteRule ^liga/?$ liga.php
 RewriteRule ^login/?$ login.php
@@ -22,7 +21,6 @@ RewriteRule ^comparacao/?$ comparacao.php
 RewriteRule ^mensal/?$ mensal.php
 
 RewriteRule ^admin/configuracoes/?$ admin/configuracoes.php
-RewriteRule ^admin/eventos/?$ admin/eventos.php
 RewriteRule ^admin/gerenciar_times/?$ admin/gerenciar_times.php
 RewriteRule ^admin/home/?$ admin/home.php
 RewriteRule ^admin/?$ admin/index.php
