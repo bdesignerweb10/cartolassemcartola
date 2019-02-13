@@ -26,6 +26,7 @@ RewriteRule ^admin/home/?$ admin/home.php
 RewriteRule ^admin/?$ admin/index.php
 RewriteRule ^admin/logout/?$ admin/logout.php
 RewriteRule ^admin/mata_mata/?$ admin/mata_mata.php
+RewriteRule ^admin/recados/?$ admin/recados.php
 RewriteRule ^admin/pontuacoes/?$ admin/pontuacoes.php
 RewriteRule ^admin/competicoes/?$ admin/competicoes.php
 RewriteRule ^admin/temporadas/?$ admin/temporadas.php
