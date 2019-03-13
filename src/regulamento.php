@@ -10,16 +10,16 @@
          </div>
          <div class="col-sm-4">
             <div class="card" style="width: 20rem;">
-              <img class="card-img-top" src="img/reg-csc.jpg" alt="Cartolas sem Carola">
+              <img class="card-img-top" src="img/reg-csc.jpg" alt="Liga Cartoleirão - Trabalho Seguro TS">
               <div class="card-block">
-                <h5 class="card-title">Cartolas sem Cartola - Liga Clássica</h5>                
+                <h5 class="card-title">Liga Cartoleirão - Trabalho Seguro TS (Clássica)</h5>                
                 <a href="#" class="btn btn-primary" style="width: 100%;">Ver Regulamento</a>
               </div>
             </div>
          </div>
          <div class="col-sm-4">
             <div class="card" style="width: 20rem;">
-              <img class="card-img-top" src="img/copa-kempes.png" alt="Cartolas sem Carola">
+              <img class="card-img-top" src="img/copa-kempes.png" alt="Liga Cartoleirão - Trabalho Seguro TS">
               <div class="card-block">
                 <h5 class="card-title">Copa Kempes VI - Mata - Mata</h5>                
                 <a href="#" class="btn btn-primary" style="width: 100%;">Ver Regulamento</a>
@@ -28,7 +28,7 @@
          </div>
          <div class="col-sm-4">
             <div class="card" style="width: 20rem;">
-              <img class="card-img-top" src="img/copa-beer.png" alt="Cartolas sem Carola">
+              <img class="card-img-top" src="img/copa-beer.png" alt="Liga Cartoleirão - Trabalho Seguro TS">
               <div class="card-block">
                 <h5 class="card-title">Copa Beer II - Mata - Mata</h5>                
                 <a href="#" class="btn btn-primary" style="width: 100%;">Ver Regulamento</a>
@@ -37,7 +37,7 @@
          </div>
          <div class="col-sm-4">
             <div class="card" style="width: 20rem;">
-              <img class="card-img-top" src="img/segunda-pele.png" alt="Cartolas sem Carola">
+              <img class="card-img-top" src="img/segunda-pele.png" alt="Liga Cartoleirão - Trabalho Seguro TS">
               <div class="card-block">
                 <h5 class="card-title">Segunda Pele II - Mata - Mata</h5>                
                 <a href="#" class="btn btn-primary" style="width: 100%;">Ver Regulamento</a>
@@ -46,7 +46,7 @@
          </div>
          <div class="col-sm-4">
             <div class="card" style="width: 20rem;">
-              <img class="card-img-top" src="img/copa-kempes.png" alt="Cartolas sem Carola">
+              <img class="card-img-top" src="img/copa-kempes.png" alt="Liga Cartoleirão - Trabalho Seguro TS">
               <div class="card-block">
                 <h5 class="card-title">Copa Kempes VII - Mata - Mata</h5>                
                 <a href="#" class="btn btn-primary" style="width: 100%;">Ver Regulamento</a>
@@ -55,7 +55,7 @@
          </div>
          <div class="col-sm-4">
             <div class="card" style="width: 20rem;">
-              <img class="card-img-top" src="img/segunda-pele.png" alt="Cartolas sem Carola">
+              <img class="card-img-top" src="img/segunda-pele.png" alt="Liga Cartoleirão - Trabalho Seguro TS">
               <div class="card-block">
                 <h5 class="card-title">Segunda Pele III - Mata - Mata</h5>                
                 <a href="#" class="btn btn-primary" style="width: 100%;">Ver Regulamento</a>
@@ -64,7 +64,7 @@
          </div>
          <div class="col-sm-4">
             <div class="card" style="width: 20rem;">
-              <img class="card-img-top" src="img/copa-beer.png" alt="Cartolas sem Carola">
+              <img class="card-img-top" src="img/copa-beer.png" alt="Liga Cartoleirão - Trabalho Seguro TS">
               <div class="card-block">
                 <h5 class="card-title">Copa Beer III - Mata - Mata</h5>                
                 <a href="#" class="btn btn-primary" style="width: 100%;">Ver Regulamento</a>
@@ -81,14 +81,14 @@
       </div>
       <div class="row">
          <div class="col-sm-12">
-            <h3 class="headline">Regulamento liga Cartolas sem cartola - Temporada 2019</h3>
+            <h3 class="headline">Regulamento Liga Cartoleirão - Trabalho Seguro TS - Temporada 2019</h3>
             <div id="accordion" role="tablist" aria-multiselectable="true">
                <div class="card regulamento">
                   <div class="card-header" role="tab" id="headingOne">
                      <h5 class="mb-0"><a data-toggle="collapse" class="collapse-title" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">CAPÍTULO I - Regulamento</a></h5>
                   </div>
                   <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
-                     <div class="card-block">Art.1º – O presente regulamento faz parte integrante do contrato individual da nossa liga CARTOLAS SEM CARTOLA, as normas e preceitos nele contidos aplicam-se a todos os participantes, complementando os princípios gerais de direitos e deveres.</div>
+                     <div class="card-block">Art.1º – O presente regulamento faz parte integrante do contrato individual da nossa Liga Cartoleirão - Trabalho Seguro TS, as normas e preceitos nele contidos aplicam-se a todos os participantes, complementando os princípios gerais de direitos e deveres.</div>
                      <div class="card-block">Parágrafo único – Sua obrigatoriedade perdura o tempo de duração da temporada respectiva, sendo assim, os participantes ao ingressarem na liga automaticamente estarão aceitando os seus termos de ciência, não podendo alegar seu desconhecimento.</div>
                   </div>
                </div>
@@ -97,7 +97,7 @@
                      <h5 class="mb-0"><a class="collapsed collapse-title" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">CAPÍTULO II - Inscrição</a></h5>
                   </div>
                   <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
-                     <div class="card-block">Art. 2º – A inscrição da liga CARTOLAS SEM CARTOLA - 2019 é feita através do site <a href="www.cartolassemcartola.com.br/inscricao">www.cartolassemcartola.com.br/inscricao</a> preenchendo o formulário com nome, e-mail, telefone e nome do time do cartola FC; o valor da inscrição é de <strong class="text-success"> R$ 50,00</strong> por participante, o participante condiciona-se a realizar depósito bancário diretamente no caixa do banco ou transferência bancária, em prazo fixado pelo presidente da liga ou realizar o pagamento em mãos, diretamente com os organizadores da liga. Os valores poderão ser reajustados de uma temporada para outra, jamais, sob nenhuma hipótese durante o andamento do campeonato.</div>
+                     <div class="card-block">Art. 2º – A inscrição da Liga Cartoleirão - Trabalho Seguro TS - 2019 é feita através do site <a href="www.cartoleirao.com.br/inscricao">www.cartoleirao.com.br/inscricao</a> preenchendo o formulário com nome, e-mail, telefone e nome do time do cartola FC; o valor da inscrição é de <strong class="text-success"> R$ 50,00</strong> por participante, o participante condiciona-se a realizar depósito bancário diretamente no caixa do banco ou transferência bancária, em prazo fixado pelo presidente da liga ou realizar o pagamento em mãos, diretamente com os organizadores da liga. Os valores poderão ser reajustados de uma temporada para outra, jamais, sob nenhuma hipótese durante o andamento do campeonato.</div>
                      <div class="card-block">1. O prazo de pagamento da inscrição inicia-se em 28/02/2019 e se encerra em 27/04/2019. Não podendo ser prorrogado.</div>
                      <div class="card-block">2. É permitido somente, UM (1) time por participante.</div>
                      <div class="card-block">3. Antes de iniciar o campeonato quem desistir de participar poderá ter o reembolso do valor pago na inscrição.</div>
@@ -123,7 +123,7 @@
                   </div>
                   <div id="collapseFour" class="collapse" role="tabpanel" aria-labelledby="headingFour">
                      <div class="card-block">Art.4º – Cabe ao presidente fixar anualmente o percentual que será retirado do total arrecadado para a organização da liga e custeios, tais como: manutenção do site.</div>
-                     <div class="card-block">• 1º. - A taxa destinada à organização nesta temporada de 2019 será de <strong class="text-danger"> R$40,00</strong> do valor total arrecadado para o pagamento do domínio do site.  .</div>
+                     <div class="card-block">• 1º. - A taxa destinada à organização nesta temporada de 2019 será de <strong class="text-danger"> R$40,00</strong> do valor total arrecadado para o pagamento do domínio do site.</div>
                   </div>
                </div>
                <!-- Card regulamento -->
@@ -132,7 +132,7 @@
                      <h5 class="mb-0"><a class="collapsed collapse-title" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">CAPÍTULO V - Estrutura da liga</a></h5>
                   </div>
                   <div id="collapseFive" class="collapse" role="tabpanel" aria-labelledby="headingFive">
-                     <div class="card-block">Art. 5º – O CARTOLAS SEM CARTOLA conta com n participantes no sistema de pontos corridos, ao final do campeonato o time que acumular mais pontos será o campeão.</div>
+                     <div class="card-block">Art. 5º – A Liga Cartoleirão - Trabalho Seguro TS conta com n participantes no sistema de pontos corridos, ao final do campeonato o time que acumular mais pontos será o campeão.</div>
                      <div class="card-block">A classificação segue o regulamento do site oficial do CARTOLA FC. https://cartolafc.globo.com/#!/liga/nome da liga</div>
                      <div class="card-block">a) As Rodadas <strong class="text-primary">7</strong>,<strong class="text-primary">18</strong>,<strong class="text-primary">27</strong> e <strong class="text-primary">37</strong> serão as rodadas bônus, que ao fim de cada uma delas, o time que fizer mais pontos será premiado*.</div>
                      <div class="card-block">(*) Espera-se ao mínimo 50 inscritos para implantação da rodada bônus, em caso de não atingir esse número de inscritos, não haverá rodada bônus.</div>                     
@@ -144,7 +144,7 @@
                      <h5 class="mb-0"><a class="collapsed collapse-title" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseSix">CAPÍTULO VI - Grupo da liga no aplicativo WhatsApp</a></h5>
                   </div>
                   <div id="collapseSix" class="collapse" role="tabpanel" aria-labelledby="headingSix">
-                     <div class="card-block">Art.6º – Ninguém é obrigado a participar do grupo da liga CARTOLAS SEM CARTOLA no whatsApp. </div>
+                     <div class="card-block">Art.6º – Ninguém é obrigado a participar do grupo da Liga Cartoleirão - Trabalho Seguro TS no whatsApp. </div>
                      <div class="card-block">• 1°-   O participante que alterar o nome do grupo sem autorização prévia do presidente será banido por (1) UM MÊS do grupo.</div>
                      <div class="card-block">• 2°-    O participante poderá sair do grupo ou entrar a hora que quiser embora, caso saia e queira retornar ele precisará esperar o ADM adicioná-lo novamente sem prazo definido.</div>
                      <div class="card-block">• 3°-   Embora todos os tipos de conteúdo sejam permitidos cabe o próprio participante ter o mínimo de noção do conteúdo que ele está compartilhando tendo em vista sempre o respeito entre todos os participantes do grupo.</div>
@@ -198,7 +198,7 @@
                   </div>
                   <div id="collapseTen" class="collapse" role="tabpanel" aria-labelledby="headingSix">
                      <div class="card-block">Art. 15º – Os participantes devem observar o presente regulamento, comunicados e outras instruções expedidas pela organização da liga.</div>
-                     <div class="card-block">Art. 16º – Todos os participantes podem ler o presente regulamento que se encontra no nosso site <a href="https://www.cartolassemcartola.com.br/regulamento"> https://www.cartolassemcartola.com.br/regulamento</a>  Ao participar da liga este regulamento é tido como lido e todos estão de acordo com todos os seus preceitos.</div>
+                     <div class="card-block">Art. 16º – Todos os participantes podem ler o presente regulamento que se encontra no nosso site <a href="https://www.cartoleirao.com.br/regulamento"> https://www.cartoleirao.com.br/regulamento</a>  Ao participar da liga este regulamento é tido como lido e todos estão de acordo com todos os seus preceitos.</div>
                      <div class="card-block">Art. 17º – Os casos omissos ou não previstos são resolvidos pelo presidente.</div>
                      <div class="card-block">Art. 18º – O presente regulamento pode ser alterado ou substituído por outro, sempre que a Organização julgar conveniente.</div>
                   </div>
@@ -247,7 +247,7 @@
                      <h5 class="mb-0"><a class="collapsed collapse-title" data-toggle="collapse" data-parent="#accordion" href="#collapsekthree" aria-expanded="false" aria-controls="collapsekthree">3) Como Participar/Inscrição </a></h5>
                   </div>
                   <div id="collapsekthree" class="collapse" role="tabpanel" aria-labelledby="headingkthree">
-                     <div class="card-block">3.1. Poderão participar da Copa Kempes, qualquer pessoa desde que efetue o pagamento de R$ 10,00 e também esteja inscrito na liga Clássica Cartolas sem cartola o que dará direito a competir com 1 time na copa Kempes.</div>
+                     <div class="card-block">3.1. Poderão participar da Copa Kempes, qualquer pessoa desde que efetue o pagamento de R$ 10,00 e também esteja inscrito na liga Clássica Cartoleirão - Trabalho Seguro TS o que dará direito a competir com 1 time na copa Kempes.</div>
                      <div class="card-block">3.2. A Copa será realizada com 32 participantes.</div>
                      <div class="card-block">3.3. O período de inscrição na Copa Kempes estará valendo a partir de 28/02/2019 até a uma rodada antes do inicio da copa, serão aceitas inscrições somente mediante pagamento.</div>
                      <div class="card-block">3.4. Caso a Copa não atinja 32 times inscritos, poderá haver uma mudança na estrutura da liga passando para 16 times (Os 16 Times primeiros inscritos e com pagamento efetuado) e também poderá haver alteração na premiação.</div>
@@ -327,7 +327,7 @@
                      <h5 class="mb-0"><a class="collapsed collapse-title" data-toggle="collapse" data-parent="#accordion" href="#collapsecspthree" aria-expanded="false" aria-controls="collapsecspthree">3) Como Participar/Inscrição </a></h5>
                   </div>
                   <div id="collapsecspthree" class="collapse" role="tabpanel" aria-labelledby="headingkthree">
-                     <div class="card-block">3.1. Poderão participar da Segunda Pele, qualquer pessoa desde que efetue o pagamento de R$ 10,00 e também esteja inscrito na liga Clássica Cartolas sem cartola o que dará direito a competir com 1 time na copa Segunda Pele.</div>
+                     <div class="card-block">3.1. Poderão participar da Segunda Pele, qualquer pessoa desde que efetue o pagamento de R$ 10,00 e também esteja inscrito na liga Clássica Cartoleirão - Trabalho Seguro TS o que dará direito a competir com 1 time na copa Segunda Pele.</div>
                      <div class="card-block">3.2. A Copa será realizada com 32 participantes.</div>
                      <div class="card-block">3.3. O período de inscrição na Copa Segunda Pele estará valendo a partir de 28/02/2019 até a uma rodada antes do inicio da copa, serão aceitas inscrições somente mediante pagamento</div>
                      <div class="card-block">3.4. Caso a Copa não atinja 32 times inscritos, poderá haver uma mudança na estrutura da liga passando para 16 times (Os 16 Times primeiros inscritos e com pagamento efetuado) e também poderá haver alteração na premiação.</div>
@@ -407,7 +407,7 @@
                      <h5 class="mb-0"><a class="collapsed collapse-title" data-toggle="collapse" data-parent="#accordion" href="#collapsebeerthree" aria-expanded="false" aria-controls="collapsebeerthree">3) Como Participar/Inscrição </a></h5>
                   </div>
                   <div id="collapsebeerthree" class="collapse" role="tabpanel" aria-labelledby="headingbeerthree">
-                     <div class="card-block">3.1. Poderão participar da Copa Beer, qualquer pessoa desde que efetue o pagamento de R$ 10,00 e também esteja inscrito na liga Clássica Cartolas sem cartola o que dará direito a competir com 1 time na copa Beer.</div>
+                     <div class="card-block">3.1. Poderão participar da Copa Beer, qualquer pessoa desde que efetue o pagamento de R$ 10,00 e também esteja inscrito na liga Clássica Cartoleirão - Trabalho Seguro TS o que dará direito a competir com 1 time na copa Beer.</div>
                      <div class="card-block">3.2. A Copa será realizada com 32 participantes.</div>
                      <div class="card-block">3.3. O período de inscrição na Copa Beer estará valendo a partir de 28/02/2019 até a uma rodada antes do inicio da copa, serão aceitas inscrições somente mediante pagamento</div>
                      <div class="card-block">3.4. Caso a Copa não atinja 32 times inscritos, poderá haver uma mudança na estrutura da liga passando para 16 times (Os 16 Times primeiros inscritos e com pagamento efetuado) e também poderá haver alteração na premiação.</div>

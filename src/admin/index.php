@@ -7,7 +7,7 @@ require_once('header_login.php');
 			<div class="col-sm-12 col-md-6 col-lg-4 col-xl-4 login-box">
 				<div class="login-header">
 					<img src="../img/logo.png" alt="Logo Cartola">
-					<span class="head-login">Painel Cartolas Sem Cartola</span>
+					<span class="head-login">Painel Liga Cartoleirão</span>
 				</div>
 				<form id="form-login" data-toggle="validator" action="acts/acts.login.php" method="POST">
 		  			<div class="form-group">		    			

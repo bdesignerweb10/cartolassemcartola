@@ -11,7 +11,7 @@ if($_SESSION["temporada"] == 0) :
 	<div class="row capa-temporada-encerrada"></div>	
 		<div class="jumbotron jumbotron-fluid fim-temporada">
 		  <div class="container">		    
-		    <p class="lead">Foram muitas mitadas, muitas zicadas e também muitas risadas. Esse ano de 2018 ficará marcada na história da liga "Cartolas sem cartola" por ser a edição com o maior número de participantes de sua tajetória.</p>
+		    <p class="lead">Foram muitas mitadas, muitas zicadas e também muitas risadas. Esse ano de 2018 ficará marcada na história da liga "Liga Cartoleirão - Trabalho Seguro TS" por ser a edição com o maior número de participantes de sua tajetória.</p>
 		    <?php if(isset($_SESSION["usu_id"]) && !empty($_SESSION["usu_id"]) && $_SESSION["usu_id"] > 0) { ?>
 			    <p class="lead">Obrigado <strong><?php echo $_SESSION["usu_nome"] ?></strong>, que já faz parte dessa história. Esperamos você em 2019.</p>		    
 			    <a id="btn-dados-time" href="#"><button class="btn btn-large btn-info">Ver desempenho do meu time</button></a>
@@ -20,7 +20,7 @@ if($_SESSION["temporada"] == 0) :
 		</div>	
 		<div class="row">
 			<div class="col-12">
-				<h1 class="headline-fim">Liga Cartolas sem Cartola <span style="font-size: 14px;">(Resumo da temporada)</span></h1>		
+				<h1 class="headline-fim">Liga Cartoleirão - Trabalho Seguro TS <span style="font-size: 14px;">(Resumo da temporada)</span></h1>		
 			</div>	
 			<ul id="resumo-temporada" class="grid cs-style-4"></ul>
 			<div class="col-12">
@@ -127,7 +127,7 @@ else :
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-6">
-					<h1 class="headline">Seja bem vindo ao Cartolas sem Cartola!</h1>			
+					<h1 class="headline">Seja bem vindo a Liga Cartoleirão - Trabalho Seguro TS</h1>			
 				</div>
 				<div class="col-sm-6">
 					<h1 class="headline-rodada">Rodada Atual: <strong><?php echo $_SESSION["rod_atual"]; ?>º rodada</strong></h1>

@@ -9,7 +9,7 @@ if($_SESSION["temporada"] != "2")
 		</div>
 		<div class="row">
 			<div class="col-sm-8">
-				<h3 class="headline">Inscrição liga Cartolas sem cartola - Temporada <?php echo $_SESSION["temp_atual"]; ?></h3>
+				<h3 class="headline">Inscrição Liga Cartoleirão - Trabalho Seguro TS - Temporada <?php echo $_SESSION["temp_atual"]; ?></h3>
 				<div class="inscricao">
 					<div class="row">
 						<div class="col-sm-12">
@@ -107,7 +107,7 @@ if($_SESSION["temporada"] != "2")
 					        <label class="custom-control custom-chek form-check">
 								<input id="regulamento" name="regulamento" type="checkbox" class="custom-control-input" value="1">
 								<span class="custom-control-indicator"></span>
-								<span class="custom-control-description"> Eu declaro que li e aceito o regulamento da Liga Cartolas Sem Cartola e das ligas Mata Mata</span>
+								<span class="custom-control-description"> Eu declaro que li e aceito o regulamento da Liga Cartoleirão - Trabalho Seguro TS e das ligas Mata Mata</span>
 							</label>
 						</div>
 						<input type="hidden" id="id_time" name="id_time" />				
@@ -120,7 +120,7 @@ if($_SESSION["temporada"] != "2")
 					<div class="card-block">
 				    	<blockquote class="card-blockquote">
 					      	<p>Olá Cartoleiro!</p>
-					      	<p>Seja bem-vindo a liga Cartolas sem cartola.</p>
+					      	<p>Seja bem-vindo a Liga Cartoleirão - Trabalho Seguro TS.</p>
 					      	<p>Após realizar sua inscrição é necessário realizar o pagamento com o tesoureiro da Liga (Bruno Gomes) para que sua inscrição seja efetivada na liga.</p>
 					      	
 					      	<p>Formas de Pagamento:</p>
@@ -133,10 +133,10 @@ if($_SESSION["temporada"] != "2")
 
 					      	<p>Caso tenha alguma dúvida ou sugestão, entre em contato por:</p>
 					      	<p> - (19) 99897-0090<br />
-					      	 - <a href="mailto:contato@cartolassemcartola.com.br">contato@cartolassemcartola.com.br</a></p>
+					      	 - <a href="mailto:contato@cartoleirao.com.br">contato@cartoleirao.com.br</a></p>
 					      	
 					      	<p>Desejamos a todos um bom divertimento.</p>
-					      	<footer>Equipe <cite title="Source Title">Cartolas sem cartola</cite></footer>
+					      	<footer>Equipe <cite title="Source Title">Liga Cartoleirão - Trabalho Seguro TS</cite></footer>
 				    	</blockquote>
 				  	</div>
 				</div><!-- card -->		
@@ -155,7 +155,7 @@ if($_SESSION["temporada"] != "2")
 		</div><!-- row -->	
 		<div class="row">
 			<div class="col-sm-12">	
-				<h2 class="headline-custom">Obrigado por se inscrever na liga Cartolas sem cartola</h2>
+				<h2 class="headline-custom">Obrigado por se inscrever na Liga Cartoleirão - Trabalho Seguro TS</h2>
 				<p class="pre-msg">Agora falta só um pouco, efetue seu pagamento e venha mitar conosco na liga.</p>				
 			</div><!-- col-sm-12 -->
 		</div><!-- row -->

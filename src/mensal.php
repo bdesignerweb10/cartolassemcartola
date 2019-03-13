@@ -32,7 +32,7 @@
 					<div id="desempenho-liga-mensal" class="card">
 						<div class="card-header">
 							<header>
-								<h2 class="card-title">Cartolas sem cartola Mês de Junho</h2>
+								<h2 class="card-title">Liga Cartoleirão - Trabalho Seguro TS - Mês de Junho</h2>
 							</header>
 						</div><!-- card-header -->
 						<div class="card-block">

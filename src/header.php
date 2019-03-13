@@ -20,14 +20,14 @@ else {
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
-	<meta name="description" content="Acompanhe seu time na liga Cartolas sem Cartola e seque bastante todos seus colegas" />
+	<meta name="description" content="Acompanhe seu time na Liga Cartoleirão - Trabalho Seguro TS e seque bastante todos seus colegas" />
 	<meta name="keywords" content="cartola, fc, globo, cartolas, sem, cartola, futebol, brasileirão, serie, a" />
 	<meta name="author" content="Pedro Pilz, Bruno Gomes"/>
 
 	<meta name="robots" content="index, follow" />
 	<meta name="googlebot" content="index, follow" />
 	
-	<title>Cartolas sem cartola</title>
+	<title>Liga Cartoleirão - Trabalho Seguro TS</title>
 
 	<link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
@@ -136,7 +136,8 @@ else {
 				<div class="liga">					
 					<p>
 						<span class="mark hidden-xs-down">
-							<?php echo strftime('Bom dia, hoje é %d de %B de %Y', strtotime('today')); ?>
+							Liga Cartoleirão - Trabalho Seguro TS
+							<!--<?php echo strftime('Bom dia, hoje é %d de %B de %Y', strtotime('today')); ?>-->
 						</span>
 					</p>
 				</div><!-- liga -->
