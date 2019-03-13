@@ -7,7 +7,7 @@ if($_SESSION["temporada"] != "2")
 	<div class="container">
 		<div class="row capa-inscricao">		
 		</div>
-		<div class="row ">
+		<div class="row">
 			<div class="col-sm-8">
 				<h3 class="headline">Inscrição liga Cartolas sem cartola - Temporada <?php echo $_SESSION["temp_atual"]; ?></h3>
 				<div class="inscricao">
@@ -41,53 +41,46 @@ if($_SESSION["temporada"] != "2")
 								  <strong>Atenção!</strong> Ao selecionar o torneio desejado, o Cartoleiro estará apenas reservando sua participação, a confirmação de sua inscrição nos torneios selecioandos, será mediante ao pagamento.
 								</div>
 			  				</div>
-			  				<div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">	
-			  					<label class="custom-control custom-chek">
-									<input id="" name="" type="checkbox" class="custom-control-input" value="1" checked>
-									<span class="custom-control-indicator"></span>
-									<span class="custom-control-description">Cartolas sem cartola (R$50,00) <i class="fa fa-info-circle" id="info" data-toggle="tooltip" data-html="true" title="<p><h3>Liga Clássica</h3></p><p><strong>Ínicio:</strong> 1º Rodada<br /><strong>Fim:</strong> 38º Rodada</p><p><strong>Premiações:</strong><br /> 1º ao 6º colocado, maior pontuador e 4 Rodadas Bônus (Informações no regulamento).</p><p><strong>Requisitos:</strong> Realizar a inscrição no site e efetuar o pagamento.</p>"></i></span>
-								</label><br />
+			  				<div class="col-sm-12 col-md-12 col-lg-9 col-xl-9">
+								<?php
+								$competicoes = $conn->query("SELECT id, descricao, valor, is_default, outro_valor, informacoes FROM tbl_competicoes ORDER BY is_default DESC") or trigger_error($conn->error);
 
-								<label class="custom-control custom-chek">
-									<input id="" name="" type="checkbox" class="custom-control-input" value="1">
-									<span class="custom-control-indicator"></span>
-									<span class="custom-control-description">Copa Kempes VI (R$10,00) <i class="fa fa-info-circle" id="info" data-toggle="tooltip" data-html="true" title="<p><h3>Mata Mata</h3></p><p><strong>Previsão ínicio:</strong> 4º Rodada<br /><strong>Previsão fim:</strong> 8º Rodada</p><p><strong>Premiações:</strong><br /> Campeão R$220,00 <br /> Vice-Campeão R$100,00 <br /> Informações no regulamento.</p><p><strong>Requisitos:</strong> Os 32 primeiros que realizar inscrição e efetuar o pagamento.</p>"></i></span>
-								</label>							
+								if($competicoes && $competicoes->num_rows > 0) {
+									$arrcount = 0;
+				        			while($c = $competicoes->fetch_object()) {
+				        				$valor_comp = "";
+				        				if($c->valor == 0) {
+			        						$valor_comp = $c->outro_valor;
+				        				}
+				        				else {
+				        					$valor_comp = number_format($c->valor, 2, ',', '.');
+				        				}
 
-								<label class="custom-control custom-chek">
-									<input id="" name="" type="checkbox" class="custom-control-input" value="1">
-									<span class="custom-control-indicator"></span>
-									<span class="custom-control-description">Copa Beer (Pack Heineken) <i class="fa fa-info-circle" id="info" data-toggle="tooltip" data-html="true" title="<p><h3>Mata Mata</h3></p><p><strong>Previsão ínicio:</strong> 9º Rodada<br /><strong>Previsão fim:</strong> 12º Rodada (16 Times) ou 13º Rodada (32 Times)</p><p><strong>Premiações:</strong> <br />Detalhes no no regulamento.</p><p><strong>Requisitos:</strong> Espera-se ao mínimo 16 times que realizem inscrição e efetuem o pagamento.</p>"></i></span>
-								</label>
-								
+			        					echo "<label class='custom-control custom-chek'>
+										<input id='competicao[$arrcount]' name='competicao[$arrcount]' type='checkbox' class='custom-control-input competicao' data-money='$c->valor' value='$c->id' " . ($c->is_default == 1 ? "checked disabled" : "") . ">
+										<span class='custom-control-indicator'></span>
+										<span class='custom-control-description'>$c->descricao (R$ $valor_comp) <i class='fa fa-info-circle' id='info' data-toggle='tooltip' data-html='true' title='$c->informacoes'></i></span>
+										</label>";
 
-								<label class="custom-control custom-chek">
-									<input id="" name="" type="checkbox" class="custom-control-input" value="1">
-									<span class="custom-control-indicator"></span>
-									<span class="custom-control-description">Segunda Pele (R$10,00) <i class="fa fa-info-circle" id="info" data-toggle="tooltip" data-html="true" title="<p><h3>Mata Mata</h3></p><p><strong>Previsão ínicio:</strong> 14º Rodada <br /><strong>Previsão fim:</strong> 18º Rodada</p><p><strong>Premiações:</strong> <br />Campeão (Produto Oficial do Clube que torça no valor de R$200,00) vice-campeão (Produto Oficial do Clube que torça no valor de R$120,00).</p><p><strong>Requisitos:</strong> Os 32 primeiros que realizar inscrição e efetuar o pagamento.</p>"></i></span>
-								</label>
+										if($c->is_default == 1) {
+											echo "<br /><input type='hidden' id='competicao[$arrcount]' name='competicao[$arrcount]' value='$c->id' />";
+										}
 
-								<label class="custom-control custom-chek">
-									<input id="" name="" type="checkbox" class="custom-control-input" value="1">
+										$arrcount++;
+			        				}
+		        				}
+		        				else {
+		        					echo '<label class="custom-control custom-chek">
+									<input id="" name="" type="checkbox" class="custom-control-input" value="ERR" checked disabled>
 									<span class="custom-control-indicator"></span>
-									<span class="custom-control-description">Copa Kempes VII (R$10,00) <i class="fa fa-info-circle" id="info" data-toggle="tooltip" data-html="true" title="<p><h3>Mata Mata</h3></p><p><strong>Previsão ínicio:</strong> 20º Rodada <br /><strong>Previsão fim:</strong> 24º Rodada</p><p><strong>Premiações:</strong><br /> Campeão R$220,00 <br /> Vice-Campeão R$100,00 <br /> Informações no regulamento.</p><p><strong>Requisitos:</strong> Os 32 primeiros que realizar inscrição e efetuar o pagamento.</p>"></i></span>
-								</label>
-
-								<label class="custom-control custom-chek">
-									<input id="" name="" type="checkbox" class="custom-control-input" value="1">
-									<span class="custom-control-indicator"></span>
-									<span class="custom-control-description">Segunda Pele (R$10,00) <i class="fa fa-info-circle" id="info" data-toggle="tooltip" data-html="true" title="<p><h3>Mata Mata</h3></p><p><strong>Previsão ínicio:</strong> 26º Rodada <br /><strong>Previsão fim:</strong> 30º Rodada</p><p><strong>Premiações:</strong> <br />Campeão (Produto Oficial do Clube que torça no valor de R$200,00) vice-campeão (Produto Oficial do Clube que torça no valor de R$120,00).</p><p><strong>Requisitos:</strong> Os 32 primeiros que realizar inscrição e efetuar o pagamento.</p>"></i></span>
-								</label>
-
-								<label class="custom-control custom-chek">
-									<input id="" name="" type="checkbox" class="custom-control-input" value="1">
-									<span class="custom-control-indicator"></span>
-									<span class="custom-control-description">Copa Beer (Pack Heineken) <i class="fa fa-info-circle" id="info" data-toggle="tooltip" data-html="true" title="<p><h3>Mata Mata</h3></p><p><strong>Previsão ínicio:</strong> 33º Rodada <br /><strong>Previsão fim:</strong> 36º Rodada (16 Times) ou 37º Rodada (32 Times)</p><p><strong>Premiações:</strong> <br />Detalhes no no regulamento.</p><p><strong>Requisitos:</strong> Espera-se ao mínimo 16 times que realizem inscrição e efetuem o pagamento.</p>"></i></span>
-								</label>
+									<span class="custom-control-description">ERRO (R$99) <i class="fa fa-info-circle" id="info" data-toggle="tooltip" data-html="true" title="Erro ao executar a Query!"></i></span>
+									</label><br />';
+		        				}
+								?>
 			  				</div>
-				  			<div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">	
+				  			<div class="col-sm-12 col-md-12 col-lg-3 col-xl-3">	
 			  					<input type="text" class="form-control mb-2 mr-sm-2 mb-sm-3" id="valor" name="valor" value="R$ 50,00" data-mask="R$ 00,00" data-mask-selectonfocus="true" data-mask-clearifnotmatch="true" readonly="readonly">
-			  					<p>Valor total não inclui a Copa Beer, <strong style="color: #293541;">Inscrição deve ser efetuada separadamente.</strong></p>
+			  					<p style="font-size: 0.8rem">Valor total não inclui a Copa Beer, <strong style="color: #293541;">o pagamento da inscrição deve ser efetuado separadamente.</strong></p>
 			  				</div>
 			  			</div>
 					    <fieldset class="form-group row" style="margin-left: 0px; margin-right: 0px;">
@@ -116,7 +109,8 @@ if($_SESSION["temporada"] != "2")
 								<span class="custom-control-indicator"></span>
 								<span class="custom-control-description"> Eu declaro que li e aceito o regulamento da Liga Cartolas Sem Cartola e das ligas Mata Mata</span>
 							</label>
-						</div>						
+						</div>
+						<input type="hidden" id="id_time" name="id_time" />				
 	  					<button id="btn-inscricao" type="submit" class="btn btn-primary form-control" name="submit" disabled>Realizar inscrição</button>		
 					</form>
 				</div>

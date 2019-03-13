@@ -41,7 +41,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 
 				$descricao = "";
 				$total_times = "";
-				$rodada_inicio = "";
+				$rodada_inicio = 0;
 				$nivel = "";
 
 				if ($resmatamata && $resmatamata->num_rows > 0) {

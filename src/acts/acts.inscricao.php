@@ -65,7 +65,6 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 					$isValid = false;
 				}
 
-
 				if(!isset($_POST["regulamento"]) || empty($_POST["regulamento"])) {
 					echo '{"succeed": false, "errno": 11001, "title": "Erro ao enviar o formulário!", "erro": "Você precisa marcar que aceita o regulamento para enviar o formulário!"}';
 					exit();
@@ -83,17 +82,20 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 						$escudo = formataNomeEscudo($time);
 						$valor = $_POST["valor"];
 						$forma_pagto = $_POST["forma-pagto"];
+						$id_time = $_POST["id_time"];
 
-						$time_exist = $conn->query("SELECT id FROM tbl_times 
-														     WHERE UPPER(email) LIKE '%" . strtoupper($email) . "%'
-														        OR UPPER(nome_presidente) LIKE '%" . strtoupper($nome) . "%'") or 
-											trigger_error("11003 - " . $conn->error);
+						if(empty($id_time) || $id_time == "0") {
+							$time_exist = $conn->query("SELECT id FROM tbl_times 
+															     WHERE UPPER(email) LIKE '%" . strtoupper($email) . "%'
+															        OR UPPER(nome_presidente) LIKE '%" . strtoupper($nome) . "%'") or 
+												trigger_error("11003 - " . $conn->error);
 
-						if ($time_exist) { 
-						    if($time_exist->num_rows > 0) {
-								echo '{"succeed": false, "errno": 11004, "title": "Time já cadastrado no banco de dados!", "erro": "O time ou presidente já foi cadastrado, favor escolher outros dados!"}';
-								exit();
-						    }
+							if ($time_exist) { 
+							    if($time_exist->num_rows > 0) {
+									echo '{"succeed": false, "errno": 11004, "title": "Time já cadastrado no banco de dados!", "erro": "O time ou presidente já foi cadastrado, favor escolher outros dados!"}';
+									exit();
+							    }
+							}
 						}
 
 						$conn->autocommit(FALSE);
@@ -103,7 +105,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 							                          FROM tbl_times t
 												 LEFT JOIN tbl_inscricao i ON i.id_times = t.id
 												 						  AND i.id_anos = $temporada
-												     WHERE UPPER(t.nome_time) LIKE '%" . strtoupper($time) . "%'") or 
+												     WHERE t.id = $id_time") or 
 											trigger_error("11003 - " . $conn->error);
 
 						if ($time_exist && $time_exist->num_rows > 0) {
@@ -114,17 +116,40 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
         						}
         						else {
 									$qry_insc = "INSERT INTO tbl_inscricao (id_times, id_anos, forma_pgto, ativo) VALUES ($t->id, $temporada, $forma_pagto, 0)";
-
 									if ($conn->query($qry_insc) === TRUE) {
-										$upd_times = "UPDATE tbl_times SET ativo = 0 WHERE id = $t->id";
+										$upd_times = "UPDATE tbl_times 
+														 SET ativo = 0,
+														 	 nome_presidente = '$nome',
+														 	 email = '$email',
+														 	 telefone = '$telefone'
+													   WHERE id = $id_time";
 
 										if ($conn->query($upd_times) === TRUE) {
-											enviarEmail($forma_pagto, $nome, $email);
-								
-											$conn->commit();
-											echo '{"succeed": true}';
+											$upd_usu = "UPDATE tbl_usuarios 
+														   SET usuario = '$email'
+														 WHERE times_id = $id_time";
+
+											if ($conn->query($upd_usu) === TRUE) {
+												$competicao = $_POST["competicao"];
+
+												for($i = 0; $i <= count($competicao) - 1; $i++) {
+													$ins_comp = "INSERT INTO tbl_competicoes_times (id_competicao, id_times, id_anos) 
+														  			  VALUES ($competicao[$i], $id_time, $temporada)";
+
+													if ($conn->query($ins_comp) !== TRUE) {
+										        		throw new Exception("Erro ao inserir a competição: " . $ins_comp . "<br>" . $conn->error);
+													}
+												}
+
+												enviarEmail($forma_pagto, $nome, $email, $valor);
+									
+												$conn->commit();
+												echo '{"succeed": true}';
+											} else {
+										        throw new Exception("Erro ao atualizar o usuário: " . $upd_usu . "<br>" . $conn->error);
+											}
 										} else {
-									        throw new Exception("Erro ao desativar o time: " . $upd_times . "<br>" . $conn->error);
+									        throw new Exception("Erro ao atualizar o time: " . $upd_times . "<br>" . $conn->error);
 										}
 									} else {
 								        throw new Exception("Erro ao inserir a inscrição: " . $qry_insc . "<br>" . $conn->error);
@@ -147,7 +172,17 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 												 				  VALUES ($id_time, '$email', '', 1, 3, 0)";
 
 									if ($conn->query($qry_usu) === TRUE) {
-										enviarEmail($forma_pagto, $nome, $email);
+										$competicao = $_POST["competicao"];
+
+										for($i = 0; $i <= count($competicao) - 1; $i++) {
+											$ins_comp = "INSERT INTO tbl_competicoes_times (id_competicao, id_times, id_anos) 
+												  			  VALUES ($competicao[$i], $id_time, $temporada)";
+
+											if ($conn->query($ins_comp) !== TRUE) {
+								        		throw new Exception("Erro ao inserir a competição: " . $ins_comp . "<br>" . $conn->error);
+											}
+										}
+										enviarEmail($forma_pagto, $nome, $email, $valor);
 
 										$conn->commit();
 										echo '{"succeed": true}';
@@ -191,6 +226,22 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 			echo '[' . $list_times . ']';
         	break;
 
+        case 'dados_time':
+				$time = str_replace('"', '', $_POST["nome_time"]);
+
+				$qrytime = $conn->query("SELECT id, nome_presidente AS nome, email, telefone
+							               FROM tbl_times
+										  WHERE UPPER(nome_time) LIKE '%" . strtoupper($time) . "%' LIMIT 1") or 
+											trigger_error("11010 - " . $conn->error);
+
+				if ($qrytime && $qrytime->num_rows > 0) {
+					while($t = $qrytime->fetch_object()) {
+						echo '{"succeed": true, "id": "' . $t->id . '", "nome": "' . $t->nome . '", "email": "' . $t->email . '", "telefone": "' . $t->telefone . '"}';	
+					}
+				}
+
+        	break;
+
 	    default:
 	       echo '{"succeed": false, "errno": 11008, "title": "Ação não definida!", "erro": "Não foi definida a ação para a requisição. Favor contatar o administrador da página!"}';
 	}
@@ -198,7 +249,7 @@ if(isset($_GET['act']) && !empty($_GET['act'])) {
 	echo '{"succeed": false, "errno": 11009, "title": "Ação não definida!", "erro": "Não foi definida a ação para a requisição. Favor contatar o administrador da página!"}';
 }
 
-function enviarEmail($forma_pagto, $nome, $email) {
+function enviarEmail($forma_pagto, $nome, $email, $valor) {
 	if($forma_pagto == 1 || $forma_pagto == 2) {
     	$msg_html = "<p style='font-family:Verdana, Geneva, sans-serif; padding-left:20px;'>O pagamento ($valor) deverá ser feito diretamente com o mini-tesoureiro ou através de deposito/transferência bancária.</p><p style='font-family:Verdana, Geneva, sans-serif; padding-left:20px;'>Banco Itaú</p><p style='font-family:Verdana, Geneva, sans-serif; padding-left:20px;'>Agência: 4890 <br />C/C: 21441-6<br />CPF: 358.640.578-27<br />Titular: Bruno Gomes da Silva (Gigante Léo)</p>";
     	$msg_plain = "O pagamento ($valor) deverá ser diretamente com o mini-tesoureiro ou através de deposito/transferência bancária. Banco Itaú - Agência: 4890 | C/C: 21441-6 | CPF: 358.640.578-27 | Titular: Bruno Gomes da Silva (Gigante Léo)";

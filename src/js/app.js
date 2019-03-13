@@ -63,18 +63,6 @@ $(function() {
 		});
 	});
 
-	$("#pag-maos").on("click", function(){
-		$("#valor").val("R$ 30,00");
-	});
-
-	$("#pag-banco").on("click", function(){
-		$("#valor").val("R$ 30,00");
-	});
-
-	$("#pag-pagseguro").on("click", function(){
-		$("#valor").val("R$ 35,00");
-	});
-
 	// BEGIN LOGIN (login)
 
 	$("#form-login").submit(function(e) {
@@ -281,67 +269,156 @@ $(function() {
 	
 	// BEGIN INSCRICAO (inscricao)
 
-    $('#nome_time').textext({
-        plugins : 'autocomplete ajax',
-        ajax : {
-            url : 'acts/acts.inscricao.php?act=times',
-            dataType : 'json',
-            cacheResults : true
-        }
-    });
+	if(window.location.pathname.indexOf('inscricao') !== -1) {
 
-	$('#btn-voltar-inscricao').click(function(e) {
-		e.preventDefault();
+	    $('#nome_time').textext({
+	        plugins : 'autocomplete ajax',
+	        ajax : {
+	            url : 'acts/acts.inscricao.php?act=times',
+	            dataType : 'json',
+	            cacheResults : true
+	        }
+	    });
 
-		$('.premain').hide();
-		$('.inscmain').show();
-	})
+		$('#btn-voltar-inscricao').click(function(e) {
+			e.preventDefault();
 
-	$("#form-inscricao").submit(function(e) {
-		e.preventDefault();
-
-		$('#loading-modal').modal({
-			keyboard: false
+			$('.premain').hide();
+			$('.inscmain').show();
 		});
 
-		$.ajax({
-			type: "POST",
-			url: "acts/acts.inscricao.php?act=add",
-			data: $("#form-inscricao").serialize(),
-			success: function(data)
-			{
-			    try {
-					$('#loading-modal').modal('hide');
+		$('body').on('click', '.text-core .text-wrap .text-dropdown .text-list .text-suggestion', function(e) {
+			var el = $(this).parent().parent().parent().parent().parent();
+			buscaDadosTime(el);
+	    });
 
-					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+	    $('#nome_time').on('keyup', function (e) {
+		    if (e.keyCode == 13) {
+				var el = $(this).parent().parent().parent();
+				buscaDadosTime(el);
+		    }
+	    });
+	 
+	    function buscaDadosTime(el) {
+	    	var nomeTime = el.find('#nome_time').val();
 
-					if(retorno.succeed) {
-						$('.inscmain').fadeOut("fast", function() {
-							$('#nome').val('');
-							$('#email').val('');
-							$('#telefone').val('');
-							$('#time').val('');
-							$('input[name="forma-pagto"]').prop('checked', false);
-							$('#regulamento').prop('checked', false);
-							
-							$('.premain').fadeIn("slow");
-						});
-					}
-					else {
-						$('#alert-title').html(retorno.title);
-						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+			var formData = new FormData();
+			formData.append('nome_time', nomeTime);
+
+			$('#loading-modal').modal({
+				keyboard: false
+			});
+
+			$.ajax({
+				type: "POST",
+				url: "acts/acts.inscricao.php?act=dados_time",
+				data : formData,
+				processData: false,
+				contentType: false,
+				timeout: 0,
+				success: function(data)
+				{
+				    try {
+						var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+						if(retorno.succeed) {
+					    	$("#nome").val(retorno.nome);
+					    	$("#email").val(retorno.email);
+					    	$("#telefone").val(retorno.telefone);
+					    	$("#id_time").val(retorno.id);
+
+							$('#loading-modal').modal('hide');
+						}
+						else {
+							$('#alert-title').html(retorno.title);
+							$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+							$('#alert').modal('show');
+
+					    	$("#nome").val("");
+					    	$("#email").val("");
+					    	$("#telefone").val("");
+					    	$("#id_time").val("");
+
+							$('#loading-modal').remove();
+						}
+				    }
+				    catch (e) {
+						$('#alert-title').html("Erro ao fazer parse do JSON!");
+						$('#alert-content').html(String(e.stack));
 						$('#alert').modal('show');
-					}
-			    }
-			    catch (e) {
-					$('#loading-modal').modal('hide');
-					$('#alert-title').html("Erro ao fazer parse do JSON!");
-					$('#alert-content').html(String(e.stack));
-					$('#alert').modal('show');
-			    };
+
+				    	$("#nome").val("");
+				    	$("#email").val("");
+				    	$("#telefone").val("");
+				    	$("#id_time").val("");
+
+						$('#loading-modal').remove();
+				    };
+				}
+			});
+	    }
+
+		$(".competicao").on("change", function(e) {
+			var valor = parseFloat($("#valor").val().replace("R$", "").replace(",", "."));
+			if($(this).is(":checked")) {
+				valor = valor + $(this).data('money');
 			}
+			else {
+				valor = valor - $(this).data('money');
+			}
+
+			$("#valor").val("R$ " + valor.toString().replace(".", ",") + ",00");
 		});
-	});
+
+		$("#form-inscricao").submit(function(e) {
+			e.preventDefault();
+
+			$('#loading-modal').modal({
+				keyboard: false
+			});
+
+			$.ajax({
+				type: "POST",
+				url: "acts/acts.inscricao.php?act=add",
+				data: $("#form-inscricao").serialize(),
+				success: function(data)
+				{
+				    try {
+						$('#loading-modal').modal('hide');
+
+						var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+						if(retorno.succeed) {
+							$('.inscmain').fadeOut("fast", function() {
+								$('#nome').val('');
+								$('#email').val('');
+								$('#telefone').val('');
+								$('#time').val('');
+								$('input[name="forma-pagto"]').prop('checked', false);
+								$('.competicao').prop('checked', false);
+								$('#regulamento').prop('checked', false);
+
+						    	$("#id_time").val("");
+								
+								$('.premain').fadeIn("slow");
+							});
+						}
+						else {
+							$('#alert-title').html(retorno.title);
+							$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+							$('#alert').modal('show');
+						}
+				    }
+				    catch (e) {
+						$('#loading-modal').modal('hide');
+						$('#alert-title').html("Erro ao fazer parse do JSON!");
+						$('#alert-content').html(String(e.stack));
+						$('#alert').modal('show');
+				    };
+				}
+			});
+		});
+	}
 
 	// END INSCRICAO (inscricao)
 

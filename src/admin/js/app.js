@@ -497,7 +497,14 @@ $(function() {
     	$('#descricao').val('');
     	$('#valor').val('');
     	$('#capa').val('');
+    	$('#outro_valor').val('');
+    	$('#informacoes').val('');
     	$('#is_default').bootstrapToggle('off');
+		$('#ch_outro_valor').bootstrapToggle('off');
+    	$('#box-capa').hide();
+    	$('#img-capa').attr('src', '');
+    	$('#img-capa').attr('alt', '');
+    	$('#img-capa').attr('title', '');
 
 		$('.mainform').hide();
 		$('.maintable').show();
@@ -518,8 +525,233 @@ $(function() {
     	$('#descricao').val('');
     	$('#valor').val('');
     	$('#capa').val('');
+    	$('#outro_valor').val('');
+    	$('#informacoes').val('');
     	$('#is_default').bootstrapToggle('off');
+		$('#ch_outro_valor').bootstrapToggle('off');
+    	$('#box-capa').hide();
+    	$('#img-capa').attr('src', '');
+    	$('#img-capa').attr('alt', '');
+    	$('#img-capa').attr('title', '');
     });	
+
+    $('.btn-edit-competicoes').click(function(e) {
+		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+    	var id = $(this).data('id');
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.competicoes.php?act=showupd&idcompeticao=" + id,
+			success: function(data)
+			{
+			    try {
+					$('#loading').modal('hide');
+
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+					if(retorno.succeed) {
+						$('.maintable').hide();
+						$('.mainform').show();
+
+	    				$('#btn-salvar-competicao').data('id', id);
+    					$('#btn-salvar-competicao').data('act', 'edit');
+				    	$('#headline-ger-times').html('Editar a competição ' + retorno.descricao);
+						$('.headline-form').html('Edite as informações da competição!');
+
+				    	$('#id').val(retorno.id);
+				    	$('#descricao').val(retorno.descricao);
+				    	$('#informacoes').val(retorno.informacoes);
+				    	$('#is_default').bootstrapToggle(retorno.is_default == 1 ? 'on' : 'off');
+				    	if(retorno.valor == 0) {
+				    		$('#ch_outro_valor').bootstrapToggle('on');
+				    		$('#outro_valor').val(retorno.outro_valor);
+				    	} else {
+				    		$('#valor').val(retorno.valor);
+				    		$('#ch_outro_valor').bootstrapToggle('off');
+				    	}
+
+				    	if(retorno.capa.length > 0) {
+							var response = jQuery.ajax({
+								url: "../img/competicao/" + retorno.capa,
+								type: 'HEAD',
+								async: false
+							}).status;
+
+	    					if(response == "200") {
+		    					$('#box-capa').show();
+						    	$('#img-capa').attr('src', "../img/competicao/" + retorno.capa);
+						    	$('#img-capa').attr('alt', retorno.descricao);
+						    	$('#img-capa').attr('title', retorno.descricao);
+	    					}
+				    	}
+				    	else {
+	    					$('#box-capa').hide();
+				    	}
+				    	
+				    	$('#ano_fundacao').val(retorno.ano_fundacao);
+					}
+					else {
+				    	$('#btn-salvar-competicao').data('id', null);
+				    	$('#btn-salvar-competicao').data('act', null);
+				    	$('#headline-competicao').html('');
+						$('.headline-form').html('');
+
+				    	$('#id').val('');
+				    	$('#descricao').val('');
+				    	$('#valor').val('');
+				    	$('#capa').val('');
+				    	$('#outro_valor').val('');
+				    	$('#informacoes').val('');
+				    	$('#is_default').bootstrapToggle('off');
+		    			$('#ch_outro_valor').bootstrapToggle('off');
+				    	$('#box-capa').hide();
+				    	$('#img-capa').attr('src', '');
+				    	$('#img-capa').attr('alt', '');
+				    	$('#img-capa').attr('title', '');
+
+						$('.mainform').hide();
+						$('.maintable').show();
+
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+					}
+			    }
+			    catch (e) {
+					$('#loading').modal('hide');
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
+					$('#alert').modal('show');
+			    };
+			}
+		});
+    });	
+
+    $('.btn-del-competicoes').click(function(e) {
+		e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+    	var id = $(this).data('id');
+
+		$.ajax({
+			type: "POST",
+			url: "acts/acts.competicoes.php?act=del&idcompeticao=" + id,
+			success: function(data)
+			{
+			    try {
+					$('#loading').modal('hide');
+
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+
+					if(retorno.succeed) {
+						$('#alert-title').html("Você desativou a competição!");
+						$('#alert-content').html("A competição selecionada foi removida com sucesso! Ao fechar esta mensagem a página será recarregada.");
+						$('#alert').modal('show');
+
+						$('#alert').on('hidden.bs.modal', function (e) {
+							window.location.reload();
+						});
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+					}
+			    }
+			    catch (e) {
+					$('#loading').modal('hide');
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
+					$('#alert').modal('show');
+			    };
+			}
+		});
+    });	
+
+    $('#ch_outro_valor').on('change', function () {
+    	if($(this).is(':checked')) {
+    		$('#outro_valor').show();
+    		$('#valor-monetario').hide();
+    	}
+    	else {
+    		$('#outro_valor').hide();
+    		$('#valor-monetario').show();
+    	}
+    });
+
+    $('#btn-salvar-competicao').click(function(e) {
+    	e.preventDefault();
+
+		$('#loading').modal({
+			keyboard: false
+		});
+
+		var formData = new FormData();
+		formData.append('descricao', $('#descricao').val());
+		formData.append('valor', $('#valor').val());
+		if($('#is_default').is(':checked'))
+			formData.append('is_default', $('#is_default').val());
+		if($('#ch_outro_valor').is(':checked')) {
+			formData.append('ch_outro_valor', $('#ch_outro_valor').val());
+			formData.append('outro_valor', $('#outro_valor').val());
+		}
+		formData.append('capa', $('#capa')[0].files[0]);
+		formData.append('informacoes', $('#informacoes').val());
+
+    	var id = $(this).data('id');
+    	var act = $(this).data('act');
+
+    	if(act == "edit") {
+    		var url = "acts/acts.competicoes.php?act=" + act + "&idcompeticao=" + id;
+    	}
+    	else {
+    		var url = "acts/acts.competicoes.php?act=" + act;
+    	}
+
+		$.ajax({
+			type: "POST",
+			url: url,
+			data : formData,
+			processData: false,
+			contentType: false,
+			success: function(data)
+			{
+			    try {
+					$('#loading').modal('hide');
+
+					var retorno = JSON.parse(data.replace(/(\r\n|\n|\r)/gm," ").replace(/\s+/g," "));
+					if(retorno.succeed) {
+						$('#alert-title').html($('#descricao').val() + (act == 'add' ? " adicionado " : " editado ") + "com sucesso!");
+						$('#alert-content').html("A " + (act == 'add' ? " adição " : " edição ") + " de " + $('#descricao').val() + " foi efetuada com sucesso! Ao fechar esta mensagem a página será recarregada.");
+						$('#alert').modal('show');
+
+						$('#alert').on('hidden.bs.modal', function (e) {
+							window.location.reload();
+						})
+					}
+					else {
+						$('#alert-title').html(retorno.title);
+						$('#alert-content').html(retorno.errno + " - " + retorno.erro);
+						$('#alert').modal('show');
+					}
+			    }
+			    catch (e) {
+					$('#loading').modal('hide');
+					$('#alert-title').html("Erro ao fazer parse do JSON!");
+					$('#alert-content').html(String(e.stack));
+					$('#alert').modal('show');
+			    };
+			}
+		});
+    });
 
     // END COMPETICOES (competicoes.php)
 

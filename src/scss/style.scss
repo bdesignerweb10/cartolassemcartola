@@ -1626,3 +1626,27 @@ table.liga-csc thead tr .headerSortDown {
 }
 
 .red-tooltip + .tooltip > .tooltip-inner {background-color: #fff !important;}
+
+#box-capa {
+	-webkit-border-bottom-left-radius: 0px !important;
+	-moz-border-radius-bottomleft: 0px !important;
+	border-bottom-left-radius: 0px !important;
+	-webkit-border-bottom-right-radius: 0px !important;
+	-moz-border-radius-bottomright: 0px !important;
+	border-bottom-right-radius: 0px !important;
+    padding: 15px 30px !important;
+}
+
+#box-competicao {
+	margin-top: -1px !important;
+	-webkit-border-top-left-radius: 0px !important;
+	-moz-border-radius-topleft: 0px !important;
+	border-top-left-radius: 0px !important;
+	-webkit-border-top-right-radius: 0px !important;
+	-moz-border-radius-topright: 0px !important;
+	border-top-right-radius: 0px !important;
+}
+
+#outro_valor {
+	display:none;
+}

@@ -28,3 +28,20 @@ CREATE TABLE `cartolassemcartola`.`tbl_competicoes_times` (
     REFERENCES `cartolassemcartola`.`tbl_competicoes` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
+
+ALTER TABLE `cartolassemcartola`.`tbl_competicoes` 
+ADD COLUMN `outro_valor` VARCHAR(60) NULL AFTER `imagem_fundo`;
+
+ALTER TABLE `cartolassemcartola`.`tbl_competicoes` 
+ADD COLUMN `informacoes` TEXT NOT NULL AFTER `outro_valor`;
+
+ALTER TABLE `cartolassemcartola`.`tbl_competicoes` 
+ADD COLUMN `id_mata_mata` INT NULL AFTER `informacoes`,
+ADD INDEX `fkey_competicoes_mata_mata_idx` (`id_mata_mata` ASC);
+;
+ALTER TABLE `cartolassemcartola`.`tbl_competicoes` 
+ADD CONSTRAINT `fkey_competicoes_mata_mata`
+  FOREIGN KEY (`id_mata_mata`)
+  REFERENCES `cartolassemcartola`.`tbl_mata_mata` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
