@@ -125,8 +125,7 @@ if($_SESSION["temporada"] != "2")
 					      	
 					      	<p>Formas de Pagamento:</p>
 					      	<p> - Em mãos, com o tesoureiro<br />
-					      	 - Transferência Bancária <i class="fa fa-info-circle" id="info" data-toggle="tooltip" data-html="true" title="<p><h3>Itaú</h3></p><p><strong>AG:</strong> 4890<br /><strong>CC:</strong> 21441-6</p><p><strong>Titular:</strong> Bruno Gomes da Silva</p><p><strong>CPF:</strong> 358.640.578-27</p>"></i></span><br />
-					      	 - Pagseguro <b>(EM BREVE)</b></p>
+					      	 - Transferência Bancária <i class="fa fa-info-circle" id="info" data-toggle="tooltip" data-html="true" title="<p><h3>Itaú</h3></p><p><strong>AG:</strong> 4890<br /><strong>CC:</strong> 21441-6</p><p><strong>Titular:</strong> Bruno Gomes da Silva</p><p><strong>CPF:</strong> 358.640.578-27</p>"></i></span></b></p>
 					      	
 					      	<p>Já leu o nosso regulamento?</p>
 					      	<p><a href="regulamento">Acesse Regulamentos e leia todas as regras para depois não ficar de mimimi!</a></p>
@@ -136,11 +135,23 @@ if($_SESSION["temporada"] != "2")
 					      	 - <a href="mailto:contato@cartoleirao.com.br">contato@cartoleirao.com.br</a></p>
 					      	
 					      	<p>Desejamos a todos um bom divertimento.</p>
-					      	<footer>Equipe <cite title="Source Title">Liga Cartoleirão - Trabalho Seguro TS</cite></footer>
+					      	<footer>Equipe <cite title="Source Title">Cartoleirão - Trabalho Seguro TS</cite></footer>
 				    	</blockquote>
 				  	</div>
-				</div><!-- card -->		
-			</div>
+				</div><!-- card -->	
+				<h1 class="headline-patrocinadores">Patrocinadores:</h1>
+				<div class="row patrocinio">
+					<div class="col-sm-3">
+						<img src="img/logo-ts.png" alt="Logo Trabalho Seguro TS">
+					</div>	
+					<div class="col-sm-9">
+						<h1 class="headline-empresa">Trabalho Seguro Treinamentos e Serviços</h1>
+						<p class="info-patr">Waner Luis Gomide <br />
+						(19) 99888-51741 / (19) 4101-0288</p>
+						<p class="site-patr"><a href="http://www.trabalhosegurots.com.br" target="_blank">www.trabalhosegurots.com.br</a></p>
+					</div>
+				</div><!-- row -->
+			</div>			
 		</div><!-- row -->
 	</div><!-- contatiner -->
 </main>

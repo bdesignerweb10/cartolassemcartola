@@ -8486,6 +8486,28 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   .headline-rodada > strong {
     color: #fc8f3e; }
 
+.headline-patrocinadores {
+  font-size: 1.5rem;
+  font-weight: bold; }
+
+/*  Patrocinador */
+.patrocinio {
+  margin-top: 20px; }
+
+.headline-empresa {
+  font-size: 17px;
+  font-weight: bold; }
+
+.info-patr {
+  font-size: 15px;
+  color: #000; }
+
+.site-patr {
+  font-size: 20px;
+  font-weight: bold; }
+  .site-patr > a {
+    color: #293541; }
+
 /* Pré inscrição */
 .premain {
   display: none; }
