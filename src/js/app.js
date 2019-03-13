@@ -393,7 +393,7 @@ $(function() {
 								$('#nome').val('');
 								$('#email').val('');
 								$('#telefone').val('');
-								$('#time').val('');
+								$('#nome_time').val('');
 								$('input[name="forma-pagto"]').prop('checked', false);
 								$('.competicao').prop('checked', false);
 								$('#regulamento').prop('checked', false);
