@@ -443,14 +443,14 @@ $(function() {
 	   window.location.pathname.indexOf('comparacao') === -1) {
 	   	
 		/* Modal de Informações  */
-		 $('#info').modal({
-		 	keyboard: false
-		 });
-
-		 /* Modal Resumo da Rodada  */
-		 /*$('#res-rodada').modal({
+		 /*$('#info').modal({
 		 	keyboard: false
 		 });*/
+
+		 /* Modal Resumo da Rodada  */
+		 $('#res-rodada').modal({
+		 	keyboard: false
+		 });
 
 		if($('#resumo-temporada').length == 0) {
 			// DESTAQUES RODADA

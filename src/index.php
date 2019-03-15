@@ -243,6 +243,17 @@ else :
 							</div>
 						</div>
 					</article>
+
+					<article>
+						<div id="eventos" class="card">
+							<div class="card-header">
+								<header>
+									<h2 class="card-title">Patrocínio</h2>
+								</header>
+							</div><!-- card-header -->
+							
+						</div>
+					</article>
 				</div><!-- col-sm-7 -->
 				<div class="col-12">
 					<article>

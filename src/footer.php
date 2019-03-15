@@ -121,6 +121,17 @@
 			      			</div>			      			
 			      		</div>
 			      	</div> 
+			      	<div class="modal-footer">			      				      		
+			      		<div class="col-sm-3">
+			      			<img src="img/logo-ts.png" style="width: 100px;">
+			      		</div>
+			      		<div class="col-sm-9">
+			      			<h1 class="headline-empresa-modal">Trabalho Seguro Treinamentos e Serviços</h1>
+							<p class="info-patr">Waner Luis Gomide <br />
+							(19) 99888-51741 / (19) 4101-0288</p>
+							<p class="site-patr"><a href="http://www.trabalhosegurots.com.br" target="_blank">www.trabalhosegurots.com.br</a></p>
+			      		</div>
+			      	</div>
 		      	</div> 	
 		      </div>		      
 		    </div>

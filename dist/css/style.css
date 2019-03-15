@@ -8498,6 +8498,9 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   font-size: 17px;
   font-weight: bold; }
 
+.headline-empresa-modal {
+  font-size: 17px; }
+
 .info-patr {
   font-size: 15px;
   color: #000; }
