@@ -1,7 +1,7 @@
 <?php 
 require_once("conn.php");
 
-if($_SESSION["temporada"] == 2 && (basename($_SERVER['PHP_SELF']) != "inscricao.php" && basename($_SERVER['PHP_SELF']) != "regulamento.php"))
+/*if($_SESSION["temporada"] == 2 && (basename($_SERVER['PHP_SELF']) != "inscricao.php" && basename($_SERVER['PHP_SELF']) != "regulamento.php"))
 	header('Location: inscricao');
 else {
 	if ($_SESSION["user_ativado"] &&
@@ -12,7 +12,7 @@ else {
 		!isset($_SESSION['usu_nivel']) || empty($_SESSION["usu_nivel"]) || 
 		$_SESSION["usu_id"] == "0")) 
 		header('Location: login?href=' . str_replace("_", "", str_replace(".php", "", basename($_SERVER['PHP_SELF']))));
-}
+}*/
 ?>
 <!DOCTYPE html>
 <html lang="en">
